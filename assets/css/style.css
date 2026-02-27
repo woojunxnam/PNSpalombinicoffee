@@ -298,6 +298,103 @@ a{ color:inherit; text-decoration:none; }
 .footer-inner p:last-child{ margin:0; }
 .footer-sub{ font-size:12px !important; opacity:.7; }
 
+/* ══════════════════════════════════════════
+   ANIMATIONS & SCROLL REVEAL
+   ══════════════════════════════════════════ */
+
+/* 기본 등장 애니메이션 — 아래에서 위로 페이드인 */
+.card,
+.tech-step,
+.result-card,
+.b2b-card,
+.stat,
+.product-main-card,
+.callout,
+.section-title,
+.section-lead,
+.hero-copy,
+.hero-media {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* 히어로는 페이지 로드 시 바로 보여야 하므로 더 빠르게 */
+.hero-copy {
+  transform: translateX(-24px);
+  transition-duration: 0.7s;
+  transition-delay: 0.1s;
+}
+.hero-media {
+  transform: translateX(24px);
+  transition-duration: 0.7s;
+  transition-delay: 0.25s;
+}
+
+/* is-visible 클래스가 붙으면 나타남 */
+.is-visible {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+/* 헤더 스크롤 시 그림자 */
+.site-header.scrolled {
+  box-shadow: 0 4px 24px rgba(43,29,20,.10);
+}
+
+/* 네비게이션 활성 링크 */
+.nav a.active {
+  background: rgba(255,255,255,.85);
+  color: var(--accent);
+}
+
+/* 버튼 리플 애니메이션 */
+@keyframes ripple {
+  to { transform: scale(3.5); opacity: 0; }
+}
+
+/* 히어로 이미지 마우스 패럴랙스 */
+.hero-image {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+/* section-title, section-lead는 약간 다른 방향 */
+.section-title { transform: translateY(20px); transition-delay: 0s; }
+.section-lead  { transform: translateY(20px); transition-delay: 0.08s; }
+
+/* stats bar 숫자 등장 */
+.stat {
+  transform: translateY(16px);
+  transition-delay: 0s;
+}
+
+/* 카드 호버 — 살짝 들어올리기 */
+.card:hover,
+.result-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* callout 펄스 효과 */
+.callout {
+  transform: translateY(20px);
+}
+
+/* prefers-reduced-motion: 애니메이션 비선호 사용자 배려 */
+@media (prefers-reduced-motion: reduce) {
+  .card, .tech-step, .result-card, .b2b-card,
+  .stat, .product-main-card, .callout,
+  .section-title, .section-lead,
+  .hero-copy, .hero-media {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 860px){
   .hero-inner{ grid-template-columns: 1fr; }
