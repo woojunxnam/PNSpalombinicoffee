@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PNS 팔롬비니 — Premium Drip Bag Coffee</title>
   <meta name="description" content="99% 실버스킨 제거(자체 공정 기준). 이탈리아 헤리티지와 베트남 화산 토양 테루아가 만든 더 깨끗한 한 잔." />
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -33,9 +31,20 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">
-        네이버 스마트스토어 구매
-      </a>
+      <div class="header-actions">
+        <!-- 언어 토글 -->
+        <div class="lang-toggle" role="group" aria-label="언어 선택">
+          <button class="lang-btn active" data-lang="ko">KO</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+        <!-- 인스타그램 -->
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="nav-buy-btn">
+          네이버 스마트스토어 구매
+        </a>
+      </div>
     </div>
   </header>
 
@@ -44,28 +53,23 @@
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-copy">
-          <p class="eyebrow">Premium Drip Bag Coffee</p>
-          <h1 class="hero-title">99% 실버스킨 제거.<br/>원두를 '안쪽부터' 맑게.</h1>
-          <p class="hero-sub">
+          <p class="eyebrow" data-i18n="hero-eyebrow">Premium Drip Bag Coffee</p>
+          <h1 class="hero-title" data-i18n="hero-title">99% 실버스킨 제거.<br/>원두를 '안쪽부터' 맑게.</h1>
+          <p class="hero-sub" data-i18n="hero-sub">
             로마의 유서 깊은 로스터리 <strong>Caffè Palombini(1940년대 시작)</strong>의 장인정신과,
             베트남 중부고원의 <strong>현무암(화산) 토양 테루아</strong>가 만든 깊은 바디감을 한 잔에 담았습니다.
           </p>
-
           <div class="hero-cta">
-            <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">
-              스마트스토어에서 바로 구매
-            </a>
-            <a class="btn btn-ghost" href="#about">브랜드 스토리 보기</a>
+            <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="hero-btn-buy">스마트스토어에서 바로 구매</a>
+            <a class="btn btn-ghost" href="#about" data-i18n="hero-btn-story">브랜드 스토리 보기</a>
           </div>
-
-          <div class="hero-badges" aria-label="핵심 가치">
-            <div class="badge">클린 피니시</div>
-            <div class="badge">향의 선명도</div>
-            <div class="badge">휴대·간편</div>
-            <div class="badge">질소 충전 패키징</div>
+          <div class="hero-badges">
+            <div class="badge" data-i18n="badge-1">클린 피니시</div>
+            <div class="badge" data-i18n="badge-2">향의 선명도</div>
+            <div class="badge" data-i18n="badge-3">휴대·간편</div>
+            <div class="badge" data-i18n="badge-4">질소 충전 패키징</div>
           </div>
         </div>
-
         <div class="hero-media" aria-label="브랜드 이미지">
           <div class="hero-image" role="img" aria-label="PNS 팔롬비니 드립백 커피"></div>
         </div>
@@ -77,22 +81,22 @@
       <div class="container stats-inner">
         <div class="stat">
           <span class="stat-num" data-target="99%">99%</span>
-          <span class="stat-label">실버스킨 제거율<br/><small>(자체 공정 기준)</small></span>
+          <span class="stat-label" data-i18n="stat-1">실버스킨 제거율<br/><small>(자체 공정 기준)</small></span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-target="1940s">1940s</span>
-          <span class="stat-label">Palombini<br/>창립 연도</span>
+          <span class="stat-label" data-i18n="stat-2">Palombini<br/>창립 연도</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-target="1500+">1,500+</span>
-          <span class="stat-label">공급 바(bar)<br/>이탈리아</span>
+          <span class="stat-label" data-i18n="stat-3">공급 바(bar)<br/>이탈리아</span>
         </div>
         <div class="stat-divider"></div>
         <div class="stat">
           <span class="stat-num" data-target="100%">100%</span>
-          <span class="stat-label">화산 토양<br/>베트남 원두</span>
+          <span class="stat-label" data-i18n="stat-4">화산 토양<br/>베트남 원두</span>
         </div>
       </div>
     </section>
@@ -100,8 +104,8 @@
     <!-- ABOUT -->
     <section class="section" id="about">
       <div class="container">
-        <h2 class="section-title">About Us</h2>
-        <p class="section-lead">
+        <h2 class="section-title" data-i18n="about-title">About Us</h2>
+        <p class="section-lead" data-i18n="about-lead">
           우리는 "편한 커피"를 만들고 싶지 않았습니다. <strong>편하지만, 프리미엄</strong>이어야 했습니다.
           그래서 원두가 가진 본연의 단맛과 향을 흐리는 미세 잔여물을 끝까지 다루는 방식으로 접근했습니다—
           그 출발점이 <strong>99% 실버스킨 제거(자체 공정 기준)</strong>입니다.
@@ -112,60 +116,27 @@
     <!-- TECHNOLOGY -->
     <section class="section alt" id="tech">
       <div class="container">
-        <h2 class="section-title">Our Technology: The "Inside-Out" Difference</h2>
-
+        <h2 class="section-title" data-i18n="tech-title">Our Technology: The "Inside-Out" Difference</h2>
         <div class="tech-flow">
           <div class="tech-step problem">
             <div class="tech-step-icon">⚠️</div>
-            <h3>문제: 대부분이 놓치는 지점</h3>
-            <p>
-              실버스킨(silverskin)은 로스팅 과정에서 '차프(chaff)'로 떨어져 나가지만,
-              연구에 따르면 <strong>로스팅 이후에도 일정 비율이 남을 수 있고</strong>,
-              특히 <strong>원두 두 조각 사이(센터 컷/홈)</strong>에 잔존하기도 합니다.
-            </p>
-            <p>
-              이 잔여물이 고열 환경에서 그을리거나 연기·오염물과 함께 로스트 환경을 탁하게 만들면,
-              컵에서는 <strong>거친 뒷맛, 스모키함, 미세한 쓴맛의 인상</strong>으로 나타날 수 있습니다.
-            </p>
+            <h3 data-i18n="tech-prob-title">문제: 대부분이 놓치는 지점</h3>
+            <p>실버스킨(silverskin)은 로스팅 과정에서 '차프(chaff)'로 떨어져 나가지만, 연구에 따르면 <strong>로스팅 이후에도 일정 비율이 남을 수 있고</strong>, 특히 <strong>원두 두 조각 사이(센터 컷/홈)</strong>에 잔존하기도 합니다.</p>
+            <p>이 잔여물이 고열 환경에서 그을리거나 연기·오염물과 함께 로스트 환경을 탁하게 만들면, 컵에서는 <strong>거친 뒷맛, 스모키함, 미세한 쓴맛의 인상</strong>으로 나타날 수 있습니다.</p>
           </div>
-
           <div class="tech-arrow">→</div>
-
           <div class="tech-step solution">
             <div class="tech-step-icon">✦</div>
-            <h3>해결: Inside-Out, 센터 컷까지</h3>
-            <p>
-              대부분의 공정이 "겉에서 떨어지는 차프 관리"에 집중한다면,
-              우리는 <strong>센터 컷(홈)에 남는 미세 실버스킨까지</strong> 다룹니다.
-            </p>
-            <p>
-              특허 문헌에서도 <strong>'실버스킨 및 센터 컷 부위를 브러시로 제거'</strong>하는 방식이
-              언급될 만큼, 이 영역을 정교하게 다루는 공정은 별도의 설계가 필요한 고난도 영역입니다.
-            </p>
-            <p>
-              우리는 이 접근을 바탕으로, <strong>원두의 안쪽 잔여물까지 포함해 99% 수준으로
-              실버스킨을 제거(자체 공정 기준)</strong>하는 "Inside-Out" 프로세스를 구축했습니다.
-            </p>
+            <h3 data-i18n="tech-sol-title">해결: Inside-Out, 센터 컷까지</h3>
+            <p>대부분의 공정이 "겉에서 떨어지는 차프 관리"에 집중한다면, 우리는 <strong>센터 컷(홈)에 남는 미세 실버스킨까지</strong> 다룹니다.</p>
+            <p>우리는 <strong>원두의 안쪽 잔여물까지 포함해 99% 수준으로 실버스킨을 제거(자체 공정 기준)</strong>하는 "Inside-Out" 프로세스를 구축했습니다.</p>
           </div>
         </div>
-
-        <h3 class="results-title">결과: 컵에서 느껴지는 차이</h3>
+        <h3 class="results-title" data-i18n="tech-result-title">결과: 컵에서 느껴지는 차이</h3>
         <div class="grid-3">
-          <div class="result-card">
-            <div class="result-icon">☕</div>
-            <h4>더 깨끗한 첫 향</h4>
-            <p>향이 탁해지지 않고 또렷하게 올라옵니다.</p>
-          </div>
-          <div class="result-card">
-            <div class="result-icon">✨</div>
-            <h4>더 매끈한 질감</h4>
-            <p>거친 뒷맛 대신 부드러운 피니시.</p>
-          </div>
-          <div class="result-card">
-            <div class="result-icon">🍯</div>
-            <h4>더 선명한 단맛</h4>
-            <p>'쓴맛의 그림자'가 줄어들수록 단맛·여운이 남습니다.</p>
-          </div>
+          <div class="result-card"><div class="result-icon">☕</div><h4>더 깨끗한 첫 향</h4><p>향이 탁해지지 않고 또렷하게 올라옵니다.</p></div>
+          <div class="result-card"><div class="result-icon">✨</div><h4>더 매끈한 질감</h4><p>거친 뒷맛 대신 부드러운 피니시.</p></div>
+          <div class="result-card"><div class="result-icon">🍯</div><h4>더 선명한 단맛</h4><p>'쓴맛의 그림자'가 줄어들수록 단맛·여운이 남습니다.</p></div>
         </div>
       </div>
     </section>
@@ -173,49 +144,24 @@
     <!-- HERITAGE -->
     <section class="section" id="heritage">
       <div class="container">
-        <h2 class="section-title">Our Heritage &amp; Sourcing</h2>
-
+        <h2 class="section-title" data-i18n="heritage-title">Our Heritage &amp; Sourcing</h2>
         <div class="grid-2">
           <div class="card heritage-card">
-            <div class="heritage-flag">🇮🇹 Italy</div>
+            <div class="heritage-flag"><span class="flag-italy"></span> Italy</div>
             <h3>The Italian Connection — Caffè Palombini</h3>
-            <p>
-              우리가 협업하는 <strong>Caffè Palombini</strong>는 로마에서
-              <strong>1940년대에 시작</strong>된 로스터리로, 창립자 Giovanni Palombini의 비전에서 출발했습니다.
-            </p>
-            <p>
-              Palombini는 <strong>교황 바오로 6세가 즐겨 마신 커피로 언급</strong>되어 왔고,
-              로마의 '프로페셔널' 에스프레소를 지향해온 브랜드 스토리를 갖고 있습니다.
-            </p>
-            <p>
-              관련 업계 보도에 따르면 Palombini는 Ho.Re.Ca. 등 채널에서 강한 기반을 갖고,
-              한 지역에서만 <strong>1,500개 바(bar)에 공급</strong>한 이력도 언급됩니다.
-            </p>
-            <p>
-              이 파트너십은 "좋은 원두"를 넘어,
-              <strong>에스프레소 문화가 축적한 로스팅/블렌딩 감각</strong>을 우리의 제품에 이식하는 기반이 됩니다.
-            </p>
+            <p>우리가 협업하는 <strong>Caffè Palombini</strong>는 로마에서 <strong>1940년대에 시작</strong>된 로스터리로, 창립자 Giovanni Palombini의 비전에서 출발했습니다.</p>
+            <p>Palombini는 <strong>교황 바오로 6세가 즐겨 마신 커피로 언급</strong>되어 왔고, 로마의 '프로페셔널' 에스프레소를 지향해온 브랜드 스토리를 갖고 있습니다.</p>
+            <p>관련 업계 보도에 따르면 Palombini는 Ho.Re.Ca. 등 채널에서 강한 기반을 갖고, 한 지역에서만 <strong>1,500개 바(bar)에 공급</strong>한 이력도 언급됩니다.</p>
           </div>
-
           <div class="card heritage-card">
-            <div class="heritage-flag">🇻🇳 Vietnam</div>
+            <div class="heritage-flag"><span class="flag-vietnam"></span> Vietnam</div>
             <h3>The Vietnamese Origin — Volcanic Terroir</h3>
-            <p>
-              베트남 중부고원은 <strong>화산 분출로 형성된 비옥한 현무암 토양</strong>이 넓게 분포하며,
-              영양분이 풍부하고 다공성(배수·통기)이 좋아 커피 같은 다년생 작물 재배에 적합합니다.
-            </p>
-            <p>
-              이 지역의 <strong>'레드 바잘트(붉은 현무암) 토양'과 고지대 환경</strong>이
-              체리의 느리고 균일한 성숙에 기여하고, 결과적으로 <strong>더 나은 컵 품질</strong>로 이어질 수 있습니다.
-            </p>
-            <p>
-              현지(닥락) 공식 자료 역시 <strong>붉은 현무암 토양 지대의 로부스타</strong>가
-              <strong>향과 풍미가 뚜렷한 품질</strong>을 만든다고 언급합니다.
-            </p>
+            <p>베트남 중부고원은 <strong>화산 분출로 형성된 비옥한 현무암 토양</strong>이 넓게 분포하며, 영양분이 풍부하고 다공성(배수·통기)이 좋아 커피 같은 다년생 작물 재배에 적합합니다.</p>
+            <p>이 지역의 <strong>'레드 바잘트(붉은 현무암) 토양'과 고지대 환경</strong>이 체리의 느리고 균일한 성숙에 기여하고, 결과적으로 <strong>더 나은 컵 품질</strong>로 이어질 수 있습니다.</p>
+            <p>현지(닥락) 공식 자료 역시 <strong>붉은 현무암 토양 지대의 로부스타</strong>가 <strong>향과 풍미가 뚜렷한 품질</strong>을 만든다고 언급합니다.</p>
           </div>
         </div>
       </div>
-
       <div class="callout container">
         "커피의 다음 단계는 '더 강한 로스팅'이 아니라, <strong>더 깨끗한 원두 상태에서 출발하는 것</strong>이라고 믿습니다."
       </div>
@@ -224,52 +170,20 @@
     <!-- PRODUCTS (B2C) -->
     <section class="section alt" id="products">
       <div class="container">
-        <h2 class="section-title">Products — For You (B2C)</h2>
-        <p class="section-lead">
-          당신의 하루가 어디에 있든, <strong>한 잔의 퀄리티는 타협하지 않도록</strong> 만들었습니다.
-        </p>
-
+        <h2 class="section-title" data-i18n="products-title">Products — For You (B2C)</h2>
+        <p class="section-lead" data-i18n="products-lead">당신의 하루가 어디에 있든, <strong>한 잔의 퀄리티는 타협하지 않도록</strong> 만들었습니다.</p>
         <div class="product-showcase">
           <div class="product-main-card">
-            <div class="product-badge-premium">PREMIUM</div>
-            <h3>프리미엄 드립백 커피</h3>
-            <p class="product-desc">
-              집, 사무실, 캠핑, 여행—뜨거운 물만 있으면 완성되는 한 잔.
-              Inside-Out 실버스킨 제거 공정 철학을 그대로 컵에 담았습니다.
-            </p>
+            <div class="product-badge-premium" data-i18n="product-badge">PREMIUM</div>
+            <h3 data-i18n="product-name">프리미엄 드립백 커피</h3>
+            <p class="product-desc">집, 사무실, 캠핑, 여행—뜨거운 물만 있으면 완성되는 한 잔. Inside-Out 실버스킨 제거 공정 철학을 그대로 컵에 담았습니다.</p>
             <div class="product-features">
-              <div class="product-feature">
-                <span class="feature-icon">🧪</span>
-                <div>
-                  <strong>질소 충전 패키징</strong>
-                  <p>산소 노출을 줄여 신선도와 향을 보호합니다.</p>
-                </div>
-              </div>
-              <div class="product-feature">
-                <span class="feature-icon">✦</span>
-                <div>
-                  <strong>99% 실버스킨 제거</strong>
-                  <p>Inside-Out 공정으로 더 깨끗하고 선명한 맛.</p>
-                </div>
-              </div>
-              <div class="product-feature">
-                <span class="feature-icon">🌋</span>
-                <div>
-                  <strong>베트남 화산 토양 원두</strong>
-                  <p>현무암 토양이 만든 풍부한 바디감과 향.</p>
-                </div>
-              </div>
-              <div class="product-feature">
-                <span class="feature-icon">☕</span>
-                <div>
-                  <strong>어디서든 프리미엄</strong>
-                  <p>뜨거운 물만 있으면 — 집, 사무실, 여행, 캠핑.</p>
-                </div>
-              </div>
+              <div class="product-feature"><span class="feature-icon">🧪</span><div><strong>질소 충전 패키징</strong><p>산소 노출을 줄여 신선도와 향을 보호합니다.</p></div></div>
+              <div class="product-feature"><span class="feature-icon">✦</span><div><strong>99% 실버스킨 제거</strong><p>Inside-Out 공정으로 더 깨끗하고 선명한 맛.</p></div></div>
+              <div class="product-feature"><span class="feature-icon">🌋</span><div><strong>베트남 화산 토양 원두</strong><p>현무암 토양이 만든 풍부한 바디감과 향.</p></div></div>
+              <div class="product-feature"><span class="feature-icon">☕</span><div><strong>어디서든 프리미엄</strong><p>뜨거운 물만 있으면 — 집, 사무실, 여행, 캠핑.</p></div></div>
             </div>
-            <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">
-              스마트스토어에서 구매하기 →
-            </a>
+            <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="product-buy-btn">스마트스토어에서 구매하기 →</a>
           </div>
         </div>
       </div>
@@ -278,135 +192,72 @@
     <!-- B2B -->
     <section class="section" id="b2b">
       <div class="container">
-        <h2 class="section-title">For Partners — Business Solutions (B2B)</h2>
-        <p class="section-lead">
-          커피 브랜드를 "제품"이 아니라 <strong>시스템</strong>으로 제공할 수 있어야 한다고 믿습니다.
-          원두 선별부터 패키징, OEM 설계까지—전체 생태계를 함께 구축합니다.
-        </p>
-
+        <h2 class="section-title" data-i18n="b2b-title">For Partners — Business Solutions (B2B)</h2>
+        <p class="section-lead" data-i18n="b2b-lead">커피 브랜드를 "제품"이 아니라 <strong>시스템</strong>으로 제공할 수 있어야 한다고 믿습니다. 원두 선별부터 패키징, OEM 설계까지—전체 생태계를 함께 구축합니다.</p>
         <div class="grid-2">
-          <div class="card b2b-card">
-            <div class="b2b-icon">🔬</div>
-            <h3>Optical Bean Selectors</h3>
-            <p>결점두·이물 선별을 통한 품질 표준화. 균일한 원두 품질을 유지하는 핵심 공정입니다.</p>
-          </div>
-          <div class="card b2b-card">
-            <div class="b2b-icon">⚙️</div>
-            <h3>Drip Bag Machines</h3>
-            <p>드립백 생산 자동화·안정화. 소규모 스타트업부터 대량 생산까지 맞춤 설계합니다.</p>
-          </div>
-          <div class="card b2b-card">
-            <div class="b2b-icon">📦</div>
-            <h3>Aluminum Packaging</h3>
-            <p>차광·차습 중심의 알루미늄 패키징 옵션. 질소 충전으로 신선도를 극대화합니다.</p>
-          </div>
-          <div class="card b2b-card">
-            <div class="b2b-icon">🎨</div>
-            <h3>OEM / ODM &amp; Custom Design</h3>
-            <p>제품 설계부터 패키지 디자인까지 맞춤 제작. 귀사의 브랜드로 완성해 드립니다.</p>
-          </div>
+          <div class="card b2b-card"><div class="b2b-icon">🔬</div><h3>Optical Bean Selectors</h3><p>결점두·이물 선별을 통한 품질 표준화. 균일한 원두 품질을 유지하는 핵심 공정입니다.</p></div>
+          <div class="card b2b-card"><div class="b2b-icon">⚙️</div><h3>Drip Bag Machines</h3><p>드립백 생산 자동화·안정화. 소규모 스타트업부터 대량 생산까지 맞춤 설계합니다.</p></div>
+          <div class="card b2b-card"><div class="b2b-icon">📦</div><h3>Aluminum Packaging</h3><p>차광·차습 중심의 알루미늄 패키징 옵션. 질소 충전으로 신선도를 극대화합니다.</p></div>
+          <div class="card b2b-card"><div class="b2b-icon">🎨</div><h3>OEM / ODM &amp; Custom Design</h3><p>제품 설계부터 패키지 디자인까지 맞춤 제작. 귀사의 브랜드로 완성해 드립니다.</p></div>
         </div>
-
         <div class="b2b-cta">
-          <p>B2B 파트너십, 대량구매, OEM 문의는 아래 연락처로 편하게 연락주세요.</p>
-          <a class="btn btn-primary" href="#contact">파트너십 문의하기</a>
+          <p data-i18n="b2b-cta-text">B2B 파트너십, 대량구매, OEM 문의는 아래 연락처로 편하게 연락주세요.</p>
+          <a class="btn btn-primary" href="#contact" data-i18n="b2b-cta-btn">파트너십 문의하기</a>
         </div>
       </div>
     </section>
 
     <!-- REVIEWS -->
-    <section class="section" id="reviews">
+    <section class="section alt" id="reviews">
       <div class="container">
-        <h2 class="section-title">고객 후기</h2>
-        <p class="section-lead">
-          실제 구매하신 분들의 솔직한 이야기입니다.
-        </p>
-
+        <h2 class="section-title" data-i18n="reviews-title">고객 후기</h2>
+        <p class="section-lead" data-i18n="reviews-lead">실제 구매하신 분들의 솔직한 이야기입니다.</p>
         <div class="reviews-grid">
           <div class="review-card">
             <div class="review-stars">★★★★★</div>
-            <p class="review-text">
-              다른곳 드립백과는 차원이 달라요. 맛은 깊이 있으면서 향은 풍미가 짙어요.
-              다음에 또 주문할 거 같아요. 강추합니다.
-            </p>
-            <div class="review-author">
-              <span class="review-name">tmjo****</span>
-              <span class="review-source">팔롬비니 돌체이탈리아 · 네이버 스토어 구매</span>
-            </div>
+            <p class="review-text">다른곳 드립백과는 차원이 달라요. 맛은 깊이 있으면서 향은 풍미가 짙어요. 다음에 또 주문할 거 같아요. 강추합니다.</p>
+            <div class="review-author"><span class="review-name">tmjo****</span><span class="review-source">팔롬비니 돌체이탈리아 · 네이버 스토어 구매</span></div>
           </div>
-
           <div class="review-card">
             <div class="review-stars">★★★★★</div>
-            <p class="review-text">
-              카페쇼에서 먹어보고 인생커피다 생각들어서 주문했어요!
-              배송 시작하고 금방 오고 좋았습니다.
-            </p>
-            <div class="review-author">
-              <span class="review-name">hyun*******</span>
-              <span class="review-source">팔롬비니 로마 · 네이버 스토어 구매</span>
-            </div>
+            <p class="review-text">카페쇼에서 먹어보고 인생커피다 생각들어서 주문했어요! 배송 시작하고 금방 오고 좋았습니다.</p>
+            <div class="review-author"><span class="review-name">hyun*******</span><span class="review-source">팔롬비니 로마 · 네이버 스토어 구매</span></div>
           </div>
-
           <div class="review-card">
             <div class="review-stars">★★★★★</div>
-            <p class="review-text">
-              깔끔한 커피맛이에요 데일리로 부담없이 먹기 좋네요.
-              한 상자 한 달도 안 되서 소진했어요.
-            </p>
-            <div class="review-author">
-              <span class="review-name">solg***</span>
-              <span class="review-source">네이버 스토어 구매 · 한달 사용</span>
-            </div>
+            <p class="review-text">깔끔한 커피맛이에요 데일리로 부담없이 먹기 좋네요. 한 상자 한 달도 안 되서 소진했어요.</p>
+            <div class="review-author"><span class="review-name">solg***</span><span class="review-source">네이버 스토어 구매 · 한달 사용</span></div>
           </div>
-
           <div class="review-card">
             <div class="review-stars">★★★★★</div>
-            <p class="review-text">
-              맛있어요. 더 유명해지면 좋겠어요.
-              유통기한 아주 넉넉하고, 포장 꼼꼼하고, 맛 만족도 맛있어요.
-            </p>
-            <div class="review-author">
-              <span class="review-name">solg***</span>
-              <span class="review-source">네이버 스토어 구매</span>
-            </div>
+            <p class="review-text">맛있어요. 더 유명해지면 좋겠어요. 유통기한 아주 넉넉하고, 포장 꼼꼼하고, 맛 만족도 맛있어요.</p>
+            <div class="review-author"><span class="review-name">solg***</span><span class="review-source">네이버 스토어 구매</span></div>
           </div>
         </div>
-
         <div class="reviews-cta">
-          <p class="reviews-note">더 많은 후기가 궁금하신가요?</p>
-          <a class="btn btn-ghost" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">
-            네이버 스토어에서 전체 리뷰 보기 →
-          </a>
+          <p class="reviews-note" data-i18n="reviews-note">더 많은 후기가 궁금하신가요?</p>
+          <a class="btn btn-ghost" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="reviews-btn">네이버 스토어에서 전체 리뷰 보기 →</a>
         </div>
       </div>
     </section>
 
     <!-- FAQ -->
-    <section class="section alt" id="faq">
+    <section class="section" id="faq">
       <div class="container">
-        <h2 class="section-title">자주 묻는 질문</h2>
-        <p class="section-lead">구매 전 궁금하신 점을 미리 답해드립니다.</p>
-
+        <h2 class="section-title" data-i18n="faq-title">자주 묻는 질문</h2>
+        <p class="section-lead" data-i18n="faq-lead">구매 전 궁금하신 점을 미리 답해드립니다.</p>
         <div class="faq-list">
+
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>드립백은 어떻게 사용하나요?</span>
+              <span data-i18n="faq-q1">드립백은 어떻게 사용하나요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
               <div class="faq-steps">
-                <div class="faq-step">
-                  <span class="faq-step-num">1</span>
-                  <p>봉투를 개봉하여 드립백을 꺼내주세요.</p>
-                </div>
-                <div class="faq-step">
-                  <span class="faq-step-num">2</span>
-                  <p>드립백을 양쪽으로 벌려 클립을 컵에 고정해주세요.</p>
-                </div>
-                <div class="faq-step">
-                  <span class="faq-step-num">3</span>
-                  <p>뜨거운 물 15ml를 부어 전체를 촉촉하게 적신 후 15초 뜸 들이기. 이후 35ml 물을 약 3~4차례 나누어 부어주세요. (물의 양은 취향에 맞게 조절 가능합니다.)</p>
-                </div>
+                <div class="faq-step"><span class="faq-step-num">1</span><p>봉투를 개봉하여 드립백을 꺼내주세요.</p></div>
+                <div class="faq-step"><span class="faq-step-num">2</span><p>드립백을 양쪽으로 벌려 클립을 컵에 고정해주세요.</p></div>
+                <div class="faq-step"><span class="faq-step-num">3</span><p>뜨거운 물 15ml를 부어 전체를 촉촉하게 적신 후 15초 뜸 들이기. 이후 35ml 물을 약 3~4차례 나누어 부어주세요.</p></div>
               </div>
               <p class="faq-tip">💡 <strong>온도 팁:</strong> 부드러운 맛은 <strong>85°C</strong>, 진한 맛은 <strong>92°C</strong> 온수를 사용하시면 더 맛있어요!</p>
             </div>
@@ -414,39 +265,39 @@
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>99% 실버스킨 제거가 맛에 어떤 차이를 주나요?</span>
+              <span data-i18n="faq-q2">99% 실버스킨 제거가 맛에 어떤 차이를 주나요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
               <p>실버스킨(차프)에는 클로로겐산, 트리고넬린, 카페인 등 쓴맛과 떫은맛에 기여하는 성분이 포함되어 있습니다. 연구에 따르면 실버스킨이 잔존할 경우 커피에 강한 쓴맛, 거친 뒷맛, 건조한 질감이 나타날 수 있다고 알려져 있습니다.</p>
-              <p>PNS 팔롬비니의 Inside-Out 공정으로 실버스킨을 99% 수준으로 제거하면, 이 쓴맛의 원인 물질이 크게 줄어들어 <strong>향이 더 또렷하게 올라오고</strong>, <strong>뒷맛이 매끄러워지며</strong>, <strong>원두 본연의 단맛과 바디감</strong>이 더 선명하게 느껴집니다.</p>
+              <p>PNS 팔롬비니의 Inside-Out 공정으로 실버스킨을 99% 수준으로 제거하면, <strong>향이 더 또렷하게 올라오고</strong>, <strong>뒷맛이 매끄러워지며</strong>, <strong>원두 본연의 단맛과 바디감</strong>이 더 선명하게 느껴집니다.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>Caffè Palombini는 어떤 브랜드인가요?</span>
+              <span data-i18n="faq-q3">Caffè Palombini는 어떤 브랜드인가요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
               <p>Caffè Palombini는 1940년대 이탈리아 로마에서 시작된 전통 로스터리입니다. 창립자 Giovanni Palombini의 철학에서 출발하여, 교황 바오로 6세가 즐겨 마신 커피로 언급되며 로마 프리미엄 에스프레소 문화의 상징적인 브랜드로 자리 잡았습니다.</p>
-              <p>업계 보도에 따르면 Palombini는 Ho.Re.Ca.(호텔·레스토랑·카페) 채널에서 강한 입지를 갖고 있으며, 한 지역에서만 <strong>1,500개 이상의 바(bar)에 공급</strong>한 이력이 있습니다. PNS 팔롬비니는 이 헤리티지 브랜드의 로스팅·블렌딩 감각을 바탕으로 제품을 만듭니다.</p>
+              <p>업계 보도에 따르면 Palombini는 Ho.Re.Ca.(호텔·레스토랑·카페) 채널에서 강한 입지를 갖고 있으며, 한 지역에서만 <strong>1,500개 이상의 바(bar)에 공급</strong>한 이력이 있습니다.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>유통기한은 얼마나 되나요?</span>
+              <span data-i18n="faq-q4">유통기한은 얼마나 되나요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
-              <p>제조일로부터 <strong>2년</strong>입니다. 질소 충전 알루미늄 패키징으로 산소 노출을 최소화하여 신선도와 향을 오랫동안 보호합니다. 정확한 소비기한은 제품 패키지 하단 스티커에서 확인해 주세요. 개봉 후에는 직사광선을 피해 서늘하고 건조한 곳에 보관하고 빠른 시일 내에 드시길 권장합니다.</p>
+              <p>제조일로부터 <strong>2년</strong>입니다. 질소 충전 알루미늄 패키징으로 산소 노출을 최소화하여 신선도와 향을 오랫동안 보호합니다. 정확한 소비기한은 제품 패키지 하단 스티커에서 확인해 주세요. 개봉 후에는 직사광선을 피해 서늘하고 건조한 곳에 보관해 주세요.</p>
             </div>
           </div>
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>대량 구매 또는 B2B 문의는 어떻게 하나요?</span>
+              <span data-i18n="faq-q5">대량 구매 또는 B2B 문의는 어떻게 하나요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
@@ -458,14 +309,15 @@
 
           <div class="faq-item">
             <button class="faq-question" aria-expanded="false">
-              <span>화산 토양이 커피 맛에 어떤 영향을 주나요?</span>
+              <span data-i18n="faq-q6">화산 토양이 커피 맛에 어떤 영향을 주나요?</span>
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-answer">
               <p>베트남 중부고원의 현무암(바잘트) 화산 토양은 철, 마그네슘, 칼륨 등 미네랄이 풍부하고 배수·통기성이 뛰어나, 커피 체리가 <strong>천천히 균일하게 성숙</strong>할 수 있는 이상적인 환경을 만들어줍니다.</p>
-              <p>이 토양에서 자란 로부스타는 <strong>묵직한 바디감, 초콜릿·견과류 풍미, 낮은 산미</strong>가 특징으로 알려져 있습니다. 화산 토양의 미네랄 성분이 원두 내 풍미 전구체(flavor precursor) 형성에 기여하여, 단순한 로부스타를 넘어 <strong>복합적이고 깊은 풍미</strong>를 만들어냅니다.</p>
+              <p>이 토양에서 자란 로부스타는 <strong>묵직한 바디감, 초콜릿·견과류 풍미, 낮은 산미</strong>가 특징으로 알려져 있습니다. 화산 토양의 미네랄 성분이 원두 내 풍미 전구체(flavor precursor) 형성에 기여하여 <strong>복합적이고 깊은 풍미</strong>를 만들어냅니다.</p>
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -473,15 +325,11 @@
     <!-- PURCHASE -->
     <section class="section alt" id="purchase">
       <div class="container">
-        <h2 class="section-title">Purchase</h2>
-        <p class="section-lead">
-          결제는 네이버 스마트스토어에서 진행됩니다. 안전하고 빠른 구매가 가능합니다.
-        </p>
+        <h2 class="section-title" data-i18n="purchase-title">Purchase</h2>
+        <p class="section-lead" data-i18n="purchase-lead">결제는 네이버 스마트스토어에서 진행됩니다. 안전하고 빠른 구매가 가능합니다.</p>
         <div class="cta-row">
-          <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">
-            네이버 스마트스토어로 이동 →
-          </a>
-          <a class="btn btn-ghost" href="#contact">대량구매 / OEM 문의</a>
+          <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="purchase-btn">네이버 스마트스토어로 이동 →</a>
+          <a class="btn btn-ghost" href="#contact" data-i18n="purchase-btn2">대량구매 / OEM 문의</a>
         </div>
       </div>
     </section>
@@ -489,20 +337,20 @@
     <!-- CONTACT -->
     <section class="section" id="contact">
       <div class="container">
-        <h2 class="section-title">Contact</h2>
+        <h2 class="section-title" data-i18n="contact-title">Contact</h2>
         <div class="grid-2">
           <div class="card">
-            <h3>문의</h3>
+            <h3 data-i18n="contact-inquiry">문의</h3>
             <p><strong>Email</strong>: <a href="mailto:p01034545837@gmail.com">p01034545837@gmail.com</a></p>
             <p><strong>Phone</strong>: <a href="tel:01034545837">010-3454-5837</a></p>
+            <p><strong>Instagram</strong>: <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">@palombini_eunhaeng</a></p>
             <p><strong>스마트스토어</strong>: <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">smartstore.naver.com/palombini</a></p>
             <div style="margin-top:16px;">
-              <a class="btn btn-primary btn-outline" href="mailto:p01034545837@gmail.com">이메일 보내기</a>
+              <a class="btn btn-outline" href="mailto:p01034545837@gmail.com" data-i18n="contact-email-btn">이메일 보내기</a>
             </div>
           </div>
-
           <div class="card">
-            <h3>References</h3>
+            <h3 data-i18n="contact-ref-title">References</h3>
             <div class="sources">
               <ul>
                 <li><a href="https://www.gamberorossointernational.com/food-producer/caffe-palombini/" target="_blank" rel="noopener">Palombini 역사 / 교황 바오로 6세 언급</a></li>
@@ -519,8 +367,14 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
+        <div class="footer-social">
+          <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" class="footer-insta" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            @palombini_eunhaeng
+          </a>
+        </div>
         <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
-        <p class="footer-sub">99% 실버스킨 제거(자체 공정 기준) · Caffè Palombini Heritage · Vietnamese Volcanic Terroir</p>
+        <p class="footer-sub" data-i18n="footer-sub">99% 실버스킨 제거(자체 공정 기준) · Caffè Palombini Heritage · Vietnamese Volcanic Terroir</p>
       </div>
     </footer>
   </main>
