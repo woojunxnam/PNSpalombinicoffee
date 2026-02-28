@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 
@@ -23,11 +24,16 @@
         <a href="#about">About</a>
         <a href="#tech">Technology</a>
         <a href="#heritage">Heritage</a>
-        <a href="#products">Products</a>
+        <div class="nav-item">
+          <a href="#products">Products</a>
+          <div class="nav-dropdown">
+            <a href="products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="machines.html"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+          </div>
+        </div>
         <a href="#b2b">B2B</a>
         <a href="#reviews">Reviews</a>
         <a href="#faq">FAQ</a>
-        <a href="#purchase">Purchase</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -147,14 +153,14 @@
         <h2 class="section-title" data-i18n="heritage-title">Our Heritage &amp; Sourcing</h2>
         <div class="grid-2">
           <div class="card heritage-card">
-            <div class="heritage-flag"><span class="flag-italy"></span> Italy</div>
+            <div class="heritage-flag"><span class="fi fi-it"></span> Italy</div>
             <h3>The Italian Connection — Caffè Palombini</h3>
             <p>우리가 협업하는 <strong>Caffè Palombini</strong>는 로마에서 <strong>1940년대에 시작</strong>된 로스터리로, 창립자 Giovanni Palombini의 비전에서 출발했습니다.</p>
             <p>Palombini는 <strong>교황 바오로 6세가 즐겨 마신 커피로 언급</strong>되어 왔고, 로마의 '프로페셔널' 에스프레소를 지향해온 브랜드 스토리를 갖고 있습니다.</p>
             <p>관련 업계 보도에 따르면 Palombini는 Ho.Re.Ca. 등 채널에서 강한 기반을 갖고, 한 지역에서만 <strong>1,500개 바(bar)에 공급</strong>한 이력도 언급됩니다.</p>
           </div>
           <div class="card heritage-card">
-            <div class="heritage-flag"><span class="flag-vietnam"></span> Vietnam</div>
+            <div class="heritage-flag"><span class="fi fi-vn"></span> Vietnam</div>
             <h3>The Vietnamese Origin — Volcanic Terroir</h3>
             <p>베트남 중부고원은 <strong>화산 분출로 형성된 비옥한 현무암 토양</strong>이 넓게 분포하며, 영양분이 풍부하고 다공성(배수·통기)이 좋아 커피 같은 다년생 작물 재배에 적합합니다.</p>
             <p>이 지역의 <strong>'레드 바잘트(붉은 현무암) 토양'과 고지대 환경</strong>이 체리의 느리고 균일한 성숙에 기여하고, 결과적으로 <strong>더 나은 컵 품질</strong>로 이어질 수 있습니다.</p>
@@ -167,10 +173,10 @@
       </div>
     </section>
 
-    <!-- PRODUCTS (B2C) -->
+    <!-- PRODUCTS (B2C) — 드립백 커피 -->
     <section class="section alt" id="products">
       <div class="container">
-        <h2 class="section-title" data-i18n="products-title">Products — For You (B2C)</h2>
+        <h2 class="section-title" data-i18n="products-title">Products — 프리미엄 드립백 커피</h2>
         <p class="section-lead" data-i18n="products-lead">당신의 하루가 어디에 있든, <strong>한 잔의 퀄리티는 타협하지 않도록</strong> 만들었습니다.</p>
         <div class="product-showcase">
           <div class="product-main-card">
@@ -183,8 +189,84 @@
               <div class="product-feature"><span class="feature-icon">🌋</span><div><strong>베트남 화산 토양 원두</strong><p>현무암 토양이 만든 풍부한 바디감과 향.</p></div></div>
               <div class="product-feature"><span class="feature-icon">☕</span><div><strong>어디서든 프리미엄</strong><p>뜨거운 물만 있으면 — 집, 사무실, 여행, 캠핑.</p></div></div>
             </div>
-            <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="product-buy-btn">스마트스토어에서 구매하기 →</a>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn btn-primary btn-large" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" data-i18n="product-buy-btn">스마트스토어에서 구매하기 →</a>
+              <a class="btn btn-ghost btn-large" href="products.html">전체 제품 보기 →</a>
+            </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS — 드립백 머신 -->
+    <section class="section" id="machines">
+      <div class="container">
+        <h2 class="section-title">드립백 머신 — Business Equipment</h2>
+        <p class="section-lead">소규모 스타트업부터 대량 생산까지, 최적의 드립백 패키징 머신을 제공합니다. <strong>자동화·정밀·효율</strong>—세 가지를 모두 갖춘 MDP 인텔리전트 머신 라인업.</p>
+
+        <div class="machines-grid">
+          <div class="machine-card">
+            <div class="machine-card-img" onclick="location.href='machines/md-181.html'">
+              <img src="assets/img/machine-md181.jpg" alt="Drip Coffee Bag Packaging Machine MD-181" loading="lazy">
+              <div class="machine-card-img-overlay"><span>상세 보기 →</span></div>
+            </div>
+            <div class="machine-card-body">
+              <p class="machine-card-tag">Entry Model</p>
+              <h3 class="machine-card-name">MD-181</h3>
+              <div class="machine-specs-mini">
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">속도</div><div class="machine-spec-mini-value">45 bags/min</div></div>
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">정확도</div><div class="machine-spec-mini-value">±0.2g</div></div>
+              </div>
+              <div class="machine-card-actions">
+                <a class="btn btn-ghost" href="machines/md-181.html">상세 보기</a>
+                <a class="btn btn-primary" href="#contact">문의하기</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="machine-card">
+            <div class="machine-card-img" onclick="location.href='machines/fg-60.html'">
+              <img src="assets/img/machine-fg60.jpg" alt="Drip Coffee Bag Packaging Machine FG-60" loading="lazy">
+              <div class="machine-card-img-overlay"><span>상세 보기 →</span></div>
+            </div>
+            <div class="machine-card-body">
+              <p class="machine-card-tag">Mid-Range Model</p>
+              <h3 class="machine-card-name">FG-60</h3>
+              <div class="machine-specs-mini">
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">속도</div><div class="machine-spec-mini-value">60 bags/min</div></div>
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">정확도</div><div class="machine-spec-mini-value">±0.15g</div></div>
+              </div>
+              <div class="machine-card-actions">
+                <a class="btn btn-ghost" href="machines/fg-60.html">상세 보기</a>
+                <a class="btn btn-primary" href="#contact">문의하기</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="machine-card">
+            <div class="machine-card-img" onclick="location.href='machines/fg-70.html'">
+              <img src="assets/img/machine-fg70.jpg" alt="Drip Coffee Bag Packaging Machine FG-70" loading="lazy">
+              <div class="machine-card-img-overlay"><span>상세 보기 →</span></div>
+            </div>
+            <div class="machine-card-body">
+              <p class="machine-card-tag">High-End Model</p>
+              <h3 class="machine-card-name">FG-70</h3>
+              <div class="machine-specs-mini">
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">속도</div><div class="machine-spec-mini-value">70 bags/min</div></div>
+                <div class="machine-spec-mini"><div class="machine-spec-mini-label">정확도</div><div class="machine-spec-mini-value">±0.1g</div></div>
+              </div>
+              <div class="machine-card-actions">
+                <a class="btn btn-ghost" href="machines/fg-70.html">상세 보기</a>
+                <a class="btn btn-primary" href="#contact">문의하기</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="b2b-cta">
+          <p>더 자세한 머신 정보나 견적 문의는 편하게 연락주세요.</p>
+          <a class="btn btn-ghost" href="machines.html">전체 머신 목록 보기 →</a>
+          <a class="btn btn-primary" href="#contact">머신 문의하기</a>
         </div>
       </div>
     </section>
