@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>FG-60 드립백 패키징 머신 — PNS 팔롬비니</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">◎</span><span class="brand-name">PNS 팔롬비니</span></a>
+      <nav class="nav">
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="../products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="../machines.html"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+          </div>
+        </div>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span>
+        <a href="../machines.html">드립백 머신</a><span class="breadcrumb-sep">›</span>
+        <span>FG-60</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="machine-detail-grid">
+          <div class="machine-catalog-img">
+            <img src="../assets/img/machine-fg60.jpg" alt="FG-60 드립백 패키징 머신 카탈로그"/>
+          </div>
+
+          <div class="machine-detail-info">
+            <div>
+              <p class="machine-card-tag" style="font-size:12px; letter-spacing:1px; color:var(--muted); font-weight:800; text-transform:uppercase; margin:0 0 8px;">Mid-Range Model · MDP Intelligent</p>
+              <h1 class="machine-detail-name">Drip Coffee Bag Packaging Machine FG-60</h1>
+              <p class="machine-detail-desc">완전 자동 추적·자동 포지셔닝 시스템 탑재. 원클릭 전원으로 파라미터 설정이나 작업 중 조정이 필요 없고, 1인이 다수 유닛을 운영 가능합니다. 각 라인에 질소 충전 장치가 내장되어 마시기 전 최상의 신선도와 향을 유지합니다. 완전 자동 로딩 시스템과 특수 표면 처리 슬라이드 도저로 그램 중량 정확도를 보장합니다.</p>
+            </div>
+
+            <div class="card" style="padding:0; overflow:hidden;">
+              <table class="specs-table">
+                <tbody>
+                  <tr><th>최대 속도</th><td>60 bags/min</td></tr>
+                  <tr><th>기계 무게</th><td>800kg</td></tr>
+                  <tr><th>이너백 사이즈</th><td>74mm × 90mm (커스터마이즈 가능)</td></tr>
+                  <tr><th>아우터백 사이즈</th><td>120mm × 100mm (커스터마이즈 가능)</td></tr>
+                  <tr><th>충진 범위</th><td>5~15g</td></tr>
+                  <tr><th>정확도</th><td>±0.15g (소재에 따라 상이)</td></tr>
+                  <tr><th>전력/전압</th><td>3.5kw / 220v</td></tr>
+                  <tr><th>에어 압력/소비</th><td>6~8bar / 0.6m³/min</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div>
+              <h3 style="font-family:var(--serif); font-size:17px; margin:0 0 12px;">주요 기능 (Features)</h3>
+              <ul class="features-list">
+                <li>분당 최대 60백 고속 생산</li>
+                <li>완전 자동 팔로우업 시스템</li>
+                <li>실링 강도 평균 대비 1.5배 이상 — 측정 인장력 ≥4N</li>
+                <li>6개 서보 모터로 안정적인 퍼포먼스</li>
+                <li>생산·안전 오류 자동 경보 및 셧다운</li>
+                <li>폐쇄형 작업 환경 — 안전하고 신뢰성 높음</li>
+                <li>업계 표준 대비 높은 질소 충전 잔류 산소율</li>
+                <li>스크류 로드 조정 방식 — 쉬운 조작</li>
+                <li>커스터마이즈 가능한 언어 운영 시스템</li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 style="font-family:var(--serif); font-size:17px; margin:0 0 12px;">옵션 사항 (Optional)</h3>
+              <div style="display:flex; flex-wrap:wrap; gap:6px;">
+                <span class="product-card-badge">질소 발생기</span>
+                <span class="product-card-badge">에어 컴프레서</span>
+                <span class="product-card-badge">TTO 프린터</span>
+                <span class="product-card-badge">자동 공급 시스템</span>
+                <span class="product-card-badge">전자 계량 스케일</span>
+                <span class="product-card-badge">스크류 필링 시스템</span>
+                <span class="product-card-badge">보조 커팅·노킹 장치</span>
+                <span class="product-card-badge">다양한 백 스타일</span>
+                <span class="product-card-badge">커스텀 전압</span>
+              </div>
+            </div>
+
+            <div class="machine-cta-box">
+              <p>가격, 납기, 설치 등 모든 문의를 도와드립니다.</p>
+              <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
+              <a class="btn btn-ghost" href="mailto:p01034545837@gmail.com">이메일 보내기</a>
+              <a class="btn btn-ghost" href="../machines.html">← 머신 목록으로</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+  </script>
+</body>
+</html>
