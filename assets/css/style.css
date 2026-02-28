@@ -457,19 +457,7 @@ a{ color:inherit; text-decoration:none; }
   border-top: 1px solid rgba(192,122,61,.15);
 }
 
-/* ── 이탈리아·베트남 국기 (CSS 유니코드) ── */
-.flag-italy,
-.flag-vietnam {
-  display: inline-block;
-  font-style: normal;
-  font-size: 1.6em;
-  line-height: 1;
-  vertical-align: middle;
-  margin-right: 4px;
-}
-.flag-italy::before  { content: "\01F1EE\01F1F9"; }
-.flag-vietnam::before{ content: "\01F1FB\01F1F3"; }
-
+/* ── 국기 (flag-icons 라이브러리) ── */
 .heritage-flag {
   font-size: 16px;
   font-weight: 800;
@@ -477,8 +465,63 @@ a{ color:inherit; text-decoration:none; }
   color: var(--text);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
 }
+.heritage-flag .fi {
+  font-size: 1.6em;
+  border-radius: 3px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.18);
+  flex-shrink: 0;
+}
+
+/* ── 드롭다운 네비게이션 ── */
+.nav-item { position: relative; }
+.nav-item > a { display: flex; align-items: center; gap: 4px; }
+.nav-item > a::after {
+  content: "▾";
+  font-size: 10px;
+  opacity: .6;
+  transition: transform .2s ease;
+}
+.nav-item:hover > a::after,
+.nav-item.open > a::after { transform: rotate(180deg); }
+
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  min-width: 200px;
+  background: rgba(255,255,255,.98);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0,0,0,.12);
+  padding: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 200;
+}
+.nav-item:hover .nav-dropdown,
+.nav-item.open .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background .12s ease;
+}
+.nav-dropdown a:hover { background: var(--bg); color: var(--accent); }
+.nav-dropdown-icon { font-size: 16px; }
 
 /* ── 헤더 오른쪽 액션 그룹 ── */
 .header-actions {
@@ -675,20 +718,368 @@ a{ color:inherit; text-decoration:none; }
   text-decoration: underline;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 860px){
-  .hero-inner{ grid-template-columns: 1fr; }
-  .nav{ display:none; }
-  .grid-2{ grid-template-columns: 1fr; }
-  .grid-3{ grid-template-columns: 1fr; }
-  .section{ padding: 58px 0; }
-  .tech-flow{ grid-template-columns: 1fr; }
-  .tech-arrow{ transform:rotate(90deg); justify-self:center; }
-  .stats-inner{ gap:0; }
-  .stat{ padding:12px 18px; }
-  .stat-divider{ width:48px; height:1px; }
-  .product-features{ grid-template-columns:1fr; }
+/* ══════════════════════════════════════════
+   MOBILE RESPONSIVE — iPhone X & Small screens
+   ══════════════════════════════════════════ */
+
+/* 태블릿 */
+@media (max-width: 1024px) {
+  .nav { display: none; }
+  .stats-inner { gap: 0; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .tech-flow { grid-template-columns: 1fr; }
+  .tech-arrow { transform: rotate(90deg); justify-self: center; }
+  .product-features { grid-template-columns: 1fr 1fr; }
+}
+
+/* 모바일 */
+@media (max-width: 860px) {
+  :root { --container: calc(100% - 32px); }
+
+  /* 헤더 */
+  .site-header { padding: 0; }
+  .header-inner {
+    flex-wrap: wrap;
+    padding: 10px 0;
+    gap: 8px;
+  }
+  .header-actions { gap: 6px; }
+  .lang-toggle { display: flex; }
+  .insta-link { width: 32px; height: 32px; }
+  .btn.btn-primary { font-size: 12px; padding: 8px 12px; }
+
+  /* 히어로 */
+  .hero { padding: 44px 0 36px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 24px; }
+  .hero-title { font-size: clamp(26px, 7vw, 38px); }
+  .hero-sub { font-size: 14px; }
+  .hero-media { order: -1; }
+  .hero-image { aspect-ratio: 16/9; }
+  .hero-media::after { display: none; }
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn { width: 100%; text-align: center; justify-content: center; }
+
+  /* Stats */
+  .stats-bar { padding: 20px 0; }
+  .stats-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+  .stat { padding: 14px 10px; }
+  .stat-num { font-size: 24px; }
+  .stat-label { font-size: 11px; }
+  .stat-divider { display: none; }
+
+  /* 섹션 */
+  .section { padding: 48px 0; }
+  .section-title { font-size: 24px; }
+  .section-lead { font-size: 14px; }
+
+  /* 그리드 */
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+
+  /* 기술 섹션 */
+  .tech-flow { grid-template-columns: 1fr; }
+  .tech-arrow { transform: rotate(90deg); justify-self: center; font-size: 24px; }
+  .tech-step { padding: 20px; }
+
+  /* 제품 */
+  .product-main-card { padding: 22px 18px; }
+  .product-features { grid-template-columns: 1fr; }
+  .btn-large { font-size: 14px; padding: 12px 20px; width: 100%; justify-content: center; }
+
+  /* B2B */
+  .b2b-cta { flex-direction: column; }
+
+  /* 리뷰 */
   .reviews-grid { grid-template-columns: 1fr; }
   .reviews-cta { flex-direction: column; align-items: flex-start; }
-  .b2b-cta{ flex-direction:column; }
+
+  /* 콜아웃 */
+  .callout { font-size: 14px; padding: 14px 16px; }
+
+  /* 푸터 */
+  .site-footer { padding: 24px 0; }
+  .footer-sub { font-size: 11px; }
+}
+
+/* 소형 모바일 (iPhone SE 등) */
+@media (max-width: 390px) {
+  .hero-title { font-size: 24px; }
+  .stats-inner { grid-template-columns: 1fr 1fr; }
+  .stat-num { font-size: 20px; }
+  .header-actions .btn { display: none; } /* 스토어 버튼 헤더에서 숨김 — 히어로에 있음 */
+}
+
+/* iPhone X 노치 대응 (Safe Area) */
+@supports (padding: env(safe-area-inset-top)) {
+  .site-header {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  .site-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ══════════════════════════════════════════
+   PRODUCTS PAGE — products.html
+   ══════════════════════════════════════════ */
+.page-hero {
+  padding: 56px 0 40px;
+  background:
+    radial-gradient(700px 280px at 20% 30%, rgba(192,122,61,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.2), transparent);
+  border-bottom: 1px solid var(--line);
+}
+.page-hero-inner { max-width: 640px; }
+.page-hero .eyebrow { margin-bottom: 10px; }
+.page-hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 600;
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.page-hero p {
+  color: var(--muted);
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.75;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 52px 0;
+}
+.product-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow2);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+.product-card-img {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+.product-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.product-card:hover .product-card-img img { transform: scale(1.04); }
+.product-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+.product-card-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.product-card-name {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+}
+.product-card-desc {
+  font-size: 14px;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.65;
+  flex: 1;
+}
+.product-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.product-card-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-light);
+  color: var(--accent2);
+  border: 1px solid rgba(192,122,61,.2);
+}
+.product-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+.product-card-actions .btn { flex: 1; font-size: 13px; padding: 10px 12px; }
+
+/* ══════════════════════════════════════════
+   MACHINES PAGE — machines.html
+   ══════════════════════════════════════════ */
+.machines-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  padding: 52px 0;
+}
+.machine-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+  box-shadow: var(--shadow2);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.machine-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
+}
+.machine-card-img {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #f5f0eb;
+  cursor: pointer;
+  position: relative;
+}
+.machine-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.machine-card:hover .machine-card-img img { transform: scale(1.04); }
+.machine-card-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(43,29,20,.0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease;
+}
+.machine-card:hover .machine-card-img-overlay { background: rgba(43,29,20,.35); }
+.machine-card-img-overlay span {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.machine-card:hover .machine-card-img-overlay span { opacity: 1; transform: translateY(0); }
+
+.machine-card-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+}
+.machine-card-tag {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.machine-card-name {
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 600;
+  margin: 0;
+}
+.machine-specs-mini {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.machine-spec-mini {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+.machine-spec-mini-label { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: .5px; text-transform: uppercase; }
+.machine-spec-mini-value { font-size: 15px; font-weight: 800; color: var(--accent); margin-top: 2px; }
+.machine-card-actions { display: flex; gap: 8px; }
+.machine-card-actions .btn { flex: 1; font-size: 13px; padding: 10px 12px; }
+
+/* ── 머신 상세 페이지 ── */
+.machine-detail-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 40px;
+  align-items: start;
+  padding: 52px 0;
+}
+.machine-catalog-img {
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+.machine-catalog-img img { width: 100%; display: block; }
+.machine-detail-info { display: flex; flex-direction: column; gap: 20px; }
+.machine-detail-name { font-family: var(--serif); font-size: 30px; font-weight: 600; margin: 0 0 8px; }
+.machine-detail-desc { color: var(--muted); font-size: 15px; line-height: 1.8; margin: 0; }
+.specs-table { width: 100%; border-collapse: collapse; }
+.specs-table th, .specs-table td { padding: 10px 12px; text-align: left; font-size: 14px; border-bottom: 1px solid var(--line); }
+.specs-table th { color: var(--muted); font-weight: 600; width: 40%; }
+.specs-table td { font-weight: 700; }
+.specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+.features-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.features-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--muted); line-height: 1.6; }
+.features-list li::before { content: "✓"; color: var(--accent); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+.machine-cta-box {
+  background: linear-gradient(135deg, rgba(192,122,61,.08), rgba(192,122,61,.03));
+  border: 1px solid rgba(192,122,61,.2);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.machine-cta-box p { margin: 0; font-size: 14px; color: var(--muted); }
+.machine-cta-box .btn { width: 100%; justify-content: center; }
+
+/* 빵부스러기 네비 */
+.breadcrumb {
+  padding: 14px 0;
+  font-size: 13px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.breadcrumb a { color: var(--muted); transition: color .15s; }
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb-sep { opacity: .4; }
+
+/* 반응형 — 제품/머신 페이지 */
+@media (max-width: 860px) {
+  .products-grid { grid-template-columns: 1fr; padding: 32px 0; }
+  .machines-grid { grid-template-columns: 1fr; padding: 32px 0; }
+  .machine-detail-grid { grid-template-columns: 1fr; }
+  .machine-detail-name { font-size: 24px; }
+}
+@media (min-width: 560px) and (max-width: 860px) {
+  .products-grid { grid-template-columns: 1fr 1fr; }
+  .machines-grid { grid-template-columns: 1fr 1fr; }
 }
