@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>프리미엄 드립백 커피 — PNS 팔롬비니</title>
+  <meta name="description" content="이탈리아 헤리티지와 99% 실버스킨 제거 공정이 만든 PNS 팔롬비니 프리미엄 드립백 커피 전 제품."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark">◎</span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="index.html#about">About</a>
+        <a href="index.html#tech">Technology</a>
+        <a href="index.html#heritage">Heritage</a>
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="machines.html"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+          </div>
+        </div>
+        <a href="index.html#reviews">Reviews</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">네이버 스마트스토어 구매</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="index.html">홈</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>프리미엄 드립백 커피</span>
+      </div>
+    </div>
+
+    <!-- 페이지 히어로 -->
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-inner">
+          <p class="eyebrow">Premium Drip Bag Coffee</p>
+          <h1>이탈리아 헤리티지,<br/>베트남 화산 토양 테루아</h1>
+          <p>Caffè Palombini의 1940년대 로스팅 철학과 99% 실버스킨 제거 Inside-Out 공정이 만든 더 깨끗하고 선명한 한 잔.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 제품 목록 -->
+    <section class="section">
+      <div class="container">
+        <div class="products-grid">
+
+          <!-- 제품 1: 10개입 스탠다드 -->
+          <div class="product-card">
+            <div class="product-card-img">
+              <img src="assets/img/product-drip-10.png" alt="팔롬비니 드립백 10개입" loading="lazy"/>
+            </div>
+            <div class="product-card-body">
+              <p class="product-card-tag">Best Seller</p>
+              <h3 class="product-card-name">팔롬비니 드립백 10개입</h3>
+              <p class="product-card-desc">이탈리아 로스팅 원두 100%. 팔롬비니 로마·그란바 블렌드를 드립백으로. 집, 사무실, 어디서든 편하게 즐기는 프리미엄 한 잔.</p>
+              <div class="product-card-badges">
+                <span class="product-card-badge">99% 실버스킨 제거</span>
+                <span class="product-card-badge">질소 충전</span>
+                <span class="product-card-badge">10개입</span>
+              </div>
+              <div class="product-card-actions">
+                <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 제품 2: 10개입 선물용 -->
+          <div class="product-card">
+            <div class="product-card-img">
+              <img src="assets/img/product-drip-10-gift.jpg" alt="팔롬비니 드립백 10개입 선물용" loading="lazy"/>
+            </div>
+            <div class="product-card-body">
+              <p class="product-card-tag">Gift Set</p>
+              <h3 class="product-card-name">팔롬비니 드립백 10개입 선물용</h3>
+              <p class="product-card-desc">로마(ROMA)와 그란바(GRAN BAR) 블렌드로 구성된 선물 세트. 소중한 분께 드리는 이탈리아 헤리티지 커피 선물.</p>
+              <div class="product-card-badges">
+                <span class="product-card-badge">선물 패키징</span>
+                <span class="product-card-badge">Roma + Gran Bar</span>
+                <span class="product-card-badge">10개입</span>
+              </div>
+              <div class="product-card-actions">
+                <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- 제품 3: 30개입 선물용 -->
+          <div class="product-card">
+            <div class="product-card-img">
+              <img src="assets/img/product-drip-30-gift.jpg" alt="팔롬비니 드립백 30개입 선물용" loading="lazy"/>
+            </div>
+            <div class="product-card-body">
+              <p class="product-card-tag">Premium Gift</p>
+              <h3 class="product-card-name">팔롬비니 드립백 30개입 선물용</h3>
+              <p class="product-card-desc">로마·그란바·돌체이탈리아 3종 블렌드 30개 구성. 명절, 기업 선물, 특별한 날을 위한 프리미엄 커피 선물 세트.</p>
+              <div class="product-card-badges">
+                <span class="product-card-badge">프리미엄 선물박스</span>
+                <span class="product-card-badge">3종 블렌드</span>
+                <span class="product-card-badge">30개입</span>
+              </div>
+              <div class="product-card-actions">
+                <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 하단 CTA -->
+        <div class="callout" style="text-align:center; margin-top: 0;">
+          <p style="margin:0 0 14px; font-size:16px;">대량 구매 또는 기업 선물 주문은 별도 문의해 주세요.</p>
+          <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">스마트스토어 바로가기 →</a>
+            <a class="btn btn-ghost" href="index.html#contact">대량 구매 문의</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 브랜드 미니 섹션 -->
+    <section class="section alt">
+      <div class="container" style="text-align:center; max-width:680px; margin: 0 auto;">
+        <h2 class="section-title">왜 PNS 팔롬비니인가요?</h2>
+        <div class="grid-3" style="margin-top:24px; text-align:left;">
+          <div class="result-card is-visible">
+            <div class="result-icon">✦</div>
+            <h4>99% 실버스킨 제거</h4>
+            <p>Inside-Out 공정으로 더 깨끗하고 선명한 맛.</p>
+          </div>
+          <div class="result-card is-visible">
+            <div class="result-icon">🇮🇹</div>
+            <h4>이탈리아 헤리티지</h4>
+            <p>1940년대 로마, Caffè Palombini의 블렌딩 철학.</p>
+          </div>
+          <div class="result-card is-visible">
+            <div class="result-icon">🌋</div>
+            <h4>화산 토양 테루아</h4>
+            <p>베트남 중부고원 현무암 토양이 만든 풍부한 바디감.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-social">
+        <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" class="footer-insta" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @palombini_eunhaeng
+        </a>
+      </div>
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+      <p class="footer-sub">99% 실버스킨 제거(자체 공정 기준) · Caffè Palombini Heritage · Vietnamese Volcanic Terroir</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    // 헤더 스크롤
+    const header = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
+  </script>
+</body>
+</html>
