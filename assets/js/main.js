@@ -231,3 +231,71 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   applyLang('ko');
 });
+
+/* ── 11. 히어로 슬라이드쇼 ── */
+(function () {
+  const slides = [...document.querySelectorAll('.hero-slide')].filter(img => {
+    // onerror로 숨겨진 이미지 제외
+    return img.style.display !== 'none';
+  });
+
+  // 실제 로드된 이미지만 사용하도록 로드 후 필터링
+  const dotsContainer = document.getElementById('heroDots');
+  if (!dotsContainer || slides.length === 0) return;
+
+  let visibleSlides = [];
+  let current = 0;
+  let timer;
+
+  function buildSlideshow(activeSlides) {
+    visibleSlides = activeSlides;
+    if (visibleSlides.length <= 1) return; // 1장이면 슬라이드쇼 불필요
+
+    // 도트 생성
+    dotsContainer.innerHTML = '';
+    visibleSlides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'hero-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', `슬라이드 ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsContainer.appendChild(dot);
+    });
+
+    startTimer();
+  }
+
+  function goTo(idx) {
+    visibleSlides[current].classList.remove('active');
+    dotsContainer.children[current]?.classList.remove('active');
+    current = (idx + visibleSlides.length) % visibleSlides.length;
+    visibleSlides[current].classList.add('active');
+    dotsContainer.children[current]?.classList.add('active');
+  }
+
+  function startTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => goTo(current + 1), 4500);
+  }
+
+  // 이미지 로드 결과 수집 후 슬라이드쇼 구성
+  let loaded = 0;
+  const validSlides = [];
+
+  slides.forEach(img => {
+    if (img.complete) {
+      if (img.naturalWidth > 0) validSlides.push(img);
+      loaded++;
+      if (loaded === slides.length) buildSlideshow(validSlides);
+    } else {
+      img.addEventListener('load', () => {
+        validSlides.push(img);
+        loaded++;
+        if (loaded === slides.length) buildSlideshow(validSlides);
+      });
+      img.addEventListener('error', () => {
+        loaded++;
+        if (loaded === slides.length) buildSlideshow(validSlides);
+      });
+    }
+  });
+})();
