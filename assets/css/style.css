@@ -48,10 +48,23 @@ a{ color:inherit; text-decoration:none; }
 }
 .brand{ display:flex; align-items:center; gap:10px; font-weight:800; }
 .brand-mark{
-  width:30px; height:30px; border-radius:999px;
+  width:36px; height:36px; border-radius:8px;
   display:grid; place-items:center;
-  background:#fff; border:1px solid var(--line);
-  box-shadow: 0 6px 14px rgba(0,0,0,.06);
+  background: transparent;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── 줄바꿈 방지 — 단어 중간에 끊기지 않도록 ── */
+body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
+.machine-card-body p, .products-preview-desc, .section-lead {
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .nav{ display:flex; gap:4px; color:var(--muted); font-weight:600; font-size:14px; }
@@ -1333,4 +1346,103 @@ a{ color:inherit; text-decoration:none; }
 @media (max-width: 860px) {
   .product-detail-grid { grid-template-columns: 1fr; }
   .product-highlights { grid-template-columns: 1fr 1fr; }
+}
+
+/* ── 블렌드 섹션 (products page) ── */
+.blends-section { margin-top: 64px; }
+.blends-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin-top: 32px;
+}
+.blend-card {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow2);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.blend-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.blend-poster {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+}
+.blend-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+.blend-name { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 0; }
+.blend-tagline { font-size: 13px; color: var(--muted); margin: 0; line-height: 1.6; word-break: keep-all; }
+
+/* flavor bars */
+.flavor-bars { display: flex; flex-direction: column; gap: 8px; }
+.flavor-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+.flavor-label { width: 44px; color: var(--muted); flex-shrink: 0; font-weight: 600; }
+.flavor-track {
+  flex: 1; height: 8px;
+  background: var(--bg);
+  border-radius: 99px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.flavor-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width .6s ease;
+}
+.flavor-val { width: 24px; text-align: right; font-size: 11px; color: var(--muted); font-weight: 700; }
+.flavor-fill.bitter  { background: linear-gradient(90deg, #4a2c1a, #7a4a2a); }
+.flavor-fill.sweet   { background: linear-gradient(90deg, #c07a3d, #e8a86a); }
+.flavor-fill.acid    { background: linear-gradient(90deg, #7a9e3a, #a8c85a); }
+.flavor-fill.body    { background: linear-gradient(90deg, #3a5a8a, #5a7aaa); }
+.flavor-fill.roast   { background: linear-gradient(90deg, #2a1a0a, #5a3a1a); }
+
+.blend-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.blend-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: .5px;
+  padding: 4px 10px; border-radius: 99px;
+  background: var(--accent-light);
+  color: var(--accent2);
+  border: 1px solid rgba(192,122,61,.2);
+  word-break: keep-all;
+}
+
+@media (max-width: 900px) {
+  .blends-grid { grid-template-columns: 1fr; gap: 20px; }
+  .blend-poster { aspect-ratio: 16/9; object-position: center top; }
+}
+
+/* ── 머신 페이지 히어로 비디오 ── */
+.machine-hero-video {
+  position: relative;
+  width: 100%;
+  max-height: 520px;
+  overflow: hidden;
+  border-radius: 0 0 24px 24px;
+  background: #111;
+}
+.machine-hero-video video {
+  width: 100%;
+  max-height: 520px;
+  object-fit: cover;
+  display: block;
+}
+.machine-hero-video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.55));
+  display: flex;
+  align-items: flex-end;
+  padding: 32px;
+}
+.machine-hero-video-overlay h2 {
+  color: #fff;
+  font-family: var(--serif);
+  font-size: clamp(22px, 4vw, 36px);
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,.4);
 }
