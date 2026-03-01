@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>MD-F11 — PNS 팔롬비니</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark">◎</span><span class="brand-name">PNS 팔롬비니</span></a>
+      <nav class="nav">
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="../products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="../machines/"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="../film.html"><span class="nav-dropdown-icon">🎞️</span> 커피 필름지</a>
+          </div>
+        </div>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
+      </div>
+    </div>
+  </header>
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span>
+        <a href="../machines/">드립백 머신</a><span class="breadcrumb-sep">›</span>
+        <span>MD-F11</span>
+      </div>
+    </div>
+    <section class="section">
+      <div class="container">
+        <div class="machine-detail-grid">
+          <div class="machine-catalog-img">
+            <img src="../assets/img/machine-md-f11.jpg" alt="Drip Coffee Inner Bag Packaging Machine MD-F11" style="width:100%;display:block;"/>
+          </div>
+          <div class="machine-detail-info">
+            <div>
+              <p class="machine-card-tag" style="font-size:12px;letter-spacing:1px;color:var(--muted);font-weight:800;text-transform:uppercase;margin:0 0 8px;">Drip Bag Machine · MDP Intelligent</p>
+              <h1 class="machine-detail-name">Drip Coffee Inner Bag Packaging Machine MD-F11</h1>
+            </div>
+            <div class="card" style="padding:0;overflow:hidden;">
+              <table class="specs-table">
+                <tbody>
+                  <tr><th>최대 속도</th><td>30~50 bags/min</td></tr>
+                  <tr><th>정확도</th><td>±0.2g</td></tr>
+                  <tr><th>기계 무게</th><td>180kg</td></tr>
+                  <tr><th>합격률</th><td>99.5%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="machine-cta-box">
+              <p>카탈로그 이미지에서 상세 사양을 확인하세요. 추가 문의는 언제든지 편하게 연락주세요.</p>
+              <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
+              <a class="btn btn-ghost" href="mailto:p01034545837@gmail.com">이메일 보내기</a>
+              <a class="btn btn-ghost" href="../machines/">← 머신 목록으로</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+  </script>
+</body>
+</html>
