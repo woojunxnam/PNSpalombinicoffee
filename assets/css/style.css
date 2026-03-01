@@ -48,7 +48,7 @@ a{ color:inherit; text-decoration:none; }
 }
 .brand{ display:flex; align-items:center; gap:10px; font-weight:800; }
 .brand-mark{
-  width:36px; height:36px; border-radius:8px;
+  width:48px; height:48px; border-radius:10px;
   display:grid; place-items:center;
   background: transparent;
   overflow: hidden;
@@ -1369,9 +1369,10 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .blend-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .blend-poster {
   width: 100%;
-  aspect-ratio: 3/4;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
   display: block;
+  background: var(--bg);
 }
 .blend-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
 .blend-name { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 0; }
@@ -1412,37 +1413,67 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 
 @media (max-width: 900px) {
   .blends-grid { grid-template-columns: 1fr; gap: 20px; }
-  .blend-poster { aspect-ratio: 16/9; object-position: center top; }
+  .blend-poster { width: 100%; height: auto; }
 }
 
-/* ── 머신 페이지 히어로 비디오 ── */
+/* ── 머신 페이지 세로형 비디오 히어로 ── */
 .machine-hero-video {
-  position: relative;
   width: 100%;
-  max-height: 520px;
-  overflow: hidden;
-  border-radius: 0 0 24px 24px;
-  background: #111;
+  background: #0a0a0a;
+  padding: 52px 0;
+  border-radius: 0 0 28px 28px;
+}
+.machine-hero-video-inner {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 52px;
+  align-items: center;
 }
 .machine-hero-video video {
   width: 100%;
-  max-height: 520px;
-  object-fit: cover;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
   display: block;
 }
 .machine-hero-video-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,.55));
   display: flex;
-  align-items: flex-end;
-  padding: 32px;
+  flex-direction: column;
+  gap: 22px;
 }
 .machine-hero-video-overlay h2 {
   color: #fff;
   font-family: var(--serif);
-  font-size: clamp(22px, 4vw, 36px);
+  font-size: clamp(24px, 3.5vw, 40px);
   font-weight: 600;
   margin: 0;
-  text-shadow: 0 2px 12px rgba(0,0,0,.4);
+  line-height: 1.3;
+}
+.machine-hero-video-overlay p {
+  color: rgba(255,255,255,.6);
+  font-size: 15px;
+  margin: 0;
+  line-height: 1.8;
+  word-break: keep-all;
+}
+.machine-hero-stats {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.machine-hero-stat {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 12px 18px;
+  text-align: center;
+}
+.machine-hero-stat strong { display: block; color: #e8a86a; font-size: 22px; font-weight: 800; line-height: 1; margin-bottom: 4px; }
+.machine-hero-stat span { font-size: 11px; color: rgba(255,255,255,.45); letter-spacing: .5px; }
+@media (max-width: 780px) {
+  .machine-hero-video-inner { grid-template-columns: 1fr; gap: 28px; }
+  .machine-hero-video video { max-width: 280px; margin: 0 auto; }
 }
