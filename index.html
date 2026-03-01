@@ -29,6 +29,7 @@
           <div class="nav-dropdown">
             <a href="products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
             <a href="machines/"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="film.html"><span class="nav-dropdown-icon">🎞️</span> 커피 필름지 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
           </div>
         </div>
         <a href="#b2b">B2B</a>
@@ -77,7 +78,15 @@
           </div>
         </div>
         <div class="hero-media" aria-label="브랜드 이미지">
-          <div class="hero-image" role="img" aria-label="PNS 팔롬비니 드립백 커피"></div>
+          <div class="hero-image" role="img" aria-label="PNS 팔롬비니 드립백 커피">
+            <!-- 슬라이드쇼: 이미지 파일명 형식 hero-1.jpg, hero-2.jpg, ... -->
+            <img src="assets/img/hero-1.jpg" alt="PNS 팔롬비니" class="hero-slide active" onerror="this.style.display='none'"/>
+            <img src="assets/img/hero-2.jpg" alt="PNS 팔롬비니" class="hero-slide" onerror="this.style.display='none'"/>
+            <img src="assets/img/hero-3.jpg" alt="PNS 팔롬비니" class="hero-slide" onerror="this.style.display='none'"/>
+            <img src="assets/img/hero-4.jpg" alt="PNS 팔롬비니" class="hero-slide" onerror="this.style.display='none'"/>
+            <img src="assets/img/hero-5.jpg" alt="PNS 팔롬비니" class="hero-slide" onerror="this.style.display='none'"/>
+            <div class="hero-dots" id="heroDots"></div>
+          </div>
         </div>
       </div>
     </section>
