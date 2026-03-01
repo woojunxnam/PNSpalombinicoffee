@@ -881,7 +881,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
    PRODUCTS PAGE — products.html
    ══════════════════════════════════════════ */
 .page-hero {
-  padding: 48px 0 28px;
+  padding: 40px 0 20px;
   background:
     radial-gradient(700px 280px at 20% 30%, rgba(192,122,61,.18), transparent 60%),
     linear-gradient(180deg, rgba(255,255,255,.2), transparent);
@@ -1350,7 +1350,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 }
 
 /* ── 블렌드 섹션 (products page) ── */
-.blends-section { margin-top: 0; padding-top: 36px !important; padding-bottom: 0 !important; }
+.blends-section { margin-top: 0; padding-top: 20px !important; padding-bottom: 0 !important; }
 .blends-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1420,9 +1420,11 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 /* ── 머신 페이지 세로형 비디오 히어로 ── */
 .machine-hero-video {
   width: 100%;
-  background: linear-gradient(135deg, #1a100a 0%, #2a1810 50%, #1a0e08 100%);
-  padding: 52px 0;
-  border-radius: 0 0 28px 28px;
+  background: var(--accent2);
+  background-image: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(192,122,61,.12), transparent 70%);
+  padding: 44px 0;
+  border-radius: 0 0 24px 24px;
+  border-bottom: 1px solid rgba(192,122,61,.2);
 }
 .machine-hero-video-inner {
   max-width: 1160px;
@@ -1466,8 +1468,8 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   flex-wrap: wrap;
 }
 .machine-hero-stat {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(192,122,61,.25);
   border-radius: 12px;
   padding: 12px 18px;
   text-align: center;
