@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Dolce Italia — 팔롬비니 원두 블렌드 · PNS 팔롬비니</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .blend-detail-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .blend-poster-wrap {
+      position: sticky;
+      top: 96px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .blend-poster-wrap img { width: 100%; display: block; }
+    .blend-detail-info { display: flex; flex-direction: column; gap: 28px; }
+    .blend-detail-name {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .blend-detail-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.85;
+      margin: 0;
+      word-break: keep-all;
+    }
+    .flavor-section h3,
+    .tasting-section h3,
+    .pairing-section h3 {
+      font-family: var(--serif);
+      font-size: 17px;
+      margin: 0 0 14px;
+      font-weight: 600;
+    }
+    .tasting-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .tasting-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .tasting-box .tasting-icon { font-size: 22px; margin-bottom: 6px; }
+    .tasting-box .tasting-label { font-size: 11px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .tasting-box .tasting-value { font-size: 14px; font-weight: 700; color: var(--text); word-break: keep-all; }
+    .pairing-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pairing-chip {
+      font-size: 13px; padding: 6px 14px;
+      border-radius: 99px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--text);
+      word-break: keep-all;
+    }
+    @media (max-width: 860px) {
+      .blend-detail-grid { grid-template-columns: 1fr; }
+      .blend-poster-wrap { position: static; max-width: 400px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"><img src="../assets/img/pns-logo.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
+      <nav class="nav">
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="../products/"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="../machines/"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="../film.html"><span class="nav-dropdown-icon">🎞️</span> 커피 필름지 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+          </div>
+        </div>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span>
+        <a href="../products/">프리미엄 드립백 커피</a><span class="breadcrumb-sep">›</span>
+        <span>Dolce Italia 블렌드</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="blend-detail-grid">
+
+          <!-- 포스터 -->
+          <div class="blend-poster-wrap">
+            <img src="../assets/img/blend-dolce-italia.png" alt="Palombini Qualità Dolce Italia 블렌드 포스터"/>
+          </div>
+
+          <!-- 상세 정보 -->
+          <div class="blend-detail-info">
+            <div>
+              <p style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin:0 0 8px;">Caffè Palombini · dal 1946 · DOLCE ITALIA</p>
+              <h1 class="blend-detail-name">Dolce Italia</h1>
+              <p class="blend-detail-desc">매일의 우아함을 담은 올데이 블렌드. 아라비카 90%의 부드럽고 달콤한 구성으로, 바닐라와 건과일 향이 편안하게 어우러집니다. 균형 잡힌 미디엄 바디와 카카오 여운으로 아침부터 저녁까지 언제든 즐길 수 있는 이탈리아 정통 블렌드입니다.</p>
+            </div>
+
+            <!-- 맛 프로파일 바 -->
+            <div class="flavor-section">
+              <h3>맛 프로파일</h3>
+              <div class="flavor-bars">
+                <div class="flavor-row"><span class="flavor-label">쓴맛</span><div class="flavor-track"><div class="flavor-fill bitter" style="width:52%"></div></div><span class="flavor-val">52</span></div>
+                <div class="flavor-row"><span class="flavor-label">단맛</span><div class="flavor-track"><div class="flavor-fill sweet" style="width:78%"></div></div><span class="flavor-val">78</span></div>
+                <div class="flavor-row"><span class="flavor-label">산미</span><div class="flavor-track"><div class="flavor-fill acid" style="width:35%"></div></div><span class="flavor-val">35</span></div>
+                <div class="flavor-row"><span class="flavor-label">바디</span><div class="flavor-track"><div class="flavor-fill body" style="width:65%"></div></div><span class="flavor-val">65</span></div>
+                <div class="flavor-row"><span class="flavor-label">로스팅</span><div class="flavor-track"><div class="flavor-fill roast" style="width:55%"></div></div><span class="flavor-val">55</span></div>
+              </div>
+            </div>
+
+            <!-- 테이스팅 노트 -->
+            <div class="tasting-section">
+              <h3>테이스팅 노트</h3>
+              <div class="tasting-grid">
+                <div class="tasting-box">
+                  <div class="tasting-icon">☕</div>
+                  <div class="tasting-label">아로마</div>
+                  <div class="tasting-value">바닐라, 건과일, 아몬드</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">👅</div>
+                  <div class="tasting-label">맛</div>
+                  <div class="tasting-value">카카오, 달콤한 견과류</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">💪</div>
+                  <div class="tasting-label">바디</div>
+                  <div class="tasting-value">미디엄 바디 · 낮은 산미</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">✨</div>
+                  <div class="tasting-label">여운</div>
+                  <div class="tasting-value">달콤한 카카오 여운</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 스펙 -->
+            <div class="card" style="padding:0;overflow:hidden;">
+              <table class="specs-table">
+                <tbody>
+                  <tr><th>로스팅 스타일</th><td>미디엄 로스트</td></tr>
+                  <tr><th>원산지</th><td>이탈리아 (Caffè Palombini, 로마)</td></tr>
+                  <tr><th>블렌드 구성</th><td>아라비카 90% + 로부스타 10%</td></tr>
+                  <tr><th>로스팅 헤리티지</th><td>Caffè di Roma dal 1946</td></tr>
+                  <tr><th>브루잉 추천</th><td>에스프레소, 모카포트, 드립백</td></tr>
+                  <tr><th>강도</th><td>EQUILIBRATO · MORBIDO · PERSISTENTE</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- 페어링 -->
+            <div class="pairing-section">
+              <h3>추천 페어링</h3>
+              <div class="pairing-chips">
+                <span class="pairing-chip">🍰 바닐라 케이크</span>
+                <span class="pairing-chip">🍪 아몬드 쿠키</span>
+                <span class="pairing-chip">🧁 마카롱</span>
+                <span class="pairing-chip">🥛 카페라떼</span>
+                <span class="pairing-chip">🍫 밀크 초콜릿</span>
+              </div>
+            </div>
+
+            <div class="product-detail-cta">
+              <p>돌체 이탈리아 블렌드가 담긴 팔롬비니 드립백을 스마트스토어에서 구매하실 수 있습니다.</p>
+              <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">스마트스토어에서 구매하기 →</a>
+              <a class="btn btn-ghost" href="../products/">← 제품 목록으로</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+  </script>
+</body>
+</html>
