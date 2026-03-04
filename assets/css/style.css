@@ -1007,6 +1007,8 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transform: translateY(-5px);
   box-shadow: var(--shadow);
 }
+/* machine-card-img is now an <a> tag for SEO */
+a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .machine-card-img {
   aspect-ratio: 4/3;
   overflow: hidden;
@@ -1100,6 +1102,8 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .specs-table th { color: var(--muted); font-weight: 600; width: 40%; }
 .specs-table td { font-weight: 700; }
 .specs-table tr:last-child th, .specs-table tr:last-child td { border-bottom: none; }
+.specs-table tbody tr { transition: background .15s ease; }
+.specs-table tbody tr:hover { background: rgba(192,122,61,.06); }
 .features-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .features-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--muted); line-height: 1.6; }
 .features-list li::before { content: "✓"; color: var(--accent); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
@@ -1393,7 +1397,11 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .flavor-fill {
   height: 100%;
   border-radius: 99px;
-  transition: width .6s ease;
+  width: 0 !important;           /* JS로 실제 너비 주입 전까지 0 유지 */
+  transition: width 1.4s cubic-bezier(.25,.8,.25,1);
+}
+.flavor-fill.animated {
+  /* JS가 인라인 style 주입 후 이 클래스 추가 → transition 발동 */
 }
 .flavor-val { width: 24px; text-align: right; font-size: 11px; color: var(--muted); font-weight: 700; }
 .flavor-fill.bitter  { background: linear-gradient(90deg, #4a2c1a, #7a4a2a); }
