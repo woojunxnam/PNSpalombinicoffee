@@ -299,3 +299,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 })();
+
+/* ── 12. Flavor Bar 스크롤 애니메이션 (Intersection Observer) ── */
+(function () {
+  // 각 .flavor-fill 요소의 data-width 속성에 목표 너비를 저장해 두고
+  // 뷰포트에 들어오는 순간 transition으로 채움
+  function initFlavorBars() {
+    document.querySelectorAll('.flavor-fill').forEach(bar => {
+      // inline style="width:XX%" 에서 목표값 추출 후 data 속성으로 저장
+      const inlineW = bar.style.width;
+      if (inlineW && !bar.dataset.targetWidth) {
+        bar.dataset.targetWidth = inlineW;
+        bar.style.width = '0';   // 초기 상태 0으로 리셋
+      }
+    });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const bar = entry.target;
+        // 살짝 딜레이 후 너비 주입 → CSS transition 발동
+        setTimeout(() => {
+          bar.style.width = bar.dataset.targetWidth || '0';
+        }, 120);
+        obs.unobserve(bar);
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -20px 0px' });
+
+    document.querySelectorAll('.flavor-fill[data-target-width], .flavor-fill').forEach(bar => {
+      if (bar.dataset.targetWidth) obs.observe(bar);
+    });
+  }
+
+  // DOM 준비 후 실행
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFlavorBars);
+  } else {
+    initFlavorBars();
+  }
+})();
