@@ -1452,7 +1452,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 }
 .machine-hero-video video::-webkit-media-controls { display: none !important; }
 .machine-hero-video video::-webkit-media-controls-enclosure { display: none !important; }
-.machine-hero-video video::--webkit-media-controls-panel { display: none !important; }
+.machine-hero-video video::-webkit-media-controls-panel { display: none !important; }
 .machine-hero-video-overlay {
   display: flex;
   flex-direction: column;
