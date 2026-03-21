@@ -11,20 +11,27 @@
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
-  <header class="site-header" id="top">
+      <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="brand" href="../index.html"><span class="brand-mark">◎</span><span class="brand-name">PNS 팔롬비니</span></a>
+      <a class="brand" href="../index.html"><span class="brand-mark"><img src="../assets/img/pns-logo.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
       <nav class="nav">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#tech">Technology</a>
         <div class="nav-item">
           <a href="#">Products</a>
           <div class="nav-dropdown">
-            <a href="../products.html"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
-            <a href="../machines.html"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="../products/"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="../machines/"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="../film.html"><span class="nav-dropdown-icon">🎞️</span> 커피 필름지 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
           </div>
         </div>
+        <a href="../index.html#reviews">Reviews</a>
         <a href="../index.html#contact">Contact</a>
       </nav>
       <div class="header-actions">
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
         <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
       </div>
     </div>
@@ -34,7 +41,7 @@
     <div class="container">
       <div class="breadcrumb">
         <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span>
-        <a href="../machines.html">드립백 머신</a><span class="breadcrumb-sep">›</span>
+        <a href="../machines/">드립백 머신</a><span class="breadcrumb-sep">›</span>
         <span>MD-181</span>
       </div>
     </div>
@@ -99,8 +106,8 @@
             <div class="machine-cta-box">
               <p>가격, 납기, 설치 등 모든 문의를 도와드립니다.</p>
               <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
-              <a class="btn btn-ghost" href="mailto:p01034545837@gmail.com">이메일 보내기</a>
-              <a class="btn btn-ghost" href="../machines.html">← 머신 목록으로</a>
+              <a class="btn btn-ghost" href="/cdn-cgi/l/email-protection#8efebebfbebdbabbbabbb6bdb9cee9e3efe7e2a0ede1e3">이메일 보내기</a>
+              <a class="btn btn-ghost" href="../machines/">← 머신 목록으로</a>
             </div>
           </div>
         </div>
@@ -113,10 +120,6 @@
       <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    const h = document.querySelector('.site-header');
-    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
-  </script>
-</body>
-</html>
+    const h = document.querySelector('.site
