@@ -103,7 +103,13 @@ document.querySelectorAll('.btn').forEach(btn => {
 /* ── 8. 부드러운 스크롤 ── */
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
+    const href = this.getAttribute('href');
+    if (href === '#top') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
       const headerH = document.querySelector('.site-header').offsetHeight;
