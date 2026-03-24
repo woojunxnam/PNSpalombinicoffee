@@ -341,3 +341,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setupFlavorBars();
   }
 })();
+
+/* ── Scroll-to-top Button ── */
+(function () {
+  const btn = document.getElementById('scrollTopBtn');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 300);
+  }, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
