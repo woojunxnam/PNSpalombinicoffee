@@ -1492,7 +1492,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .machine-hero-video video { max-width: 280px; margin: 0 auto; }
 }
 
-/* ── Scroll-to-top Button ─────────────────────────── */
+/* Scroll-to-top Button */
 .scroll-top {
   position: fixed;
   bottom: 32px;
