@@ -1491,3 +1491,37 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .machine-hero-video-inner { grid-template-columns: 1fr; gap: 28px; }
   .machine-hero-video video { max-width: 280px; margin: 0 auto; }
 }
+
+/* ── Scroll-to-top Button ─────────────────────────── */
+.scroll-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease, background .2s ease;
+}
+.scroll-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.scroll-top:hover {
+  background: var(--accent2);
+}
+@media (max-width: 600px) {
+  .scroll-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+}
