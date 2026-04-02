@@ -25,13 +25,13 @@
           </div>
         </div>
         <a href="../index.html#reviews">Reviews</a>
-        <a href="../index.html#contact">Contact</a>
+        <a href="../contact.html">Contact</a>
       </nav>
       <div class="header-actions">
         <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
+        <a class="btn btn-primary" href="../contact.html">문의하기</a>
       </div>
     </div>
   </header>
@@ -66,8 +66,8 @@
             </div>
             <div class="machine-cta-box">
               <p>카탈로그 이미지에서 상세 사양을 확인하세요. 추가 문의는 언제든지 편하게 연락주세요.</p>
-              <a class="btn btn-primary" href="../index.html#contact">문의하기</a>
-              <a class="btn btn-ghost" href="/cdn-cgi/l/email-protection#38480809080b0c0d0c0d000b0f785f55595154165b5755">이메일 보내기</a>
+              <a class="btn btn-primary" href="../contact.html">문의하기</a>
+              <a class="btn btn-ghost" href="mailto:p01034545837@gmail.com">이메일 보내기</a>
               <a class="btn btn-ghost" href="../machines/">← 머신 목록으로</a>
             </div>
           </div>
@@ -80,6 +80,10 @@
       <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-    const h = document.querySelector('.site
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+  </script>
+</body>
+</html>

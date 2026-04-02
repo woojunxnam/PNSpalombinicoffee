@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>볼케이노 루비 — 프리미엄 베트남 로부스타 · PNS 팔롬비니</title>
+  <meta name="description" content="화산 고산지대에서 자란 프리미엄 베트남 로부스타 원두, 볼케이노 루비 소개 페이지."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .blend-detail-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .blend-poster-wrap {
+      position: sticky;
+      top: 96px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .blend-poster-wrap img { width: 100%; display: block; }
+    .blend-detail-info { display: flex; flex-direction: column; gap: 28px; }
+    .blend-detail-name {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.2;
+    }
+    .blend-detail-desc {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.85;
+      margin: 0;
+      word-break: keep-all;
+    }
+    .tasting-section h3,
+    .origin-section h3,
+    .pairing-section h3 {
+      font-family: var(--serif);
+      font-size: 17px;
+      margin: 0 0 14px;
+      font-weight: 600;
+    }
+    .tasting-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .tasting-box {
+      background: var(--bg);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 16px;
+    }
+    .tasting-box .tasting-icon { font-size: 22px; margin-bottom: 6px; }
+    .tasting-box .tasting-label { font-size: 11px; font-weight: 800; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .tasting-box .tasting-value { font-size: 14px; font-weight: 700; color: var(--text); word-break: keep-all; }
+    .origin-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 14px;
+    }
+    .origin-list li { margin-bottom: 6px; }
+    .pairing-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .pairing-chip {
+      font-size: 13px; padding: 6px 14px;
+      border-radius: 99px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      color: var(--text);
+      word-break: keep-all;
+    }
+    .process-photo-section h3 {
+      font-family: var(--serif);
+      font-size: 17px;
+      margin: 0 0 14px;
+      font-weight: 600;
+    }
+    .process-photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+    .process-photo-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--card);
+    }
+    .process-photo-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+    }
+    .process-photo-card figcaption {
+      padding: 10px 12px 12px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .process-photo-card.wide { grid-column: span 2; }
+    @media (max-width: 860px) {
+      .blend-detail-grid { grid-template-columns: 1fr; }
+      .blend-poster-wrap { position: static; max-width: 400px; margin: 0 auto; }
+      .process-photo-grid { grid-template-columns: 1fr; }
+      .process-photo-card.wide { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"><img src="../assets/img/pns-logo.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
+      <nav class="nav">
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="../products/"><span class="nav-dropdown-icon">☕</span> 프리미엄 드립백</a>
+            <a href="../machines/"><span class="nav-dropdown-icon">⚙️</span> 드립백 머신</a>
+            <a href="../film.html"><span class="nav-dropdown-icon">🎞️</span> 커피 필름지 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+          </div>
+        </div>
+        <a href="../contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="../contact.html">문의하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span>
+        <a href="../products/">프리미엄 드립백 커피</a><span class="breadcrumb-sep">›</span>
+        <span>볼케이노 루비</span>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="container">
+        <div class="blend-detail-grid">
+          <div class="blend-poster-wrap">
+            <img src="../assets/img/product-drip-10.png" alt="볼케이노 루비 원두 소개 이미지"/>
+          </div>
+
+          <div class="blend-detail-info">
+            <div>
+              <p style="font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin:0 0 8px;">Premium Vietnam Robusta · Volcano Ruby</p>
+              <h1 class="blend-detail-name">볼케이노 루비<br/><span style="font-size:clamp(16px,2.5vw,24px);color:var(--muted);font-weight:500;">Volcano Ruby</span></h1>
+              <p class="blend-detail-desc">화산 고산지대에서 천천히 익은 체리의 힘을 담은 프리미엄 로부스타 원두입니다. 묵직한 바디감 위에 베리 계열의 단맛과 스모키한 피니시가 이어지는 구조적인 향미를 목표로 설계되었습니다.</p>
+            </div>
+
+            <div class="flavor-section">
+              <h3>맛 프로파일</h3>
+              <div class="flavor-bars">
+                <div class="flavor-row"><span class="flavor-label">바디</span><div class="flavor-track"><div class="flavor-fill body" style="width:90%"></div></div><span class="flavor-val">90</span></div>
+                <div class="flavor-row"><span class="flavor-label">단맛</span><div class="flavor-track"><div class="flavor-fill sweet" style="width:72%"></div></div><span class="flavor-val">72</span></div>
+                <div class="flavor-row"><span class="flavor-label">산미</span><div class="flavor-track"><div class="flavor-fill acid" style="width:48%"></div></div><span class="flavor-val">48</span></div>
+                <div class="flavor-row"><span class="flavor-label">스모키 피니시</span><div class="flavor-track"><div class="flavor-fill roast" style="width:82%"></div></div><span class="flavor-val">82</span></div>
+              </div>
+            </div>
+
+            <div class="tasting-section">
+              <h3>테이스팅 노트</h3>
+              <div class="tasting-grid">
+                <div class="tasting-box">
+                  <div class="tasting-icon">🍫</div>
+                  <div class="tasting-label">첫 인상</div>
+                  <div class="tasting-value">다크 초콜릿, 묵직한 바디</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">🍒</div>
+                  <div class="tasting-label">중간 풍미</div>
+                  <div class="tasting-value">체리, 라즈베리 계열 단맛</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">🔥</div>
+                  <div class="tasting-label">피니시</div>
+                  <div class="tasting-value">길게 남는 스모키한 여운</div>
+                </div>
+                <div class="tasting-box">
+                  <div class="tasting-icon">☕</div>
+                  <div class="tasting-label">추천 추출</div>
+                  <div class="tasting-value">에스프레소, 드립, 모카포트</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="padding:0;overflow:hidden;">
+              <table class="specs-table">
+                <tbody>
+                  <tr><th>원산지</th><td>베트남 (중부 고원권)</td></tr>
+                  <tr><th>품종</th><td>프리미엄 로부스타</td></tr>
+                  <tr><th>가공 방식</th><td>내추럴(Natural)</td></tr>
+                  <tr><th>재배 고도</th><td>해발 700m 이상</td></tr>
+                  <tr><th>선별 기준</th><td>G1 · S18</td></tr>
+                  <tr><th>핵심 키워드</th><td>Volcanic Terroir · Hand Picked · Clean Sorting</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="origin-section">
+              <h3>소싱 & 가공 포인트</h3>
+              <ul class="origin-list">
+                <li>화산토 기반 고산지 재배로 밀도감 있는 바디 형성.</li>
+                <li>완숙 체리 중심 수확 후 내추럴 공정 적용.</li>
+                <li>선별 공정에서 결점두를 관리하여 일관된 품질 유지.</li>
+              </ul>
+            </div>
+
+            <div class="process-photo-section">
+              <h3>현장 이미지 (원두 · 건조장 · 선별 · 출하 · 컵샷)</h3>
+              <div class="process-photo-grid">
+                <figure class="process-photo-card">
+                  <img src="../assets/img/hero-2.jpg" alt="원두 상태 및 품질 확인"/>
+                  <figcaption><strong>원두</strong> — 생두/원두 상태 확인 및 배치 품질 관리.</figcaption>
+                </figure>
+                <figure class="process-photo-card">
+                  <img src="../assets/img/hero-4.jpg" alt="건조장 공정 이미지"/>
+                  <figcaption><strong>건조장</strong> — 내추럴 공정 건조 구간 모니터링.</figcaption>
+                </figure>
+                <figure class="process-photo-card">
+                  <img src="../assets/img/hero-5.jpg" alt="선별 공정 이미지"/>
+                  <figcaption><strong>선별</strong> — 결점두 분리와 균일도 확보를 위한 정밀 선별.</figcaption>
+                </figure>
+                <figure class="process-photo-card">
+                  <img src="../assets/img/hero-3.jpg" alt="출하 준비 이미지"/>
+                  <figcaption><strong>출하</strong> — 포대/물류 단위 출하 준비 및 로트 관리.</figcaption>
+                </figure>
+                <figure class="process-photo-card wide">
+                  <img src="../assets/img/hero-1.jpg" alt="컵샷 및 추출 결과 이미지"/>
+                  <figcaption><strong>컵샷</strong> — 최종 추출 품질 점검(바디·단맛·피니시 확인).</figcaption>
+                </figure>
+              </div>
+            </div>
+
+            <div class="pairing-section">
+              <h3>추천 페어링</h3>
+              <div class="pairing-chips">
+                <span class="pairing-chip">🍫 다크 초콜릿</span>
+                <span class="pairing-chip">🥜 구운 견과류</span>
+                <span class="pairing-chip">🧀 숙성 치즈</span>
+                <span class="pairing-chip">🥐 버터 크루아상</span>
+              </div>
+            </div>
+
+            <div class="product-detail-cta">
+              <p>볼케이노 루비 원두/드립백 도입 문의는 Contact 페이지를 통해 접수해 주세요.</p>
+              <a class="btn btn-primary" href="../contact.html">문의하기 →</a>
+              <a class="btn btn-ghost" href="../products/">← 제품 목록으로</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+  </script>
+</body>
+</html>
