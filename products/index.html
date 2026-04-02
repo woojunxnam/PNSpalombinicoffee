@@ -16,6 +16,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .volcano-feature-row {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 32px;
+      margin-bottom: 28px;
+    }
+    .volcano-feature-card {
+      width: min(360px, 100%);
+    }
+    .volcano-feature-card .blend-poster {
+      height: 220px;
+      object-fit: cover;
+      background: #1d0f08;
+    }
+    .volcano-feature-card .blend-card-body {
+      gap: 12px;
+    }
+    .blends-grid-secondary {
+      margin-top: 0;
+    }
+    @media (max-width: 900px) {
+      .volcano-feature-row {
+        justify-content: stretch;
+      }
+      .volcano-feature-card {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -76,10 +106,8 @@
         <p class="eyebrow">Caffè Palombini · 이탈리아 로마, 1946</p>
         <h2 class="section-title">팔롬비니 원두 블렌드</h2>
         <p class="section-lead" style="color:var(--muted);max-width:560px;word-break:keep-all;">PNS 팔롬비니 드립백에 사용되는 세 가지 이탈리아 정통 블렌드. 각 블렌드는 80년 로마 로스팅 헤리티지를 담고 있습니다.</p>
-        <div class="blends-grid">
-
-          <!-- VOLCANO RUBY -->
-          <div class="blend-card">
+        <div class="volcano-feature-row">
+          <div class="blend-card volcano-feature-card">
             <img class="blend-poster" src="./volcano-ruby/img_02_원두.jpg" alt="Volcano Ruby 원두 이미지"/>
             <div class="blend-card-body">
               <div>
@@ -99,7 +127,9 @@
               <a class="btn btn-ghost" href="volcano-ruby.html" style="justify-content:center;">상세 보기 →</a>
             </div>
           </div>
+        </div>
 
+        <div class="blends-grid blends-grid-secondary">
           <!-- ROMA -->
           <div class="blend-card">
             <img class="blend-poster" src="../assets/img/blend-roma.png" alt="Palombini Roma 블렌드 포스터"/>
