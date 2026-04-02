@@ -1244,6 +1244,76 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 }
 .products-preview-actions .btn { font-size: 13px; padding: 10px 16px; }
 
+/* ── Signature feature under Products ── */
+.signature-feature {
+  margin-top: 28px;
+}
+.signature-feature-card {
+  display: grid;
+  grid-template-columns: 1.02fr .98fr;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: calc(var(--r) + 4px);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.signature-feature-media {
+  min-height: 280px;
+  background: #1a1207;
+}
+.signature-feature-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.signature-feature-copy {
+  padding: 30px 30px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+  background:
+    radial-gradient(420px 180px at 100% 0%, rgba(192,122,61,.12), transparent 62%),
+    linear-gradient(180deg, rgba(255,255,255,.2), transparent 60%);
+}
+.signature-feature-kicker {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.signature-feature-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(28px, 3.4vw, 38px);
+  font-weight: 600;
+  line-height: 1.18;
+}
+.signature-feature-desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--muted);
+  max-width: 52ch;
+}
+.signature-feature-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.signature-feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 2px;
+}
+.signature-feature-actions .btn {
+  font-size: 14px;
+}
+
 @media (max-width: 860px) {
   .products-preview-grid {
     grid-template-columns: 1fr;
@@ -1254,6 +1324,15 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
     margin: 0 24px;
   }
   .products-preview-images { height: 200px; }
+  .signature-feature-card {
+    grid-template-columns: 1fr;
+  }
+  .signature-feature-media {
+    min-height: 220px;
+  }
+  .signature-feature-copy {
+    padding: 24px 22px;
+  }
 }
 
 /* ── machine-card 버튼 하단 정렬 ── */
