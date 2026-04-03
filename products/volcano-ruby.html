@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>볼케이노 루비 — 베트남 화산 고산지 프리미엄 로부스타 · PNS 팔롬비니</title>
-  <meta name="description" content="볼케이노 루비의 산지, 가공, 선별, 향미를 PNS 팔롬비니 사이트 형식으로 소개하는 상세 페이지입니다."/>
+  <meta name="description" content="볼케이노 루비의 산지, 가공, 선별, 향미를 소개하는 상세 페이지입니다."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700;900&family=Cormorant+Garamond:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
@@ -419,7 +419,7 @@
       display: block;
     }
     .vr-natural-photo.is-wide img {
-      object-position: center 58%;
+      object-position: center 50%;
     }
     .vr-natural-photo.is-tall img {
       object-position: center 26%;
@@ -493,6 +493,70 @@
       color: rgba(240,235,228,.68);
       font-size: 12px;
       line-height: 1.5;
+    }
+    .vr-direct-grid {
+      display: grid;
+      grid-template-columns: 1fr .98fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .vr-direct-copy {
+      background: rgba(255,255,255,.72);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px 22px;
+      box-shadow: var(--shadow2);
+    }
+    .vr-direct-eye {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .vr-direct-copy h3 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-size: 26px;
+      line-height: 1.28;
+    }
+    .vr-direct-copy p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+    .vr-direct-copy p:last-of-type {
+      margin-bottom: 0;
+    }
+    .vr-direct-media {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .vr-direct-media img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      background: #ddd3c4;
+    }
+    .vr-direct-media img:first-child {
+      object-position: center 52%;
+    }
+    .vr-direct-media img:last-child {
+      object-position: center center;
+    }
+    .vr-direct-points {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
     }
     .vr-flavor-grid {
       display: grid;
@@ -634,6 +698,96 @@
     .vr-fill.acid { width: 50%; background: #9a1c30; }
     .vr-fill.sweet { width: 74%; background: #b45420; }
     .vr-fill.finish { width: 82%; background: #6a3820; }
+    .vr-lineup-intro {
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+    .vr-lineup-kicker {
+      display: inline-block;
+      margin-bottom: 12px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .vr-lineup-intro h2 {
+      margin: 0 0 12px;
+      font-family: var(--serif);
+      font-size: clamp(30px, 4.4vw, 42px);
+      line-height: 1.22;
+    }
+    .vr-lineup-intro p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.85;
+    }
+    .vr-lineup-intro p:last-child {
+      margin-bottom: 0;
+    }
+    .vr-lineup-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .vr-lineup-card {
+      background: rgba(255,255,255,.7);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow2);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+    .vr-lineup-media {
+      aspect-ratio: 4 / 5;
+      background: #ddd3c4;
+    }
+    .vr-lineup-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center center;
+    }
+    .vr-lineup-copy {
+      padding: 18px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .vr-lineup-title {
+      margin: 0;
+      font-size: 22px;
+      font-family: var(--serif);
+      line-height: 1.26;
+    }
+    .vr-lineup-roast {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(192,122,61,.1);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid rgba(192,122,61,.18);
+    }
+    .vr-lineup-position {
+      margin: 0;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+    .vr-lineup-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.8;
+    }
     .vr-cta {
       display: grid;
       grid-template-columns: .95fr 1.05fr;
@@ -720,9 +874,13 @@
       .vr-step,
       .vr-step:nth-child(even),
       .vr-natural-grid,
+      .vr-direct-grid,
       .vr-flavor-grid,
       .vr-cta {
         grid-template-columns: 1fr;
+      }
+      .vr-lineup-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
       .vr-step:nth-child(even) .vr-step-media {
         order: 0;
@@ -730,6 +888,7 @@
       .vr-summary-grid,
       .vr-terroir-grid,
       .vr-stat-grid,
+      .vr-direct-points,
       .vr-sorting-media {
         grid-template-columns: 1fr 1fr;
       }
@@ -748,6 +907,9 @@
       .vr-compare,
       .vr-terroir-grid,
       .vr-stat-grid,
+      .vr-direct-media,
+      .vr-direct-points,
+      .vr-lineup-grid,
       .vr-sorting-media,
       .vr-natural-photos {
         grid-template-columns: 1fr;
@@ -768,6 +930,9 @@
         padding-bottom: 48px;
       }
       .vr-natural-photo {
+        height: 220px;
+      }
+      .vr-direct-media img {
         height: 220px;
       }
       .vr-actions .btn {
@@ -925,7 +1090,7 @@
           <img src="./volcano-ruby/img_06_건조장.jpg" alt="베트남 화산 고원 건조장 전경"/>
         </div>
         <h2 class="section-title">화산이 만든 땅, 대지가 키운 커피</h2>
-        <p class="section-lead">수천 년 전 화산 활동이 남긴 화산재 토양과 큰 일교차는 볼케이노 루비의 밀도감 있는 바디와 깊은 향미의 출발점입니다. 이 페이지는 그 산지 조건을 기존 PNS 사이트 형식 안에서 보이도록 재정리했습니다.</p>
+        <p class="section-lead">수천 년 전 화산 활동이 남긴 화산재 토양과 큰 일교차는 볼케이노 루비의 밀도감 있는 바디와 깊은 향미의 출발점입니다.</p>
         <div class="vr-terroir-grid">
           <div class="vr-terroir-card">
             <strong>700m+</strong>
@@ -954,7 +1119,7 @@
     <section class="section">
       <div class="container">
         <h2 class="section-title">한 잔이 되기까지, 다섯 단계</h2>
-        <p class="section-lead">수확자의 손끝, 건조장의 태양, 선별기의 정밀함까지 모든 과정이 컵 안의 인상으로 연결됩니다. 기존 사이트의 상세페이지 형식을 유지하면서도 사진과 설명은 사용자가 주신 자료를 반영했습니다.</p>
+        <p class="section-lead">수확자의 손끝, 건조장의 태양, 선별기의 정밀함까지 모든 과정이 컵 안의 인상으로 연결됩니다.</p>
         <div class="vr-process-list">
           <article class="vr-step">
             <div class="vr-step-copy">
@@ -1031,7 +1196,7 @@
         <div class="vr-natural-grid">
           <div class="vr-natural-photos">
             <div class="vr-natural-photo is-wide">
-              <img src="./volcano-ruby/img_12_체리_건조_두번째.jpg" alt="체리를 뒤집으며 건조하는 장면"/>
+              <img src="./volcano-ruby/img_15_내추럴.jpg" alt="내추럴 프로세스를 위해 펼쳐진 체리 건조장"/>
             </div>
             <div class="vr-natural-photo is-tall">
               <img src="./volcano-ruby/img_04_체리_건조.jpg" alt="건조대 위의 체리"/>
@@ -1050,6 +1215,41 @@
               <h3>매일 뒤집고 수분을 확인합니다</h3>
               <p>건조는 기다림이지만 방치가 아닙니다. 적절한 수분 도달 시점까지 뒤집고 측정하며 향의 균형과 안정성을 만듭니다.</p>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">베트남 농장과 직접 계약 · 산지 직송</h2>
+        <p class="section-lead">현지 농장과 직접 연결된 공급 구조는 단순히 빠르게 들여오는 문제가 아니라, 기준에 맞는 원두를 더 안정적으로 확보하는 방식이기도 합니다.</p>
+        <div class="vr-direct-grid">
+          <div>
+            <div class="vr-direct-copy">
+              <span class="vr-direct-eye">Direct Sourcing</span>
+              <h3>중간 단계를 줄이고, 산지에서 더 빠르게 연결합니다</h3>
+              <p>볼케이노 루비는 베트남 현지 농장과 직접 계약한 뒤 산지에서 바로 선적하는 흐름을 기반으로 움직입니다. 유통 단계가 짧을수록 생두 상태를 더 빠르게 확인할 수 있고, 공급 일정과 품질 기준도 더 선명하게 맞출 수 있습니다.</p>
+              <p>이 방식은 단순한 물류 효율보다도, 기준에 맞는 원두를 안정적으로 선별하고 같은 품질을 반복해서 공급하는 데 강점이 있습니다. 결과적으로 더 신선하고, 더 일관된 컵 프로파일을 만들 수 있는 기반이 됩니다.</p>
+            </div>
+            <div class="vr-direct-points">
+              <div class="vr-point">
+                <h3>직접 계약</h3>
+                <p>현지 농장과 바로 연결해 원료 기준과 공급 조건을 더 명확하게 맞춥니다.</p>
+              </div>
+              <div class="vr-point">
+                <h3>산지 직송</h3>
+                <p>중간 단계를 줄여 선적과 입고 흐름을 단순하게 유지하고 신선도 관리에 유리합니다.</p>
+              </div>
+              <div class="vr-point">
+                <h3>안정적 공급</h3>
+                <p>기준에 맞는 원두를 꾸준히 선별하고 확보해 품질 편차를 더 줄일 수 있습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="vr-direct-media">
+            <img src="./volcano-ruby/img_05_02_컨테이너.png" alt="베트남 산지에서 직접 선적되는 컨테이너"/>
+            <img src="./volcano-ruby/img_10_컨테이너.jpg" alt="산지 직송을 위한 컨테이너 적재 준비"/>
           </div>
         </div>
       </div>
@@ -1188,6 +1388,99 @@
               <p class="vr-radar-caption">볼케이노 루비는 강한 바디를 중심으로 자연 단맛과 스모키 여운이 넓게 퍼지고, 과일 산미가 중간 축에서 균형을 잡는 구조입니다.</p>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="container">
+        <div class="vr-lineup-intro">
+          <span class="vr-lineup-kicker">DRIP BAG LINEUP</span>
+          <h2>볼케이노 루비로 만든<br/>하루의 드립백</h2>
+          <p>같은 볼케이노 루비 원두도 배전에 따라 전혀 다른 인상을 만듭니다.<br/>더 밝고 맑게 시작하는 한 잔부터, 깊고 진하게 남는 한 잔까지.<br/>`오늘의 일상` 시리즈는 하루의 시간에 맞춰 볼케이노 루비의 표정을 다르게 담아낸 드립백 라인업입니다.</p>
+          <p>출발은 같은 원두입니다.<br/>하지만 배전이 달라지면 향의 결, 바디의 무게, 여운의 길이가 달라집니다.<br/>원하는 시간과 기분에 맞춰, 가장 잘 어울리는 한 잔을 고를 수 있도록 설계했습니다.</p>
+        </div>
+        <div class="vr-lineup-grid">
+          <article class="vr-lineup-card">
+            <div class="vr-lineup-media">
+              <img src="./volcano-ruby/오늘의_일상-새벽_6시.jpg" alt="오늘의 일상 새벽 6시 드립백"/>
+            </div>
+            <div class="vr-lineup-copy">
+              <h3 class="vr-lineup-title">오늘의 일상 — 새벽 6시</h3>
+              <div class="vr-lineup-roast">가장 연한 배전</div>
+              <p class="vr-lineup-position">가장 맑고 부드럽게 하루를 여는 한 잔</p>
+              <p>새벽 6시는 볼케이노 루비를 가장 가볍고 투명한 결로 풀어낸 드립백입니다.<br/>부담 없이 시작할 수 있는 부드러움, 깨끗하게 열리는 향, 지나치게 무겁지 않은 첫 인상이 특징입니다.<br/>아직 하루가 완전히 움직이기 전, 조용한 시작에 어울리는 가장 연한 로스팅입니다.</p>
+              <div class="vr-chip-row">
+                <span class="vr-chip">부드러움</span>
+                <span class="vr-chip">맑은 인상</span>
+                <span class="vr-chip">가벼운 시작</span>
+              </div>
+            </div>
+          </article>
+          <article class="vr-lineup-card">
+            <div class="vr-lineup-media">
+              <img src="./volcano-ruby/오늘의_일상-아침_10시.jpg" alt="오늘의 일상 아침 10시 드립백"/>
+            </div>
+            <div class="vr-lineup-copy">
+              <h3 class="vr-lineup-title">오늘의 일상 — 아침 10시</h3>
+              <div class="vr-lineup-roast">중간 연한 배전</div>
+              <p class="vr-lineup-position">산뜻함과 단맛의 균형이 가장 편안한 한 잔</p>
+              <p>아침 10시는 밝은 향과 자연스러운 단맛이 균형 있게 이어지는 드립백입니다.<br/>볼케이노 루비의 개성을 너무 가볍지도, 너무 진하지도 않게 담아내어 가장 편하게 손이 가는 인상을 만듭니다.<br/>오전의 집중감과 산뜻한 리듬에 맞는, 깨끗하고 안정적인 중간 연한 로스팅입니다.</p>
+              <div class="vr-chip-row">
+                <span class="vr-chip">균형감</span>
+                <span class="vr-chip">산뜻한 활력</span>
+                <span class="vr-chip">편안한 접근성</span>
+              </div>
+            </div>
+          </article>
+          <article class="vr-lineup-card">
+            <div class="vr-lineup-media">
+              <img src="./volcano-ruby/오늘의_일상-낮_2시.jpg" alt="오늘의 일상 낮 2시 드립백"/>
+            </div>
+            <div class="vr-lineup-copy">
+              <h3 class="vr-lineup-title">오늘의 일상 — 낮 2시</h3>
+              <div class="vr-lineup-roast">가장 진한 배전</div>
+              <p class="vr-lineup-position">가장 깊고 강하게 존재감을 남기는 한 잔</p>
+              <p>낮 2시는 볼케이노 루비 라인업 가운데 가장 진한 인상을 지닌 드립백입니다.<br/>강한 바디감과 짙은 여운이 중심을 잡아주며, 한 잔만으로도 충분한 존재감을 느끼게 합니다.<br/>가볍기보다 깊이와 무게를 원하는 순간, 점심 이후의 흐름을 다시 세우는 가장 진한 로스팅입니다.</p>
+              <div class="vr-chip-row">
+                <span class="vr-chip">강한 바디</span>
+                <span class="vr-chip">깊은 인상</span>
+                <span class="vr-chip">묵직한 여운</span>
+              </div>
+            </div>
+          </article>
+          <article class="vr-lineup-card">
+            <div class="vr-lineup-media">
+              <img src="./volcano-ruby/오늘의_일상-저녁_6시.jpg" alt="오늘의 일상 저녁 6시 드립백"/>
+            </div>
+            <div class="vr-lineup-copy">
+              <h3 class="vr-lineup-title">오늘의 일상 — 저녁 6시</h3>
+              <div class="vr-lineup-roast">중간 진한 배전</div>
+              <p class="vr-lineup-position">깊이와 균형이 함께 남는 차분한 한 잔</p>
+              <p>저녁 6시는 진한 쪽의 만족감을 가지면서도 지나치게 무겁지 않도록 균형을 잡은 드립백입니다.<br/>하루가 서서히 가라앉는 시간에 맞춰, 부드러운 진함과 안정적인 여운이 자연스럽게 이어집니다.<br/>강도는 충분히 느껴지지만 거칠지 않게 마무리되는, 중간 진한 로스팅의 장점이 잘 드러나는 한 잔입니다.</p>
+              <div class="vr-chip-row">
+                <span class="vr-chip">균형 잡힌 진함</span>
+                <span class="vr-chip">차분한 시간</span>
+                <span class="vr-chip">안정적인 여운</span>
+              </div>
+            </div>
+          </article>
+          <article class="vr-lineup-card">
+            <div class="vr-lineup-media">
+              <img src="./volcano-ruby/오늘의_일상-밤_10시.jpg" alt="오늘의 일상 밤 10시 드립백"/>
+            </div>
+            <div class="vr-lineup-copy">
+              <h3 class="vr-lineup-title">오늘의 일상 — 밤 10시</h3>
+              <div class="vr-lineup-roast">중간 배전</div>
+              <p class="vr-lineup-position">부드러움과 입체감이 함께 머무는 한 잔</p>
+              <p>밤 10시는 다섯 가지 라인업 가운데 중심을 잡아주는 중간 배전 드립백입니다.<br/>너무 가볍지도, 너무 진하지도 않은 균형 안에서 향의 결이 둥글게 살아나며 편안한 마무리를 만듭니다.<br/>하루 끝에 무리 없이 즐기기 좋고, 볼케이노 루비의 성격을 가장 안정적으로 느낄 수 있는 한 잔입니다.</p>
+              <div class="vr-chip-row">
+                <span class="vr-chip">중심감</span>
+                <span class="vr-chip">부드러운 입체감</span>
+                <span class="vr-chip">편안한 마무리</span>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </section>
