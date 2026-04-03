@@ -119,9 +119,30 @@
       border-radius: 18px;
       padding: 20px 18px;
       box-shadow: var(--shadow2);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .vr-summary-icon {
+      width: 18px;
+      height: 18px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2px;
+    }
+    .vr-summary-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
     .vr-summary-label {
-      margin-bottom: 7px;
       color: var(--accent);
       font-size: 11px;
       font-weight: 800;
@@ -161,9 +182,45 @@
       line-height: 1.7;
       font-size: 15px;
     }
+    .vr-compare-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 0 0 12px;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .vr-compare-row:last-child {
+      margin-bottom: 0;
+    }
+    .vr-compare-icon {
+      flex: 0 0 20px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+      vertical-align: middle;
+    }
+    .vr-compare-icon svg {
+      width: 12px;
+      height: 12px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .vr-compare-basic {
       background: #f3ede3;
       color: #6b5e55;
+    }
+    .vr-compare-basic .vr-compare-icon {
+      background: #e8ddcf;
+      color: #9a6d47;
     }
     .vr-compare-ruby {
       background:
@@ -171,8 +228,12 @@
         #281408;
       color: rgba(240,235,228,.86);
     }
+    .vr-compare-ruby .vr-compare-icon {
+      background: #9a1c30;
+      color: #fff;
+    }
     .vr-compare-ruby h3,
-    .vr-compare-ruby p strong {
+    .vr-compare-ruby strong {
       color: #f0ebe4;
     }
     .vr-quote {
@@ -199,15 +260,26 @@
       color: rgba(240,235,228,.78);
     }
     .vr-terroir-hero {
+      position: relative;
       border-radius: 22px;
       overflow: hidden;
       margin-bottom: 28px;
       border: 1px solid rgba(255,255,255,.08);
+      background: #281408;
+    }
+    .vr-terroir-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(40,20,8,0) 0%, rgba(40,20,8,0) 54%, rgba(40,20,8,.22) 72%, rgba(40,20,8,.62) 88%, #281408 100%);
+      pointer-events: none;
     }
     .vr-terroir-hero img {
       width: 100%;
       height: 320px;
       object-fit: cover;
+      object-position: center center;
       display: block;
     }
     .vr-terroir-grid {
@@ -760,19 +832,40 @@
       <div class="container">
         <div class="vr-summary-grid">
           <div class="vr-summary-card">
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 19h18"></path><path d="M5 19 11 9l3 4 2-3 3 9"></path></svg></span>
             <div class="vr-summary-label">원산지</div>
             <div class="vr-summary-value">베트남</div>
             <div class="vr-summary-note">프리미엄 베트남 로부스타 기반의 단단한 구조감</div>
           </div>
           <div class="vr-summary-card">
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 20V4"></path><path d="m7 9 5-5 5 5"></path><path d="M6 20h12"></path></svg></span>
             <div class="vr-summary-label">재배 환경</div>
             <div class="vr-summary-value">해발 700m 이상</div>
             <div class="vr-summary-note">화산 고산지대와 큰 일교차가 당도와 밀도감을 만듭니다</div>
           </div>
           <div class="vr-summary-card">
-            <div class="vr-summary-label">가공 · 선별</div>
-            <div class="vr-summary-value">내추럴 · G1 · S18</div>
-            <div class="vr-summary-note">발효 관리와 색채선별 공정으로 일관된 품질을 유지합니다</div>
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 14c0-5 5-8 12-8-1 7-4 12-10 12-1.5 0-2-.8-2-4Z"></path><path d="M8 16c3-2 6-5 9-9"></path></svg></span>
+            <div class="vr-summary-label">가공 과정</div>
+            <div class="vr-summary-value">내추럴</div>
+            <div class="vr-summary-note">발효 온도와 시간을 정밀하게 관리하는 내추럴 프로세스입니다</div>
+          </div>
+          <div class="vr-summary-card">
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg></span>
+            <div class="vr-summary-label">선별 기준</div>
+            <div class="vr-summary-value">G1 · S18</div>
+            <div class="vr-summary-note">색채선별 공정으로 결점 원두를 줄이고 균일도를 높입니다</div>
+          </div>
+          <div class="vr-summary-card">
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8 4c6 0 10 4 10 8s-4 8-10 8S4 16 4 12 5.5 4 8 4Z"></path><path d="M11 5c2 3 2 11-1 14"></path></svg></span>
+            <div class="vr-summary-label">주요 향미</div>
+            <div class="vr-summary-value">다크 초콜릿 · 베리</div>
+            <div class="vr-summary-note">체리와 라즈베리 계열의 인상이 다크 초콜릿 톤 위에 쌓입니다</div>
+          </div>
+          <div class="vr-summary-card">
+            <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v4"></path><path d="M12 17v4"></path><path d="M3 12h4"></path><path d="M17 12h4"></path><path d="m5.5 5.5 2.8 2.8"></path><path d="m15.7 15.7 2.8 2.8"></path><path d="m18.5 5.5-2.8 2.8"></path><path d="m8.3 15.7-2.8 2.8"></path></svg></span>
+            <div class="vr-summary-label">맛의 인상</div>
+            <div class="vr-summary-value">깊고 진한 바디감</div>
+            <div class="vr-summary-note">자연 단맛과 스모키한 여운이 묵직한 구조감 안에서 이어집니다</div>
           </div>
         </div>
       </div>
@@ -785,17 +878,41 @@
         <div class="vr-compare">
           <div class="vr-compare-col vr-compare-basic">
             <h3>일반 로부스타</h3>
-            <p>낮은 고도 재배로 향미의 복잡도가 제한되기 쉽습니다.</p>
-            <p>기계 수확 비중이 높아 미숙 체리가 함께 들어갈 수 있습니다.</p>
-            <p>공정 관리가 약하면 품질 편차가 크게 나타납니다.</p>
-            <p>쓴맛 위주의 단조로운 인상에 머무르기 쉽습니다.</p>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></span>
+              <span>낮은 고도 재배로 향미의 복잡도가 제한되기 쉽습니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></span>
+              <span>기계 수확 비중이 높아 미숙 체리가 함께 들어갈 수 있습니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></span>
+              <span>공정 관리가 약하면 품질 편차가 크게 나타납니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg></span>
+              <span>쓴맛 위주의 단조로운 인상에 머무르기 쉽습니다.</span>
+            </div>
           </div>
           <div class="vr-compare-col vr-compare-ruby">
             <h3>볼케이노 루비</h3>
-            <p><strong>해발 700m 이상</strong>의 화산 고산지대에서 천천히 익어 당도를 응축합니다.</p>
-            <p><strong>완숙 체리 손수확</strong>으로 원료의 기준을 먼저 올립니다.</p>
-            <p><strong>발효 온도와 시간</strong>을 관리해 내추럴 향미를 더 깨끗하게 만듭니다.</p>
-            <p><strong>다크 초콜릿 · 베리 · 스모키</strong>가 순서 있게 펼쳐지는 입체적인 맛을 지향합니다.</p>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></svg></span>
+              <span><strong>해발 700m 이상</strong>의 화산 고산지대에서 천천히 익어 당도를 응축합니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></svg></span>
+              <span><strong>완숙 체리 손수확</strong>으로 원료의 기준을 먼저 올립니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></svg></span>
+              <span><strong>발효 온도와 시간</strong>을 관리해 내추럴 향미를 더 깨끗하게 만듭니다.</span>
+            </div>
+            <div class="vr-compare-row">
+              <span class="vr-compare-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"></path></svg></span>
+              <span><strong>다크 초콜릿 · 베리 · 스모키</strong>가 순서 있게 펼쳐지는 입체적인 맛을 지향합니다.</span>
+            </div>
           </div>
         </div>
         <div class="vr-quote">강렬함은 투박함이 아닙니다. 진하고 묵직하지만, 그 안에 체리향의 단맛과 스모키한 여운이 함께 있습니다.</div>
@@ -805,7 +922,7 @@
     <section class="section vr-dark-section">
       <div class="container">
         <div class="vr-terroir-hero">
-          <img src="./volcano-ruby/img_11_나무에_열린_체리.jpg" alt="화산 고산지대에서 자라는 커피 체리"/>
+          <img src="./volcano-ruby/img_06_건조장.jpg" alt="베트남 화산 고원 건조장 전경"/>
         </div>
         <h2 class="section-title">화산이 만든 땅, 대지가 키운 커피</h2>
         <p class="section-lead">수천 년 전 화산 활동이 남긴 화산재 토양과 큰 일교차는 볼케이노 루비의 밀도감 있는 바디와 깊은 향미의 출발점입니다. 이 페이지는 그 산지 조건을 기존 PNS 사이트 형식 안에서 보이도록 재정리했습니다.</p>
