@@ -156,13 +156,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 /* ── 8.5. Mobile Navigation ── */
 (function () {
+  const pathname = window.location.pathname.replace(/\\/g, '/');
+  const nestedPage = /\/(products|machines)\//.test(pathname);
+  const prefix = nestedPage ? '../' : '';
+
   const siteHeader = document.querySelector('.site-header');
   const headerInner = document.querySelector('.header-inner');
   if (!siteHeader || !headerInner) return;
 
   const headerActions = headerInner.querySelector('.header-actions') || headerInner;
-  const nestedPage = /\/(products|machines)\//.test(window.location.pathname.replace(/\\/g, '/'));
-  const prefix = nestedPage ? '../' : '';
   const panelId = 'mobileNavPanel';
 
   const getActionInsertTarget = () =>
@@ -192,7 +194,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     storeLink.href = 'https://smartstore.naver.com/palombini';
     storeLink.target = '_blank';
     storeLink.rel = 'noopener';
-    storeLink.setAttribute('aria-label', '??? ??????');
+    storeLink.setAttribute('aria-label', '네이버 스마트스토어');
     storeLink.setAttribute('data-store-link', '');
     storeLink.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>';
     instaLink.insertAdjacentElement('afterend', storeLink);
@@ -203,13 +205,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'menu-toggle';
-    toggle.setAttribute('aria-label', '??? ?? ??');
-    toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', panelId);
     toggle.setAttribute('data-mobile-menu-toggle', '');
-    toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
     headerActions.appendChild(toggle);
   }
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-label', '모바일 메뉴 열기');
+  toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
 
   let backdrop = document.querySelector('.mobile-nav-backdrop');
   if (!backdrop) {
@@ -228,10 +230,29 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     document.body.appendChild(panel);
   }
 
+  const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+  const menuItems = [
+    { href: `${prefix}index.html`, label: '홈' },
+    { href: `${prefix}products/`, label: '제품' },
+    { href: `${prefix}products/volcano-ruby.html`, label: '볼케이노 루비' },
+    { href: `${prefix}contact.html`, label: '문의하기' }
+  ];
+
+  panel.setAttribute('data-global-mobile-nav', '');
+  panel.innerHTML = `
+    <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
+      ${menuItems.map((item) => {
+        const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
+        const isCurrent = currentPath === itemPath;
+        return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}</a>`;
+      }).join('')}
+    </nav>
+  `;
+
   const setMenu = (open) => {
     document.body.classList.toggle('menu-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? '??? ?? ??' : '??? ?? ??');
+    toggle.setAttribute('aria-label', open ? '모바일 메뉴 닫기' : '모바일 메뉴 열기');
     if (open) {
       backdrop.removeAttribute('hidden');
       panel.removeAttribute('hidden');
@@ -246,7 +267,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 
   backdrop.addEventListener('click', () => setMenu(false));
-  panel.querySelectorAll('a').forEach(link => {
+  panel.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setMenu(false));
   });
   document.addEventListener('keydown', (e) => {
@@ -255,67 +276,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   window.addEventListener('resize', () => {
     if (window.innerWidth > 1024) setMenu(false);
   });
-})();
-
-/* ── 9. FAQ 아코디언 ── */
-/* scrollHeight 계산 버그 수정: overflow:hidden 상태에서도 안정적으로 작동하는 고정값 방식 사용 */
-/* 8.6. Mobile Navigation UI Polish + Global CTA */
-(function () {
-  const pathname = window.location.pathname.replace(/\\/g, '/');
-  const nestedPage = /\/(products|machines)\//.test(pathname);
-  const prefix = nestedPage ? '../' : '';
-
-  const toggle = document.querySelector('[data-mobile-menu-toggle]');
-  const panel = document.getElementById('mobileNavPanel');
-  const backdrop = document.querySelector('.mobile-nav-backdrop');
-
-  if (toggle) {
-    toggle.setAttribute('aria-label', toggle.getAttribute('aria-expanded') === 'true' ? '\uBAA8\uBC14\uC77C \uBA54\uB274 \uB2EB\uAE30' : '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
-    toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
-  }
-
-  if (panel) {
-    const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
-    const menuItems = [
-      { href: `${prefix}index.html`, label: '\uD648' },
-      { href: `${prefix}products/`, label: '\uC81C\uD488' },
-      { href: `${prefix}products/volcano-ruby.html`, label: '\uBCFC\uCF00\uC774\uB178 \uB8E8\uBE44' },
-      { href: `${prefix}contact.html`, label: '\uBB38\uC758\uD558\uAE30' }
-    ];
-
-    panel.setAttribute('data-global-mobile-nav', '');
-    panel.innerHTML = `
-      <nav class="mobile-nav-inner" aria-label="\uBAA8\uBC14\uC77C \uBA54\uB274">
-        ${menuItems.map((item) => {
-          const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
-          const isCurrent = currentPath === itemPath;
-          return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}</a>`;
-        }).join('')}
-      </nav>
-    `;
-    panel.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        document.body.classList.remove('menu-open');
-        backdrop?.setAttribute('hidden', '');
-        panel.setAttribute('hidden', '');
-        toggle?.setAttribute('aria-expanded', 'false');
-        toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
-      });
-    });
-  }
-
-  toggle?.addEventListener('click', () => {
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    toggle.setAttribute('aria-label', expanded ? '\uBAA8\uBC14\uC77C \uBA54\uB274 \uB2EB\uAE30' : '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
-  });
-  backdrop?.addEventListener('click', () => {
-    toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
-  });
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 1024) {
-      toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
-    }
-  });
 
   if (!/\/contact\.html$/.test(pathname)) {
     const isMachinePage = /\/machines\//.test(pathname);
@@ -323,14 +283,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const isListPage = /\/(?:products|machines)\/(?:index\.html)?$/.test(pathname);
     const isProductsListPage = /\/products\/(?:index\.html)?$/.test(pathname);
 
-    let secondaryLabel = '\uC81C\uD488 \uBCF4\uAE30';
+    let secondaryLabel = '제품 보기';
     let secondaryHref = `${prefix}products/`;
 
     if (isMachinePage) {
-      secondaryLabel = isListPage ? '\uD648\uC73C\uB85C' : '\uBA38\uC2E0 \uBCF4\uAE30';
+      secondaryLabel = isListPage ? '홈으로' : '머신 보기';
       secondaryHref = isListPage ? `${prefix}index.html` : `${prefix}machines/`;
     } else if (isProductPage) {
-      secondaryLabel = '\uC81C\uD488 \uBCF4\uAE30';
+      secondaryLabel = '제품 보기';
       secondaryHref = isProductsListPage ? '#productsCatalog' : `${prefix}products/`;
     }
 
@@ -339,9 +299,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       sticky = document.createElement('div');
       sticky.className = 'mobile-sticky-cta';
       sticky.setAttribute('data-mobile-sticky-cta', '');
-      sticky.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBE60\uB978 \uC774\uB3D9');
+      sticky.setAttribute('aria-label', '모바일 빠른 이동');
       sticky.innerHTML = `
-        <a class="btn btn-primary" href="${prefix}contact.html">\uBB38\uC758\uD558\uAE30</a>
+        <a class="btn btn-primary" href="${prefix}contact.html">문의하기</a>
         <a class="btn btn-ghost" href="${secondaryHref}">${secondaryLabel}</a>
       `;
       document.body.appendChild(sticky);
