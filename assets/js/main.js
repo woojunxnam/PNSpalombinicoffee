@@ -399,7 +399,7 @@ const translations = {
     'products-lead':'당신의 하루가 어디에 있든, <strong>한 잔의 퀄리티는 타협하지 않도록</strong> 만들었습니다.',
     'product-badge':'PREMIUM','product-name':'프리미엄 드립백 커피','product-buy-btn':'스마트스토어에서 구매하기 →',
     'b2b-title':'For Partners — Business Solutions (B2B)',
-    'b2b-lead':'<span class="desktop-line-break">?? ???? "??"? ??? ????? ??? ? ??? ??? ????.</span><span class="desktop-line-break">?? ???? ???, OEM ??????? ???? ?? ?????.</span>',
+    'b2b-lead':'<span class="desktop-line-break">커피 브랜드를 "제품"이 아니라 시스템으로 제공할 수 있어야 한다고 믿습니다.</span><span class="desktop-line-break">원두 선별부터 패키징, OEM 설계까지—전체 생태계를 함께 구축합니다.</span>',
     'b2b-cta-text':'B2B 파트너십, 대량구매, OEM 문의는 아래 연락처로 편하게 연락주세요.','b2b-cta-btn':'파트너십 문의하기',
     'reviews-title':'고객 후기','reviews-lead':'실제 구매하신 분들의 솔직한 이야기입니다.','reviews-note':'더 많은 후기가 궁금하신가요?','reviews-btn':'네이버 스토어에서 전체 리뷰 보기 →',
     'faq-title':'자주 묻는 질문','faq-lead':'구매 전 궁금하신 점을 미리 답해드립니다.',
