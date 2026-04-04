@@ -592,6 +592,8 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   display: none;
   width: 40px;
   height: 40px;
+  font-size: 0;
+  line-height: 0;
   padding: 0;
   border-radius: 14px;
   border: 1px solid rgba(221, 211, 201, .9);
@@ -613,9 +615,14 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transform: scale(.98);
 }
 .menu-toggle-icon {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
   gap: 4px;
   width: 18px;
+  height: 14px;
+  pointer-events: none;
 }
 .menu-toggle-bar {
   display: block;
@@ -729,7 +736,8 @@ body.menu-open .mobile-nav {
 .lang-btn.active { background: var(--accent); color: #fff; }
 
 /* ?? ?몄뒪?洹몃옩 ?꾩씠肄?(?ㅻ뜑) ?? */
-.insta-link {
+.insta-link,
+.store-link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -745,6 +753,26 @@ body.menu-open .mobile-nav {
   color: #fff;
   border-color: transparent;
   transform: scale(1.08);
+}
+.store-link:hover {
+  background: #8a5838;
+  color: #fff;
+  border-color: transparent;
+  transform: scale(1.08);
+}
+.store-link svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.desktop-line-break {
+  display: inline;
 }
 
 /* ?? ?명꽣 ?뚯뀥 ?? */
@@ -921,7 +949,8 @@ body.menu-open .mobile-nav {
   .header-actions { gap: 6px; }
   .header-actions > .btn { display: none; }
   .lang-toggle { display: flex; }
-  .insta-link { width: 32px; height: 32px; }
+  .insta-link,
+  .store-link { width: 32px; height: 32px; }
   .btn.btn-primary { font-size: 12px; padding: 8px 12px; }
   .mobile-nav {
     top: 68px;
@@ -1029,6 +1058,12 @@ body.menu-open .mobile-nav {
   .stats-inner { grid-template-columns: 1fr 1fr; }
   .stat-num { font-size: 20px; }
   .mobile-nav { top: 64px; }
+}
+
+@media (min-width: 761px) {
+  .desktop-line-break {
+    display: block;
+  }
 }
 
 /* iPhone X ?몄튂 ???(Safe Area) */

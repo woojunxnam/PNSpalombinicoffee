@@ -174,8 +174,28 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', panelId);
     toggle.setAttribute('data-mobile-menu-toggle', '');
-    toggle.innerHTML = '<span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span>';
+    toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
     headerActions.appendChild(toggle);
+  }
+
+  if (headerActions && !headerActions.querySelector('[data-store-link]')) {
+    const instaLink = headerActions.querySelector('.insta-link');
+    if (instaLink) {
+      const storeLink = document.createElement('a');
+      storeLink.className = 'store-link';
+      storeLink.href = 'https://smartstore.naver.com/palombini';
+      storeLink.target = '_blank';
+      storeLink.rel = 'noopener';
+      storeLink.setAttribute('aria-label', '\uB124\uC774\uBC84 \uC2A4\uB9C8\uD2B8\uC2A4\uD1A0\uC5B4');
+      storeLink.setAttribute('data-store-link', '');
+      storeLink.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>';
+      const primaryButton = headerActions.querySelector('.btn');
+      if (primaryButton) {
+        instaLink.insertAdjacentElement('afterend', storeLink);
+      } else {
+        headerActions.appendChild(storeLink);
+      }
+    }
   }
 
   let backdrop = document.querySelector('.mobile-nav-backdrop');
@@ -379,7 +399,7 @@ const translations = {
     'products-lead':'당신의 하루가 어디에 있든, <strong>한 잔의 퀄리티는 타협하지 않도록</strong> 만들었습니다.',
     'product-badge':'PREMIUM','product-name':'프리미엄 드립백 커피','product-buy-btn':'스마트스토어에서 구매하기 →',
     'b2b-title':'For Partners — Business Solutions (B2B)',
-    'b2b-lead':'커피 브랜드를 "제품"이 아니라 <strong>시스템</strong>으로 제공할 수 있어야 한다고 믿습니다. 원두 선별부터 패키징, OEM 설계까지—전체 생태계를 함께 구축합니다.',
+    'b2b-lead':'<span class="desktop-line-break">?? ???? "??"? ??? ????? ??? ? ??? ??? ????.</span><span class="desktop-line-break">?? ???? ???, OEM ??????? ???? ?? ?????.</span>',
     'b2b-cta-text':'B2B 파트너십, 대량구매, OEM 문의는 아래 연락처로 편하게 연락주세요.','b2b-cta-btn':'파트너십 문의하기',
     'reviews-title':'고객 후기','reviews-lead':'실제 구매하신 분들의 솔직한 이야기입니다.','reviews-note':'더 많은 후기가 궁금하신가요?','reviews-btn':'네이버 스토어에서 전체 리뷰 보기 →',
     'faq-title':'자주 묻는 질문','faq-lead':'구매 전 궁금하신 점을 미리 답해드립니다.',
@@ -411,7 +431,7 @@ const translations = {
     'products-lead':'Wherever your day takes you, <strong>never compromise on quality</strong>.',
     'product-badge':'PREMIUM','product-name':'Premium Drip Bag Coffee','product-buy-btn':'Buy on Naver Store →',
     'b2b-title':'For Partners — Business Solutions (B2B)',
-    'b2b-lead':'We believe a coffee brand should be delivered as a <strong>system</strong>, not just a product. From bean sorting to packaging and OEM design — we build the full ecosystem with you.',
+    'b2b-lead':'<span class="desktop-line-break">We believe a coffee brand should be delivered as a system, not just a product.</span><span class="desktop-line-break">From bean sorting to packaging and OEM design?we build the full ecosystem with you.</span>',
     'b2b-cta-text':'For B2B partnerships, bulk orders, or OEM inquiries, please reach out anytime.','b2b-cta-btn':'Contact for Partnership',
     'reviews-title':'Customer Reviews','reviews-lead':'Honest words from real customers.','reviews-note':'Want to read more reviews?','reviews-btn':'View all reviews on Naver Store →',
     'faq-title':'Frequently Asked Questions','faq-lead':'Everything you need to know before your first cup.',
