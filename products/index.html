@@ -17,16 +17,22 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
+    .products-list-page .page-hero {
+      padding-bottom: 8px;
+    }
+    .products-list-page .page-hero-inner {
+      max-width: 580px;
+    }
     .blends-section .section-title {
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
     .blends-section .section-lead {
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
     .volcano-feature-row {
       display: flex;
       justify-content: flex-start;
-      margin-top: 10px;
+      margin-top: 0;
       margin-bottom: 18px;
     }
     .volcano-feature-card {
@@ -43,19 +49,28 @@
     .blends-grid-secondary {
       margin-top: 0;
     }
+    .products-list-page .blends-section {
+      padding-top: 6px !important;
+    }
     @media (max-width: 900px) {
+      .products-list-page .page-hero {
+        padding-bottom: 2px;
+      }
       .volcano-feature-row {
         justify-content: stretch;
-        margin-top: 10px;
-        margin-bottom: 16px;
+        margin-top: 0;
+        margin-bottom: 14px;
       }
       .volcano-feature-card {
         width: 100%;
       }
+      .products-list-page .blends-section {
+        padding-top: 2px !important;
+      }
     }
   </style>
 </head>
-<body>
+<body class="products-list-page">
 
   <header class="site-header" id="top">
     <div class="container header-inner">

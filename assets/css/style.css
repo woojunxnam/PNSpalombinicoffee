@@ -942,15 +942,58 @@ body.menu-open .mobile-nav {
   /* ?ㅻ뜑 */
   .site-header { padding: 0; }
   .header-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     flex-wrap: nowrap;
     padding: 10px 0;
     gap: 8px;
   }
-  .header-actions { gap: 6px; }
+  .brand {
+    min-width: 0;
+  }
+  .brand-name {
+    min-width: 0;
+    font-size: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand-mark {
+    width: 42px;
+    height: 42px;
+  }
+  .header-actions {
+    gap: 4px;
+    min-width: 0;
+    flex-wrap: nowrap;
+  }
   .header-actions > .btn { display: none; }
-  .lang-toggle { display: flex; }
+  .lang-toggle {
+    display: inline-flex;
+    padding: 2px;
+    gap: 2px;
+    border-radius: 999px;
+  }
+  .lang-btn {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 7px;
+    font-size: 11px;
+  }
   .insta-link,
-  .store-link { width: 32px; height: 32px; }
+  .store-link { width: 30px; height: 30px; }
+  .menu-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+  }
+  .menu-toggle-icon {
+    width: 16px;
+    height: 12px;
+    gap: 3px;
+  }
+  .menu-toggle-bar {
+    width: 16px;
+  }
   .btn.btn-primary { font-size: 12px; padding: 8px 12px; }
   .mobile-nav {
     top: 68px;
@@ -1817,6 +1860,40 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .scroll-top:hover {
   background: var(--accent2);
 }
+@media (max-width: 430px) {
+  .header-inner {
+    gap: 6px;
+  }
+  .brand-name {
+    display: none;
+  }
+  .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+  .header-actions {
+    gap: 3px;
+  }
+  .lang-toggle {
+    padding: 1px;
+  }
+  .lang-btn {
+    min-width: 24px;
+    height: 26px;
+    padding: 0 6px;
+    font-size: 10px;
+  }
+  .insta-link,
+  .store-link {
+    width: 28px;
+    height: 28px;
+  }
+  .menu-toggle {
+    width: 34px;
+    height: 34px;
+  }
+}
+
 @media (max-width: 600px) {
   .scroll-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
 }

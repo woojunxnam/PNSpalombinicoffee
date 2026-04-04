@@ -165,37 +165,50 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const prefix = nestedPage ? '../' : '';
   const panelId = 'mobileNavPanel';
 
+  const getActionInsertTarget = () =>
+    headerActions.querySelector('[data-mobile-menu-toggle], .btn') || null;
+
+  let instaLink = headerActions.querySelector('.insta-link');
+  if (!instaLink) {
+    instaLink = document.createElement('a');
+    instaLink.className = 'insta-link';
+    instaLink.href = 'https://www.instagram.com/palombini_eunhaeng';
+    instaLink.target = '_blank';
+    instaLink.rel = 'noopener';
+    instaLink.setAttribute('aria-label', 'Instagram');
+    instaLink.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>';
+    const target = getActionInsertTarget();
+    if (target) {
+      target.insertAdjacentElement('beforebegin', instaLink);
+    } else {
+      headerActions.appendChild(instaLink);
+    }
+  }
+
+  let storeLink = headerActions.querySelector('[data-store-link]');
+  if (!storeLink) {
+    storeLink = document.createElement('a');
+    storeLink.className = 'store-link';
+    storeLink.href = 'https://smartstore.naver.com/palombini';
+    storeLink.target = '_blank';
+    storeLink.rel = 'noopener';
+    storeLink.setAttribute('aria-label', '??? ??????');
+    storeLink.setAttribute('data-store-link', '');
+    storeLink.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>';
+    instaLink.insertAdjacentElement('afterend', storeLink);
+  }
+
   let toggle = headerInner.querySelector('[data-mobile-menu-toggle]');
   if (!toggle) {
     toggle = document.createElement('button');
     toggle.type = 'button';
     toggle.className = 'menu-toggle';
-    toggle.setAttribute('aria-label', '모바일 메뉴 열기');
+    toggle.setAttribute('aria-label', '??? ?? ??');
     toggle.setAttribute('aria-expanded', 'false');
     toggle.setAttribute('aria-controls', panelId);
     toggle.setAttribute('data-mobile-menu-toggle', '');
     toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
     headerActions.appendChild(toggle);
-  }
-
-  if (headerActions && !headerActions.querySelector('[data-store-link]')) {
-    const instaLink = headerActions.querySelector('.insta-link');
-    if (instaLink) {
-      const storeLink = document.createElement('a');
-      storeLink.className = 'store-link';
-      storeLink.href = 'https://smartstore.naver.com/palombini';
-      storeLink.target = '_blank';
-      storeLink.rel = 'noopener';
-      storeLink.setAttribute('aria-label', '\uB124\uC774\uBC84 \uC2A4\uB9C8\uD2B8\uC2A4\uD1A0\uC5B4');
-      storeLink.setAttribute('data-store-link', '');
-      storeLink.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>';
-      const primaryButton = headerActions.querySelector('.btn');
-      if (primaryButton) {
-        instaLink.insertAdjacentElement('afterend', storeLink);
-      } else {
-        headerActions.appendChild(storeLink);
-      }
-    }
   }
 
   let backdrop = document.querySelector('.mobile-nav-backdrop');
