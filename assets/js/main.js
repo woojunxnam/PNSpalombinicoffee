@@ -225,21 +225,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     panel.className = 'mobile-nav';
     panel.id = panelId;
     panel.setAttribute('hidden', '');
-    panel.innerHTML = `
-      <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
-        <a href="${prefix}index.html">홈</a>
-        <a href="${prefix}products/">제품</a>
-        <a href="${prefix}products/volcano-ruby.html">볼케이노 루비</a>
-        <a href="${prefix}contact.html">문의하기</a>
-      </nav>
-    `;
     document.body.appendChild(panel);
   }
 
   const setMenu = (open) => {
     document.body.classList.toggle('menu-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? '모바일 메뉴 닫기' : '모바일 메뉴 열기');
+    toggle.setAttribute('aria-label', open ? '??? ?? ??' : '??? ?? ??');
     if (open) {
       backdrop.removeAttribute('hidden');
       panel.removeAttribute('hidden');
