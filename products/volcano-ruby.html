@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="utf-8"/>
@@ -107,6 +107,48 @@
       color: #f0ebe4;
       font-size: 12px;
       font-weight: 600;
+    }
+    .vr-quickjump {
+      display: none;
+      margin: -8px 0 18px;
+      padding-bottom: 4px;
+    }
+    .vr-quickjump-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 6px;
+      scrollbar-width: none;
+    }
+    .vr-quickjump-nav::-webkit-scrollbar {
+      display: none;
+    }
+    .vr-quickjump-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.82);
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: var(--shadow2);
+      transition: background .15s ease, color .15s ease, border-color .15s ease;
+    }
+    .vr-quickjump-link.is-active {
+      background: rgba(192,122,61,.14);
+      color: var(--accent);
+      border-color: rgba(192,122,61,.24);
+    }
+    .vr-mobile-sticky-cta {
+      display: none;
+    }
+    .volcano-ruby-page .scroll-top {
+      display: none;
     }
     .vr-summary-grid {
       display: grid;
@@ -1073,39 +1115,79 @@
         height: 360px;
       }
     }
-    @media (max-width: 760px) {
+    @media (max-width: 820px) {
+      .volcano-ruby-page {
+        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+      }
+      .volcano-ruby-page .scroll-top {
+        display: flex;
+      }
+      .vr-quickjump {
+        display: block;
+        position: sticky;
+        top: 64px;
+        z-index: 60;
+        background: linear-gradient(180deg, rgba(247,243,238,.96) 0%, rgba(247,243,238,.9) 100%);
+        backdrop-filter: blur(10px);
+      }
+      .vr-quickjump-nav {
+        gap: 6px;
+      }
+      .vr-quickjump-link {
+        min-height: 36px;
+        padding: 8px 12px;
+        font-size: 11px;
+      }
       .vr-summary-grid,
       .vr-compare,
       .vr-terroir-grid,
       .vr-stat-grid,
       .vr-direct-media,
       .vr-direct-points,
-      .vr-lineup-spectrum,
       .vr-sorting-media,
       .vr-natural-photos {
         grid-template-columns: 1fr;
+      }
+      .vr-process-list {
+        gap: 12px;
       }
       .vr-lineup-card {
         grid-template-columns: 1fr;
       }
       .vr-lineup-media {
-        min-height: 300px;
+        min-height: 220px;
       }
       .vr-lineup-head {
         flex-direction: column;
-        gap: 10px;
+        gap: 8px;
       }
       .vr-hero-copy,
       .vr-cta-copy,
       .vr-step-copy {
-        padding: 24px 20px;
+        padding: 18px 16px;
+      }
+      .vr-step h3,
+      .vr-direct-copy h3 {
+        font-size: 22px;
       }
       .vr-quote {
-        font-size: 18px;
+        font-size: 17px;
+        padding: 18px 18px;
       }
       .vr-step-media,
       .vr-step-media img {
-        height: 200px;
+        height: 168px;
+      }
+      .vr-step p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+      .vr-step-result {
+        padding: 10px 12px;
+        font-size: 13px;
+        line-height: 1.6;
       }
       .vr-natural-section {
         padding-bottom: 48px;
@@ -1113,16 +1195,187 @@
       .vr-natural-photo {
         height: 220px;
       }
+      .vr-direct-media {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
       .vr-direct-media img {
-        height: 240px;
+        height: 170px;
+      }
+      .vr-direct-body,
+      .vr-flavor-grid {
+        gap: 14px;
+      }
+      .vr-direct-copy {
+        padding: 18px 16px;
+      }
+      .vr-direct-copy p,
+      .vr-direct-point p {
+        font-size: 14px;
+        line-height: 1.72;
+      }
+      .vr-direct-copy p:last-of-type,
+      .vr-direct-point p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+      .vr-direct-points {
+        gap: 10px;
+      }
+      .vr-direct-point {
+        padding: 15px 15px 14px;
+      }
+      .vr-flavor-path {
+        gap: 12px;
+      }
+      .vr-flavor-card {
+        padding: 15px;
+        gap: 12px;
+      }
+      .vr-flavor-card h3 {
+        font-size: 20px;
+        margin-bottom: 6px;
+      }
+      .vr-flavor-card p {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+      .vr-bars {
+        padding: 16px 16px 14px;
+      }
+      .vr-bars h3 {
+        margin-bottom: 12px;
+      }
+      .vr-radar-wrap {
+        margin-top: 12px;
+        padding-top: 12px;
+      }
+      .vr-radar-svg {
+        max-width: 180px;
+      }
+      .vr-radar-caption {
+        margin-top: 8px;
+        padding: 8px 10px;
+        font-size: 10px;
+      }
+      .vr-lineup-intro {
+        margin-bottom: 14px;
+      }
+      .vr-lineup-lead {
+        margin-bottom: 8px;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .vr-lineup-note {
+        font-size: 13px;
+        line-height: 1.65;
+      }
+      .vr-lineup-spectrum {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        margin-bottom: 14px;
+        padding-bottom: 4px;
+        scrollbar-width: none;
+      }
+      .vr-lineup-spectrum::-webkit-scrollbar {
+        display: none;
+      }
+      .vr-lineup-step {
+        min-width: 136px;
+        flex: 0 0 auto;
+        padding: 12px;
+      }
+      .vr-lineup-step::after {
+        display: none;
+      }
+      .vr-lineup-copy {
+        padding: 16px 16px 14px;
+        gap: 10px;
+      }
+      .vr-lineup-title {
+        font-size: 24px;
+      }
+      .vr-lineup-position {
+        font-size: 16px;
+        line-height: 1.45;
+      }
+      .vr-lineup-copy > p:last-of-type {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+      }
+      .vr-chip-row {
+        gap: 6px;
+      }
+      .vr-chip {
+        padding: 5px 10px;
+        font-size: 11px;
+      }
+      .vr-mobile-sticky-cta {
+        position: fixed;
+        left: 12px;
+        right: 12px;
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        z-index: 90;
+        display: grid;
+        grid-template-columns: 1.15fr .85fr;
+        gap: 8px;
+        padding: 8px;
+        border-radius: 16px;
+        border: 1px solid rgba(230,222,214,.92);
+        background: rgba(247,243,238,.96);
+        box-shadow: 0 14px 28px rgba(0,0,0,.12);
+        backdrop-filter: blur(14px);
+      }
+      .vr-mobile-sticky-cta .btn {
+        min-width: 0;
+        width: 100%;
+        min-height: 44px;
+        padding: 10px 14px;
+      }
+      .volcano-ruby-page .scroll-top {
+        right: 16px;
+        bottom: calc(92px + env(safe-area-inset-bottom, 0px));
       }
       .vr-actions .btn {
         width: 100%;
       }
     }
+    @media (max-width: 430px) {
+      .vr-quickjump-link {
+        min-height: 34px;
+        padding: 7px 11px;
+        font-size: 10px;
+      }
+      .vr-direct-media {
+        grid-template-columns: 1fr;
+      }
+      .vr-direct-media img {
+        height: 200px;
+      }
+      .vr-lineup-step {
+        min-width: 124px;
+      }
+      .vr-mobile-sticky-cta {
+        grid-template-columns: 1fr;
+      }
+      .vr-mobile-sticky-cta .btn {
+        min-height: 42px;
+      }
+      .volcano-ruby-page .scroll-top {
+        bottom: calc(138px + env(safe-area-inset-bottom, 0px));
+      }
+    }
   </style>
 </head>
-<body>
+<body class="volcano-ruby-page">
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="../index.html"><span class="brand-mark"><img src="../assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
@@ -1152,7 +1405,7 @@
       </div>
     </div>
 
-    <section class="section vr-hero">
+    <section class="section vr-hero" id="hero">
       <div class="container">
         <div class="card vr-hero-card">
           <div class="vr-hero-media">
@@ -1174,7 +1427,17 @@
       </div>
     </section>
 
-    <section class="section" style="padding-top:0;">
+    <div class="container vr-quickjump">
+      <nav class="vr-quickjump-nav" aria-label="볼케이노 루비 빠른 이동">
+        <a class="vr-quickjump-link" href="#process">공정</a>
+        <a class="vr-quickjump-link" href="#sourcing">공급 구조</a>
+        <a class="vr-quickjump-link" href="#flavor">풍미</a>
+        <a class="vr-quickjump-link" href="#lineup">라인업</a>
+        <a class="vr-quickjump-link" href="#cta">문의</a>
+      </nav>
+    </div>
+
+    <section class="section" style="padding-top:0;" id="summary">
       <div class="container">
         <div class="vr-summary-grid">
           <div class="vr-summary-card">
@@ -1297,7 +1560,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="process">
       <div class="container">
         <h2 class="section-title">한 잔이 되기까지, 다섯 단계</h2>
         <p class="section-lead">수확자의 손끝, 건조장의 태양, 선별기의 정밀함까지 모든 과정이 컵 안의 인상으로 연결됩니다.</p>
@@ -1430,7 +1693,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="sourcing">
       <div class="container">
         <h2 class="section-title">베트남 농장과 직접 계약 · 산지 직송</h2>
         <p class="section-lead">현지 농장과 곧바로 연결된 공급 구조는 원두의 상태를 더 빠르게 확인하고, 기준과 신선도를 더 선명하게 맞추기 위한 방식입니다.</p>
@@ -1468,7 +1731,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="flavor">
       <div class="container">
         <h2 class="section-title">한 잔 안에서 펼쳐지는 세 개의 층</h2>
         <p class="section-lead">볼케이노 루비는 첫 모금부터 끝맛까지 선명한 순서가 있는 커피입니다. 묵직한 시작, 과일의 중간층, 그리고 스모키한 마무리가 이어집니다.</p>
@@ -1576,7 +1839,7 @@
       </div>
     </section>
 
-    <section class="section alt">
+    <section class="section alt" id="lineup">
       <div class="container">
         <div class="vr-lineup-intro">
           <span class="vr-lineup-kicker">DRIP BAG LINEUP</span>
@@ -1756,7 +2019,7 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="cta">
       <div class="container">
         <div class="card vr-cta">
           <div class="vr-cta-media">
@@ -1788,6 +2051,15 @@
       <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
+
+  <div class="vr-mobile-sticky-cta" aria-label="모바일 빠른 문의">
+    <a class="btn btn-primary" href="../contact.html">문의하기</a>
+    <a class="btn btn-ghost" href="../products/">제품 보기</a>
+  </div>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
+    ↑
+  </button>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();

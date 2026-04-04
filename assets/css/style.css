@@ -587,6 +587,107 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   gap: 10px;
   flex-shrink: 0;
 }
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,.72);
+  color: var(--text);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.menu-toggle:hover {
+  background: #fff;
+}
+.menu-toggle:active {
+  transform: scale(.98);
+}
+.menu-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.menu-toggle-bar + .menu-toggle-bar {
+  margin-top: 4px;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+.mobile-nav-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 12, 8, .32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease;
+  z-index: 120;
+}
+.mobile-nav {
+  position: fixed;
+  top: 73px;
+  left: 16px;
+  right: 16px;
+  border-radius: 20px;
+  border: 1px solid var(--line);
+  background: rgba(247,243,238,.98);
+  box-shadow: 0 20px 50px rgba(0,0,0,.16);
+  padding: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity .18s ease, transform .18s ease;
+  z-index: 130;
+}
+.mobile-nav-inner {
+  display: grid;
+  gap: 6px;
+}
+.mobile-nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 700;
+  background: rgba(255,255,255,.66);
+  border: 1px solid rgba(230,222,214,.8);
+}
+.mobile-nav a:hover {
+  background: #fff;
+}
+.mobile-nav a::after {
+  content: "↗";
+  color: var(--accent);
+  font-size: 13px;
+}
+body.menu-open {
+  overflow: hidden;
+}
+body.menu-open .mobile-nav-backdrop,
+body.menu-open .mobile-nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+body.menu-open .mobile-nav {
+  transform: translateY(0);
+}
 
 /* ── 언어 토글 ── */
 .lang-toggle {
@@ -782,6 +883,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 /* 태블릿 */
 @media (max-width: 1024px) {
   .nav { display: none; }
+  .menu-toggle { display: inline-flex; }
   .stats-inner { gap: 0; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
   .tech-flow { grid-template-columns: 1fr; }
@@ -804,6 +906,11 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   .lang-toggle { display: flex; }
   .insta-link { width: 32px; height: 32px; }
   .btn.btn-primary { font-size: 12px; padding: 8px 12px; }
+  .mobile-nav {
+    top: 68px;
+    left: 12px;
+    right: 12px;
+  }
 
   /* 히어로 */
   .hero { padding: 44px 0 36px; }
@@ -864,6 +971,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   .stats-inner { grid-template-columns: 1fr 1fr; }
   .stat-num { font-size: 20px; }
   .header-actions .btn { display: none; } /* 스토어 버튼 헤더에서 숨김 — 히어로에 있음 */
+  .mobile-nav { top: 64px; }
 }
 
 /* iPhone X 노치 대응 (Safe Area) */

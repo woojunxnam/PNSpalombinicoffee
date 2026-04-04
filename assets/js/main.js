@@ -112,11 +112,125 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const target = document.querySelector(href);
     if (target) {
       e.preventDefault();
-      const headerH = document.querySelector('.site-header').offsetHeight;
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - headerH - 16, behavior: 'smooth' });
+      const headerEl = document.querySelector('.site-header');
+      const headerH = headerEl ? headerEl.offsetHeight : 0;
+      const quickJump = document.querySelector('.vr-quickjump');
+      const quickJumpH = (quickJump && window.innerWidth <= 820) ? quickJump.offsetHeight : 0;
+      const extraOffset = quickJumpH ? (quickJumpH + 10) : 16;
+      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - headerH - extraOffset, behavior: 'smooth' });
     }
   });
 });
+
+/* ── 8.2. Volcano Ruby Quick Jump Active State ── */
+(function () {
+  const quickLinks = [...document.querySelectorAll('.vr-quickjump-link[href^="#"]')];
+  if (!quickLinks.length) return;
+
+  const sections = quickLinks
+    .map(link => document.querySelector(link.getAttribute('href')))
+    .filter(Boolean);
+
+  if (!sections.length) return;
+
+  const setActive = (id) => {
+    quickLinks.forEach(link => {
+      link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+    });
+  };
+
+  const quickObserver = new IntersectionObserver((entries) => {
+    const visible = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+    if (visible?.target?.id) setActive(visible.target.id);
+  }, {
+    rootMargin: '-24% 0px -60% 0px',
+    threshold: [0.15, 0.35, 0.6]
+  });
+
+  sections.forEach(section => quickObserver.observe(section));
+  setActive(sections[0].id);
+})();
+
+/* ── 8.5. Mobile Navigation ── */
+(function () {
+  const siteHeader = document.querySelector('.site-header');
+  const headerInner = document.querySelector('.header-inner');
+  if (!siteHeader || !headerInner) return;
+
+  const headerActions = headerInner.querySelector('.header-actions') || headerInner;
+  const nestedPage = /\/(products|machines)\//.test(window.location.pathname.replace(/\\/g, '/'));
+  const prefix = nestedPage ? '../' : '';
+  const panelId = 'mobileNavPanel';
+
+  let toggle = headerInner.querySelector('[data-mobile-menu-toggle]');
+  if (!toggle) {
+    toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'menu-toggle';
+    toggle.setAttribute('aria-label', '모바일 메뉴 열기');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', panelId);
+    toggle.setAttribute('data-mobile-menu-toggle', '');
+    toggle.innerHTML = '<span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span>';
+    headerActions.appendChild(toggle);
+  }
+
+  let backdrop = document.querySelector('.mobile-nav-backdrop');
+  if (!backdrop) {
+    backdrop = document.createElement('div');
+    backdrop.className = 'mobile-nav-backdrop';
+    backdrop.setAttribute('hidden', '');
+    document.body.appendChild(backdrop);
+  }
+
+  let panel = document.getElementById(panelId);
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.className = 'mobile-nav';
+    panel.id = panelId;
+    panel.setAttribute('hidden', '');
+    panel.innerHTML = `
+      <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
+        <a href="${prefix}index.html">홈</a>
+        <a href="${prefix}products/">제품</a>
+        <a href="${prefix}products/volcano-ruby.html">볼케이노 루비</a>
+        <a href="${prefix}contact.html">문의하기</a>
+      </nav>
+    `;
+    document.body.appendChild(panel);
+  }
+
+  const setMenu = (open) => {
+    document.body.classList.toggle('menu-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? '모바일 메뉴 닫기' : '모바일 메뉴 열기');
+    if (open) {
+      backdrop.removeAttribute('hidden');
+      panel.removeAttribute('hidden');
+    } else {
+      backdrop.setAttribute('hidden', '');
+      panel.setAttribute('hidden', '');
+    }
+  };
+
+  toggle.addEventListener('click', () => {
+    setMenu(toggle.getAttribute('aria-expanded') !== 'true');
+  });
+
+  backdrop.addEventListener('click', () => setMenu(false));
+  panel.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => setMenu(false));
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) setMenu(false);
+  });
+})();
 
 /* ── 9. FAQ 아코디언 ── */
 /* scrollHeight 계산 버그 수정: overflow:hidden 상태에서도 안정적으로 작동하는 고정값 방식 사용 */
