@@ -296,6 +296,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     const isMachinePage = /\/machines\//.test(pathname);
     const isProductPage = /\/products\//.test(pathname);
     const isListPage = /\/(?:products|machines)\/(?:index\.html)?$/.test(pathname);
+    const isProductsListPage = /\/products\/(?:index\.html)?$/.test(pathname);
 
     let secondaryLabel = '\uC81C\uD488 \uBCF4\uAE30';
     let secondaryHref = `${prefix}products/`;
@@ -304,8 +305,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       secondaryLabel = isListPage ? '\uD648\uC73C\uB85C' : '\uBA38\uC2E0 \uBCF4\uAE30';
       secondaryHref = isListPage ? `${prefix}index.html` : `${prefix}machines/`;
     } else if (isProductPage) {
-      secondaryLabel = isListPage ? '\uD648\uC73C\uB85C' : '\uC81C\uD488 \uBCF4\uAE30';
-      secondaryHref = isListPage ? `${prefix}index.html` : `${prefix}products/`;
+      secondaryLabel = '\uC81C\uD488 \uBCF4\uAE30';
+      secondaryHref = isProductsListPage ? '#productsCatalog' : `${prefix}products/`;
     }
 
     let sticky = document.querySelector('[data-mobile-sticky-cta]');
