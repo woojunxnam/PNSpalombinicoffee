@@ -234,6 +234,99 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
 /* ── 9. FAQ 아코디언 ── */
 /* scrollHeight 계산 버그 수정: overflow:hidden 상태에서도 안정적으로 작동하는 고정값 방식 사용 */
+/* 8.6. Mobile Navigation UI Polish + Global CTA */
+(function () {
+  const pathname = window.location.pathname.replace(/\\/g, '/');
+  const nestedPage = /\/(products|machines)\//.test(pathname);
+  const prefix = nestedPage ? '../' : '';
+
+  const toggle = document.querySelector('[data-mobile-menu-toggle]');
+  const panel = document.getElementById('mobileNavPanel');
+  const backdrop = document.querySelector('.mobile-nav-backdrop');
+
+  if (toggle) {
+    toggle.setAttribute('aria-label', toggle.getAttribute('aria-expanded') === 'true' ? '\uBAA8\uBC14\uC77C \uBA54\uB274 \uB2EB\uAE30' : '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
+    toggle.innerHTML = '<span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>';
+  }
+
+  if (panel) {
+    const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
+    const menuItems = [
+      { href: `${prefix}index.html`, label: '\uD648' },
+      { href: `${prefix}products/`, label: '\uC81C\uD488' },
+      { href: `${prefix}products/volcano-ruby.html`, label: '\uBCFC\uCF00\uC774\uB178 \uB8E8\uBE44' },
+      { href: `${prefix}contact.html`, label: '\uBB38\uC758\uD558\uAE30' }
+    ];
+
+    panel.setAttribute('data-global-mobile-nav', '');
+    panel.innerHTML = `
+      <nav class="mobile-nav-inner" aria-label="\uBAA8\uBC14\uC77C \uBA54\uB274">
+        ${menuItems.map((item) => {
+          const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
+          const isCurrent = currentPath === itemPath;
+          return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}</a>`;
+        }).join('')}
+      </nav>
+    `;
+    panel.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        document.body.classList.remove('menu-open');
+        backdrop?.setAttribute('hidden', '');
+        panel.setAttribute('hidden', '');
+        toggle?.setAttribute('aria-expanded', 'false');
+        toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
+      });
+    });
+  }
+
+  toggle?.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-label', expanded ? '\uBAA8\uBC14\uC77C \uBA54\uB274 \uB2EB\uAE30' : '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
+  });
+  backdrop?.addEventListener('click', () => {
+    toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 1024) {
+      toggle?.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBA54\uB274 \uC5F4\uAE30');
+    }
+  });
+
+  if (!/\/contact\.html$/.test(pathname)) {
+    const isMachinePage = /\/machines\//.test(pathname);
+    const isProductPage = /\/products\//.test(pathname);
+    const isListPage = /\/(?:products|machines)\/(?:index\.html)?$/.test(pathname);
+
+    let secondaryLabel = '\uC81C\uD488 \uBCF4\uAE30';
+    let secondaryHref = `${prefix}products/`;
+
+    if (isMachinePage) {
+      secondaryLabel = isListPage ? '\uD648\uC73C\uB85C' : '\uBA38\uC2E0 \uBCF4\uAE30';
+      secondaryHref = isListPage ? `${prefix}index.html` : `${prefix}machines/`;
+    } else if (isProductPage) {
+      secondaryLabel = isListPage ? '\uD648\uC73C\uB85C' : '\uC81C\uD488 \uBCF4\uAE30';
+      secondaryHref = isListPage ? `${prefix}index.html` : `${prefix}products/`;
+    }
+
+    let sticky = document.querySelector('[data-mobile-sticky-cta]');
+    if (!sticky) {
+      sticky = document.createElement('div');
+      sticky.className = 'mobile-sticky-cta';
+      sticky.setAttribute('data-mobile-sticky-cta', '');
+      sticky.setAttribute('aria-label', '\uBAA8\uBC14\uC77C \uBE60\uB978 \uC774\uB3D9');
+      sticky.innerHTML = `
+        <a class="btn btn-primary" href="${prefix}contact.html">\uBB38\uC758\uD558\uAE30</a>
+        <a class="btn btn-ghost" href="${secondaryHref}">${secondaryLabel}</a>
+      `;
+      document.body.appendChild(sticky);
+    } else {
+      sticky.classList.add('mobile-sticky-cta');
+      sticky.setAttribute('data-mobile-sticky-cta', '');
+    }
+    document.body.classList.add('has-mobile-sticky-cta');
+  }
+})();
+
 document.querySelectorAll('.faq-question').forEach(btn => {
   btn.addEventListener('click', function () {
     const item   = this.closest('.faq-item');

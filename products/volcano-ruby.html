@@ -144,12 +144,6 @@
       color: var(--accent);
       border-color: rgba(192,122,61,.24);
     }
-    .vr-mobile-sticky-cta {
-      display: none;
-    }
-    .volcano-ruby-page .scroll-top {
-      display: none;
-    }
     .vr-summary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -1116,9 +1110,6 @@
       }
     }
     @media (max-width: 820px) {
-      .volcano-ruby-page {
-        padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
-      }
       .volcano-ruby-page .scroll-top {
         display: flex;
       }
@@ -1318,32 +1309,6 @@
         padding: 5px 10px;
         font-size: 11px;
       }
-      .vr-mobile-sticky-cta {
-        position: fixed;
-        left: 12px;
-        right: 12px;
-        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
-        z-index: 90;
-        display: grid;
-        grid-template-columns: 1.15fr .85fr;
-        gap: 8px;
-        padding: 8px;
-        border-radius: 16px;
-        border: 1px solid rgba(230,222,214,.92);
-        background: rgba(247,243,238,.96);
-        box-shadow: 0 14px 28px rgba(0,0,0,.12);
-        backdrop-filter: blur(14px);
-      }
-      .vr-mobile-sticky-cta .btn {
-        min-width: 0;
-        width: 100%;
-        min-height: 44px;
-        padding: 10px 14px;
-      }
-      .volcano-ruby-page .scroll-top {
-        right: 16px;
-        bottom: calc(92px + env(safe-area-inset-bottom, 0px));
-      }
       .vr-actions .btn {
         width: 100%;
       }
@@ -1362,15 +1327,6 @@
       }
       .vr-lineup-step {
         min-width: 124px;
-      }
-      .vr-mobile-sticky-cta {
-        grid-template-columns: 1fr;
-      }
-      .vr-mobile-sticky-cta .btn {
-        min-height: 42px;
-      }
-      .volcano-ruby-page .scroll-top {
-        bottom: calc(138px + env(safe-area-inset-bottom, 0px));
       }
     }
   </style>
@@ -2051,11 +2007,6 @@
       <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
-
-  <div class="vr-mobile-sticky-cta" aria-label="모바일 빠른 문의">
-    <a class="btn btn-primary" href="../contact.html">문의하기</a>
-    <a class="btn btn-ghost" href="../products/">제품 보기</a>
-  </div>
 
   <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
     ↑
