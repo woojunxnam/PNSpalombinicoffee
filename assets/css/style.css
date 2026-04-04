@@ -1,4 +1,4 @@
-:root{
+﻿:root{
   --bg: #F7F3EE;
   --bg2: #F1ECE6;
   --card: rgba(255,255,255,.72);
@@ -35,7 +35,7 @@ body{
 a{ color:inherit; text-decoration:none; }
 .container{ width:min(var(--container), calc(100% - 44px)); margin:0 auto; }
 
-/* ?�?� HEADER ?�?� */
+/* ?? HEADER ?? */
 .site-header{
   position: sticky; top:0; z-index:100;
   background: rgba(247,243,238,.88);
@@ -61,7 +61,7 @@ a{ color:inherit; text-decoration:none; }
   object-fit: contain;
 }
 
-/* ?�?� 줄바�?방�? ???�어 중간???�기지 ?�도�??�?� */
+/* ?? 以꾨컮轅?諛⑹? ???⑥뼱 以묎컙???딄린吏 ?딅룄濡??? */
 body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .machine-card-body p, .products-preview-desc, .section-lead {
   word-break: keep-all;
@@ -76,7 +76,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 }
 .nav a:hover{ background: rgba(255,255,255,.8); color: var(--text); }
 
-/* ?�?� BUTTONS ?�?� */
+/* ?? BUTTONS ?? */
 .btn{
   display:inline-flex; align-items:center; justify-content:center;
   padding: 11px 18px;
@@ -96,7 +96,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .btn-ghost:hover{ background:#fff; }
 .btn-large{ padding: 14px 26px; font-size: 16px; }
 
-/* ?�?� HERO ?�?� */
+/* ?? HERO ?? */
 .hero{
   padding: 74px 0 52px;
   border-bottom:1px solid var(--line);
@@ -143,7 +143,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   position: relative;
   background: linear-gradient(135deg, #e8ddd0, #c8b99a);
 }
-/* ?�라?�드??*/
+/* ?щ씪?대뱶??*/
 .hero-slide {
   position: absolute;
   inset: 0;
@@ -154,7 +154,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 }
 .hero-slide.active { opacity: 1; }
 
-/* ?�라?�드 ?�디케?�터 */
+/* ?щ씪?대뱶 ?몃뵒耳?댄꽣 */
 .hero-dots {
   position: absolute;
   bottom: 12px;
@@ -174,9 +174,9 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   padding: 0;
 }
 .hero-dot.active { background: #fff; transform: scale(1.3); }
-.hero-media::after{ display: none; } /* 박스 ?�버?�이 ?�거 */
+.hero-media::after{ display: none; } /* 諛뺤뒪 ?ㅻ쾭?덉씠 ?쒓굅 */
 
-/* ?�?� STATS BAR ?�?� */
+/* ?? STATS BAR ?? */
 .stats-bar{
   background: var(--accent2);
   padding: 28px 0;
@@ -208,17 +208,17 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   flex-shrink:0;
 }
 
-/* ?�?� SECTIONS ?�?� */
+/* ?? SECTIONS ?? */
 .section{ padding: 80px 0; }
 .section.alt{ background: var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
 .section-title{ font-family: var(--serif); font-weight:600; font-size: 30px; margin: 0 0 12px; }
 .section-lead{ color: var(--muted); margin: 0 0 32px; max-width: 80ch; font-size: 16px; line-height: 1.8; }
 
-/* ?�?� GRIDS ?�?� */
+/* ?? GRIDS ?? */
 .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid-3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
 
-/* ?�?� CARDS ?�?� */
+/* ?? CARDS ?? */
 .card{
   background: var(--card); border: 1px solid var(--line);
   border-radius: var(--r); padding: 24px; box-shadow: var(--shadow2);
@@ -228,7 +228,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .card p:last-child{ margin-bottom:0; }
 .card a{ color: var(--accent); }
 
-/* ?�?� TECHNOLOGY SECTION ?�?� */
+/* ?? TECHNOLOGY SECTION ?? */
 .tech-flow{
   display:grid;
   grid-template-columns: 1fr auto 1fr;
@@ -262,10 +262,10 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .result-card h4{ margin:0 0 8px; font-family:var(--serif); font-size:16px; font-weight:600; }
 .result-card p{ margin:0; color:var(--muted); font-size:14px; line-height:1.65; }
 
-/* ?�?� HERITAGE ?�?� */
+/* ?? HERITAGE ?? */
 .heritage-card .heritage-flag{ font-size:32px; margin-bottom:12px; }
 
-/* ?�?� CALLOUT ?�?� */
+/* ?? CALLOUT ?? */
 .callout{
   margin-top: 32px;
   padding: 20px 24px;
@@ -278,7 +278,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   line-height: 1.7;
 }
 
-/* ?�?� PRODUCTS (B2C) ?�?� */
+/* ?? PRODUCTS (B2C) ?? */
 .product-showcase{ display:flex; justify-content:center; }
 .product-main-card{
   background: var(--card); border:1px solid var(--line);
@@ -307,7 +307,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .product-feature strong{ display:block; font-size:14px; margin-bottom:3px; }
 .product-feature p{ margin:0; color:var(--muted); font-size:13px; line-height:1.55; }
 
-/* ?�?� B2B ?�?� */
+/* ?? B2B ?? */
 .b2b-card{ transition: transform .15s ease, box-shadow .15s ease; }
 .b2b-card:hover{ transform:translateY(-3px); box-shadow: var(--shadow); }
 .b2b-icon{ font-size:32px; margin-bottom:12px; }
@@ -323,7 +323,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .b2b-cta p{ margin:0; color:var(--muted); font-size:15px; flex:1; min-width:180px; }
 .b2b-cta .btn { flex-shrink: 0; }
 
-/* ?�?� MISC ?�?� */
+/* ?? MISC ?? */
 .muted{ color:var(--muted); font-size:13px; }
 .cta-row{ display:flex; gap:12px; flex-wrap:wrap; }
 
@@ -331,18 +331,18 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .sources ul{ margin:0; padding-left:18px; color:var(--muted); font-size:13px; line-height:2; }
 .sources a{ text-decoration:underline; color:var(--accent); }
 
-/* ?�?� FOOTER ?�?� */
+/* ?? FOOTER ?? */
 .site-footer{ padding:32px 0; border-top:1px solid var(--line); }
 .footer-inner{ text-align:center; }
 .footer-inner p{ margin:0 0 6px; color:var(--muted); font-size:13px; }
 .footer-inner p:last-child{ margin:0; }
 .footer-sub{ font-size:12px !important; opacity:.7; }
 
-/* ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    ANIMATIONS & SCROLL REVEAL
-   ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═ */
+   ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 
-/* 기본 ?�장 ?�니메이?????�래?�서 ?�로 ?�이?�인 */
+/* 湲곕낯 ?깆옣 ?좊땲硫붿씠?????꾨옒?먯꽌 ?꾨줈 ?섏씠?쒖씤 */
 .card,
 .tech-step,
 .result-card,
@@ -360,7 +360,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
               transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ?�어로는 ?�이지 로드 ??바로 보여???��?�???빠르�?*/
+/* ?덉뼱濡쒕뒗 ?섏씠吏 濡쒕뱶 ??諛붾줈 蹂댁뿬???섎?濡???鍮좊Ⅴ寃?*/
 .hero-copy {
   transform: translateX(-24px);
   transition-duration: 0.7s;
@@ -372,45 +372,45 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transition-delay: 0.25s;
 }
 
-/* is-visible ?�래?��? 붙으�??��???*/
+/* is-visible ?대옒?ㅺ? 遺숈쑝硫??섑???*/
 .is-visible {
   opacity: 1 !important;
   transform: translate(0, 0) !important;
 }
 
-/* ?�더 ?�크�???그림??*/
+/* ?ㅻ뜑 ?ㅽ겕濡???洹몃┝??*/
 .site-header.scrolled {
   box-shadow: 0 4px 24px rgba(43,29,20,.10);
 }
 
-/* ?�비게이???�성 링크 */
+/* ?ㅻ퉬寃뚯씠???쒖꽦 留곹겕 */
 .nav a.active {
   background: rgba(255,255,255,.85);
   color: var(--accent);
 }
 
-/* 버튼 리플 ?�니메이??*/
+/* 踰꾪듉 由ы뵆 ?좊땲硫붿씠??*/
 @keyframes ripple {
   to { transform: scale(3.5); opacity: 0; }
 }
 
-/* ?�어�??��?지 마우???�럴?�스 */
+/* ?덉뼱濡??대?吏 留덉슦???⑤윺?숈뒪 */
 .hero-image {
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: transform;
 }
 
-/* section-title, section-lead???�간 ?�른 방향 */
+/* section-title, section-lead???쎄컙 ?ㅻⅨ 諛⑺뼢 */
 .section-title { transform: translateY(20px); transition-delay: 0s; }
 .section-lead  { transform: translateY(20px); transition-delay: 0.08s; }
 
-/* stats bar ?�자 ?�장 */
+/* stats bar ?レ옄 ?깆옣 */
 .stat {
   transform: translateY(16px);
   transition-delay: 0s;
 }
 
-/* 카드 ?�버 ???�짝 ?�어?�리�?*/
+/* 移대뱶 ?몃쾭 ???댁쭩 ?ㅼ뼱?щ━湲?*/
 .card:hover,
 .result-card:hover {
   transform: translateY(-4px);
@@ -418,12 +418,12 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* callout ?�스 ?�과 */
+/* callout ?꾩뒪 ?④낵 */
 .callout {
   transform: translateY(20px);
 }
 
-/* prefers-reduced-motion: ?�니메이??비선???�용??배려 */
+/* prefers-reduced-motion: ?좊땲硫붿씠??鍮꾩꽑???ъ슜??諛곕젮 */
 @media (prefers-reduced-motion: reduce) {
   .card, .tech-step, .result-card, .b2b-card,
   .stat, .product-main-card, .callout,
@@ -435,7 +435,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   }
 }
 
-/* ?�메??버튼 - ?�두리형 (?�스??가?�성) */
+/* ?대찓??踰꾪듉 - ?뚮몢由ы삎 (?띿뒪??媛?낆꽦) */
 .btn-outline {
   background: transparent;
   color: var(--accent);
@@ -446,7 +446,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   color: #fff;
 }
 
-/* ?�리?��? �?? ?�시 */
+/* ?ㅻ━?곗? 援?? ?쒖떆 */
 .heritage-flag {
   font-size: 18px;
   font-weight: 800;
@@ -455,7 +455,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   letter-spacing: .3px;
 }
 
-/* FAQ ?�계�??�용�?*/
+/* FAQ ?④퀎蹂??ъ슜踰?*/
 .faq-steps {
   display: flex;
   flex-direction: column;
@@ -497,7 +497,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   border-top: 1px solid rgba(192,122,61,.15);
 }
 
-/* ?�?� �?�� (flag-icons ?�이브러�? ?�?� */
+/* ?? 援?린 (flag-icons ?쇱씠釉뚮윭由? ?? */
 .heritage-flag {
   font-size: 16px;
   font-weight: 800;
@@ -514,11 +514,11 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   flex-shrink: 0;
 }
 
-/* ?�?� ?�롭?�운 ?�비게이???�?� */
+/* ?? ?쒕∼?ㅼ슫 ?ㅻ퉬寃뚯씠???? */
 .nav-item { position: relative; }
 .nav-item > a { display: flex; align-items: center; gap: 4px; }
 .nav-item > a::after {
-  content: "??;
+  content: "▾";
   font-size: 10px;
   opacity: .6;
   transition: transform .2s ease;
@@ -526,14 +526,14 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .nav-item:hover > a::after,
 .nav-item.open > a::after { transform: rotate(180deg); }
 
-/* 보이지 ?�는 브리지 ?�역 ??마우?��? ?�롭?�운?�로 ?�동?�는 중에 ?�히지 ?�게 */
+/* 蹂댁씠吏 ?딅뒗 釉뚮━吏 ?곸뿭 ??留덉슦?ㅺ? ?쒕∼?ㅼ슫?쇰줈 ?대룞?섎뒗 以묒뿉 ?ロ엳吏 ?딄쾶 */
 .nav-item::after {
   content: '';
   position: absolute;
   top: 100%;
   left: -20px;
   right: -20px;
-  height: 16px; /* 링크?� ?�롭?�운 ?�이??�?�� 채�? */
+  height: 16px; /* 留곹겕? ?쒕∼?ㅼ슫 ?ъ씠??媛?쓣 梨꾩? */
   z-index: 199;
 }
 
@@ -550,7 +550,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   padding: 8px;
   opacity: 0;
   pointer-events: none;
-  /* ?�라�????�레??200ms 추�? ???�릭???�간 ?�보 */
+  /* ?щ씪吏????쒕젅??200ms 異붽? ???대┃???쒓컙 ?뺣낫 */
   transition: opacity .15s ease .0s, transform .15s ease .0s;
   z-index: 200;
 }
@@ -561,7 +561,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transform: translateX(-50%) translateY(0);
   transition: opacity .15s ease, transform .15s ease;
 }
-/* 마우?��? 벗어????바로 ???�히?�록 */
+/* 留덉슦?ㅺ? 踰쀬뼱????諛붾줈 ???ロ엳?꾨줉 */
 .nav-item:not(:hover) .nav-dropdown {
   transition-delay: 150ms;
 }
@@ -580,7 +580,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .nav-dropdown a:hover { background: var(--accent-light); color: var(--accent); }
 .nav-dropdown-icon { font-size: 16px; }
 
-/* ?�?� ?�더 ?�른�??�션 그룹 ?�?� */
+/* ?? ?ㅻ뜑 ?ㅻⅨ履??≪뀡 洹몃９ ?? */
 .header-actions {
   display: flex;
   align-items: center;
@@ -684,7 +684,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   color: var(--accent);
 }
 .mobile-nav a::after {
-  content: "��";
+  content: "↗";
   color: var(--accent);
   font-size: 13px;
 }
@@ -704,7 +704,7 @@ body.menu-open .mobile-nav {
   display: none;
 }
 
-/* ?�?� ?�어 ?��? ?�?� */
+/* ?? ?몄뼱 ?좉? ?? */
 .lang-toggle {
   display: flex;
   border: 1px solid var(--line);
@@ -727,7 +727,7 @@ body.menu-open .mobile-nav {
 .lang-btn:hover  { background: rgba(255,255,255,.8); color: var(--text); }
 .lang-btn.active { background: var(--accent); color: #fff; }
 
-/* ?�?� ?�스?�그램 ?�이�?(?�더) ?�?� */
+/* ?? ?몄뒪?洹몃옩 ?꾩씠肄?(?ㅻ뜑) ?? */
 .insta-link {
   display: flex;
   align-items: center;
@@ -746,7 +746,7 @@ body.menu-open .mobile-nav {
   transform: scale(1.08);
 }
 
-/* ?�?� ?�터 ?�셜 ?�?� */
+/* ?? ?명꽣 ?뚯뀥 ?? */
 .footer-social {
   margin-bottom: 10px;
 }
@@ -760,7 +760,7 @@ body.menu-open .mobile-nav {
 }
 .footer-insta:hover { color: #E1306C; }
 
-/* ?�?� REVIEWS ?�?� */
+/* ?? REVIEWS ?? */
 .reviews-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -824,7 +824,7 @@ body.menu-open .mobile-nav {
   font-size: 15px;
 }
 
-/* ?�?� FAQ ?�?� */
+/* ?? FAQ ?? */
 .faq-list {
   display: flex;
   flex-direction: column;
@@ -891,11 +891,11 @@ body.menu-open .mobile-nav {
   text-decoration: underline;
 }
 
-/* ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    MOBILE RESPONSIVE ??iPhone X & Small screens
-   ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═ */
+   ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 
-/* ?�블�?*/
+/* ?쒕툝由?*/
 @media (max-width: 1024px) {
   .nav { display: none; }
   .menu-toggle { display: inline-flex; }
@@ -906,11 +906,11 @@ body.menu-open .mobile-nav {
   .product-features { grid-template-columns: 1fr 1fr; }
 }
 
-/* 모바??*/
+/* 紐⑤컮??*/
 @media (max-width: 860px) {
   :root { --container: calc(100% - 32px); }
 
-  /* ?�더 */
+  /* ?ㅻ뜑 */
   .site-header { padding: 0; }
   .header-inner {
     flex-wrap: wrap;
@@ -958,7 +958,7 @@ body.menu-open .mobile-nav {
     bottom: calc(96px + env(safe-area-inset-bottom));
   }
 
-  /* ?�어�?*/
+  /* ?덉뼱濡?*/
   .hero { padding: 44px 0 36px; }
   .hero-inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-title { font-size: clamp(26px, 7vw, 38px); }
@@ -977,21 +977,21 @@ body.menu-open .mobile-nav {
   .stat-label { font-size: 11px; }
   .stat-divider { display: none; }
 
-  /* ?�션 */
+  /* ?뱀뀡 */
   .section { padding: 48px 0; }
   .section-title { font-size: 24px; }
   .section-lead { font-size: 14px; }
 
-  /* 그리??*/
+  /* 洹몃━??*/
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
 
-  /* 기술 ?�션 */
+  /* 湲곗닠 ?뱀뀡 */
   .tech-flow { grid-template-columns: 1fr; }
   .tech-arrow { transform: rotate(90deg); justify-self: center; font-size: 24px; }
   .tech-step { padding: 20px; }
 
-  /* ?�품 */
+  /* ?쒗뭹 */
   .product-main-card { padding: 22px 18px; }
   .product-features { grid-template-columns: 1fr; }
   .btn-large { font-size: 14px; padding: 12px 20px; width: 100%; justify-content: center; }
@@ -999,28 +999,28 @@ body.menu-open .mobile-nav {
   /* B2B */
   .b2b-cta { flex-direction: column; }
 
-  /* 리뷰 */
+  /* 由щ럭 */
   .reviews-grid { grid-template-columns: 1fr; }
   .reviews-cta { flex-direction: column; align-items: flex-start; }
 
-  /* 콜아??*/
+  /* 肄쒖븘??*/
   .callout { font-size: 14px; padding: 14px 16px; }
 
-  /* ?�터 */
+  /* ?명꽣 */
   .site-footer { padding: 24px 0; }
   .footer-sub { font-size: 11px; }
 }
 
-/* ?�형 모바??(iPhone SE ?? */
+/* ?뚰삎 紐⑤컮??(iPhone SE ?? */
 @media (max-width: 390px) {
   .hero-title { font-size: 24px; }
   .stats-inner { grid-template-columns: 1fr 1fr; }
   .stat-num { font-size: 20px; }
-  .header-actions .btn { display: none; } /* ?�토??버튼 ?�더?�서 ?��? ???�어로에 ?�음 */
+  .header-actions .btn { display: none; } /* ?ㅽ넗??踰꾪듉 ?ㅻ뜑?먯꽌 ?④? ???덉뼱濡쒖뿉 ?덉쓬 */
   .mobile-nav { top: 64px; }
 }
 
-/* iPhone X ?�치 ?�??(Safe Area) */
+/* iPhone X ?몄튂 ???(Safe Area) */
 @media (max-width: 390px) {
   .mobile-sticky-cta {
     grid-template-columns: 1fr;
@@ -1047,9 +1047,9 @@ body.menu-open .mobile-nav {
   }
 }
 
-/* ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    PRODUCTS PAGE ??products.html
-   ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═ */
+   ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 .page-hero {
   padding: 40px 0 20px;
   background:
@@ -1154,9 +1154,9 @@ body.menu-open .mobile-nav {
 }
 .product-card-actions .btn { flex: 1; font-size: 13px; padding: 10px 12px; }
 
-/* ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    MACHINES PAGE ??machines.html
-   ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═ */
+   ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 .machines-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1250,7 +1250,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .machine-card-actions { display: flex; gap: 8px; }
 .machine-card-actions .btn { flex: 1; font-size: 13px; padding: 10px 12px; }
 
-/* ?�?� 머신 ?�세 ?�이지 ?�?� */
+/* ?? 癒몄떊 ?곸꽭 ?섏씠吏 ?? */
 .machine-detail-grid {
   display: grid;
   grid-template-columns: 1.1fr .9fr;
@@ -1277,7 +1277,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .specs-table tbody tr:hover { background: rgba(192,122,61,.06); }
 .features-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .features-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 14px; color: var(--muted); line-height: 1.6; }
-.features-list li::before { content: "??; color: var(--accent); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+.features-list li::before { content: "✓"; color: var(--accent); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
 .machine-cta-box {
   background: linear-gradient(135deg, rgba(192,122,61,.08), rgba(192,122,61,.03));
   border: 1px solid rgba(192,122,61,.2);
@@ -1290,7 +1290,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .machine-cta-box p { margin: 0; font-size: 14px; color: var(--muted); }
 .machine-cta-box .btn { width: 100%; justify-content: center; }
 
-/* 빵�??�러�??�비 */
+/* 鍮듬??ㅻ윭湲??ㅻ퉬 */
 .breadcrumb {
   padding: 14px 0;
   font-size: 13px;
@@ -1304,7 +1304,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 .breadcrumb a:hover { color: var(--accent); }
 .breadcrumb-sep { opacity: .4; }
 
-/* 반응?????�품/머신 ?�이지 */
+/* 諛섏쓳?????쒗뭹/癒몄떊 ?섏씠吏 */
 @media (max-width: 860px) {
   .products-grid { grid-template-columns: 1fr; padding: 32px 0; }
   .machines-grid { grid-template-columns: 1fr; padding: 32px 0; }
@@ -1316,9 +1316,9 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .machines-grid { grid-template-columns: 1fr 1fr; }
 }
 
-/* ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    PRODUCTS PREVIEW ??2-column side by side (index.html)
-   ?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═?�═ */
+   ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 .products-preview-grid {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -1414,7 +1414,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 }
 .products-preview-actions .btn { font-size: 13px; padding: 10px 16px; }
 
-/* ?�?� Signature feature under Products ?�?� */
+/* ?? Signature feature under Products ?? */
 .signature-feature {
   margin-top: 28px;
 }
@@ -1505,13 +1505,13 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   }
 }
 
-/* ?�?� machine-card 버튼 ?�단 ?�렬 ?�?� */
+/* ?? machine-card 踰꾪듉 ?섎떒 ?뺣젹 ?? */
 .machine-card { display: flex; flex-direction: column; }
 .machine-card-body { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
 .machine-specs-mini { flex: 1; align-content: start; }
 .machine-card-actions { margin-top: auto; padding-top: 14px; }
 
-/* ?�?� B2B CTA 버튼 간격 ?�정 ?�?� */
+/* ?? B2B CTA 踰꾪듉 媛꾧꺽 ?섏젙 ?? */
 .b2b-cta {
   display: flex;
   align-items: center;
@@ -1525,7 +1525,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 }
 .b2b-cta p { margin: 0; flex: 1; min-width: 200px; font-size: 14px; color: var(--muted); }
 
-/* ?�?� machines 목록 ??카테고리 구분 ?�?� */
+/* ?? machines 紐⑸줉 ??移댄뀒怨좊━ 援щ텇 ?? */
 .machines-category { margin-top: 48px; }
 .machines-category-title {
   font-family: var(--serif);
@@ -1548,7 +1548,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   letter-spacing: .5px;
 }
 
-/* ?�?� ?�품 ?�세 ?�이지 (products ?�더?? ?�?� */
+/* ?? ?쒗뭹 ?곸꽭 ?섏씠吏 (products ?대뜑?? ?? */
 .product-detail-grid {
   display: grid;
   grid-template-columns: .9fr 1.1fr;
@@ -1603,7 +1603,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .product-highlights { grid-template-columns: 1fr 1fr; }
 }
 
-/* ?�?� 블렌???�션 (products page) ?�?� */
+/* ?? 釉붾젋???뱀뀡 (products page) ?? */
 .blends-section { margin-top: 0; padding-top: 20px !important; padding-bottom: 0 !important; }
 .blends-grid {
   display: grid;
@@ -1672,7 +1672,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .blend-poster { width: 100%; height: auto; }
 }
 
-/* ?�?� 머신 ?�이지 ?�로??비디???�어�??�?� */
+/* ?? 癒몄떊 ?섏씠吏 ?몃줈??鍮꾨뵒???덉뼱濡??? */
 .machine-hero-video {
   width: 100%;
   background: var(--accent2);
@@ -1696,7 +1696,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   border-radius: 18px;
   box-shadow: 0 20px 60px rgba(0,0,0,.6);
   display: block;
-  /* 브라?��? 기본 비디??UI ?�전 ?�거 */
+  /* 釉뚮씪?곗? 湲곕낯 鍮꾨뵒??UI ?꾩쟾 ?쒓굅 */
   outline: none;
 }
 .machine-hero-video video::-webkit-media-controls { display: none !important; }

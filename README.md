@@ -58,6 +58,14 @@ python -m http.server 8000
 ## 문서
 - 기여/작업 규칙: `CONTRIBUTING.md`
 - 변경 이력: `CHANGELOG.md`
+- CSS 무결성 점검: `docs/css-integrity-guard.md`
+
+## CSS 점검
+전역 CSS 수정 전후에는 아래 명령으로 최소 문법 무결성을 확인합니다.
+
+```bash
+python scripts/check_css.py
+```
 
 ## 라이선스
 - 현재 저장소에 라이선스 파일이 없습니다. 권리자 확인 후 `LICENSE`를 추가하세요.

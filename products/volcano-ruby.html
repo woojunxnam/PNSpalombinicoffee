@@ -554,9 +554,8 @@
     }
     .vr-direct-body {
       display: grid;
-      grid-template-columns: 1.02fr .98fr;
       gap: 18px;
-      align-items: start;
+      justify-items: center;
     }
     .vr-direct-copy {
       background: rgba(255,255,255,.72);
@@ -591,29 +590,31 @@
     }
     .vr-direct-points-wrap {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      justify-content: center;
     }
     .vr-direct-points {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 16px;
+      width: 100%;
+      max-width: 1040px;
     }
     .vr-direct-point {
       background: rgba(255,255,255,.76);
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 18px 18px 16px;
+      padding: 24px 22px 22px;
       box-shadow: var(--shadow2);
+      text-align: center;
     }
     .vr-direct-point-icon {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       color: var(--accent);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 10px;
+      margin: 0 auto 12px;
     }
     .vr-direct-point-icon svg {
       width: 100%;
@@ -635,16 +636,19 @@
       color: var(--muted);
       line-height: 1.72;
       font-size: 14px;
+      max-width: 24ch;
+      margin-inline: auto;
     }
     .vr-flavor-grid {
       display: grid;
       grid-template-columns: 1fr .92fr;
       gap: 20px;
-      align-items: start;
+      align-items: stretch;
     }
     .vr-flavor-path {
       display: grid;
       gap: 16px;
+      height: 100%;
     }
     .vr-flavor-card {
       display: grid;
@@ -709,6 +713,9 @@
       border-radius: 18px;
       padding: 20px 20px 18px;
       box-shadow: var(--shadow2);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     .vr-bars h3 {
       margin: 0 0 14px;
@@ -716,9 +723,18 @@
       font-size: 22px;
     }
     .vr-radar-wrap {
-      margin-top: 16px;
+      margin-top: auto;
       padding-top: 14px;
       border-top: 1px solid var(--line);
+    }
+    @media (min-width: 761px) {
+      .vr-summary-value,
+      .vr-step-label,
+      .vr-point h3,
+      .vr-direct-point h3,
+      .vr-flavor-time {
+        white-space: nowrap;
+      }
     }
     .vr-radar-title {
       margin: 0 0 10px;
@@ -1412,7 +1428,7 @@
             <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 14c0-5 5-8 12-8-1 7-4 12-10 12-1.5 0-2-.8-2-4Z"></path><path d="M8 16c3-2 6-5 9-9"></path></svg></span>
             <div class="vr-summary-label">가공 과정</div>
             <div class="vr-summary-value">내추럴</div>
-            <div class="vr-summary-note">발효 온도와 시간을 정밀하게 관리하는 내추럴 프로세스입니다</div>
+            <div class="vr-summary-note">온도와 시간을 관리하여 생두를 자연에서 건조, 발효시키는 내추럴 프로세스입니다.</div>
           </div>
           <div class="vr-summary-card">
             <span class="vr-summary-icon"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><rect x="14" y="14" width="6" height="6" rx="1"></rect></svg></span>
@@ -1551,7 +1567,7 @@
             <div class="vr-step-copy">
               <div class="vr-step-num">STEP 03</div>
               <div class="vr-step-label">Natural Process · 내추럴 가공</div>
-              <h3>과육째 발효하며 향미를 입힙니다</h3>
+              <h3>과육째 발효하여 향미를 입힙니다</h3>
               <p>체리 전체를 건조대에 펼쳐 과육이 생두를 감싼 채 발효가 진행되도록 둡니다. 당분과 과일향이 서서히 스며들며 체리와 라즈베리 계열의 향미가 형성됩니다.</p>
               <div class="vr-step-result">결과 — 자연스러운 단맛과 베리 계열의 과일 향미</div>
             </div>
@@ -1577,7 +1593,7 @@
             <div class="vr-step-copy">
               <div class="vr-step-num">STEP 05</div>
               <div class="vr-step-label">Sorting & Cupping · 선별 · 평가</div>
-              <h3>G1, S18 기준으로 끝까지 고릅니다</h3>
+              <h3>G1, S18의 원두만 선별합니다</h3>
               <p>색채선별기로 생두 한 알씩 상태를 확인하고, G1 등급과 S18 사이즈 기준에 맞는 원두만 남깁니다. 균일한 원두는 로스팅과 추출의 일관성을 높입니다.</p>
               <div class="vr-step-result">결과 — 매 잔을 더 안정적이고 동일한 깊이로 재현</div>
             </div>
@@ -1658,12 +1674,6 @@
           <img src="./volcano-ruby/img_10_컨테이너.jpg" alt="산지 직송을 위한 컨테이너 적재 준비"/>
         </div>
         <div class="vr-direct-body">
-          <div class="vr-direct-copy">
-            <span class="vr-direct-eye">Direct Sourcing</span>
-            <h3>중간을 줄이면, 품질 흐름이 더 또렷해집니다</h3>
-            <p>볼케이노 루비는 베트남 현지 농장과 직접 계약하고 산지에서 바로 연결됩니다. 그래서 원두 상태를 더 빠르게 확인하고, 필요한 기준도 더 분명하게 맞출 수 있습니다.</p>
-            <p>결과적으로 신선도 관리가 쉬워지고, 같은 품질을 더 안정적으로 이어가기 좋습니다.</p>
-          </div>
           <div class="vr-direct-points-wrap">
             <div class="vr-direct-points">
               <div class="vr-direct-point">
