@@ -571,15 +571,18 @@
   .fg-breadcrumb-wrap { padding-top: 12px; }
 
   /* ── MOBILE: 헤더/sticky CTA 숨기기, 상단 퀵스타트 버튼 ── */
-  .fg-mobile-quick-start { display: none; }
+  .fg-mobile-quick-start-wrap { display: none; }
   @media (max-width: 860px) {
     .site-header { display: none !important; }
     .mobile-sticky-cta { display: none !important; }
     body.has-mobile-sticky-cta { padding-bottom: 0 !important; }
-    .fg-mobile-quick-start {
+    .fg-mobile-quick-start-wrap {
       display: block;
-      margin-bottom: 20px;
+      max-width: 920px;
+      margin: 0 auto 16px;
+      padding: 0 16px;
     }
+    .fg-mobile-quick-start { display: block; width: 100%; }
   }
   .fg-page-intro { max-width: 920px; margin: 0 auto 18px; padding: 0 20px; }
   .fg-page-card { border-radius: 26px; border: 1px solid rgba(200,170,110,.16); background: linear-gradient(180deg, rgba(30,23,16,.96), rgba(21,16,12,.96)); box-shadow: 0 24px 60px rgba(0,0,0,.28); padding: 30px 32px; }
@@ -633,6 +636,9 @@
   <div class="container fg-breadcrumb-wrap">
     <div class="breadcrumb"><a href="index.html">홈</a><span class="breadcrumb-sep">›</span><a href="products/">Products</a><span class="breadcrumb-sep">›</span><span>Flavor Guide</span></div>
   </div>
+  <div class="fg-mobile-quick-start-wrap">
+    <button class="btn-primary fg-mobile-quick-start" onclick="startQuiz()">내 블렌드 찾기 →</button>
+  </div>
   <section class="fg-page-intro">
     <div class="fg-page-card">
       <p class="eyebrow">Flavor Guide</p>
@@ -645,9 +651,6 @@
 
   <!-- BRAND HEADER -->
   <div class="brand-header">PALOMBINI DRIP BAG</div>
-
-  <!-- 모바일 전용 상단 퀵스타트 버튼 -->
-  <button class="btn-primary fg-mobile-quick-start" onclick="startQuiz()">내 블렌드 찾기 →</button>
 
   <!-- PROGRESS -->
   <div class="progress-wrap" id="progressWrap">
