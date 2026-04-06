@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>카페 메뉴 — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니 카페 메뉴"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f7f3ee;
+      --bg2:       #ede8e0;
+      --card:      #ffffff;
+      --text:      #2b1d14;
+      --muted:     #7a6555;
+      --accent:    #c8aa6e;
+      --accent-dk: #a07840;
+      --line:      rgba(192,160,100,.18);
+      --shadow:    0 2px 12px rgba(43,29,20,.07);
+      --serif:     'Noto Serif KR', Georgia, serif;
+      --sans:      'Noto Sans KR', -apple-system, sans-serif;
+      --header-h:  68px;
+      --nav-h:     48px;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    .menu-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247,243,238,.97);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      height: var(--header-h);
+    }
+    .menu-header-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      gap: 12px;
+    }
+    .menu-brand { display: flex; flex-direction: column; gap: 1px; }
+    .menu-brand-eyebrow {
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+    }
+    .menu-brand-name {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .menu-title-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200,170,110,.12);
+      border: 1px solid rgba(200,170,110,.28);
+      border-radius: 6px;
+      padding: 3px 8px;
+    }
+
+    /* ── LANG SWITCHER ── */
+    .lang-switcher {
+      display: flex;
+      gap: 3px;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background .15s, color .15s;
+      font-family: var(--sans);
+      position: relative;
+      white-space: nowrap;
+    }
+    .lang-btn.active {
+      background: var(--card);
+      color: var(--text);
+      box-shadow: 0 1px 4px rgba(43,29,20,.10);
+    }
+    .lang-btn.coming-soon {
+      opacity: .45;
+      cursor: not-allowed;
+    }
+    .lang-btn.coming-soon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    /* ── CATEGORY NAV ── */
+    .cat-nav {
+      position: sticky;
+      top: var(--header-h);
+      z-index: 90;
+      background: rgba(247,243,238,.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      height: var(--nav-h);
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-nav::-webkit-scrollbar { display: none; }
+
+    .cat-nav-inner {
+      display: flex;
+      gap: 6px;
+      padding: 7px 16px;
+      white-space: nowrap;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .cat-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: var(--sans);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cat-nav-btn:hover:not(.active) {
+      background: var(--bg2);
+      color: var(--text);
+    }
+    .cat-nav-btn.active {
+      background: var(--text);
+      border-color: var(--text);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* ── MENU BODY ── */
+    .menu-body {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 16px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ── CATEGORY SECTION ── */
+    .cat-section {
+      background: var(--card);
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      scroll-margin-top: calc(var(--header-h) + var(--nav-h) + 12px);
+    }
+
+    .cat-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(200,170,110,.07), transparent 60%);
+    }
+    .cat-icon { font-size: 19px; line-height: 1; flex-shrink: 0; }
+    .cat-name {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .cat-count {
+      margin-left: auto;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      flex-shrink: 0;
+    }
+
+    /* ── ITEM GRID ── */
+    .item-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .item-grid.col-1 { grid-template-columns: 1fr; }
+
+    .menu-item {
+      padding: 11px 20px;
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text);
+      border-bottom: 1px solid rgba(192,160,100,.07);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .1s;
+    }
+    .menu-item::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+      opacity: .5;
+    }
+    .menu-item:hover { background: rgba(200,170,110,.05); }
+    .menu-item.sub-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      background: rgba(200,170,110,.05);
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .menu-item.sub-label::before { display: none; }
+
+    /* ── GELATO FLAVORS NOTE ── */
+    .cat-note {
+      padding: 12px 20px 14px;
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+    .cat-note-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 8px;
+    }
+    .flavor-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .flavor-chip {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--text);
+    }
+
+    /* ── FOOTER ── */
+    .menu-footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 20px 20px 48px;
+      text-align: center;
+    }
+    .menu-footer-inner {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .footer-note {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── COMING SOON TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--text);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 999px;
+      opacity: 0;
+      transition: transform .25s, opacity .25s;
+      pointer-events: none;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .item-grid { grid-template-columns: 1fr; }
+      .menu-brand-name { font-size: 17px; }
+      .cat-name { font-size: 15.5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="menu-header">
+    <div class="menu-header-inner">
+      <div class="menu-brand">
+        <span class="menu-brand-eyebrow">Caffè Palombini · Dal 1946</span>
+        <span class="menu-brand-name">PNS 팔롬비니 카페</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="menu-title-badge">MENU</span>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="ko">한국어</button>
+          <button class="lang-btn coming-soon" data-lang="en" onclick="showToast('영어 메뉴 준비중입니다')">EN</button>
+          <button class="lang-btn coming-soon" data-lang="zh" onclick="showToast('중국어 메뉴 준비중입니다')">中</button>
+          <button class="lang-btn coming-soon" data-lang="ja" onclick="showToast('일본어 메뉴 준비중입니다')">日</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- CATEGORY NAV -->
+  <nav class="cat-nav">
+    <div class="cat-nav-inner" id="catNavInner"></div>
+  </nav>
+
+  <!-- MENU BODY -->
+  <main class="menu-body" id="menuBody"></main>
+
+  <!-- FOOTER -->
+  <footer class="menu-footer">
+    <div class="menu-footer-inner">
+      <p class="footer-brand">PNS 팔롬비니 카페</p>
+      <p class="footer-note">메뉴 및 가격은 사전 고지 없이 변경될 수 있습니다.<br/>문의: 010-3454-5837</p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* ════════════════════════════════════════
+       MENU DATA
+       다국어 확장을 위해 언어별 객체로 구성.
+       EN / ZH / JA 추가 시 아래 null 대신 채우면 됩니다.
+    ════════════════════════════════════════ */
+    const MENU = {
+
+      ko: [
+        {
+          id: 'coffee', icon: '☕', name: '커피',
+          items: [
+            '에스프레소', '에스프레소 마키아토', '에스프레소 콘파냐',
+            '아메리카노', '헤이즐넛 커피', '카푸치노', '카페라떼',
+            '바닐라라떼', '카라멜마키아또', '카페모카', '민트모카라떼',
+            '연유라떼', '헤이즐넛 라떼', '아인슈페너', '아포카토',
+            '이탈리안 커피', '사케라또', '드림아이스커피', '깔루아라떼'
+          ]
+        },
+        {
+          id: 'latte', icon: '🥛', name: '라떼 (논커피)',
+          items: [
+            '고구마라떼', '블루베리라떼', '초콜렛라떼', '민트초콜렛라떼',
+            '제주말차라떼', '오곡라떼', '밀크티', '딸기밀크라떼',
+            '복숭아라떼', '멜론라떼', '체리라또', '블랙 펄 밀크티'
+          ]
+        },
+        {
+          id: 'ade', icon: '🍋', name: '에이드',
+          items: [
+            '레몬에이드', '블루레몬에이드', '오렌지에이드',
+            '자몽에이드', '청포도에이드', '복숭아에이드', '멜론에이드'
+          ]
+        },
+        {
+          id: 'smoothie', icon: '🥤', name: '스무디',
+          groups: [
+            {
+              label: '스무디',
+              items: [
+                '요거트 스무디', '망고 스무디', '딸기 스무디',
+                '키위 스무디', '홍시 스무디', '믹스블루베리 스무디'
+              ]
+            },
+            {
+              label: '팔로치노 스무디',
+              items: [
+                '바닐라 팔로치노', '모카 팔로치노',
+                '민트초코 팔로치노', '제주말차 팔로치노', '쿠앤크 팔로치노'
+              ]
+            }
+          ]
+        },
+        {
+          id: 'fruittea', icon: '🍵', name: '과일차',
+          items: [
+            '히비스커스 트로피칼', '자스민 자몽', '레몬 홍차',
+            '오미자 유자', '오미자 자몽', '자몽차', '유자차',
+            '레몬차', '생강차', '대추차'
+          ]
+        },
+        {
+          id: 'icedtea', icon: '🧊', name: '아이스티',
+          items: [
+            '복숭아 아이스티', '레몬 아이스티', '망고 아이스티',
+            '석류 아이스티', '아샷추'
+          ]
+        },
+        {
+          id: 'blacktea', icon: '🫖', name: '홍차',
+          items: ['다즐링', '얼그레이', '잉글리시 브렉퍼스트']
+        },
+        {
+          id: 'herbtea', icon: '🌿', name: '허브차',
+          items: ['캐모마일', '페퍼민트', '루이보스', '페어엘렌느']
+        },
+        {
+          id: 'bingsu', icon: '🍧', name: '팥빙수',
+          items: [
+            '밀크팥빙수', '커피빙수', '딸기빙수', '자몽빙수',
+            '오렌지빙수', '망고빙수', '블루베리빙수', '녹차빙수', '초코빙수'
+          ]
+        },
+        {
+          id: 'gelato', icon: '🍦', name: '젤라또',
+          items: ['젤라또 싱글', '젤라또 더블', '젤라또 미디움', '젤라또 라지'],
+          note: { label: '맛 선택', chips: ['초코', '쿠앤크', '치즈케이크', '바닐라', '그린티', '망고', '딸기', '요거트'] }
+        },
+        {
+          id: 'dessert', icon: '🥐', name: '디저트',
+          items: ['갈릭브레드', '허니브레드', '모카번', '초코머핀']
+        },
+        {
+          id: 'cake', icon: '🎂', name: '케이크',
+          items: [
+            '치즈 케이크', '티라미수 케이크', '아몬드초코 케이크',
+            '두바이악마초콜렛 케이크', '레드벨벳 케이크',
+            '깔루아마키아또 케이크', '생크림 초코 케이크'
+          ]
+        }
+      ],
+
+      /* ── 향후 번역 추가 ──────────────────────── */
+      en: null,  // TODO: Add English translations
+      zh: null,  // TODO: Add Chinese translations
+      ja: null   // TODO: Add Japanese translations
+
+    };
+
+    /* ════════════════════════════════════════
+       RENDER
+    ════════════════════════════════════════ */
+    function buildItemGrid(items, forceCol1) {
+      const cls = (forceCol1 || items.length <= 5) ? 'col-1' : '';
+      return `<div class="item-grid ${cls}">${
+        items.map(item => `<div class="menu-item">${item}</div>`).join('')
+      }</div>`;
+    }
+
+    function renderMenu(lang) {
+      const cats = MENU[lang] || MENU.ko;
+      const navEl  = document.getElementById('catNavInner');
+      const bodyEl = document.getElementById('menuBody');
+
+      /* Category nav */
+      navEl.innerHTML = cats.map(cat =>
+        `<button class="cat-nav-btn" data-cat="${cat.id}" onclick="jumpTo('${cat.id}',this)">
+          ${cat.icon} ${cat.name}
+        </button>`
+      ).join('');
+      navEl.querySelector('.cat-nav-btn').classList.add('active');
+
+      /* Menu sections */
+      bodyEl.innerHTML = cats.map(cat => {
+        let contentHTML = '';
+
+        if (cat.groups) {
+          /* grouped items (e.g. smoothie) */
+          cat.groups.forEach((g, i) => {
+            if (i > 0) {
+              contentHTML += `<div class="item-grid col-1">
+                <div class="menu-item sub-label">${g.label}</div>
+              </div>`;
+            }
+            contentHTML += buildItemGrid(g.items, false);
+          });
+        } else {
+          contentHTML = buildItemGrid(cat.items || []);
+        }
+
+        const noteHTML = cat.note ? `
+          <div class="cat-note">
+            <div class="cat-note-label">${cat.note.label}</div>
+            <div class="flavor-chips">
+              ${cat.note.chips.map(c => `<span class="flavor-chip">${c}</span>`).join('')}
+            </div>
+          </div>` : '';
+
+        const total = cat.groups
+          ? cat.groups.reduce((s, g) => s + g.items.length, 0)
+          : (cat.items || []).length;
+
+        return `
+          <section class="cat-section" id="cat-${cat.id}">
+            <div class="cat-head">
+              <span class="cat-icon">${cat.icon}</span>
+              <span class="cat-name">${cat.name}</span>
+              <span class="cat-count">${total}종</span>
+            </div>
+            ${contentHTML}
+            ${noteHTML}
+          </section>`;
+      }).join('');
+
+      /* Start observing sections */
+      observeSections();
+    }
+
+    /* ════════════════════════════════════════
+       NAVIGATION
+    ════════════════════════════════════════ */
+    function jumpTo(id, btn) {
+      document.getElementById('cat-' + id)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setActiveTab(id);
+    }
+
+    function setActiveTab(id) {
+      document.querySelectorAll('.cat-nav-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.cat === id);
+      });
+      /* Scroll tab into view */
+      const btn = document.querySelector(`.cat-nav-btn[data-cat="${id}"]`);
+      btn?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }
+
+    let scrollTimer;
+    function observeSections() {
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+              setActiveTab(e.target.id.replace('cat-', ''));
+            }, 60);
+          }
+        });
+      }, {
+        rootMargin: `-${getComputedStyle(document.documentElement)
+          .getPropertyValue('--header-h').trim()} 0px -55% 0px`,
+        threshold: 0
+      });
+      document.querySelectorAll('.cat-section').forEach(el => io.observe(el));
+    }
+
+    /* ════════════════════════════════════════
+       TOAST
+    ════════════════════════════════════════ */
+    let toastTimer;
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2400);
+    }
+
+    /* ════════════════════════════════════════
+       INIT
+    ════════════════════════════════════════ */
+    renderMenu('ko');
+  </script>
+</body>
+</html>
