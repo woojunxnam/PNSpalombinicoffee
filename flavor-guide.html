@@ -1200,7 +1200,7 @@ function showResult(keys) {
     card.className = 'flavor-card';
     card.innerHTML = `
       <div class="flavor-card-top">
-        ${image ? `<div class="flavor-card-media"><img src="${image}" alt="${b.name} ??? ???" onerror="this.parentElement.remove()"></div>` : ''}
+        ${image ? `<div class="flavor-card-media"><img src="${image}" alt="${b.name} 드립백 이미지" onerror="this.parentElement.remove()"></div>` : ''}
         <div class="flavor-name-row">
           <div class="flavor-name">${b.name}</div>
           <div class="flavor-tag tag-${b.tier}">${TIER_LABEL[b.tier]}</div>
@@ -1210,14 +1210,14 @@ function showResult(keys) {
         <div class="note-tags">${notes}</div>
       </div>
       <div class="flavor-card-bottom">
-        <div class="profile-title">? ???</div>
+        <div class="profile-title">맛 구조</div>
         <div class="profile-bars">
-          <div class="profile-row"><div class="profile-row-label">??</div><div class="profile-bar-track"><div class="profile-bar-fill bar-sweet" style="width:0%" data-target="${pct(b.sweetness)}"></div></div><div class="profile-row-val">${b.sweetness}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">???</div><div class="profile-bar-track"><div class="profile-bar-fill bar-body" style="width:0%" data-target="${pct(b.body)}"></div></div><div class="profile-row-val">${b.body}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">??</div><div class="profile-bar-track"><div class="profile-bar-fill bar-acid" style="width:0%" data-target="${pct(b.acidity)}"></div></div><div class="profile-row-val">${b.acidity}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">??</div><div class="profile-bar-track"><div class="profile-bar-fill bar-bitter" style="width:0%" data-target="${pct(b.bitterness)}"></div></div><div class="profile-row-val">${b.bitterness}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">단맛</div><div class="profile-bar-track"><div class="profile-bar-fill bar-sweet" style="width:0%" data-target="${pct(b.sweetness)}"></div></div><div class="profile-row-val">${b.sweetness}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">바디감</div><div class="profile-bar-track"><div class="profile-bar-fill bar-body" style="width:0%" data-target="${pct(b.body)}"></div></div><div class="profile-row-val">${b.body}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">산미</div><div class="profile-bar-track"><div class="profile-bar-fill bar-acid" style="width:0%" data-target="${pct(b.acidity)}"></div></div><div class="profile-row-val">${b.acidity}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">쓴맛</div><div class="profile-bar-track"><div class="profile-bar-fill bar-bitter" style="width:0%" data-target="${pct(b.bitterness)}"></div></div><div class="profile-row-val">${b.bitterness}/5</div></div>
         </div>
-        <div class="brew-section"><div class="brew-label">?? ??</div><div class="brew-tags">${b.brew.map(t => `<span class="brew-tag">${t}</span>`).join('')}</div></div>
+        <div class="brew-section"><div class="brew-label">추천 방식</div><div class="brew-tags">${b.brew.map(t => `<span class="brew-tag">${t}</span>`).join('')}</div></div>
       </div>
     `;
 
