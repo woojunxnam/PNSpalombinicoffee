@@ -532,7 +532,28 @@
     0%,100% { opacity:1; } 50% { opacity:.3; }
   }
 
-  .fg-site-main { padding-bottom: 72px; }
+  .site-header {
+    background: rgba(16,12,7,.86);
+    border-bottom: 1px solid rgba(200,170,110,.12);
+    backdrop-filter: blur(18px);
+  }
+  .site-header .brand-name,
+  .site-header .nav,
+  .site-header .nav a,
+  .site-header .header-actions a {
+    color: var(--cream);
+  }
+  .site-header .nav a:hover {
+    background: rgba(255,255,255,.06);
+    color: var(--gold-lt);
+  }
+  .site-header .insta-link,
+  .site-header .store-link,
+  .site-header .menu-toggle {
+    background: rgba(255,255,255,.04);
+    border-color: rgba(240,232,216,.16);
+  }
+  .fg-site-main { padding-top: 16px; padding-bottom: 72px; }
   .fg-breadcrumb-wrap { padding-top: 12px; }
   .fg-page-intro { max-width: 920px; margin: 0 auto 18px; padding: 0 20px; }
   .fg-page-card { border-radius: 26px; border: 1px solid rgba(200,170,110,.16); background: linear-gradient(180deg, rgba(30,23,16,.96), rgba(21,16,12,.96)); box-shadow: 0 24px 60px rgba(0,0,0,.28); padding: 30px 32px; }
