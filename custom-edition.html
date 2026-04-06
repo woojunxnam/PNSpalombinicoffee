@@ -210,10 +210,10 @@
     /* Print area — the square zone where the design is printed */
     .print-area {
       position: absolute;
-      top: 13%;
-      left: 19%;
-      width: 62%;
-      height: 70%;
+      top: 20%;
+      left: 25%;
+      width: 58%;
+      height: 65%;
       overflow: hidden;
       border: 2px dashed rgba(180,160,120,0.55);
       border-radius: 4px;
@@ -936,10 +936,10 @@
       ctx.globalCompositeOperation = 'multiply';
       const dImg = new Image();
       dImg.src = designOverlay.src;
-      const dx = canvas.width  * 0.19;
-      const dy = canvas.height * 0.13;
-      const dw = canvas.width  * 0.62;
-      const dh = canvas.height * 0.70;
+      const dx = canvas.width  * 0.25;
+      const dy = canvas.height * 0.20;
+      const dw = canvas.width  * 0.58;
+      const dh = canvas.height * 0.65;
       ctx.drawImage(dImg, dx, dy, dw, dh);
       ctx.globalCompositeOperation = 'source-over';
       const a = document.createElement('a');
