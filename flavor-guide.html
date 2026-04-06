@@ -890,6 +890,68 @@
   </div>
 
   <!-- ══════════════════════════════════════════════════════
+       SCREEN 3C — 균형 계열 추출 방식
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen" id="screen-q3c">
+    <div class="nav-row">
+      <button class="btn-ghost" onclick="goTo('q2b')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        이전 질문
+      </button>
+    </div>
+    <div class="q-eyebrow">질문 3 of 3 · 추출 방식</div>
+    <h2 class="q-title">주로 <em>어떻게</em><br>드세요?</h2>
+    <p class="q-sub">마지막 질문입니다 — 거의 다 왔어요!</p>
+    <div class="options-grid">
+      <div class="option-card" onclick="answer('q3c','black')">
+        <div class="option-icon">☕</div>
+        <div class="option-text">
+          <div class="option-label">블랙으로 (아메리카노·롱블랙)</div>
+          <div class="option-desc">커피 본연의 맛을 그대로 즐기고 싶어요</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="answer('q3c','milk')">
+        <div class="option-icon">🥛</div>
+        <div class="option-text">
+          <div class="option-label">우유와 함께 (라떼·카푸치노)</div>
+          <div class="option-desc">부드럽고 크리미한 음료로 즐기고 싶어요</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       SCREEN 3D — 진함 계열 강도 방향
+  ══════════════════════════════════════════════════════ -->
+  <div class="screen" id="screen-q3d">
+    <div class="nav-row">
+      <button class="btn-ghost" onclick="goTo('q2c')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        이전 질문
+      </button>
+    </div>
+    <div class="q-eyebrow">질문 3 of 3 · 진함의 방향</div>
+    <h2 class="q-title">진한 커피에서<br><em>무엇</em>을 원하세요?</h2>
+    <p class="q-sub">마지막 질문입니다 — 거의 다 왔어요!</p>
+    <div class="options-grid">
+      <div class="option-card" onclick="answer('q3d','kick')">
+        <div class="option-icon">⚡</div>
+        <div class="option-text">
+          <div class="option-label">강렬한 카페인 킥·농도</div>
+          <div class="option-desc">한 모금에 강하게 치고 들어오는 강도가 좋아요</div>
+        </div>
+      </div>
+      <div class="option-card" onclick="answer('q3d','aroma')">
+        <div class="option-icon">🍫</div>
+        <div class="option-text">
+          <div class="option-label">풍부한 다크 향·긴 여운</div>
+          <div class="option-desc">진하면서도 향이 풍부하고 여운이 길면 좋겠어요</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
        SCREEN — RESULT
   ══════════════════════════════════════════════════════ -->
   <div class="screen" id="screen-result">
@@ -1088,7 +1150,7 @@ const BLEND_IMAGES = {
 ══════════════════════════════════════════════════════════ */
 let currentScreen = 'landing';
 let answers = {};
-const STEPS = { landing:0, q1:1, q2a:2, q2b:2, q2c:2, q3a:3, q3b:3 };
+const STEPS = { landing:0, q1:1, q2a:2, q2b:2, q2c:2, q3a:3, q3b:3, q3c:3, q3d:3 };
 const MAX_STEPS = 3;
 
 /* ══════════════════════════════════════════════════════════
@@ -1160,32 +1222,43 @@ function answer(qKey, value) {
   }
 
   if (qKey === 'q2b') {
-    if (value == 'aroma') {
-      showResult(['poplar', 'zelkova']);
-      return;
-    }
-    if (value == 'sweet') {
-      showResult(['silverberry', 'sequoia']);
-      return;
-    }
-    if (value == 'versatile') {
-      showResult(['sequoia', 'roma']);
-      return;
-    }
+    goTo('q3c');
+    return;
   }
 
   if (qKey === 'q2c') {
-    if (value === 'espresso') {
-      showResult(['tamarind', 'granbar']);
-      return;
+    goTo('q3d');
+    return;
+  }
+
+  if (qKey === 'q3c') {
+    const q2b = answers['q2b'];
+    if (value === 'black') {
+      if (q2b === 'aroma')     showResult(['poplar', 'zelkova']);
+      if (q2b === 'sweet')     showResult(['silverberry', 'roma']);
+      if (q2b === 'versatile') showResult(['roma', 'poplar']);
     }
-    if (value === 'milkdark') {
-      showResult(['spruce', 'miru']);
-      return;
+    if (value === 'milk') {
+      if (q2b === 'aroma')     showResult(['zelkova', 'sequoia']);
+      if (q2b === 'sweet')     showResult(['silverberry', 'sequoia']);
+      if (q2b === 'versatile') showResult(['sequoia', 'silverberry']);
     }
-    if (value === 'darkelegant') {
-      showResult(['willow', 'spruce']);
+    return;
+  }
+
+  if (qKey === 'q3d') {
+    const q2c = answers['q2c'];
+    if (value === 'kick') {
+      if (q2c === 'espresso')     showResult(['tamarind', 'granbar']);
+      if (q2c === 'milkdark')     showResult(['miru', 'spruce']);
+      if (q2c === 'darkelegant')  showResult(['willow', 'miru']);
     }
+    if (value === 'aroma') {
+      if (q2c === 'espresso')     showResult(['granbar', 'willow']);
+      if (q2c === 'milkdark')     showResult(['spruce', 'willow']);
+      if (q2c === 'darkelegant')  showResult(['willow', 'granbar']);
+    }
+    return;
   }
 }
 
