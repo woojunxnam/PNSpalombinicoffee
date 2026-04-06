@@ -215,6 +215,7 @@
       height: 79%;
       object-fit: contain;
       mix-blend-mode: multiply;
+      filter: grayscale(1);
       display: none;
       pointer-events: none;
     }
@@ -892,8 +893,9 @@
       const ctx = canvas.getContext('2d');
       // Draw bag
       ctx.drawImage(bagImg, 0, 0, canvas.width, canvas.height);
-      // Draw design with multiply
+      // Draw design with multiply + grayscale
       ctx.globalCompositeOperation = 'multiply';
+      ctx.filter = 'grayscale(1)';
       const dImg = new Image();
       dImg.src = designOverlay.src;
       const dx = canvas.width  * 0.15;
@@ -901,6 +903,7 @@
       const dw = canvas.width  * 0.70;
       const dh = canvas.height * 0.79;
       ctx.drawImage(dImg, dx, dy, dw, dh);
+      ctx.filter = 'none';
       ctx.globalCompositeOperation = 'source-over';
       const a = document.createElement('a');
       a.download = 'pns-custom-mockup.png';
