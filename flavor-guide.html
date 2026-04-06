@@ -540,13 +540,26 @@
   }
   .site-header .brand-name,
   .site-header .nav,
-  .site-header .nav a,
+  .site-header .nav > a,
+  .site-header .nav .nav-item > a,
   .site-header .header-actions a {
     color: var(--cream);
   }
-  .site-header .nav a:hover {
+  .site-header .nav > a:hover,
+  .site-header .nav .nav-item > a:hover {
     background: rgba(255,255,255,.06);
     color: var(--gold-lt);
+  }
+  /* 드롭다운 내부는 흰 배경이므로 어두운 색으로 명시 */
+  .site-header .nav-dropdown {
+    color: #2B1D14;
+  }
+  .site-header .nav-dropdown a {
+    color: #2B1D14 !important;
+  }
+  .site-header .nav-dropdown a:hover {
+    background: rgba(192,122,61,.10);
+    color: #C07A3D !important;
   }
   .site-header .insta-link,
   .site-header .store-link,
@@ -556,13 +569,25 @@
   }
   .fg-site-main { padding-top: 16px; padding-bottom: 72px; }
   .fg-breadcrumb-wrap { padding-top: 12px; }
+
+  /* ── MOBILE: 헤더/sticky CTA 숨기기, 상단 퀵스타트 버튼 ── */
+  .fg-mobile-quick-start { display: none; }
+  @media (max-width: 860px) {
+    .site-header { display: none !important; }
+    .mobile-sticky-cta { display: none !important; }
+    body.has-mobile-sticky-cta { padding-bottom: 0 !important; }
+    .fg-mobile-quick-start {
+      display: block;
+      margin-bottom: 20px;
+    }
+  }
   .fg-page-intro { max-width: 920px; margin: 0 auto 18px; padding: 0 20px; }
   .fg-page-card { border-radius: 26px; border: 1px solid rgba(200,170,110,.16); background: linear-gradient(180deg, rgba(30,23,16,.96), rgba(21,16,12,.96)); box-shadow: 0 24px 60px rgba(0,0,0,.28); padding: 30px 32px; }
   .fg-page-card h1 { margin: 0 0 12px; color: var(--cream); font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); line-height: 1.08; }
   .fg-page-card p { margin: 0; color: rgba(240,232,216,.7); line-height: 1.8; word-break: keep-all; }
   .fg-page-card p + p { margin-top: 10px; }
   .flavor-card-media { aspect-ratio: 1.04 / 1; border-radius: 18px; overflow: hidden; border: 1px solid rgba(200,170,110,.14); margin-bottom: 18px; background: #17120d; }
-  .flavor-card-media img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  .flavor-card-media img { width: 100%; height: 100%; display: block; object-fit: contain; }
   .note-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
   .note-tag { font-size: .72rem; padding: 4px 12px; border: 1px solid var(--border); border-radius: 99px; color: var(--cream); background: rgba(255,255,255,.03); }
   .result-actions { gap: 10px; }
@@ -620,6 +645,9 @@
 
   <!-- BRAND HEADER -->
   <div class="brand-header">PALOMBINI DRIP BAG</div>
+
+  <!-- 모바일 전용 상단 퀵스타트 버튼 -->
+  <button class="btn-primary fg-mobile-quick-start" onclick="startQuiz()">내 블렌드 찾기 →</button>
 
   <!-- PROGRESS -->
   <div class="progress-wrap" id="progressWrap">
