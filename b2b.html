@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>B2B 파트너십 — PNS 팔롬비니 | 국내 최초 자동 드립백 포장기</title>
+  <meta name="description" content="국내 최초 자동 드립백 포장기 도입. 원두 선별부터 OEM 패키징까지 — 귀사의 커피 브랜드를 완성합니다." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --b2b-dark: #0d0d0d;
+      --b2b-dark2: #161616;
+      --b2b-gold: #c9a96e;
+      --b2b-gold-dim: rgba(201,169,110,0.18);
+      --b2b-gold-border: rgba(201,169,110,0.3);
+      --b2b-text: rgba(255,255,255,0.85);
+      --b2b-muted: rgba(255,255,255,0.45);
+    }
+
+    /* ── HERO ── */
+    .b2b-hero {
+      background: var(--b2b-dark);
+      padding: 100px 0 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .b2b-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 40%, rgba(201,169,110,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .b2b-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--b2b-gold);
+      margin-bottom: 16px;
+    }
+    .b2b-hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.25;
+      margin: 0 0 12px;
+    }
+    .b2b-hero h1 span {
+      color: var(--b2b-gold);
+    }
+    .b2b-hero-en {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      margin: 0 0 28px;
+      letter-spacing: 0.5px;
+    }
+    .b2b-hero-desc {
+      font-size: 1.05rem;
+      color: var(--b2b-text);
+      max-width: 600px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .b2b-hero-desc-en {
+      font-size: 0.9rem;
+      color: var(--b2b-muted);
+      max-width: 580px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+    .b2b-hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+    .b2b-badge {
+      background: var(--b2b-gold-dim);
+      color: var(--b2b-gold);
+      border: 1px solid var(--b2b-gold-border);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .b2b-hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+    /* ── SECTION STYLES ── */
+    .b2b-section {
+      padding: 80px 0;
+      background: var(--b2b-dark);
+    }
+    .b2b-section.light {
+      background: var(--b2b-dark2);
+    }
+    .b2b-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--b2b-gold);
+      margin-bottom: 10px;
+    }
+    .b2b-section h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      color: #fff;
+      margin: 0 0 8px;
+      font-weight: 600;
+    }
+    .b2b-section h2 .en {
+      display: block;
+      font-size: 0.55em;
+      color: var(--b2b-muted);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .b2b-section-lead {
+      color: var(--b2b-text);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 620px;
+      margin-bottom: 8px;
+    }
+    .b2b-section-lead-en {
+      color: var(--b2b-muted);
+      font-size: 0.87rem;
+      line-height: 1.7;
+      max-width: 600px;
+      margin-bottom: 48px;
+    }
+    .divider-gold {
+      width: 48px;
+      height: 3px;
+      background: var(--b2b-gold);
+      border-radius: 2px;
+      margin: 20px 0 32px;
+    }
+
+    /* ── VIDEOS ── */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .video-card {
+      background: #1a1a1a;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .video-card video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #000;
+    }
+    .video-card-body {
+      padding: 22px 24px 26px;
+    }
+    .video-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--b2b-gold);
+      margin-bottom: 6px;
+    }
+    .video-card-body h3 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.1rem;
+      color: #fff;
+      margin: 0 0 4px;
+    }
+    .video-card-body .en-title {
+      font-size: 0.8rem;
+      color: var(--b2b-muted);
+      margin: 0 0 12px;
+      letter-spacing: 0.5px;
+    }
+    .video-card-body p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.75;
+      margin: 0 0 8px;
+    }
+    .video-card-body .en-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      line-height: 1.65;
+      margin: 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 10px;
+      margin-top: 8px;
+    }
+
+    /* ── PROCESS STEPS ── */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 0;
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--b2b-gold-border), transparent);
+      pointer-events: none;
+    }
+    .process-step {
+      text-align: center;
+      padding: 0 12px 32px;
+      position: relative;
+    }
+    .process-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--b2b-gold-dim);
+      border: 2px solid var(--b2b-gold-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin: 0 auto 16px;
+      position: relative;
+      z-index: 1;
+    }
+    .process-step-num {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      width: 22px;
+      height: 22px;
+      background: var(--b2b-gold);
+      color: #000;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .process-step h4 {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+    .process-step .en {
+      color: var(--b2b-muted);
+      font-size: 0.72rem;
+      margin: 0 0 8px;
+      letter-spacing: 0.5px;
+    }
+    .process-step p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.78rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ── CAPABILITY CARDS ── */
+    .capability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .cap-card {
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 28px 24px;
+      transition: border-color .2s;
+    }
+    .cap-card:hover { border-color: var(--b2b-gold-border); }
+    .cap-icon {
+      font-size: 2rem;
+      margin-bottom: 14px;
+    }
+    .cap-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--b2b-gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .cap-label {
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .cap-label-en {
+      color: var(--b2b-muted);
+      font-size: 0.75rem;
+      margin-bottom: 10px;
+    }
+    .cap-desc {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.82rem;
+      line-height: 1.65;
+    }
+
+    /* ── OEM OPTIONS ── */
+    .oem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .oem-card {
+      background: linear-gradient(135deg, rgba(201,169,110,0.08), rgba(201,169,110,0.02));
+      border: 1px solid var(--b2b-gold-border);
+      border-radius: 14px;
+      padding: 28px 24px;
+    }
+    .oem-card-icon { font-size: 1.8rem; margin-bottom: 14px; }
+    .oem-card h3 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+    .oem-card .en {
+      color: var(--b2b-muted);
+      font-size: 0.75rem;
+      margin: 0 0 10px;
+    }
+    .oem-card p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.84rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── PARTNERSHIP FLOW ── */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .flow-step {
+      background: #1a1a1a;
+      border-radius: 14px;
+      padding: 28px 22px;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .flow-step-num {
+      width: 36px;
+      height: 36px;
+      background: var(--b2b-gold);
+      color: #000;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .flow-step h4 {
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+    .flow-step .en {
+      color: var(--b2b-muted);
+      font-size: 0.75rem;
+      margin: 0 0 10px;
+    }
+    .flow-step p {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.83rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--b2b-gold);
+      font-size: 1.4rem;
+      padding-top: 36px;
+    }
+    @media (max-width: 768px) { .flow-arrow { display: none; } }
+
+    /* ── FAQ ── */
+    .b2b-faq-list { margin-top: 40px; display: flex; flex-direction: column; gap: 12px; }
+    .b2b-faq-item {
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .b2b-faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 20px 24px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .b2b-faq-q:hover { color: var(--b2b-gold); }
+    .b2b-faq-icon {
+      color: var(--b2b-gold);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      transition: transform .2s;
+    }
+    .b2b-faq-a {
+      display: none;
+      padding: 0 24px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.88rem;
+      line-height: 1.75;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .b2b-faq-a.open { display: block; }
+    .b2b-faq-a a {
+      color: var(--b2b-gold);
+      text-decoration: underline;
+    }
+
+    /* ── BOTTOM CTA ── */
+    .b2b-cta-section {
+      background: linear-gradient(135deg, #1a1208, #0d0d0d);
+      border-top: 1px solid var(--b2b-gold-border);
+      padding: 80px 0;
+      text-align: center;
+    }
+    .b2b-cta-section h2 {
+      font-family: 'Noto Serif KR', serif;
+      color: #fff;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      margin: 0 0 8px;
+    }
+    .b2b-cta-section .en {
+      color: var(--b2b-muted);
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+    }
+    .b2b-cta-section p {
+      color: var(--b2b-text);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .b2b-cta-section .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .process-grid::before { display: none; }
+      .b2b-hero { padding: 70px 0 60px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER (consistent with site) -->
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <a href="index.html">Home</a>
+        <a href="products/">Products</a>
+        <a href="machines/">Machines</a>
+        <a href="b2b.html" aria-current="page">B2B</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="contact.html">B2B 문의하기</a>
+      </div>
+      <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+        <span class="menu-toggle-icon" aria-hidden="true">
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+          <span class="menu-toggle-bar"></span>
+        </span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="b2b-hero">
+      <div class="container">
+        <p class="b2b-hero-eyebrow">For Business Partners — B2B Solutions</p>
+        <h1>
+          <span>국내 최초</span> 자동 드립백 포장기 도입.<br>
+          귀사의 커피 브랜드를 완성합니다.
+        </h1>
+        <p class="b2b-hero-en">Korea's First Automated Drip Bag Packaging System — Built to Scale Your Brand.</p>
+        <p class="b2b-hero-desc">
+          단순한 커피 제조사가 아닙니다.<br>
+          원두 선별부터 정밀 충전, 질소 실링, 자동 카운팅, 브랜드 박스 패키징, 출하 검수까지—<br>
+          귀사의 커피 브랜드를 처음부터 끝까지 설계하고, 생산하고, 완성합니다.
+        </p>
+        <p class="b2b-hero-desc-en">
+          We don't just manufacture coffee. We engineer your entire coffee brand from bean to finished packaged product —
+          with Korea's most advanced automated drip bag production system.
+        </p>
+        <div class="b2b-hero-badges">
+          <span class="b2b-badge">국내 최초 자동화 라인</span>
+          <span class="b2b-badge">최대 60백/분</span>
+          <span class="b2b-badge">±0.15g 정밀 충전</span>
+          <span class="b2b-badge">OEM / ODM</span>
+          <span class="b2b-badge">알루미늄 질소 패키징</span>
+          <span class="b2b-badge">문의 후 견적</span>
+        </div>
+        <div class="b2b-hero-actions">
+          <a class="btn btn-primary" href="contact.html">파트너십 문의하기</a>
+          <a class="btn btn-outline" href="#videos" style="border-color:var(--b2b-gold-border);color:var(--b2b-gold);">생산 현장 영상 보기 ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── VIDEOS ── -->
+    <section class="b2b-section light" id="videos">
+      <div class="container">
+        <p class="b2b-eyebrow">Production Floor Videos</p>
+        <h2>실제 생산 현장을<br>직접 확인하십시오<span class="en">See Exactly How Your Product Is Made</span></h2>
+        <div class="divider-gold"></div>
+        <p class="b2b-section-lead">말이 아닌 영상으로 증명합니다. 필터지 원단이 기계에 투입되는 순간부터 완성된 브랜드 박스가 출하되기까지 — 전 공정을 투명하게 공개합니다.</p>
+        <p class="b2b-section-lead-en">We prove it with footage, not words. From raw filter material entering the machine to finished branded boxes leaving the line — every stage, fully transparent.</p>
+
+        <div class="videos-grid">
+
+          <!-- VIDEO 1 -->
+          <div class="video-card">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/video/auto_1.mp4" type="video/mp4">
+            </video>
+            <div class="video-card-body">
+              <p class="video-num">01 — 드립백 제조 공정</p>
+              <h3>필터지에서 완성 드립백까지, 단 몇 초</h3>
+              <p class="en-title">Drip Bag Manufacturing · Raw Material to Finished Bag</p>
+              <p>필터지 원단이 기계에 투입되는 순간, 자동으로 커피가 정밀 충전되고 양면이 완벽하게 실링됩니다. 단 한 명의 작업자도 개입하지 않는 완전 자동화 공정. 국내 최초로 도입된 MDP 지능형 드립백 포장기가 만들어내는 0.15g 오차 이내의 정밀함을 확인하십시오.</p>
+              <p class="en-desc">The moment filter paper enters the machine, coffee is precision-filled and both sides are sealed automatically — zero manual intervention. Witness ±0.15g filling accuracy from Korea's first MDP Intelligent Drip Bag Packaging System.</p>
+            </div>
+          </div>
+
+          <!-- VIDEO 2 -->
+          <div class="video-card">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/video/auto_2.mp4" type="video/mp4">
+            </video>
+            <div class="video-card-body">
+              <p class="video-num">02 — 자동 카운팅 & 박스 패키징</p>
+              <h3>오차 제로. 귀사의 브랜드 박스로 자동 투입</h3>
+              <p class="en-title">Auto Counting & Box Packaging · Zero Error, Full Automation</p>
+              <p>한 치의 오차도 허용하지 않는 터치스크린 수량 제어 시스템. 설정된 수량이 채워지는 순간, 완성된 드립백이 귀사의 브랜드 박스에 자동으로 투입됩니다. 사람의 손이 닿지 않아도 완벽하게 포장되는 무인 패키징 라인 — 이것이 PNS의 품질 기준입니다.</p>
+              <p class="en-desc">A touch-screen quantity control system with zero tolerance for error. Once the set count is reached, finished drip bags are automatically inserted into your branded box — unmanned, uncompromised, and perfectly consistent every single time.</p>
+            </div>
+          </div>
+
+          <!-- VIDEO 3 -->
+          <div class="video-card">
+            <video autoplay muted loop playsinline preload="metadata">
+              <source src="assets/video/auto_3.mp4" type="video/mp4">
+            </video>
+            <div class="video-card-body">
+              <p class="video-num">03 — 전체 생산 라인</p>
+              <h3>원두 투입부터 출하까지, 하나의 끊김 없는 라인</h3>
+              <p class="en-title">Full Production Line · Bean to Boxed, End-to-End</p>
+              <p>원단 롤 공급, 드립백 제조, 자동 박스 카토닝, 중량 검수, 출하 대기까지 — 모든 공정이 하나의 연속된 자동화 라인 위에서 쉬지 않고 이어집니다. 귀사의 제품도 바로 이 라인 위에서 탄생합니다. 대규모 출하도, 소량 주문도 동일한 품질 기준으로 완성됩니다.</p>
+              <p class="en-desc">Raw material feed, drip bag forming, automated cartoning, weight verification, and dispatch staging — all on one uninterrupted line. Your product will be born right here. The same uncompromising standards, whether large-scale or small-batch.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PRODUCTION PROCESS ── -->
+    <section class="b2b-section" id="process">
+      <div class="container">
+        <p class="b2b-eyebrow">Manufacturing Process</p>
+        <h2>6단계 자동화 생산 공정<span class="en">6-Stage Automated Production Process</span></h2>
+        <div class="divider-gold"></div>
+        <p class="b2b-section-lead">모든 단계가 자동화되어 있으며, 각 공정은 다음 단계로 끊김 없이 이어집니다. 사람의 손이 개입하는 지점을 최소화하여 위생과 품질을 동시에 극대화합니다.</p>
+        <p class="b2b-section-lead-en">Every stage is automated and flows seamlessly into the next. Human touch points are minimized — maximizing hygiene and quality simultaneously.</p>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-icon">🔬<span class="process-step-num">1</span></div>
+            <h4>원두 선별</h4>
+            <p class="en">Optical Bean Selection</p>
+            <p>광학 선별기로 결점두·이물 완전 제거. 균일한 품질의 시작점.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">⚖️<span class="process-step-num">2</span></div>
+            <h4>정밀 충전</h4>
+            <p class="en">Precision Filling ±0.15g</p>
+            <p>자동 계량 후 필터백에 충전. 오차 ±0.15g 이내 보장.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">🔒<span class="process-step-num">3</span></div>
+            <h4>질소 실링</h4>
+            <p class="en">Nitrogen Sealing</p>
+            <p>알루미늄 차광·차습 포장 + 질소 충전. 신선도 극대화.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">🔢<span class="process-step-num">4</span></div>
+            <h4>자동 카운팅</h4>
+            <p class="en">Automated Counting</p>
+            <p>터치스크린 수량 제어. 설정 수량 도달 시 자동 박스 투입.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">📦<span class="process-step-num">5</span></div>
+            <h4>브랜드 패키징</h4>
+            <p class="en">Brand Box Packaging</p>
+            <p>귀사 브랜드 박스에 자동 삽입. 무인 카토닝 라인.</p>
+          </div>
+          <div class="process-step">
+            <div class="process-icon">✅<span class="process-step-num">6</span></div>
+            <h4>품질 검수</h4>
+            <p class="en">Final Quality Check</p>
+            <p>최종 중량 검수 및 외관 확인 후 출하. 불량 제로 목표.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CAPABILITIES ── -->
+    <section class="b2b-section light" id="capabilities">
+      <div class="container">
+        <p class="b2b-eyebrow">Production Capabilities</p>
+        <h2>국내 최고 수준의 생산 능력<span class="en">Industry-Leading Production Specifications</span></h2>
+        <div class="divider-gold"></div>
+        <p class="b2b-section-lead">국내 최초로 도입된 MDP 지능형 드립백 포장기는 기존 반자동 설비 대비 압도적인 생산 속도와 정밀도를 실현합니다. 귀사의 규모에 맞는 생산 라인을 함께 설계합니다.</p>
+        <p class="b2b-section-lead-en">Korea's first MDP Intelligent Drip Bag Packaging System delivers overwhelming production speed and precision compared to conventional semi-automatic equipment. We design a production line that fits your scale.</p>
+        <div class="capability-grid">
+          <div class="cap-card">
+            <div class="cap-icon">⚡</div>
+            <div class="cap-num">60<span style="font-size:1rem;">백/분</span></div>
+            <div class="cap-label">최대 생산 속도</div>
+            <div class="cap-label-en">Max Production Speed</div>
+            <div class="cap-desc">기존 반자동 설비 대비 최대 5배 빠른 생산 속도. 대량 수주도 납기 내 완벽 대응합니다.</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🎯</div>
+            <div class="cap-num">±0.15<span style="font-size:1rem;">g</span></div>
+            <div class="cap-label">충전 정확도</div>
+            <div class="cap-label-en">Filling Accuracy</div>
+            <div class="cap-desc">6축 서보 모터 제어. 재료에 따라 다소 차이가 있으나 업계 최고 수준의 충전 정밀도를 구현합니다.</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🔒</div>
+            <div class="cap-num">1.5<span style="font-size:1rem;">배+</span></div>
+            <div class="cap-label">실링 강도</div>
+            <div class="cap-label-en">Sealing Strength</div>
+            <div class="cap-desc">업계 평균 대비 1.5배 이상 높은 실링 강도(≥4N). 유통 중 파손·산화를 원천 차단합니다.</div>
+          </div>
+          <div class="cap-card">
+            <div class="cap-icon">🤖</div>
+            <div class="cap-num">완전<span style="font-size:1rem;">자동</span></div>
+            <div class="cap-label">무인 운영 가능</div>
+            <div class="cap-label-en">Unmanned Operation</div>
+            <div class="cap-desc">1인이 복수 설비를 동시 운영 가능. 인건비 절감과 위생 관리를 동시에 실현합니다.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── OEM / ODM ── -->
+    <section class="b2b-section" id="oem">
+      <div class="container">
+        <p class="b2b-eyebrow">OEM / ODM Services</p>
+        <h2>귀사의 브랜드로<br>완성합니다<span class="en">Your Brand. Your Blend. Your Box.</span></h2>
+        <div class="divider-gold"></div>
+        <p class="b2b-section-lead">PNS의 생산 인프라 위에 귀사의 브랜드를 얹습니다. 블렌드 선택부터 패키지 디자인, 수량 조정까지 — 모든 것을 귀사 중심으로 설계합니다.</p>
+        <p class="b2b-section-lead-en">We place your brand on top of PNS's production infrastructure. From blend selection to package design and quantity adjustment — everything designed around you.</p>
+        <div class="oem-grid">
+          <div class="oem-card">
+            <div class="oem-card-icon">☕</div>
+            <h3>블렌드 커스터마이징</h3>
+            <p class="en">Custom Blend Selection</p>
+            <p>팔롬비니 Roma·Gran Bar·Dolce Italia 및 PNS 시그니처 Volcano Ruby 중 선택하거나, 귀사 요청에 맞는 별도 블렌드를 협의합니다.</p>
+          </div>
+          <div class="oem-card">
+            <div class="oem-card-icon">🎨</div>
+            <h3>브랜드 패키지 디자인</h3>
+            <p class="en">Custom Brand Packaging</p>
+            <p>귀사의 로고, 색상, 서체가 담긴 알루미늄 드립백 패키지와 박스를 제작합니다. 어떤 브랜드 아이덴티티도 구현 가능합니다.</p>
+          </div>
+          <div class="oem-card">
+            <div class="oem-card-icon">📐</div>
+            <h3>수량·규격 맞춤 설계</h3>
+            <p class="en">Flexible Quantity & Spec</p>
+            <p>소량 테스트 생산부터 대규모 양산까지. 박스당 수량, 충전 중량, 포장 재질 등 모든 스펙을 협의로 결정합니다.</p>
+          </div>
+          <div class="oem-card">
+            <div class="oem-card-icon">🌍</div>
+            <h3>수출 대응 가능</h3>
+            <p class="en">Export-Ready Production</p>
+            <p>국내외 파트너십 모두 환영합니다. 해외 유통을 위한 패키지 현지화 및 표기 대응도 협의 가능합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PARTNERSHIP FLOW ── -->
+    <section class="b2b-section light" id="flow">
+      <div class="container">
+        <p class="b2b-eyebrow">How To Start</p>
+        <h2>파트너십 시작 방법<span class="en">4 Steps to Your First Branded Product</span></h2>
+        <div class="divider-gold"></div>
+        <p class="b2b-section-lead">복잡한 절차 없이 4단계로 귀사의 첫 번째 브랜드 드립백이 탄생합니다.</p>
+        <p class="b2b-section-lead-en">Your first branded drip bag in just 4 clear steps — no unnecessary complexity.</p>
+        <div class="flow-grid">
+          <div class="flow-step">
+            <div class="flow-step-num">1</div>
+            <h4>문의 접수</h4>
+            <p class="en">Initial Inquiry</p>
+            <p>온라인 문의 또는 연락처로 파트너십 의향을 알려주세요. 24시간 내 담당자가 연락드립니다.</p>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-num">2</div>
+            <h4>사양 협의</h4>
+            <p class="en">Spec Consultation</p>
+            <p>블렌드, 수량, 패키지 디자인, 납기 등 세부 사양을 함께 결정합니다.</p>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-num">3</div>
+            <h4>샘플 제작</h4>
+            <p class="en">Sample Production</p>
+            <p>양산 전 샘플을 제작하여 블렌드와 패키지 품질을 직접 확인하실 수 있습니다.</p>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-num">4</div>
+            <h4>양산 시작</h4>
+            <p class="en">Mass Production</p>
+            <p>샘플 승인 후 자동화 라인을 가동합니다. 귀사 브랜드 제품이 라인에서 탄생합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── FAQ ── -->
+    <section class="b2b-section" id="faq">
+      <div class="container" style="max-width:760px;">
+        <p class="b2b-eyebrow">FAQ</p>
+        <h2>자주 묻는 질문<span class="en">Frequently Asked Questions</span></h2>
+        <div class="divider-gold"></div>
+        <div class="b2b-faq-list">
+
+          <div class="b2b-faq-item">
+            <button class="b2b-faq-q" onclick="toggleB2bFaq(this)">
+              <span>OEM/ODM 생산이 가능한가요? 저희 브랜드로 만들 수 있나요?<br><small style="color:rgba(255,255,255,0.4);font-weight:400;">Is OEM/ODM production available under our brand?</small></span>
+              <span class="b2b-faq-icon">+</span>
+            </button>
+            <div class="b2b-faq-a">
+              네, 귀사 브랜드로 완성하는 OEM/ODM 서비스를 제공합니다. 로고, 색상, 패키지 디자인을 적용한 알루미늄 드립백 및 박스 제작이 가능합니다. 자세한 사양과 견적은 <a href="contact.html">문의하기</a>를 통해 편하게 연락 주세요.<br><br>
+              <em style="color:rgba(255,255,255,0.35);">Yes, we offer full OEM/ODM services under your brand. Please <a href="contact.html">contact us</a> for details and a custom quote.</em>
+            </div>
+          </div>
+
+          <div class="b2b-faq-item">
+            <button class="b2b-faq-q" onclick="toggleB2bFaq(this)">
+              <span>어떤 커피 블렌드를 선택할 수 있나요?<br><small style="color:rgba(255,255,255,0.4);font-weight:400;">What coffee blends are available?</small></span>
+              <span class="b2b-faq-icon">+</span>
+            </button>
+            <div class="b2b-faq-a">
+              팔롬비니 Roma(100% 아라비카), Gran Bar(아라비카 40%+로부스타 60%), Dolce Italia(아라비카 중심) 및 PNS 시그니처 Volcano Ruby 중 선택하실 수 있습니다. 귀사만의 커스텀 블렌드 협의도 가능하니 <a href="contact.html">문의</a> 주세요.<br><br>
+              <em style="color:rgba(255,255,255,0.35);">Palombini Roma, Gran Bar, Dolce Italia, and PNS Volcano Ruby are available. Custom blends can also be discussed — <a href="contact.html">contact us</a>.</em>
+            </div>
+          </div>
+
+          <div class="b2b-faq-item">
+            <button class="b2b-faq-q" onclick="toggleB2bFaq(this)">
+              <span>샘플 제작이 가능한가요?<br><small style="color:rgba(255,255,255,0.4);font-weight:400;">Can we get samples before full production?</small></span>
+              <span class="b2b-faq-icon">+</span>
+            </button>
+            <div class="b2b-faq-a">
+              네, 양산 전 샘플 제작이 가능합니다. 블렌드와 패키지 품질을 직접 확인하신 후 양산 여부를 결정하실 수 있습니다. 샘플 관련 세부 사항은 <a href="contact.html">문의</a>를 통해 안내해 드립니다.<br><br>
+              <em style="color:rgba(255,255,255,0.35);">Yes, samples are available before mass production. Please <a href="contact.html">contact us</a> for sample details.</em>
+            </div>
+          </div>
+
+          <div class="b2b-faq-item">
+            <button class="b2b-faq-q" onclick="toggleB2bFaq(this)">
+              <span>패키지 디자인 제작은 어떻게 진행되나요?<br><small style="color:rgba(255,255,255,0.4);font-weight:400;">How does the package design process work?</small></span>
+              <span class="b2b-faq-icon">+</span>
+            </button>
+            <div class="b2b-faq-a">
+              귀사의 로고와 디자인 가이드라인을 기반으로 알루미늄 드립백 및 박스 디자인을 제작합니다. 디자인 파일이 있으시면 함께 보내주세요. 자세한 진행 방식은 <a href="contact.html">문의하기</a>로 연락 주시면 단계별로 안내해 드립니다.<br><br>
+              <em style="color:rgba(255,255,255,0.35);">We create packaging based on your brand guidelines. Please send your design files and <a href="contact.html">contact us</a> for step-by-step guidance.</em>
+            </div>
+          </div>
+
+          <div class="b2b-faq-item">
+            <button class="b2b-faq-q" onclick="toggleB2bFaq(this)">
+              <span>해외 수출 및 해외 파트너십도 가능한가요?<br><small style="color:rgba(255,255,255,0.4);font-weight:400;">Is international partnership / export available?</small></span>
+              <span class="b2b-faq-icon">+</span>
+            </button>
+            <div class="b2b-faq-a">
+              네, 국내외 모든 파트너십을 환영합니다. 해외 유통을 위한 패키지 현지화 및 표기 대응도 협의 가능합니다. 국제 파트너십 문의는 <a href="contact.html">문의하기</a>를 통해 연락 주세요.<br><br>
+              <em style="color:rgba(255,255,255,0.35);">We welcome both domestic and international partnerships. <a href="contact.html">Contact us</a> for international inquiries.</em>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── BOTTOM CTA ── -->
+    <section class="b2b-cta-section">
+      <div class="container">
+        <h2>지금 바로 귀사의 커피 브랜드를<br>시작하십시오</h2>
+        <p class="en">Start Your Coffee Brand with Korea's Most Advanced Production System</p>
+        <p>국내 최초 자동화 드립백 생산 시스템과 팔롬비니의 이탈리아 헤리티지가 만나는 곳. 귀사의 브랜드가 될 첫 번째 드립백이 이 라인에서 만들어집니다.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="contact.html" style="font-size:1rem;padding:14px 32px;">파트너십 문의하기 →</a>
+          <a class="btn btn-outline" href="contact.html" style="font-size:1rem;padding:14px 32px;border-color:var(--b2b-gold-border);color:var(--b2b-gold);">B2B Inquiry (English) →</a>
+        </div>
+        <p style="margin-top:24px;font-size:0.82rem;color:rgba(255,255,255,0.3);">문의 접수 후 24시간 내 담당자가 연락드립니다 · We respond within 24 hours</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PNS 팔롬비니. All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="index.html">홈</a>
+        <a href="products/">제품</a>
+        <a href="b2b.html">B2B</a>
+        <a href="contact.html">문의</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+    function toggleB2bFaq(btn) {
+      const answer = btn.nextElementSibling;
+      const icon = btn.querySelector('.b2b-faq-icon');
+      const isOpen = answer.classList.contains('open');
+      // close all
+      document.querySelectorAll('.b2b-faq-a').forEach(a => a.classList.remove('open'));
+      document.querySelectorAll('.b2b-faq-icon').forEach(i => { i.textContent = '+'; i.style.transform = ''; });
+      if (!isOpen) {
+        answer.classList.add('open');
+        icon.textContent = '×';
+      }
+    }
+  </script>
+</body>
+</html>
