@@ -60,8 +60,21 @@
       padding-top: 0 !important;
       margin-top: 0;
     }
+    #productsCatalog {
+      padding-top: 28px;
+      padding-bottom: 28px;
+    }
     .flavor-guide-promo {
-      padding-top: 18px;
+      padding-top: 0;
+      padding-bottom: 32px;
+    }
+    .products-list-page .section.alt {
+      padding: 36px 0;
+    }
+    @media (max-width: 900px) {
+      #productsCatalog { padding-top: 20px; padding-bottom: 20px; }
+      .flavor-guide-promo { padding-bottom: 20px; }
+      .products-list-page .section.alt { padding: 28px 0; }
     }
     .flavor-guide-promo-card {
       display: grid;
@@ -224,9 +237,16 @@
         <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="??? ??????" data-store-link>
+        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link>
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>
         </a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true">
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+            <span class="menu-toggle-bar"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
@@ -255,8 +275,8 @@
     <section class="section blends-section" style="padding-top:10px;padding-bottom:0;">
       <div class="container">
         <p class="eyebrow">Caffè Palombini</p>
-        <h2 class="section-title">팔롬비니 원두 블렌드</h2>
-        <p class="section-lead" style="color:var(--muted);max-width:560px;word-break:keep-all;margin-bottom:16px;">PNS 팔롬비니 드립백에 사용되는 세 가지 이탈리아 정통 블렌드. 각 블렌드는 80년 로마 로스팅 헤리티지를 담고 있습니다.</p>
+        <h2 class="section-title is-visible">팔롬비니 원두 블렌드</h2>
+        <p class="section-lead is-visible" style="color:var(--muted);max-width:560px;word-break:keep-all;margin-bottom:16px;">PNS 팔롬비니 드립백에 사용되는 세 가지 이탈리아 정통 블렌드. 각 블렌드는 80년 로마 로스팅 헤리티지를 담고 있습니다.</p>
         <div class="volcano-feature-row">
           <div class="blend-card volcano-feature-card">
             <img class="blend-poster" src="./volcano-ruby/img_02_원두.jpg" alt="Volcano Ruby 원두 이미지"/>
