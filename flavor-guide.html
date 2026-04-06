@@ -570,19 +570,17 @@
   .fg-site-main { padding-top: 16px; padding-bottom: 72px; }
   .fg-breadcrumb-wrap { padding-top: 12px; }
 
-  /* ── MOBILE: 헤더/sticky CTA 숨기기, 상단 퀵스타트 버튼 ── */
-  .fg-mobile-quick-start-wrap { display: none; }
+  /* ── 설명 카드 내 시작 버튼 ── */
+  .fg-card-start-btn {
+    display: block;
+    width: 100%;
+    margin: 20px 0 16px;
+  }
+  /* ── MOBILE: 헤더/sticky CTA 숨기기 ── */
   @media (max-width: 860px) {
     .site-header { display: none !important; }
     .mobile-sticky-cta { display: none !important; }
     body.has-mobile-sticky-cta { padding-bottom: 0 !important; }
-    .fg-mobile-quick-start-wrap {
-      display: block;
-      max-width: 920px;
-      margin: 0 auto 16px;
-      padding: 0 16px;
-    }
-    .fg-mobile-quick-start { display: block; width: 100%; }
   }
   .fg-page-intro { max-width: 920px; margin: 0 auto 18px; padding: 0 20px; }
   .fg-page-card { border-radius: 26px; border: 1px solid rgba(200,170,110,.16); background: linear-gradient(180deg, rgba(30,23,16,.96), rgba(21,16,12,.96)); box-shadow: 0 24px 60px rgba(0,0,0,.28); padding: 30px 32px; }
@@ -636,13 +634,11 @@
   <div class="container fg-breadcrumb-wrap">
     <div class="breadcrumb"><a href="index.html">홈</a><span class="breadcrumb-sep">›</span><a href="products/">Products</a><span class="breadcrumb-sep">›</span><span>Flavor Guide</span></div>
   </div>
-  <div class="fg-mobile-quick-start-wrap">
-    <button class="btn-primary fg-mobile-quick-start" onclick="startQuiz()">내 블렌드 찾기 →</button>
-  </div>
-  <section class="fg-page-intro">
+  <section class="fg-page-intro" id="fg-page-intro">
     <div class="fg-page-card">
       <p class="eyebrow">Flavor Guide</p>
       <h1>PALOMBINI 드립백 취향 찾기</h1>
+      <button class="btn-primary fg-card-start-btn" onclick="startFromCard()">내 블렌드 찾기 →</button>
       <p>세 가지 질문만으로 지금의 기분과 취향에 가장 잘 어울리는 PALOMBINI 드립백 블렌드를 추천합니다. 먼저 감각적인 인상으로 접근하고, 그다음 왜 잘 맞는지 맛의 구조로 설명합니다.</p>
       <p>PALOMBINI 드립백은 실버스킨을 먼저 물리적으로 덜어낸 뒤 패키징해, 쓴맛과 텁텁함을 줄이고 더 깨끗하게 마무리되는 한 잔을 목표로 합니다.</p>
     </div>
@@ -1126,7 +1122,13 @@ function goTo(screen) {
 }
 
 function startQuiz() { answers = {}; goTo('q1'); }
-function restartQuiz() { answers = {}; goTo('landing'); }
+function startFromCard() {
+  const intro = document.getElementById('fg-page-intro');
+  if (intro) intro.style.display = 'none';
+  answers = {};
+  goTo('q1');
+}
+function restartQuiz() { answers = {}; goTo('q1'); }
 
 function answer(qKey, value) {
   answers[qKey] = value;
