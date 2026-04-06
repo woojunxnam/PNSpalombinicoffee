@@ -1,15 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PALOMBINI — 나의 드립백 찾기</title>
+<title>PALOMBINI ???섏쓽 ?쒕┰諛?李얘린</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
-  /* ── TOKENS ───────────────────────────────────────────── */
+  /* ?? TOKENS ????????????????????????????????????????????? */
   :root {
     --bg:        #100c07;
     --bg2:       #1a1410;
@@ -28,7 +28,7 @@
     --r-lg:      24px;
   }
 
-  /* ── RESET / BASE ─────────────────────────────────────── */
+  /* ?? RESET / BASE ??????????????????????????????????????? */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { font-size: 16px; scroll-behavior: smooth; }
   body {
@@ -44,7 +44,7 @@
     position: relative;
   }
 
-  /* ── BACKGROUND TEXTURE ───────────────────────────────── */
+  /* ?? BACKGROUND TEXTURE ????????????????????????????????? */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 0;
@@ -58,7 +58,7 @@
     pointer-events: none;
   }
 
-  /* ── LAYOUT WRAPPER ───────────────────────────────────── */
+  /* ?? LAYOUT WRAPPER ????????????????????????????????????? */
   #app {
     position: relative; z-index: 1;
     width: 100%; max-width: 640px;
@@ -66,7 +66,7 @@
     margin: 0 auto;
   }
 
-  /* ── LOGO / HEADER ────────────────────────────────────── */
+  /* ?? LOGO / HEADER ?????????????????????????????????????? */
   .brand-header {
     text-align: center;
     padding: 0 0 28px;
@@ -87,7 +87,7 @@
     background: linear-gradient(90deg, transparent, var(--border), transparent);
   }
 
-  /* ── PROGRESS BAR ─────────────────────────────────────── */
+  /* ?? PROGRESS BAR ??????????????????????????????????????? */
   .progress-wrap {
     display: flex;
     align-items: center;
@@ -117,7 +117,7 @@
     white-space: nowrap;
   }
 
-  /* ── SCREEN SYSTEM ────────────────────────────────────── */
+  /* ?? SCREEN SYSTEM ?????????????????????????????????????? */
   .screen {
     display: none;
     animation: fadeUp .5s ease both;
@@ -128,7 +128,7 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* ── LANDING ──────────────────────────────────────────── */
+  /* ?? LANDING ???????????????????????????????????????????? */
   .landing-eyebrow {
     text-align: center;
     font-size: .68rem;
@@ -182,7 +182,7 @@
     text-transform: uppercase;
   }
 
-  /* ── BUTTONS ──────────────────────────────────────────── */
+  /* ?? BUTTONS ???????????????????????????????????????????? */
   .btn-primary {
     display: block;
     width: 100%;
@@ -221,7 +221,7 @@
   .btn-ghost:hover { color: var(--cream); }
   .btn-ghost svg { width: 14px; height: 14px; }
 
-  /* ── QUESTION CARD ────────────────────────────────────── */
+  /* ?? QUESTION CARD ?????????????????????????????????????? */
   .q-eyebrow {
     font-size: .68rem;
     letter-spacing: .25em;
@@ -246,7 +246,7 @@
     font-weight: 300;
   }
 
-  /* ── OPTION CARDS ─────────────────────────────────────── */
+  /* ?? OPTION CARDS ??????????????????????????????????????? */
   .options-grid {
     display: flex;
     flex-direction: column;
@@ -297,7 +297,7 @@
     line-height: 1.5;
   }
 
-  /* ── RESULT CARD ──────────────────────────────────────── */
+  /* ?? RESULT CARD ???????????????????????????????????????? */
   .result-header {
     text-align: center;
     margin-bottom: 28px;
@@ -455,7 +455,7 @@
     color: var(--muted);
   }
 
-  /* ── RESULT ACTIONS ───────────────────────────────────── */
+  /* ?? RESULT ACTIONS ????????????????????????????????????? */
   .result-actions {
     display: flex;
     flex-direction: column;
@@ -463,7 +463,7 @@
     margin-top: 8px;
   }
 
-  /* ── BACK NAV ─────────────────────────────────────────── */
+  /* ?? BACK NAV ??????????????????????????????????????????? */
   .nav-row {
     display: flex;
     align-items: center;
@@ -471,7 +471,7 @@
     min-height: 32px;
   }
 
-  /* ── SEPARATOR ────────────────────────────────────────── */
+  /* ?? SEPARATOR ?????????????????????????????????????????? */
   .or-sep {
     text-align: center;
     font-size: .72rem;
@@ -490,7 +490,7 @@
   .or-sep::before { left: 0; }
   .or-sep::after  { right: 0; }
 
-  /* ── FOOTER ───────────────────────────────────────────── */
+  /* ?? FOOTER ????????????????????????????????????????????? */
   .guide-footer {
     text-align: center;
     font-size: .65rem;
@@ -500,7 +500,7 @@
     padding-top: 32px;
   }
 
-  /* ── MOBILE TWEAKS ────────────────────────────────────── */
+  /* ?? MOBILE TWEAKS ?????????????????????????????????????? */
   @media (max-width: 420px) {
     #app { padding: 20px 16px 32px; }
     .option-card { padding: 16px 18px; }
@@ -508,7 +508,7 @@
     .profile-row { grid-template-columns: 44px 1fr 18px; }
   }
 
-  /* ── SILVERSKIN BADGE ─────────────────────────────────── */
+  /* ?? SILVERSKIN BADGE ??????????????????????????????????? */
   .sk-badge {
     display: inline-flex;
     align-items: center;
@@ -576,20 +576,20 @@
 <body>
 <header class="site-header" id="top">
   <div class="container header-inner">
-    <a class="brand" href="index.html" aria-label="홈으로">
-      <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
-      <span class="brand-name">PNS 팔롬비니</span>
+    <a class="brand" href="index.html" aria-label="?덉쑝濡?>
+      <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS ?붾＼鍮꾨땲 濡쒓퀬"/></span>
+      <span class="brand-name">PNS ?붾＼鍮꾨땲</span>
     </a>
-    <nav class="nav" aria-label="주요 메뉴">
+    <nav class="nav" aria-label="二쇱슂 硫붾돱">
       <a href="index.html#about">About</a>
       <a href="index.html#tech">Technology</a>
       <a href="index.html#heritage">Heritage</a>
       <div class="nav-item">
         <a href="products/">Products</a>
         <div class="nav-dropdown">
-          <a href="products/"><span class="nav-dropdown-icon">&#9749;</span> 프리미엄 드립백</a>
-          <a href="machines/"><span class="nav-dropdown-icon">&#9881;&#65039;</span> 드립백 머신</a>
-          <a href="film.html"><span class="nav-dropdown-icon">&#127910;&#65039;</span> 커피 필름지 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+          <a href="products/"><span class="nav-dropdown-icon">&#9749;</span> ?꾨━誘몄뾼 ?쒕┰諛?/a>
+          <a href="machines/"><span class="nav-dropdown-icon">&#9881;&#65039;</span> ?쒕┰諛?癒몄떊</a>
+          <a href="film.html"><span class="nav-dropdown-icon">&#127910;&#65039;</span> 而ㅽ뵾 ?꾨쫫吏 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">以鍮꾩쨷</span></a>
         </div>
       </div>
       <a href="index.html#b2b">B2B</a>
@@ -599,20 +599,20 @@
     </nav>
     <div class="header-actions">
       <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
-      <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg></a>
+      <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="?ㅼ씠踰??ㅻ쭏?몄뒪?좎뼱" data-store-link><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg></a>
     </div>
   </div>
 </header>
 <main class="fg-site-main">
   <div class="container fg-breadcrumb-wrap">
-    <div class="breadcrumb"><a href="index.html">홈</a><span class="breadcrumb-sep">›</span><a href="products/">Products</a><span class="breadcrumb-sep">›</span><span>Flavor Guide</span></div>
+    <div class="breadcrumb"><a href="index.html">??/a><span class="breadcrumb-sep">??/span><a href="products/">Products</a><span class="breadcrumb-sep">??/span><span>Flavor Guide</span></div>
   </div>
   <section class="fg-page-intro">
     <div class="fg-page-card">
       <p class="eyebrow">Flavor Guide</p>
-      <h1>PALOMBINI 드립백 취향 찾기</h1>
-      <p>세 가지 질문만으로 지금의 기분과 취향에 가장 잘 어울리는 PALOMBINI 드립백 블렌드를 추천합니다. 먼저 감각적인 인상으로 접근하고, 그다음 왜 잘 맞는지 맛의 구조로 설명합니다.</p>
-      <p>PALOMBINI 드립백은 실버스킨을 먼저 물리적으로 덜어낸 뒤 패키징해, 쓴맛과 텁텁함을 줄이고 더 깨끗하게 마무리되는 한 잔을 목표로 합니다.</p>
+      <h1>PALOMBINI ?쒕┰諛?痍⑦뼢 李얘린</h1>
+      <p>??媛吏 吏덈Ц留뚯쑝濡?吏湲덉쓽 湲곕텇怨?痍⑦뼢??媛?????댁슱由щ뒗 PALOMBINI ?쒕┰諛?釉붾젋?쒕? 異붿쿇?⑸땲?? 癒쇱? 媛먭컖?곸씤 ?몄긽?쇰줈 ?묎렐?섍퀬, 洹몃떎??????留욌뒗吏 留쏆쓽 援ъ“濡??ㅻ챸?⑸땲??</p>
+      <p>PALOMBINI ?쒕┰諛깆? ?ㅻ쾭?ㅽ궓??癒쇱? 臾쇰━?곸쑝濡??쒖뼱?????⑦궎吏뺥빐, ?대쭧怨??곹뀅?⑥쓣 以꾩씠怨???源⑤걮?섍쾶 留덈Т由щ릺?????붿쓣 紐⑺몴濡??⑸땲??</p>
     </div>
   </section>
 <div id="app">
@@ -628,259 +628,259 @@
     <span class="progress-label" id="progressLabel">1 / 3</span>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 0 — LANDING
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 0 ??LANDING
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen active" id="screen-landing">
     <div class="landing-eyebrow">Flavor Discovery Guide</div>
-    <h1 class="landing-title">나의 <em>완벽한</em><br>드립백을 찾아서</h1>
+    <h1 class="landing-title">?섏쓽 <em>?꾨꼍??/em><br>?쒕┰諛깆쓣 李얠븘??/h1>
     <div class="landing-divider"></div>
     <p class="landing-sub">
-      몇 가지 질문에 답하면,<br>
-      15가지 블렌드 중 당신에게 가장 잘 맞는<br>
-      1–2가지를 추천해 드립니다.
+      紐?媛吏 吏덈Ц???듯븯硫?<br>
+      15媛吏 釉붾젋??以??뱀떊?먭쾶 媛????留욌뒗<br>
+      1??媛吏瑜?異붿쿇???쒕┰?덈떎.
     </p>
     <div style="text-align:center">
       <div class="sk-badge">
         <span class="sk-dot"></span>
-        실버스킨 제거 공법 · 클린컵 보장
+        ?ㅻ쾭?ㅽ궓 ?쒓굅 怨듬쾿 쨌 ?대┛而?蹂댁옣
       </div>
     </div>
     <div class="badge-row">
-      <span class="badge">15가지 블렌드</span>
-      <span class="badge">3단계 질문</span>
-      <span class="badge">맞춤 추천</span>
+      <span class="badge">15媛吏 釉붾젋??/span>
+      <span class="badge">3?④퀎 吏덈Ц</span>
+      <span class="badge">留욎땄 異붿쿇</span>
     </div>
-    <button class="btn-primary" onclick="startQuiz()">내 블렌드 찾기 →</button>
+    <button class="btn-primary" onclick="startQuiz()">??釉붾젋??李얘린 ??/button>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 1 — 무드 질문 (감성)
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 1 ??臾대뱶 吏덈Ц (媛먯꽦)
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q1">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('landing')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        처음으로
+        泥섏쓬?쇰줈
       </button>
     </div>
-    <div class="q-eyebrow">질문 1 of 3 · 오늘의 무드</div>
-    <h2 class="q-title">지금 이 순간,<br>어떤 커피가 <em>필요</em>하세요?</h2>
-    <p class="q-sub">느낌으로 고르세요 — 취향을 분석해 드릴게요.</p>
+    <div class="q-eyebrow">吏덈Ц 1 of 3 쨌 ?ㅻ뒛??臾대뱶</div>
+    <h2 class="q-title">吏湲????쒓컙,<br>?대뼡 而ㅽ뵾媛 <em>?꾩슂</em>?섏꽭??</h2>
+    <p class="q-sub">?먮굦?쇰줈 怨좊Ⅴ?몄슂 ??痍⑦뼢??遺꾩꽍???쒕┫寃뚯슂.</p>
     <div class="options-grid">
       <div class="option-card" onclick="answer('q1','soft')">
-        <div class="option-icon">☀️</div>
+        <div class="option-icon">?截?/div>
         <div class="option-text">
-          <div class="option-label">포근하고 부드러운 한 잔</div>
-          <div class="option-desc">달콤하고 크리미하게, 마음이 편안해지는 커피</div>
+          <div class="option-label">?ш렐?섍퀬 遺?쒕윭??????/div>
+          <div class="option-desc">?ъ숴?섍퀬 ?щ━誘명븯寃? 留덉쓬???몄븞?댁???而ㅽ뵾</div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q1','balance')">
-        <div class="option-icon">⚖️</div>
+        <div class="option-icon">?뽳툘</div>
         <div class="option-text">
-          <div class="option-label">균형 잡힌 일상의 한 잔</div>
-          <div class="option-desc">하루 종일 마셔도 질리지 않는, 안정적인 커피</div>
+          <div class="option-label">洹좏삎 ?≫엺 ?쇱긽??????/div>
+          <div class="option-desc">?섎（ 醫낆씪 留덉뀛??吏덈━吏 ?딅뒗, ?덉젙?곸씤 而ㅽ뵾</div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q1','dark')">
-        <div class="option-icon">🌑</div>
+        <div class="option-icon">?뙌</div>
         <div class="option-text">
-          <div class="option-label">강렬하고 깊은 한 잔</div>
-          <div class="option-desc">진하고 묵직한 에스프레소 킥이 필요한 날</div>
+          <div class="option-label">媛뺣젹?섍퀬 源딆? ????/div>
+          <div class="option-desc">吏꾪븯怨?臾듭쭅???먯뒪?꾨젅???μ씠 ?꾩슂????/div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 2A — 부드러움 계열 취향 질문
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 2A ??遺?쒕윭? 怨꾩뿴 痍⑦뼢 吏덈Ц
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q2a">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('q1')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        이전 질문
+        ?댁쟾 吏덈Ц
       </button>
     </div>
-    <div class="q-eyebrow">질문 2 of 3 · 음용 스타일</div>
-    <h2 class="q-title">주로 <em>어떻게</em><br>드시나요?</h2>
-    <p class="q-sub">추출 방식에 따라 가장 잘 맞는 블렌드가 달라집니다.</p>
+    <div class="q-eyebrow">吏덈Ц 2 of 3 쨌 ?뚯슜 ?ㅽ???/div>
+    <h2 class="q-title">二쇰줈 <em>?대뼸寃?/em><br>?쒖떆?섏슂?</h2>
+    <p class="q-sub">異붿텧 諛⑹떇???곕씪 媛????留욌뒗 釉붾젋?쒓? ?щ씪吏묐땲??</p>
     <div class="options-grid">
       <div class="option-card" onclick="answer('q2a','milk')">
-        <div class="option-icon">🥛</div>
+        <div class="option-icon">?쪢</div>
         <div class="option-text">
-          <div class="option-label">우유와 함께 (라떼·카푸치노)</div>
-          <div class="option-desc">밀크 베이스, 크리미한 텍스처를 즐겨요</div>
+          <div class="option-label">?곗쑀? ?④퍡 (?쇰뼹쨌移댄뫖移섎끂)</div>
+          <div class="option-desc">諛??踰좎씠?? ?щ━誘명븳 ?띿뒪泥섎? 利먭꺼??/div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q2a','black')">
-        <div class="option-icon">☕</div>
+        <div class="option-icon">??/div>
         <div class="option-text">
-          <div class="option-label">블랙으로 깔끔하게</div>
-          <div class="option-desc">아메리카노, 드립 등 커피 본연의 맛을 즐겨요</div>
+          <div class="option-label">釉붾옓?쇰줈 源붾걫?섍쾶</div>
+          <div class="option-desc">?꾨찓由ъ뭅?? ?쒕┰ ??而ㅽ뵾 蹂몄뿰??留쏆쓣 利먭꺼??/div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 2B — 균형 계열 취향 질문
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 2B ??洹좏삎 怨꾩뿴 痍⑦뼢 吏덈Ц
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q2b">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('q1')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        이전 질문
+        ?댁쟾 吏덈Ц
       </button>
     </div>
-    <div class="q-eyebrow">질문 2 of 3 · 취향 포인트</div>
-    <h2 class="q-title">균형 잡힌 커피에서<br><em>무엇</em>을 가장 중시하세요?</h2>
-    <p class="q-sub">세 가지 중 직감으로 고르세요.</p>
+    <div class="q-eyebrow">吏덈Ц 2 of 3 쨌 痍⑦뼢 ?ъ씤??/div>
+    <h2 class="q-title">洹좏삎 ?≫엺 而ㅽ뵾?먯꽌<br><em>臾댁뾿</em>??媛??以묒떆?섏꽭??</h2>
+    <p class="q-sub">??媛吏 以?吏곴컧?쇰줈 怨좊Ⅴ?몄슂.</p>
     <div class="options-grid">
       <div class="option-card" onclick="answer('q2b','aroma')">
-        <div class="option-icon">🌸</div>
+        <div class="option-icon">?뙵</div>
         <div class="option-text">
-          <div class="option-label">향 (아로마)</div>
-          <div class="option-desc">꽃향, 과일향, 섬세한 아라비카 향이 중요해요</div>
+          <div class="option-label">??(?꾨줈留?</div>
+          <div class="option-desc">苑껎뼢, 怨쇱씪?? ?ъ꽭???꾨씪鍮꾩뭅 ?μ씠 以묒슂?댁슂</div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q2b','sweet')">
-        <div class="option-icon">🍫</div>
+        <div class="option-icon">?뜪</div>
         <div class="option-text">
-          <div class="option-label">단맛 · 초콜릿 느낌</div>
-          <div class="option-desc">코코아, 캐러멜처럼 달콤한 바디감을 좋아해요</div>
+          <div class="option-label">?⑤쭧 쨌 珥덉퐳由??먮굦</div>
+          <div class="option-desc">肄붿퐫?? 罹먮윭硫쒖쿂???ъ숴??諛붾뵒媛먯쓣 醫뗭븘?댁슂</div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q2b','versatile')">
-        <div class="option-icon">🎯</div>
+        <div class="option-icon">?렞</div>
         <div class="option-text">
-          <div class="option-label">만능 · 어떤 메뉴에도</div>
-          <div class="option-desc">블랙이든 라떼든, 모든 레시피에 쓸 수 있으면 좋겠어요</div>
+          <div class="option-label">留뚮뒫 쨌 ?대뼡 硫붾돱?먮룄</div>
+          <div class="option-desc">釉붾옓?대뱺 ?쇰뼹?? 紐⑤뱺 ?덉떆?쇱뿉 ?????덉쑝硫?醫뗪쿋?댁슂</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 2C — 진함 계열 취향 질문
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 2C ??吏꾪븿 怨꾩뿴 痍⑦뼢 吏덈Ц
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q2c">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('q1')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        이전 질문
+        ?댁쟾 吏덈Ц
       </button>
     </div>
-    <div class="q-eyebrow">질문 2 of 3 · 진함의 방향</div>
-    <h2 class="q-title">진한 커피에서<br><em>어떤 경험</em>을 원하세요?</h2>
-    <p class="q-sub">진함 안에도 다양한 개성이 있습니다.</p>
+    <div class="q-eyebrow">吏덈Ц 2 of 3 쨌 吏꾪븿??諛⑺뼢</div>
+    <h2 class="q-title">吏꾪븳 而ㅽ뵾?먯꽌<br><em>?대뼡 寃쏀뿕</em>???먰븯?몄슂?</h2>
+    <p class="q-sub">吏꾪븿 ?덉뿉???ㅼ뼇??媛쒖꽦???덉뒿?덈떎.</p>
     <div class="options-grid">
       <div class="option-card" onclick="answer('q2c','espresso')">
-        <div class="option-icon">💥</div>
+        <div class="option-icon">?뮙</div>
         <div class="option-text">
-          <div class="option-label">최강 에스프레소 킥</div>
-          <div class="option-desc">리스트레토, 스트레이트 에스프레소, 가장 강하게</div>
+          <div class="option-label">理쒓컯 ?먯뒪?꾨젅????/div>
+          <div class="option-desc">由ъ뒪?몃젅?? ?ㅽ듃?덉씠???먯뒪?꾨젅?? 媛??媛뺥븯寃?/div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q2c','milkdark')">
-        <div class="option-icon">🧊</div>
+        <div class="option-icon">?쭒</div>
         <div class="option-text">
-          <div class="option-label">진한 베이스로 라떼·아이스</div>
-          <div class="option-desc">우유나 얼음을 넣어도 커피 맛이 살아있으면 좋겠어요</div>
+          <div class="option-label">吏꾪븳 踰좎씠?ㅻ줈 ?쇰뼹쨌?꾩씠??/div>
+          <div class="option-desc">?곗쑀???쇱쓬???ｌ뼱??而ㅽ뵾 留쏆씠 ?댁븘?덉쑝硫?醫뗪쿋?댁슂</div>
         </div>
       </div>
       <div class="option-card" onclick="answer('q2c','darkelegant')">
-        <div class="option-icon">🌹</div>
+        <div class="option-icon">?뙶</div>
         <div class="option-text">
-          <div class="option-label">진하지만 고급스러운 향도</div>
-          <div class="option-desc">묵직한 바디감에 향기로운 마무리가 있으면 좋겠어요</div>
+          <div class="option-label">吏꾪븯吏留?怨좉툒?ㅻ윭???λ룄</div>
+          <div class="option-desc">臾듭쭅??諛붾뵒媛먯뿉 ?κ린濡쒖슫 留덈Т由ш? ?덉쑝硫?醫뗪쿋?댁슂</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 3A — 부드러움+우유 취향
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 3A ??遺?쒕윭?+?곗쑀 痍⑦뼢
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q3a">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('q2a')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        이전 질문
+        ?댁쟾 吏덈Ц
       </button>
     </div>
-    <div class="q-eyebrow">질문 3 of 3 · 단맛의 방향</div>
-    <h2 class="q-title">어떤 <em>달콤함</em>을<br>좋아하세요?</h2>
-    <p class="q-sub">마지막 질문입니다 — 거의 다 왔어요!</p>
+    <div class="q-eyebrow">吏덈Ц 3 of 3 쨌 ?⑤쭧??諛⑺뼢</div>
+    <h2 class="q-title">?대뼡 <em>?ъ숴??/em>??br>醫뗭븘?섏꽭??</h2>
+    <p class="q-sub">留덉?留?吏덈Ц?낅땲????嫄곗쓽 ???붿뼱??</p>
     <div class="options-grid">
       <div class="option-card" onclick="showResult(['magnolia','dolce'])">
-        <div class="option-icon">🍮</div>
+        <div class="option-icon">?뜮</div>
         <div class="option-text">
-          <div class="option-label">바닐라·초콜릿 디저트 느낌</div>
-          <div class="option-desc">달콤하고 부드럽게, 마치 디저트처럼</div>
+          <div class="option-label">諛붾땺?셋룹큹肄쒕┸ ?붿????먮굦</div>
+          <div class="option-desc">?ъ숴?섍퀬 遺?쒕읇寃? 留덉튂 ?붿??몄쿂??/div>
         </div>
       </div>
       <div class="option-card" onclick="showResult(['juniper','birch'])">
-        <div class="option-icon">🌰</div>
+        <div class="option-icon">?뙭</div>
         <div class="option-text">
-          <div class="option-label">고소한 견과류·헤이즐넛 느낌</div>
-          <div class="option-desc">달콤하면서도 고소한 너티 캐릭터가 좋아요</div>
+          <div class="option-label">怨좎냼??寃ш낵瑜샕룻뿤?댁쫹???먮굦</div>
+          <div class="option-desc">?ъ숴?섎㈃?쒕룄 怨좎냼???덊떚 罹먮┃?곌? 醫뗭븘??/div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN 3B — 부드러움+블랙 취향
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN 3B ??遺?쒕윭?+釉붾옓 痍⑦뼢
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-q3b">
     <div class="nav-row">
       <button class="btn-ghost" onclick="goTo('q2a')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        이전 질문
+        ?댁쟾 吏덈Ц
       </button>
     </div>
-    <div class="q-eyebrow">질문 3 of 3 · 마무리 여운</div>
-    <h2 class="q-title">마시고 나서<br>어떤 <em>여운</em>이 남으면 좋겠어요?</h2>
-    <p class="q-sub">마지막 질문입니다 — 거의 다 왔어요!</p>
+    <div class="q-eyebrow">吏덈Ц 3 of 3 쨌 留덈Т由??ъ슫</div>
+    <h2 class="q-title">留덉떆怨??섏꽌<br>?대뼡 <em>?ъ슫</em>???⑥쑝硫?醫뗪쿋?댁슂?</h2>
+    <p class="q-sub">留덉?留?吏덈Ц?낅땲????嫄곗쓽 ???붿뼱??</p>
     <div class="options-grid">
       <div class="option-card" onclick="showResult(['jujube'])">
-        <div class="option-icon">🍯</div>
+        <div class="option-icon">?뜱</div>
         <div class="option-text">
-          <div class="option-label">꿀처럼 달콤한 긴 여운</div>
-          <div class="option-desc">마지막까지 달콤하게, 향긋하게 남아있으면 좋겠어요</div>
+          <div class="option-label">轅泥섎읆 ?ъ숴??湲??ъ슫</div>
+          <div class="option-desc">留덉?留됯퉴吏 ?ъ숴?섍쾶, ?κ툔?섍쾶 ?⑥븘?덉쑝硫?醫뗪쿋?댁슂</div>
         </div>
       </div>
       <div class="option-card" onclick="showResult(['birch','juniper'])">
-        <div class="option-icon">🫧</div>
+        <div class="option-icon">?ェ</div>
         <div class="option-text">
-          <div class="option-label">크리미하고 깔끔한 마무리</div>
-          <div class="option-desc">산뜻하게 끝나는, 부담 없는 피니시를 좋아해요</div>
+          <div class="option-label">?щ━誘명븯怨?源붾걫??留덈Т由?/div>
+          <div class="option-desc">?곕쑜?섍쾶 ?앸굹?? 遺???녿뒗 ?쇰땲?쒕? 醫뗭븘?댁슂</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════
-       SCREEN — RESULT
-  ══════════════════════════════════════════════════════ -->
+  <!-- ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+       SCREEN ??RESULT
+  ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 -->
   <div class="screen" id="screen-result">
     <div class="nav-row">
       <button class="btn-ghost" onclick="restartQuiz()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-        다시 하기
+        ?ㅼ떆 ?섍린
       </button>
     </div>
     <div class="result-header">
-      <div class="result-eyebrow">✦ 추천 블렌드</div>
-      <h2 class="result-title">당신을 위한<br><em>완벽한 한 잔</em></h2>
-      <p class="result-sub">아래 블렌드가 취향에 가장 잘 맞습니다</p>
+      <div class="result-eyebrow">??異붿쿇 釉붾젋??/div>
+      <h2 class="result-title">?뱀떊???꾪븳<br><em>?꾨꼍??????/em></h2>
+      <p class="result-sub">?꾨옒 釉붾젋?쒓? 痍⑦뼢??媛????留욎뒿?덈떎</p>
     </div>
     <div class="flavor-cards-wrap" id="resultCards"></div>
     <div class="result-actions">
-      <button class="btn-primary" onclick="restartQuiz()">다른 블렌드 찾아보기 →</button>
-      <a class="result-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">스마트스토어에서 보기</a>
-      <a class="result-link" href="index.html">PALOMBINI 홈페이지 보기</a>
+      <button class="btn-primary" onclick="restartQuiz()">?ㅻⅨ 釉붾젋??李얠븘蹂닿린 ??/button>
+      <a class="result-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">?ㅻ쭏?몄뒪?좎뼱?먯꽌 蹂닿린</a>
+      <a class="result-link" href="index.html">PALOMBINI ?덊럹?댁? 蹂닿린</a>
     </div>
   </div>
 
@@ -888,154 +888,154 @@
 
 </div><!-- /#app -->
 </main>
-<footer class="site-footer"><div class="container footer-inner"><p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p></div></footer>
-<button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">↑</button>
+<footer class="site-footer"><div class="container footer-inner"><p>짤 <span id="year"></span> PNS ?붾＼鍮꾨땲. All rights reserved.</p></div></footer>
+<button class="scroll-top" id="scrollTopBtn" aria-label="留??꾨줈 ?대룞" title="留??꾨줈">??/button>
 
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
 
-/* ══════════════════════════════════════════════════════════
-   DATA — 15 BLENDS
-══════════════════════════════════════════════════════════ */
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
+   DATA ??15 BLENDS
+?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 const BLENDS = {
   juniper: {
     name: 'Juniper',
     tier: 'light',
-    tagline: '부드러운 단맛, 데일리 라떼를 위한 스위트 블렌드',
-    desc: '부드러운 단맛과 고소한 견과류, 은은한 과일 향이 조화를 이루는 데일리 블렌드입니다. 산미는 최소화하고 달콤한 코코아 여운을 살린, 누구나 부담 없이 마실 수 있는 커피입니다.',
-    notes: ['바닐라', '밀크 초콜릿', '아몬드·헤이즐넛', '말린 과일'],
-    brew: ['에스프레소', '카페라떼', '카푸치노'],
+    tagline: '遺?쒕윭???⑤쭧, ?곗씪由??쇰뼹瑜??꾪븳 ?ㅼ쐞??釉붾젋??,
+    desc: '遺?쒕윭???⑤쭧怨?怨좎냼??寃ш낵瑜? ????怨쇱씪 ?μ씠 議고솕瑜??대（???곗씪由?釉붾젋?쒖엯?덈떎. ?곕???理쒖냼?뷀븯怨??ъ숴??肄붿퐫???ъ슫???대┛, ?꾧뎄??遺???놁씠 留덉떎 ???덈뒗 而ㅽ뵾?낅땲??',
+    notes: ['諛붾땺??, '諛??珥덉퐳由?, '?꾨が?쑣룻뿤?댁쫹??, '留먮┛ 怨쇱씪'],
+    brew: ['?먯뒪?꾨젅??, '移댄럹?쇰뼹', '移댄뫖移섎끂'],
     sweetness: 4, body: 3, acidity: 2, bitterness: 2
   },
   miru: {
     name: 'Miru',
     tier: 'dark',
-    tagline: '산미 제로, 다크 초콜릿 한 잔 – 진한 에스프레소의 끝',
-    desc: '산미를 거의 제거하고 다크 초콜릿과 구운 견과의 쌉쌀한 풍미를 극대화한 바 스타일 블렌드입니다. 진하고 강한 한 잔을 원하는 분들을 위한, 이탈리안 클래식 에스프레소에 가장 가까운 캐릭터입니다.',
-    notes: ['다크 코코아', '구운 견과', '토스트·비스킷', '스파이스'],
-    brew: ['스트레이트 에스프레소', '리스트레토', '마끼아토'],
+    tagline: '?곕? ?쒕줈, ?ㅽ겕 珥덉퐳由???????吏꾪븳 ?먯뒪?꾨젅?뚯쓽 ??,
+    desc: '?곕?瑜?嫄곗쓽 ?쒓굅?섍퀬 ?ㅽ겕 珥덉퐳由욧낵 援ъ슫 寃ш낵???됱????띾?瑜?洹밸??뷀븳 諛??ㅽ???釉붾젋?쒖엯?덈떎. 吏꾪븯怨?媛뺥븳 ???붿쓣 ?먰븯??遺꾨뱾???꾪븳, ?댄깉由ъ븞 ?대옒???먯뒪?꾨젅?뚯뿉 媛??媛源뚯슫 罹먮┃?곗엯?덈떎.',
+    notes: ['?ㅽ겕 肄붿퐫??, '援ъ슫 寃ш낵', '?좎뒪?맞룸퉬?ㅽ궥', '?ㅽ뙆?댁뒪'],
+    brew: ['?ㅽ듃?덉씠???먯뒪?꾨젅??, '由ъ뒪?몃젅??, '留덈겮?꾪넗'],
     sweetness: 2, body: 5, acidity: 1, bitterness: 5
   },
   silverberry: {
     name: 'Silverberry',
     tier: 'mid',
-    tagline: '달콤함과 쌉쌀함의 정가운데 – 카페 시그니처 블렌드',
-    desc: '달콤함과 다크한 바디가 반반으로 섞인, 단맛과 쓴맛이 잘 균형 잡힌 블렌드입니다. 우유·블랙 어느 쪽으로 추출해도 캐릭터가 무너지지 않는 범용 하우스 에스프레소입니다.',
-    notes: ['코코아', '캐러멜', '아몬드·헤이즐넛', '구운 빵'],
-    brew: ['에스프레소', '아메리카노', '라떼'],
+    tagline: '?ъ숴?④낵 ?됱??⑥쓽 ?뺢??대뜲 ??移댄럹 ?쒓렇?덉쿂 釉붾젋??,
+    desc: '?ъ숴?④낵 ?ㅽ겕??諛붾뵒媛 諛섎컲?쇰줈 ?욎씤, ?⑤쭧怨??대쭧????洹좏삎 ?≫엺 釉붾젋?쒖엯?덈떎. ?곗쑀쨌釉붾옓 ?대뒓 履쎌쑝濡?異붿텧?대룄 罹먮┃?곌? 臾대꼫吏吏 ?딅뒗 踰붿슜 ?섏슦???먯뒪?꾨젅?뚯엯?덈떎.',
+    notes: ['肄붿퐫??, '罹먮윭硫?, '?꾨が?쑣룻뿤?댁쫹??, '援ъ슫 鍮?],
+    brew: ['?먯뒪?꾨젅??, '?꾨찓由ъ뭅??, '?쇰뼹'],
     sweetness: 3, body: 3, acidity: 2, bitterness: 3
   },
   willow: {
     name: 'Willow',
     tier: 'dark',
-    tagline: '진하지만 거칠지 않은, 로마식 클래식 에스프레소',
-    desc: '진한 바디와 고급스러운 향을 동시에 원하는 분들을 위한 블렌드입니다. 한 모금은 바 스타일의 힘 있고 쌉쌀한 맛, 마지막은 깨끗한 향으로 마무리됩니다.',
-    notes: ['다크 코코아', '구운 견과', '토스트', '붉은 과일'],
-    brew: ['에스프레소', '롱블랙', '플랫화이트'],
+    tagline: '吏꾪븯吏留?嫄곗튌吏 ?딆?, 濡쒕쭏???대옒???먯뒪?꾨젅??,
+    desc: '吏꾪븳 諛붾뵒? 怨좉툒?ㅻ윭???μ쓣 ?숈떆???먰븯??遺꾨뱾???꾪븳 釉붾젋?쒖엯?덈떎. ??紐④툑? 諛??ㅽ??쇱쓽 ???덇퀬 ?됱???留? 留덉?留됱? 源⑤걮???μ쑝濡?留덈Т由щ맗?덈떎.',
+    notes: ['?ㅽ겕 肄붿퐫??, '援ъ슫 寃ш낵', '?좎뒪??, '遺됱? 怨쇱씪'],
+    brew: ['?먯뒪?꾨젅??, '濡깅툝??, '?뚮옯?붿씠??],
     sweetness: 2, body: 4, acidity: 2, bitterness: 4
   },
   spruce: {
     name: 'Spruce',
     tier: 'dark',
-    tagline: '헤비 바디, 다크 초콜릿 – 강렬한 한 방이 필요한 날',
-    desc: '산미 없이 진한 바디와 다크 초콜릿 풍미를 극대화한 헤비 바디 블렌드입니다. 긴 여운과 두꺼운 크레마로, 한 잔만으로도 존재감이 강한 에스프레소를 만들어 줍니다.',
-    notes: ['다크 코코아', '에스프레소 비터', '구운 견과', '바닐라·캐러멜'],
-    brew: ['리스트레토', '에스프레소', '아이스 라떼'],
+    tagline: '?ㅻ퉬 諛붾뵒, ?ㅽ겕 珥덉퐳由???媛뺣젹????諛⑹씠 ?꾩슂????,
+    desc: '?곕? ?놁씠 吏꾪븳 諛붾뵒? ?ㅽ겕 珥덉퐳由??띾?瑜?洹밸??뷀븳 ?ㅻ퉬 諛붾뵒 釉붾젋?쒖엯?덈떎. 湲??ъ슫怨??먭볼???щ젅留덈줈, ???붾쭔?쇰줈??議댁옱媛먯씠 媛뺥븳 ?먯뒪?꾨젅?뚮? 留뚮뱾??以띾땲??',
+    notes: ['?ㅽ겕 肄붿퐫??, '?먯뒪?꾨젅??鍮꾪꽣', '援ъ슫 寃ш낵', '諛붾땺?셋룹틦?щ찞'],
+    brew: ['由ъ뒪?몃젅??, '?먯뒪?꾨젅??, '?꾩씠???쇰뼹'],
     sweetness: 2, body: 5, acidity: 1, bitterness: 5
   },
   birch: {
     name: 'Birch',
     tier: 'light',
-    tagline: '부드럽고 달콤한, 누구나 좋아하는 크리미 하우스',
-    desc: '달콤한 캐릭터를 중심에 두고, 아로마와 바디를 살짝 더한 부드러운 크리미 블렌드입니다. 깔끔하면서도 달콤한 여운 덕분에 블랙·라떼 모두에 잘 어울립니다.',
-    notes: ['바닐라', '코코아', '아몬드·헤이즐넛', '밀크 초콜릿'],
-    brew: ['라떼', '카푸치노', '아메리카노'],
+    tagline: '遺?쒕읇怨??ъ숴?? ?꾧뎄??醫뗭븘?섎뒗 ?щ━誘??섏슦??,
+    desc: '?ъ숴??罹먮┃?곕? 以묒떖???먭퀬, ?꾨줈留덉? 諛붾뵒瑜??댁쭩 ?뷀븳 遺?쒕윭???щ━誘?釉붾젋?쒖엯?덈떎. 源붾걫?섎㈃?쒕룄 ?ъ숴???ъ슫 ?뺣텇??釉붾옓쨌?쇰뼹 紐⑤몢?????댁슱由쎈땲??',
+    notes: ['諛붾땺??, '肄붿퐫??, '?꾨が?쑣룻뿤?댁쫹??, '諛??珥덉퐳由?],
+    brew: ['?쇰뼹', '移댄뫖移섎끂', '?꾨찓由ъ뭅??],
     sweetness: 4, body: 3, acidity: 2, bitterness: 2
   },
   poplar: {
     name: 'Poplar',
     tier: 'mid',
-    tagline: '향으로 기억되는 한 잔 – 아라비카의 매력을 담다',
-    desc: '100% 아라비카의 향을 중심으로, 약간의 바디와 단맛을 더해 완성한 향미 중심 블렌드입니다. 향은 풍부하지만 맛의 밸런스가 좋아, 데일리 블랙 커피로 사용하기 좋습니다.',
-    notes: ['밀크 초콜릿', '견과류', '붉은 과일·꽃 향', '코코아'],
-    brew: ['아메리카노', '롱블랙', '핸드드립'],
+    tagline: '?μ쑝濡?湲곗뼲?섎뒗 ???????꾨씪鍮꾩뭅??留ㅻ젰???대떎',
+    desc: '100% ?꾨씪鍮꾩뭅???μ쓣 以묒떖?쇰줈, ?쎄컙??諛붾뵒? ?⑤쭧???뷀빐 ?꾩꽦???λ? 以묒떖 釉붾젋?쒖엯?덈떎. ?μ? ?띾??섏?留?留쏆쓽 諛몃윴?ㅺ? 醫뗭븘, ?곗씪由?釉붾옓 而ㅽ뵾濡??ъ슜?섍린 醫뗭뒿?덈떎.',
+    notes: ['諛??珥덉퐳由?, '寃ш낵瑜?, '遺됱? 怨쇱씪쨌苑???, '肄붿퐫??],
+    brew: ['?꾨찓由ъ뭅??, '濡깅툝??, '?몃뱶?쒕┰'],
     sweetness: 3, body: 3, acidity: 3, bitterness: 2
   },
   magnolia: {
     name: 'Magnolia',
     tier: 'light',
-    tagline: '디저트처럼 달콤한, 부드러운 스위트 블렌드',
-    desc: '달콤함을 극대화하고, 구조감과 향을 살짝 보완한 스위트 스페셜티 감성 블렌드입니다. 산미를 부담스러워하는 분들도 편하게 즐길 수 있는 디저트형 커피입니다.',
-    notes: ['바닐라', '코코아', '아몬드·헤이즐넛', '밀크 초콜릿'],
-    brew: ['라떼', '카푸치노', '모카', '아이스 라떼'],
+    tagline: '?붿??몄쿂???ъ숴?? 遺?쒕윭???ㅼ쐞??釉붾젋??,
+    desc: '?ъ숴?⑥쓣 洹밸??뷀븯怨? 援ъ“媛먭낵 ?μ쓣 ?댁쭩 蹂댁셿???ㅼ쐞???ㅽ럹?쒗떚 媛먯꽦 釉붾젋?쒖엯?덈떎. ?곕?瑜?遺?댁뒪?ъ썙?섎뒗 遺꾨뱾???명븯寃?利먭만 ???덈뒗 ?붿??명삎 而ㅽ뵾?낅땲??',
+    notes: ['諛붾땺??, '肄붿퐫??, '?꾨が?쑣룻뿤?댁쫹??, '諛??珥덉퐳由?],
+    brew: ['?쇰뼹', '移댄뫖移섎끂', '紐⑥뭅', '?꾩씠???쇰뼹'],
     sweetness: 5, body: 3, acidity: 1, bitterness: 1
   },
   tamarind: {
     name: 'Tamarind',
     tier: 'dark',
-    tagline: '산미 없이 강하게 – 다크 에스프레소 매니아를 위한 블렌드',
-    desc: '강렬한 개성을 그대로 살리면서, 질감을 다듬은 극저산미 다크 블렌드입니다. 진하고 강한 카페인 킥과 다크 초콜릿 여운을 원하는 분들에게 최적입니다.',
-    notes: ['다크 코코아', '에스프레소 비터', '구운 견과', '스파이스'],
-    brew: ['리스트레토', '에스프레소', '아이스 아메리카노', '아포가토'],
+    tagline: '?곕? ?놁씠 媛뺥븯寃????ㅽ겕 ?먯뒪?꾨젅??留ㅻ땲?꾨? ?꾪븳 釉붾젋??,
+    desc: '媛뺣젹??媛쒖꽦??洹몃?濡??대━硫댁꽌, 吏덇컧???ㅻ벉? 洹뱀??곕? ?ㅽ겕 釉붾젋?쒖엯?덈떎. 吏꾪븯怨?媛뺥븳 移댄럹???κ낵 ?ㅽ겕 珥덉퐳由??ъ슫???먰븯??遺꾨뱾?먭쾶 理쒖쟻?낅땲??',
+    notes: ['?ㅽ겕 肄붿퐫??, '?먯뒪?꾨젅??鍮꾪꽣', '援ъ슫 寃ш낵', '?ㅽ뙆?댁뒪'],
+    brew: ['由ъ뒪?몃젅??, '?먯뒪?꾨젅??, '?꾩씠???꾨찓由ъ뭅??, '?꾪룷媛??],
     sweetness: 1, body: 5, acidity: 1, bitterness: 5
   },
   zelkova: {
     name: 'Zelkova',
     tier: 'mid',
-    tagline: '로마 카페에서 마시는 듯한, 향으로 즐기는 에스프레소',
-    desc: '100% 아라비카의 향미를 중심으로, 미세하게 바디와 단맛만 보강한 클래식 로마 스타일 블렌드입니다. 향 중심의 부드러운 한 잔을 원하는 손님에게 추천하기 좋은, 매우 안정적인 데일리 커피입니다.',
-    notes: ['밀크 초콜릿', '견과류', '과일·꽃 향', '코코아·바닐라'],
-    brew: ['아메리카노', '롱블랙', '에스프레소'],
+    tagline: '濡쒕쭏 移댄럹?먯꽌 留덉떆????븳, ?μ쑝濡?利먭린???먯뒪?꾨젅??,
+    desc: '100% ?꾨씪鍮꾩뭅???λ?瑜?以묒떖?쇰줈, 誘몄꽭?섍쾶 諛붾뵒? ?⑤쭧留?蹂닿컯???대옒??濡쒕쭏 ?ㅽ???釉붾젋?쒖엯?덈떎. ??以묒떖??遺?쒕윭?????붿쓣 ?먰븯???먮떂?먭쾶 異붿쿇?섍린 醫뗭?, 留ㅼ슦 ?덉젙?곸씤 ?곗씪由?而ㅽ뵾?낅땲??',
+    notes: ['諛??珥덉퐳由?, '寃ш낵瑜?, '怨쇱씪쨌苑???, '肄붿퐫?꽷룸컮?먮씪'],
+    brew: ['?꾨찓由ъ뭅??, '濡깅툝??, '?먯뒪?꾨젅??],
     sweetness: 3, body: 3, acidity: 3, bitterness: 2
   },
   jujube: {
     name: 'Jujube',
     tier: 'light',
-    tagline: '꿀처럼 부드러운, 하루 종일 마실 수 있는 하우스 블렌드',
-    desc: '달콤함과 아로마를 반반으로 담은, 꿀처럼 부드럽고 고소한 블렌드입니다. 산미·단맛·바디감이 모두 균형 잡혀 있어, 하루 여러 잔 마셔도 부담이 적은 스타일입니다.',
-    notes: ['밀크 초콜릿', '바닐라', '붉은 과일·말린 과일', '꽃 향'],
-    brew: ['아메리카노', '라떼', '플랫화이트'],
+    tagline: '轅泥섎읆 遺?쒕윭?? ?섎（ 醫낆씪 留덉떎 ???덈뒗 ?섏슦??釉붾젋??,
+    desc: '?ъ숴?④낵 ?꾨줈留덈? 諛섎컲?쇰줈 ?댁?, 轅泥섎읆 遺?쒕읇怨?怨좎냼??釉붾젋?쒖엯?덈떎. ?곕?쨌?⑤쭧쨌諛붾뵒媛먯씠 紐⑤몢 洹좏삎 ?≫? ?덉뼱, ?섎（ ?щ윭 ??留덉뀛??遺?댁씠 ?곸? ?ㅽ??쇱엯?덈떎.',
+    notes: ['諛??珥덉퐳由?, '諛붾땺??, '遺됱? 怨쇱씪쨌留먮┛ 怨쇱씪', '苑???],
+    brew: ['?꾨찓由ъ뭅??, '?쇰뼹', '?뚮옯?붿씠??],
     sweetness: 4, body: 3, acidity: 2, bitterness: 2
   },
   sequoia: {
     name: 'Sequoia',
     tier: 'mid',
-    tagline: '집에서든 카페에서든 – 모든 메뉴를 받쳐주는 시그니처 하우스 블렌드',
-    desc: '달콤함·바디감·향을 고르게 갖춘 시그니처 하우스 블렌드입니다. 어떤 메뉴로 추출해도 캐릭터가 뭉개지지 않고, 카페 전체 레시피의 중심축이 되기 좋은 타입입니다.',
-    notes: ['코코아', '밀크 초콜릿', '캐러멜', '구운 견과'],
-    brew: ['에스프레소', '아메리카노', '라떼', '아이스 전반'],
+    tagline: '吏묒뿉?쒕뱺 移댄럹?먯꽌????紐⑤뱺 硫붾돱瑜?諛쏆퀜二쇰뒗 ?쒓렇?덉쿂 ?섏슦??釉붾젋??,
+    desc: '?ъ숴?㉱룸컮?붽컧쨌?μ쓣 怨좊Ⅴ寃?媛뽰텣 ?쒓렇?덉쿂 ?섏슦??釉붾젋?쒖엯?덈떎. ?대뼡 硫붾돱濡?異붿텧?대룄 罹먮┃?곌? 萸됯컻吏吏 ?딄퀬, 移댄럹 ?꾩껜 ?덉떆?쇱쓽 以묒떖異뺤씠 ?섍린 醫뗭? ??낆엯?덈떎.',
+    notes: ['肄붿퐫??, '諛??珥덉퐳由?, '罹먮윭硫?, '援ъ슫 寃ш낵'],
+    brew: ['?먯뒪?꾨젅??, '?꾨찓由ъ뭅??, '?쇰뼹', '?꾩씠???꾨컲'],
     sweetness: 3, body: 4, acidity: 2, bitterness: 3
   },
   dolce: {
     name: 'Dolce Italia',
     tier: 'light',
-    tagline: '부드러운 단맛 선호 고객 추천 – 클래식 이탈리안 하우스',
-    desc: '바닐라·코코아·견과류 향이 어우러진 부드러운 이탈리안 블렌드입니다. 산미는 낮고 단맛과 고소함이 중심이라 누구나 마시기 편안합니다.',
-    notes: ['바닐라', '코코아', '견과류', '부드러운 단맛'],
-    brew: ['에스프레소', '라떼', '카푸치노'],
+    tagline: '遺?쒕윭???⑤쭧 ?좏샇 怨좉컼 異붿쿇 ???대옒???댄깉由ъ븞 ?섏슦??,
+    desc: '諛붾땺?셋룹퐫肄붿븘쨌寃ш낵瑜??μ씠 ?댁슦?ъ쭊 遺?쒕윭???댄깉由ъ븞 釉붾젋?쒖엯?덈떎. ?곕?????퀬 ?⑤쭧怨?怨좎냼?⑥씠 以묒떖?대씪 ?꾧뎄??留덉떆湲??몄븞?⑸땲??',
+    notes: ['諛붾땺??, '肄붿퐫??, '寃ш낵瑜?, '遺?쒕윭???⑤쭧'],
+    brew: ['?먯뒪?꾨젅??, '?쇰뼹', '移댄뫖移섎끂'],
     sweetness: 4, body: 3, acidity: 1, bitterness: 2
   },
   granbar: {
     name: 'GranBar',
     tier: 'dark',
-    tagline: '산미 제로! 다크 초콜릿을 녹인 듯한 진하고 쌉쌀한 맛',
-    desc: '다크 코코아·구운 견과·구운 빵 향이 강조된 클래식 바 스타일입니다. 산미가 거의 없고 쌉쌀한 여운과 묵직한 바디감이 돋보입니다.',
-    notes: ['다크 코코아', '구운 견과', '구운 빵', '에스프레소 비터'],
-    brew: ['에스프레소', '리스트레토', '아이스 라떼'],
+    tagline: '?곕? ?쒕줈! ?ㅽ겕 珥덉퐳由우쓣 ?뱀씤 ??븳 吏꾪븯怨??됱???留?,
+    desc: '?ㅽ겕 肄붿퐫?꽷룰뎄??寃ш낵쨌援ъ슫 鍮??μ씠 媛뺤“???대옒??諛??ㅽ??쇱엯?덈떎. ?곕?媛 嫄곗쓽 ?녾퀬 ?됱????ъ슫怨?臾듭쭅??諛붾뵒媛먯씠 ?뗫낫?낅땲??',
+    notes: ['?ㅽ겕 肄붿퐫??, '援ъ슫 寃ш낵', '援ъ슫 鍮?, '?먯뒪?꾨젅??鍮꾪꽣'],
+    brew: ['?먯뒪?꾨젅??, '由ъ뒪?몃젅??, '?꾩씠???쇰뼹'],
     sweetness: 1, body: 5, acidity: 1, bitterness: 5
   },
   roma: {
     name: 'Roma',
     tier: 'mid',
-    tagline: '100% 아라비카의 깨끗한 향미, 은은한 과일·초콜릿 노트',
-    desc: '100% 아라비카의 깨끗한 향미, 은은한 과일·초콜릿 노트가 특징입니다. 산미와 바디가 모두 중간 수준으로 균형 잡힌 맛을 제공합니다.',
-    notes: ['과일 노트', '초콜릿', '클린 아라비카', '균형 바디'],
-    brew: ['아메리카노', '롱블랙', '블랙 커피'],
+    tagline: '100% ?꾨씪鍮꾩뭅??源⑤걮???λ?, ????怨쇱씪쨌珥덉퐳由??명듃',
+    desc: '100% ?꾨씪鍮꾩뭅??源⑤걮???λ?, ????怨쇱씪쨌珥덉퐳由??명듃媛 ?뱀쭠?낅땲?? ?곕?? 諛붾뵒媛 紐⑤몢 以묎컙 ?섏??쇰줈 洹좏삎 ?≫엺 留쏆쓣 ?쒓났?⑸땲??',
+    notes: ['怨쇱씪 ?명듃', '珥덉퐳由?, '?대┛ ?꾨씪鍮꾩뭅', '洹좏삎 諛붾뵒'],
+    brew: ['?꾨찓由ъ뭅??, '濡깅툝??, '釉붾옓 而ㅽ뵾'],
     sweetness: 3, body: 3, acidity: 3, bitterness: 2
   }
 };
 
-const TIER_LABEL = { light: '부드러움', mid: '균형', dark: '진함' };
+const TIER_LABEL = { light: '遺?쒕윭?', mid: '洹좏삎', dark: '吏꾪븿' };
 const BLEND_IMAGES = {
   juniper: 'assets/img/flavor-guide/juniper_img.png',
   birch: 'assets/img/flavor-guide/birch_img.png',
@@ -1055,17 +1055,17 @@ const BLEND_IMAGES = {
 };
 
 
-/* ══════════════════════════════════════════════════════════
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    STATE
-══════════════════════════════════════════════════════════ */
+?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 let currentScreen = 'landing';
 let answers = {};
 const STEPS = { landing:0, q1:1, q2a:2, q2b:2, q2c:2, q3a:3, q3b:3 };
 const MAX_STEPS = 3;
 
-/* ══════════════════════════════════════════════════════════
+/* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    NAVIGATION
-══════════════════════════════════════════════════════════ */
+?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 function goTo(screen) {
   document.getElementById('screen-' + currentScreen).classList.remove('active');
   currentScreen = screen;
@@ -1083,7 +1083,7 @@ function goTo(screen) {
   } else if (screen === 'result') {
     progressWrap.classList.add('visible');
     fill.style.width = '100%';
-    label.textContent = '완료 ✦';
+    label.textContent = '?꾨즺 ??;
   } else {
     progressWrap.classList.add('visible');
     fill.style.width = (step / MAX_STEPS * 100) + '%';
@@ -1098,12 +1098,63 @@ function restartQuiz() { answers = {}; goTo('landing'); }
 
 function answer(qKey, value) {
   answers[qKey] = value;
+
   if (qKey === 'q1') {
-    if (value === 'soft')    goTo('q2a');
-    if (value === 'balance') goTo('q2b');
-    if (value === 'dark')    goTo('q2c');
+    if (value === 'soft') {
+      goTo('q2a');
+      return;
+    }
+    if (value === 'balance') {
+      goTo('q2b');
+      return;
+    }
+    if (value === 'dark') {
+      goTo('q2c');
+      return;
+    }
   }
+
   if (qKey === 'q2a') {
+    if (value === 'milk') {
+      goTo('q3a');
+      return;
+    }
+    if (value === 'black') {
+      goTo('q3b');
+      return;
+    }
+  }
+
+  if (qKey === 'q2b') {
+    if (value === 'aroma') {
+      showResult(['poplar', 'zelkova']);
+      return;
+    }
+    if (value === 'sweet') {
+      showResult(['silverberry', 'sequoia']);
+      return;
+    }
+    if (value === 'versatile') {
+      showResult(['sequoia', 'roma']);
+      return;
+    }
+  }
+
+  if (qKey === 'q2c') {
+    if (value === 'espresso') {
+      showResult(['tamarind', 'granbar']);
+      return;
+    }
+    if (value === 'milkdark') {
+      showResult(['spruce', 'miru']);
+      return;
+    }
+    if (value === 'darkelegant') {
+      showResult(['willow', 'spruce']);
+    }
+  }
+}
+
 function showResult(keys) {
   const container = document.getElementById('resultCards');
   container.innerHTML = '';
@@ -1111,14 +1162,19 @@ function showResult(keys) {
   keys.forEach(key => {
     const b = BLENDS[key];
     if (!b) return;
-    const pct = v => Math.round(v / 5 * 100) + '%';
-    const notes = (b.notes || []).slice(0, 4).map(note => `<span class="note-tag">${note}</span>`).join('');
+
+    const pct = v => Math.round((v / 5) * 100) + '%';
+    const notes = (b.notes || [])
+      .slice(0, 4)
+      .map(note => `<span class="note-tag">${note}</span>`)
+      .join('');
     const image = BLEND_IMAGES[key];
     const card = document.createElement('div');
+
     card.className = 'flavor-card';
     card.innerHTML = `
       <div class="flavor-card-top">
-        ${image ? `<div class="flavor-card-media"><img src="${image}" alt="${b.name} 드립백 패키지"></div>` : ""}
+        ${image ? `<div class="flavor-card-media"><img src="${image}" alt="${b.name} package" onerror="this.parentElement.remove()"></div>` : ''}
         <div class="flavor-name-row">
           <div class="flavor-name">${b.name}</div>
           <div class="flavor-tag tag-${b.tier}">${TIER_LABEL[b.tier]}</div>
@@ -1128,16 +1184,17 @@ function showResult(keys) {
         <div class="note-tags">${notes}</div>
       </div>
       <div class="flavor-card-bottom">
-        <div class="profile-title">맛 프로필</div>
+        <div class="profile-title">Taste Profile</div>
         <div class="profile-bars">
-          <div class="profile-row"><div class="profile-row-label">단맛</div><div class="profile-bar-track"><div class="profile-bar-fill bar-sweet" style="width:0%" data-target="${pct(b.sweetness)}"></div></div><div class="profile-row-val">${b.sweetness}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">바디감</div><div class="profile-bar-track"><div class="profile-bar-fill bar-body" style="width:0%" data-target="${pct(b.body)}"></div></div><div class="profile-row-val">${b.body}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">산미</div><div class="profile-bar-track"><div class="profile-bar-fill bar-acid" style="width:0%" data-target="${pct(b.acidity)}"></div></div><div class="profile-row-val">${b.acidity}/5</div></div>
-          <div class="profile-row"><div class="profile-row-label">쓴맛</div><div class="profile-bar-track"><div class="profile-bar-fill bar-bitter" style="width:0%" data-target="${pct(b.bitterness)}"></div></div><div class="profile-row-val">${b.bitterness}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">Sweet</div><div class="profile-bar-track"><div class="profile-bar-fill bar-sweet" style="width:0%" data-target="${pct(b.sweetness)}"></div></div><div class="profile-row-val">${b.sweetness}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">Body</div><div class="profile-bar-track"><div class="profile-bar-fill bar-body" style="width:0%" data-target="${pct(b.body)}"></div></div><div class="profile-row-val">${b.body}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">Acid</div><div class="profile-bar-track"><div class="profile-bar-fill bar-acid" style="width:0%" data-target="${pct(b.acidity)}"></div></div><div class="profile-row-val">${b.acidity}/5</div></div>
+          <div class="profile-row"><div class="profile-row-label">Bitter</div><div class="profile-bar-track"><div class="profile-bar-fill bar-bitter" style="width:0%" data-target="${pct(b.bitterness)}"></div></div><div class="profile-row-val">${b.bitterness}/5</div></div>
         </div>
-        <div class="brew-section"><div class="brew-label">추천 추출</div><div class="brew-tags">${b.brew.map(t => `<span class="brew-tag">${t}</span>`).join('')}</div></div>
+        <div class="brew-section"><div class="brew-label">Recommended Brew</div><div class="brew-tags">${b.brew.map(t => `<span class="brew-tag">${t}</span>`).join('')}</div></div>
       </div>
     `;
+
     container.appendChild(card);
   });
 
@@ -1153,3 +1210,4 @@ function showResult(keys) {
 <script src="assets/js/main.js"></script>
 </body>
 </html>
+
