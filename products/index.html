@@ -34,21 +34,24 @@
       row-gap: 10px;
     }
     .volcano-feature-row {
-      display: flex;
-      justify-content: flex-start;
       margin-top: 0;
       margin-bottom: 8px;
     }
     .volcano-feature-card {
-      width: min(360px, 100%);
+      width: 100%;
+      flex-direction: row;
     }
     .volcano-feature-card .blend-poster {
-      height: 220px;
+      width: min(280px, 36%);
+      height: auto;
+      flex-shrink: 0;
+      align-self: stretch;
       object-fit: cover;
       background: #1d0f08;
     }
     .volcano-feature-card .blend-card-body {
       gap: 10px;
+      justify-content: center;
     }
     .blends-grid-secondary {
       margin-top: 0;
@@ -167,12 +170,16 @@
         row-gap: 8px;
       }
       .volcano-feature-row {
-        justify-content: stretch;
         margin-top: 0;
         margin-bottom: 10px;
       }
       .volcano-feature-card {
         width: 100%;
+        flex-direction: column;
+      }
+      .volcano-feature-card .blend-poster {
+        width: 100%;
+        height: 220px;
       }
       .products-list-page .blends-section {
         padding-top: 0 !important;
