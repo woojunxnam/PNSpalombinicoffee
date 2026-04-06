@@ -237,6 +237,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}products/volcano-ruby.html`, label: '볼케이노 루비' },
     { href: `${prefix}machines/`, label: '머신' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
+    { href: `${prefix}custom-edition.html`, label: '커스텀 에디션' },
     { href: `${prefix}contact.html`, label: '문의하기' }
   ];
 
