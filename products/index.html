@@ -69,6 +69,7 @@
       background:
         radial-gradient(640px 240px at 100% 0%, rgba(200,170,110,.14), transparent 60%),
         linear-gradient(180deg, rgba(33,23,16,.98), rgba(20,14,10,.98));
+      color: #f4ece1;
     }
     .flavor-guide-copy {
       padding: 28px 30px;
@@ -83,19 +84,19 @@
       font-weight: 800;
       letter-spacing: .16em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #b89467;
     }
     .flavor-guide-title {
       margin: 0;
       font-family: var(--serif);
       font-size: clamp(28px, 3.4vw, 42px);
       line-height: 1.18;
-      color: var(--text);
+      color: #f5ede1;
     }
     .flavor-guide-desc {
       margin: 0;
       max-width: 58ch;
-      color: var(--muted-strong);
+      color: rgba(244,236,225,.80);
       line-height: 1.8;
     }
     .flavor-guide-points {
@@ -108,9 +109,9 @@
       align-items: center;
       padding: 7px 12px;
       border-radius: 999px;
-      background: rgba(240,235,228,.06);
-      border: 1px solid rgba(240,235,228,.12);
-      color: var(--text);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(244,236,225,.16);
+      color: rgba(245,237,225,.92);
       font-size: 12px;
       font-weight: 600;
     }
@@ -119,6 +120,28 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 4px;
+    }
+    .flavor-guide-promo-card a {
+      color: inherit;
+    }
+    .flavor-guide-promo-card .btn-primary {
+      background: linear-gradient(135deg, #c8823f, #ddb56b);
+      color: #21160f;
+      border-color: transparent;
+      box-shadow: 0 12px 28px rgba(0,0,0,.24);
+    }
+    .flavor-guide-promo-card .btn-primary:hover {
+      background: linear-gradient(135deg, #d48c47, #e6bf76);
+      color: #1a120d;
+    }
+    .flavor-guide-promo-card .btn-ghost {
+      background: rgba(255,255,255,.14);
+      border-color: rgba(244,236,225,.28);
+      color: #f5ede1;
+    }
+    .flavor-guide-promo-card .btn-ghost:hover {
+      background: rgba(255,255,255,.22);
+      color: #fff8ee;
     }
     .flavor-guide-media {
       position: relative;
