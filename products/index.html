@@ -175,6 +175,61 @@
       object-fit: contain;
       filter: drop-shadow(0 18px 30px rgba(0,0,0,.28));
     }
+    /* ── flavor-val 텍스트 레이블 override ─── */
+    .flavor-val--text {
+      width: auto;
+      min-width: 54px;
+      white-space: nowrap;
+    }
+
+    /* ── 오늘의 일상 드립백 시리즈 ────────── */
+    .vr-drip-series {
+      padding: 20px 22px 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      margin-top: 4px;
+    }
+    .vr-drip-eyebrow {
+      font-size: 10px; font-weight: 800; letter-spacing: 1.4px;
+      text-transform: uppercase; color: var(--accent); margin: 0 0 4px;
+    }
+    .vr-drip-series h4 {
+      font-family: var(--serif); font-size: 15px; font-weight: 600;
+      margin: 0 0 5px; color: var(--text);
+    }
+    .vr-drip-desc {
+      font-size: 12.5px; color: var(--muted); margin: 0 0 14px;
+      line-height: 1.6; word-break: keep-all;
+    }
+    .vr-drip-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .vr-drip-card {
+      text-decoration: none; color: var(--text);
+      border: 1px solid var(--line); border-radius: 11px;
+      overflow: hidden; background: var(--bg);
+      transition: transform .18s ease, box-shadow .18s ease;
+      display: flex; flex-direction: column;
+    }
+    .vr-drip-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .vr-drip-img { aspect-ratio: 1/1; overflow: hidden; background: var(--bg2); }
+    .vr-drip-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .28s ease;
+    }
+    .vr-drip-card:hover .vr-drip-img img { transform: scale(1.06); }
+    .vr-drip-info { padding: 8px 9px 10px; display: flex; flex-direction: column; gap: 2px; }
+    .vr-drip-time  { font-size: 12px; font-weight: 700; }
+    .vr-drip-cnt   { font-size: 10px; color: var(--muted); }
+    .vr-drip-price { font-size: 12px; font-weight: 800; margin-top: 3px; }
+    .vr-drip-orig  { font-size: 10px; color: var(--muted); font-weight: 400; text-decoration: line-through; margin-left: 3px; }
+    @media (max-width: 640px) {
+      .vr-drip-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
     @media (max-width: 900px) {
       .products-list-page .page-hero {
         padding-bottom: 0;
@@ -289,16 +344,71 @@
                 <p class="blend-tagline">화산 고산지대 프리미엄 로부스타. 묵직한 바디와 베리 계열 단맛, 스모키한 피니시가 특징인 시그니처 원두.</p>
               </div>
               <div class="flavor-bars">
-                <div class="flavor-row"><span class="flavor-label">바디</span><div class="flavor-track"><div class="flavor-fill body" style="width:90%"></div></div><span class="flavor-val">90</span></div>
-                <div class="flavor-row"><span class="flavor-label">단맛</span><div class="flavor-track"><div class="flavor-fill sweet" style="width:72%"></div></div><span class="flavor-val">72</span></div>
-                <div class="flavor-row"><span class="flavor-label">산미</span><div class="flavor-track"><div class="flavor-fill acid" style="width:48%"></div></div><span class="flavor-val">48</span></div>
-                <div class="flavor-row"><span class="flavor-label">피니시</span><div class="flavor-track"><div class="flavor-fill roast" style="width:82%"></div></div><span class="flavor-val">82</span></div>
+                <div class="flavor-row"><span class="flavor-label">바디</span><div class="flavor-track"><div class="flavor-fill body" style="width:90%"></div></div><span class="flavor-val flavor-val--text">매우 강함</span></div>
+                <div class="flavor-row"><span class="flavor-label">단맛</span><div class="flavor-track"><div class="flavor-fill sweet" style="width:72%"></div></div><span class="flavor-val flavor-val--text">중간</span></div>
+                <div class="flavor-row"><span class="flavor-label">산미</span><div class="flavor-track"><div class="flavor-fill acid" style="width:48%"></div></div><span class="flavor-val flavor-val--text">중간 이상</span></div>
+                <div class="flavor-row"><span class="flavor-label">피니시</span><div class="flavor-track"><div class="flavor-fill roast" style="width:82%"></div></div><span class="flavor-val flavor-val--text">강함</span></div>
               </div>
               <div class="blend-tags">
                 <span class="blend-tag">다크 초콜릿</span><span class="blend-tag">체리</span><span class="blend-tag">스모키</span>
               </div>
               <a class="btn btn-ghost" href="volcano-ruby.html" style="justify-content:center;">상세 보기 →</a>
             </div>
+          </div>
+        </div>
+
+        <!-- 오늘의 일상 드립백 시리즈 -->
+        <div class="vr-drip-series">
+          <p class="vr-drip-eyebrow">Volcano Ruby × Drip Bag</p>
+          <h4>오늘의 일상 시리즈</h4>
+          <p class="vr-drip-desc">같은 볼케이노 루비 원두, 다른 배전. 하루의 시간에 맞춰 향의 결과 바디의 무게를 다르게 담았습니다.</p>
+          <div class="vr-drip-grid">
+
+            <a class="vr-drip-card" href="https://smartstore.naver.com/palombini/products/13361948982" target="_blank" rel="noopener">
+              <div class="vr-drip-img"><img src="./volcano-ruby/오늘의_일상-새벽_6시.jpg" alt="새벽 6시 드립백" loading="lazy"/></div>
+              <div class="vr-drip-info">
+                <span class="vr-drip-time">새벽 6시</span>
+                <span class="vr-drip-cnt">10개입</span>
+                <span class="vr-drip-price">₩20,000</span>
+              </div>
+            </a>
+
+            <a class="vr-drip-card" href="https://smartstore.naver.com/palombini/products/13361967850" target="_blank" rel="noopener">
+              <div class="vr-drip-img"><img src="./volcano-ruby/오늘의_일상-아침_10시.jpg" alt="아침 10시 드립백" loading="lazy"/></div>
+              <div class="vr-drip-info">
+                <span class="vr-drip-time">아침 10시</span>
+                <span class="vr-drip-cnt">10개입</span>
+                <span class="vr-drip-price">₩20,000</span>
+              </div>
+            </a>
+
+            <a class="vr-drip-card" href="https://smartstore.naver.com/palombini/products/13361974983" target="_blank" rel="noopener">
+              <div class="vr-drip-img"><img src="./volcano-ruby/오늘의_일상-낮_2시.jpg" alt="낮 2시 드립백" loading="lazy"/></div>
+              <div class="vr-drip-info">
+                <span class="vr-drip-time">낮 2시</span>
+                <span class="vr-drip-cnt">10개입</span>
+                <span class="vr-drip-price">₩20,000</span>
+              </div>
+            </a>
+
+            <a class="vr-drip-card" href="https://smartstore.naver.com/palombini/products/13361987919" target="_blank" rel="noopener">
+              <div class="vr-drip-img"><img src="./volcano-ruby/오늘의_일상-저녁_6시.jpg" alt="저녁 6시 드립백" loading="lazy"/></div>
+              <div class="vr-drip-info">
+                <span class="vr-drip-time">저녁 6시</span>
+                <span class="vr-drip-cnt">10개입</span>
+                <span class="vr-drip-price">₩20,000</span>
+              </div>
+            </a>
+
+            <a class="vr-drip-card" href="https://smartstore.naver.com/palombini/products/13361995108" target="_blank" rel="noopener">
+              <div class="vr-drip-img"><img src="./volcano-ruby/오늘의_일상-밤_10시.jpg" alt="밤 10시 드립백" loading="lazy"/></div>
+              <div class="vr-drip-info">
+                <span class="vr-drip-time">밤 10시</span>
+                <span class="vr-drip-cnt">15개입</span>
+                <span class="vr-drip-price">₩20,000 <span class="vr-drip-orig">₩30,000</span></span>
+              </div>
+            </a>
+
           </div>
         </div>
 
