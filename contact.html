@@ -315,6 +315,51 @@
     .contact-insta-link:hover { color: var(--accent2); }
 
     /* ── Responsive ── */
+    /* ── Person Cards ── */
+    .contact-person-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+      margin-top: -24px;
+    }
+    .contact-person-card {
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 20px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .contact-person-role {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .contact-person-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .contact-person-name-en {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .5px;
+      margin-bottom: 10px;
+    }
+    .contact-person-contact {
+      display: inline-block;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      line-height: 1.8;
+    }
+    .contact-person-contact:hover { color: var(--accent); }
+
     @media (max-width: 860px) {
       .contact-layout {
         grid-template-columns: 1fr;
@@ -323,6 +368,9 @@
         position: static;
       }
       .contact-info-row {
+        grid-template-columns: 1fr;
+      }
+      .contact-person-row {
         grid-template-columns: 1fr;
       }
       .form-row {
@@ -410,11 +458,29 @@
             </div>
           </div>
           <div class="contact-info-card">
-            <div class="contact-info-icon">📸</div>
+            <div class="contact-info-icon">📞</div>
             <div>
-              <h3>인스타그램</h3>
-              <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">@palombini_eunhaeng</a>
+              <h3>전화</h3>
+              <a href="tel:01077545837">010-7754-5837</a>
             </div>
+          </div>
+        </div>
+
+        <!-- 담당자 안내 -->
+        <div class="contact-person-row">
+          <div class="contact-person-card">
+            <div class="contact-person-role">드립백 · 봉투 · 필름지</div>
+            <div class="contact-person-name">엔지니어 남우현</div>
+            <div class="contact-person-name-en">NAM, WOO HYUN</div>
+            <a class="contact-person-contact" href="tel:01077545837">📞 010-7754-5837</a>
+            <a class="contact-person-contact" href="mailto:p01034545837@gmail.com">✉️ p01034545837@gmail.com</a>
+          </div>
+          <div class="contact-person-card">
+            <div class="contact-person-role">기계 장비 · B2B</div>
+            <div class="contact-person-name">대표 성기용</div>
+            <div class="contact-person-name-en">SUNG, KI YONG</div>
+            <a class="contact-person-contact" href="tel:01026045567">📞 010-2604-5567</a>
+            <a class="contact-person-contact" href="mailto:sungpavla@daum.net">✉️ sungpavla@daum.net</a>
           </div>
         </div>
 
