@@ -26,6 +26,78 @@
       border-top: 2px solid var(--accent);
       color: var(--accent2);
     }
+    /* ── VIDEO CARDS ── */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      margin-top: 24px;
+    }
+    .video-card {
+      background: var(--card);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.12);
+    }
+    .video-card video {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      background: #000;
+    }
+    .video-card-body {
+      padding: 22px 24px 26px;
+    }
+    .video-card-body .video-num {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .video-card-body h3 {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--accent2);
+      margin: 0 0 12px;
+    }
+    .video-card-body p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0 0 8px;
+    }
+    .video-card-body .en-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 0 0 12px;
+      letter-spacing: 0.5px;
+    }
+    .video-card-body .en-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin: 0;
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      margin-top: 8px;
+      opacity: .7;
+    }
+
+    /* Language toggle: hide EN text in KO mode, hide KO text in EN mode */
+    html[lang="ko"] .en-title,
+    html[lang="ko"] .en-desc { display: none; }
+    html[lang="en"] .video-card-body > h3,
+    html[lang="en"] .video-card-body > p:not(.video-num):not(.en-title):not(.en-desc) { display: none; }
+    html[lang="en"] .en-title,
+    html[lang="en"] .en-desc { display: block; }
   </style>
 </head>
 <body>
@@ -48,7 +120,7 @@
             <a href="../products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
             <a href="../custom-edition.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> &#xB098;&#xB9CC;&#xC758; &#xB4DC;&#xB9BD;&#xBC31; &#xC81C;&#xC791;</a>
             <a href="../lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
-            <a href="../machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> &#xB4DC;&#xB9BD;&#xBC31; &#xBA38;&#xC2E0;</a>
+            <a href="../machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
             <a href="../film.html"><span class="nav-dropdown-icon">&#x1F39E;&#xFE0F;</span> &#xCEE4;&#xD53C; &#xD544;&#xB984;&#xC9C0; <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">&#xC900;&#xBE44;&#xC911;</span></a>
           </div>
         </div>
@@ -67,7 +139,7 @@
   <main>
     <div class="container">
       <div class="breadcrumb">
-        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>드립백 머신</span>
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><span>패키징 머신</span>
       </div>
     </div>
 
@@ -106,7 +178,7 @@
       <div class="container">
         <div class="page-hero-inner">
           <p class="eyebrow">Packaging Machines · MDP Intelligent</p>
-          <h1>드립백 머신<br/>전체 라인업</h1>
+          <h1>MDP 머신<br/>전체 라인업</h1>
           <p>드립백·티백·파우더·액체·프리메이드 파우치·캡슐까지 26종. 생산 규모와 예산에 맞는 최적의 패키징 머신을 찾아드립니다.</p>
         </div>
       </div>
@@ -118,7 +190,7 @@
         <h2 class="machines-category-title" style="margin-bottom:20px;">머신 작동 영상 <span>Machine Demos</span></h2>
         <div class="videos-grid">
           <div class="video-card">
-            <video controls muted playsinline preload="metadata">
+            <video autoplay muted loop playsinline preload="metadata">
               <source src="../assets/video/machine-fm100.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -130,7 +202,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video controls muted playsinline preload="metadata">
+            <video autoplay muted loop playsinline preload="metadata">
               <source src="../assets/video/machine-fm200.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -305,6 +377,7 @@
       /* ── Breadcrumb ── */
       ['.breadcrumb a', 'Home'],
       ['.breadcrumb span:last-child', 'Packaging Machines'],
+      ['.page-hero h1', 'MDP Machines<br/>Full Lineup'],
 
       /* ── Video Showcase Section ── */
       ['.machines-category-title', 'Machine Demo Videos <span>Machine Demos</span>', 0],
@@ -319,7 +392,7 @@
       ['.machine-hero-video-overlay .btn-primary', 'Machine Inquiry \u2192'],
 
       /* ── Page Hero ── */
-      ['.page-hero h1', 'Packaging Machines<br/>Full Lineup'],
+      /* removed — now handled above */
       ['.page-hero-inner > p:last-child', 'Drip bags, tea bags, powder, liquid, premade pouch, and capsules — 26 models. We help you find the ideal packaging machine for your production scale and budget.'],
 
       /* ── Comparison Table Headers ── */
