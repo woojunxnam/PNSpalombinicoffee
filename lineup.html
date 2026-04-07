@@ -172,6 +172,29 @@
     }
     .lc-modal-close:hover { background: rgba(0,0,0,.5); }
 
+    /* ── COLLAPSE / EXPAND ───────────────── */
+    .lineup-grid-wrap {
+      position: relative;
+      transition: max-height .42s ease;
+    }
+    .lineup-grid-wrap.collapsed { overflow: hidden; }
+    .lineup-grid-wrap.collapsed::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--bg));
+      pointer-events: none; z-index: 1;
+    }
+    .lineup-toggle-btn {
+      display: block; margin: 14px auto 0;
+      padding: 9px 36px; border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: var(--card); color: var(--muted);
+      font-family: var(--sans); font-size: 13px; font-weight: 700;
+      cursor: pointer; transition: all .15s ease; letter-spacing: .2px;
+    }
+    .lineup-toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
     /* ── RESPONSIVE ──────────────────────── */
     @media (max-width: 1060px) { .lineup-grid { grid-template-columns: repeat(4, 1fr); } }
     @media (max-width: 840px)  { .lineup-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -279,6 +302,7 @@
             <span class="lineup-group-tag">Caffè Palombini · dal 1946</span>
             <div class="lineup-group-label-line"></div>
           </div>
+          <div class="lineup-grid-wrap" id="pns-grid-wrap">
           <div class="lineup-grid">
 
             <!-- 1 팔롬비니 드립백 10입 -->
@@ -455,7 +479,7 @@
               data-url="https://smartstore.naver.com/palombini/products/13281122385"
               data-sub="네이버 스마트스토어에서 구매하실 수 있습니다.">
               <div class="lc-img">
-                <img src="products/volcano-ruby/img_02_원두.jpg" alt="피앤에스 볼케이노 루비 G1 내추럴 500g"/>
+                <img src="assets/img/vol_ruby_bag.png" alt="피앤에스 볼케이노 루비 G1 내추럴 500g"/>
               </div>
               <div class="lc-body">
                 <div class="lc-company">PNS 팔롬비니</div>
@@ -469,7 +493,7 @@
               data-url="https://smartstore.naver.com/palombini/products/13270525319"
               data-sub="네이버 스마트스토어에서 구매하실 수 있습니다.">
               <div class="lc-img">
-                <img src="products/volcano-ruby/img_13_원두_두번째.jpg" alt="피앤에스 볼케이노 루비 G1 내추럴 1kg"/>
+                <img src="assets/img/vol_ruby_bag.png" alt="피앤에스 볼케이노 루비 G1 내추럴 1kg"/>
               </div>
               <div class="lc-body">
                 <div class="lc-company">PNS 팔롬비니</div>
@@ -483,7 +507,7 @@
               data-url="https://smartstore.naver.com/palombini/products/12954926851"
               data-sub="네이버 스마트스토어에서 구매하실 수 있습니다.">
               <div class="lc-img">
-                <img src="assets/img/product-drip-30-gift.jpg" alt="팔롬비니 이탈리아 원두 드립백 30개+5개 명절선물세트"/>
+                <img src="assets/img/product-drip-35-gift.jpg" alt="팔롬비니 이탈리아 원두 드립백 30개+5개 명절선물세트"/>
               </div>
               <div class="lc-body">
                 <div class="lc-company">PNS 팔롬비니</div>
@@ -497,7 +521,7 @@
               data-url="https://smartstore.naver.com/palombini/products/12909852073"
               data-sub="네이버 스마트스토어에서 구매하실 수 있습니다.">
               <div class="lc-img">
-                <img src="assets/img/product-drip-10-gift.jpg" alt="팔롬비니 고급 커피 드립백 가방세트 32개입"/>
+                <img src="assets/img/product-drip-bag32-gift.jpg" alt="팔롬비니 고급 커피 드립백 가방세트 32개입"/>
               </div>
               <div class="lc-body">
                 <div class="lc-company">PNS 팔롬비니</div>
@@ -507,6 +531,8 @@
             </div>
 
           </div>
+          </div><!-- /pns grid-wrap -->
+          <button class="lineup-toggle-btn" data-wrap="pns-grid-wrap">더 보기 ∨</button>
         </div><!-- /pns group -->
 
         <!-- ══ 블랙빈스 ══ -->
@@ -516,6 +542,7 @@
             <span class="lineup-group-tag">blackbeans.kr</span>
             <div class="lineup-group-label-line"></div>
           </div>
+          <div class="lineup-grid-wrap" id="bb-grid-wrap">
           <div class="lineup-grid">
 
             <div class="lineup-card" data-url="https://blackbeans.kr/product/list.html?cate_no=59" data-sub="블랙빈스 스토어에서 구매하실 수 있습니다.">
@@ -855,6 +882,8 @@
             </div>
 
           </div>
+          </div><!-- /bb grid-wrap -->
+          <button class="lineup-toggle-btn" data-wrap="bb-grid-wrap">더 보기 ∨</button>
         </div><!-- /partner group -->
 
         <!-- B2B CTA -->
@@ -864,7 +893,7 @@
             <p style="font-size:14px;color:var(--muted);margin:0;word-break:keep-all;">파트너십 및 대량 주문에 관심 있으신 분은 아래 채널로 문의해 주세요.</p>
           </div>
           <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap;">
-            <a class="btn btn-primary" href="b2b.html">B2B 파트너십 안내 →</a>
+            <a class="btn btn-primary" href="b2b.html" style="color:#fff !important">B2B 파트너십 안내 →</a>
             <a class="btn btn-ghost" href="contact.html">문의하기</a>
           </div>
         </div>
@@ -991,6 +1020,73 @@
     closeBtn.addEventListener('click', closeModal);
     overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    // ── 접기 / 펼치기 ─────────────────────
+    function initCollapseWrap(wrap) {
+      const grid  = wrap.querySelector('.lineup-grid');
+      const cards = Array.from(grid.querySelectorAll('.lineup-card'));
+      if (cards.length < 2) return;
+
+      // 3번째 행의 시작 카드 찾기
+      let prevTop = cards[0].getBoundingClientRect().top;
+      let rowCount = 1, row3Idx = -1;
+      for (let i = 1; i < cards.length; i++) {
+        const t = cards[i].getBoundingClientRect().top;
+        if (t > prevTop + 10) {
+          rowCount++;
+          prevTop = t;
+          if (rowCount === 3) { row3Idx = i; break; }
+        }
+      }
+
+      const btn = document.querySelector('.lineup-toggle-btn[data-wrap="' + wrap.id + '"]');
+      if (row3Idx === -1) { if (btn) btn.style.display = 'none'; return; }
+
+      const twoH = cards[row3Idx].getBoundingClientRect().top - wrap.getBoundingClientRect().top;
+      wrap.dataset.twoRowHeight = twoH;
+
+      // 애니메이션 없이 즉시 접기
+      wrap.style.transition = 'none';
+      wrap.style.overflow   = 'hidden';
+      wrap.style.maxHeight  = twoH + 'px';
+      wrap.classList.add('collapsed');
+      requestAnimationFrame(() => requestAnimationFrame(() => { wrap.style.transition = ''; }));
+    }
+
+    document.querySelectorAll('.lineup-toggle-btn').forEach(btn => {
+      const wrap = document.getElementById(btn.dataset.wrap);
+      if (!wrap) return;
+      btn.addEventListener('click', () => {
+        const isCollapsed = wrap.classList.contains('collapsed');
+        if (isCollapsed) {
+          // 펼치기
+          wrap.style.maxHeight = wrap.scrollHeight + 'px';
+          wrap.classList.remove('collapsed');
+          btn.textContent = '접기 ∧';
+          setTimeout(() => {
+            if (!wrap.classList.contains('collapsed')) {
+              wrap.style.maxHeight = 'none';
+              wrap.style.overflow  = 'visible';
+            }
+          }, 460);
+        } else {
+          // 접기
+          wrap.style.overflow  = 'hidden';
+          wrap.style.maxHeight = wrap.scrollHeight + 'px';
+          wrap.classList.add('collapsed');
+          requestAnimationFrame(() => requestAnimationFrame(() => {
+            wrap.style.maxHeight = wrap.dataset.twoRowHeight + 'px';
+          }));
+          btn.textContent = '더 보기 ∨';
+          setTimeout(() => {
+            wrap.closest('.lineup-group').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 50);
+        }
+      });
+    });
+
+    // 페이지 로드 후 측정 및 초기 접기
+    document.querySelectorAll('.lineup-grid-wrap').forEach(initCollapseWrap);
   </script>
   <script src="assets/js/main.js"></script>
 </body>
