@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>상품 라인업 — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니와 계열사의 다양한 상품을 한눈에 확인하세요. 프리미엄 드립백 커피부터 파트너사 제품까지."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ── HERO ─────────────────────────────── */
+    .lineup-hero {
+      padding: 52px 0 40px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(150deg, var(--bg2) 0%, var(--bg) 100%);
+    }
+    .lineup-hero .breadcrumb { margin-bottom: 20px; }
+    .lineup-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .lineup-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(26px, 4.5vw, 40px);
+      font-weight: 600;
+      margin: 0 0 14px;
+      line-height: 1.2;
+    }
+    .lineup-hero p {
+      font-size: 15px;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.85;
+      max-width: 540px;
+      word-break: keep-all;
+    }
+
+    /* ── SECTION WRAPPER ─────────────────── */
+    .lineup-section { padding: 44px 0 96px; }
+
+    /* ── FILTER TABS ─────────────────────── */
+    .lineup-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 8px 22px;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s ease;
+      letter-spacing: .2px;
+    }
+    .tab-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .tab-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .lineup-count {
+      font-size: 12px;
+      color: var(--muted);
+      align-self: center;
+      margin-left: auto;
+    }
+
+    /* ── GROUP LABEL ─────────────────────── */
+    .lineup-group { margin-bottom: 52px; }
+    .lineup-group-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .lineup-group-label h2 {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 600;
+      margin: 0;
+      white-space: nowrap;
+    }
+    .lineup-group-label-line {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+    .lineup-group-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      color: var(--muted);
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      padding: 3px 9px;
+      border-radius: 99px;
+    }
+
+    /* ── PRODUCT GRID ────────────────────── */
+    .lineup-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px 14px;
+    }
+
+    /* ── PRODUCT CARD ────────────────────── */
+    .lineup-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform .2s ease, box-shadow .2s ease;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .lineup-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Image wrapper */
+    .lc-img {
+      position: relative;
+      aspect-ratio: 1 / 1.05;
+      overflow: hidden;
+      background: var(--bg2);
+      flex-shrink: 0;
+    }
+    .lc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .32s ease;
+    }
+    .lineup-card:hover .lc-img img { transform: scale(1.05); }
+
+    /* Placeholder image (no real image) */
+    .lc-img-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--bg2) 0%, #e8dfd7 100%);
+      color: var(--line);
+    }
+    .lc-img-placeholder .ph-icon { font-size: 32px; opacity: .45; }
+    .lc-img-placeholder .ph-label {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: .55;
+    }
+
+    /* 준비중 overlay tint */
+    .lc-img.is-pending::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(247,243,238,.28);
+      pointer-events: none;
+    }
+
+    /* 준비중 badge */
+    .badge-pending {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      background: rgba(43,29,20,.72);
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .8px;
+      padding: 3px 8px;
+      border-radius: 99px;
+      z-index: 2;
+      backdrop-filter: blur(4px);
+    }
+
+    /* Card body */
+    .lc-body {
+      padding: 12px 13px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      flex: 1;
+    }
+    .lc-company {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .9px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+    .lc-name {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+    .lc-price {
+      margin-top: 7px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .lc-price.ready { color: var(--text); }
+    .lc-price.pending {
+      color: var(--muted);
+      font-weight: 600;
+      opacity: .7;
+      font-style: italic;
+    }
+
+    /* ── EMPTY PARTNER NOTICE ─────────────── */
+    .lineup-coming-soon {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 48px 24px;
+      background: var(--bg2);
+      border: 1.5px dashed var(--line);
+      border-radius: 18px;
+      color: var(--muted);
+      display: none; /* hidden when placeholders exist */
+    }
+
+    /* ── RESPONSIVE ──────────────────────── */
+    @media (max-width: 1060px) {
+      .lineup-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 840px) {
+      .lineup-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .lineup-grid { grid-template-columns: repeat(2, 1fr); gap: 12px 10px; }
+      .lineup-hero { padding: 36px 0 28px; }
+      .lc-body { padding: 10px 10px 12px; }
+      .lc-name { font-size: 11.5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─────────── HEADER ─────────── -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <div class="nav-item">
+          <a href="index.html#about">About</a>
+          <div class="nav-dropdown">
+            <a href="index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> Technology</a>
+            <a href="index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> Heritage</a>
+            <a href="index.html#reviews"><span class="nav-dropdown-icon">&#x2B50;</span> Reviews</a>
+            <a href="index.html#faq"><span class="nav-dropdown-icon">&#x2753;</span> FAQ</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">Products</a>
+          <div class="nav-dropdown">
+            <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+            <a href="custom-edition.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> &#xB098;&#xB9CC;&#xC758; &#xB4DC;&#xB9BD;&#xBC31; &#xC81C;&#xC791;</a>
+            <a href="lineup.html" style="color:var(--accent)"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+            <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> &#xB4DC;&#xB9BD;&#xBC31; &#xBA38;&#xC2E0;</a>
+            <a href="film.html"><span class="nav-dropdown-icon">&#x1F39E;&#xFE0F;</span> &#xCEE4;&#xD53C; &#xD544;&#xB984;&#xC9C0; <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">&#xC900;&#xBE44;&#xC911;</span></a>
+          </div>
+        </div>
+        <a href="b2b.html">B2B</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ─────────── HERO ─────────── -->
+    <section class="lineup-hero">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">홈</a><span class="breadcrumb-sep">›</span>
+          <span>계열사 상품 라인업</span>
+        </div>
+        <p class="lineup-hero-eyebrow">PNS &amp; Partners · Product Lineup</p>
+        <h1>계열사 상품 라인업</h1>
+        <p>PNS 팔롬비니와 함께하는 파트너 브랜드의 상품을 한눈에 확인하세요.<br/>각 브랜드의 개성 있는 제품들이 순차적으로 업데이트될 예정입니다.</p>
+      </div>
+    </section>
+
+    <!-- ─────────── PRODUCTS ─────────── -->
+    <section class="lineup-section">
+      <div class="container">
+
+        <!-- Filter Tabs -->
+        <div class="lineup-tabs">
+          <button class="tab-btn active" data-filter="all">전체</button>
+          <button class="tab-btn" data-filter="pns">PNS 팔롬비니</button>
+          <button class="tab-btn" data-filter="partner">계열사</button>
+          <span class="lineup-count" id="lineup-count">총 17개 상품</span>
+        </div>
+
+        <!-- ── PNS 팔롬비니 ── -->
+        <div class="lineup-group" data-group="pns">
+          <div class="lineup-group-label">
+            <h2>PNS 팔롬비니</h2>
+            <span class="lineup-group-tag">Caffè Palombini · dal 1946</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid">
+
+            <!-- 1 -->
+            <a class="lineup-card" href="products/drip-10.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/product-drip-10.png" alt="팔롬비니 드립백 10입"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">팔롬비니 드립백 커피 10입</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 2 -->
+            <a class="lineup-card" href="products/drip-10-gift.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/product-drip-10-gift.jpg" alt="팔롬비니 드립백 10입 선물세트"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">팔롬비니 드립백 10입 선물세트</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 3 -->
+            <a class="lineup-card" href="products/drip-30-gift.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/product-drip-30-gift.jpg" alt="팔롬비니 드립백 30입 선물세트"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">팔롬비니 드립백 30입 선물세트</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 4 -->
+            <a class="lineup-card" href="products/roma.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/blend-roma.png" alt="Roma 블렌드 드립백"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">Roma 블렌드 드립백</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 5 -->
+            <a class="lineup-card" href="products/gran-bar.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/blend-gran-bar.png" alt="Gran Bar 블렌드 드립백"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">Gran Bar 블렌드 드립백</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 6 -->
+            <a class="lineup-card" href="products/dolce-italia.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/blend-dolce-italia.png" alt="Dolce Italia 블렌드 드립백"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">Dolce Italia 블렌드 드립백</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <!-- 7 -->
+            <a class="lineup-card" href="custom-edition.html">
+              <div class="lc-img is-pending">
+                <img src="assets/img/custom/bag-blank.png" alt="나만의 커스텀 드립백"/>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">PNS 팔롬비니</div>
+                <div class="lc-name">나만의 커스텀 드립백</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+          </div><!-- /.lineup-grid -->
+        </div><!-- /.lineup-group pns -->
+
+        <!-- ── 계열사 상품 ── -->
+        <div class="lineup-group" data-group="partner">
+          <div class="lineup-group-label">
+            <h2>계열사 상품</h2>
+            <span class="lineup-group-tag">Partners</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid">
+
+            <!-- Partner placeholder 1~10 -->
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">☕</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🧴</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🎁</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🫙</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🍵</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🛍️</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🌿</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🍫</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">🏷️</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+            <a class="lineup-card" href="#">
+              <div class="lc-img is-pending">
+                <div class="lc-img-placeholder">
+                  <span class="ph-icon">✨</span>
+                  <span class="ph-label">Coming Soon</span>
+                </div>
+                <span class="badge-pending">준비중</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company">계열사</div>
+                <div class="lc-name">파트너사 상품 준비중</div>
+                <div class="lc-price pending">상품 준비중</div>
+              </div>
+            </a>
+
+          </div><!-- /.lineup-grid -->
+        </div><!-- /.lineup-group partner -->
+
+        <!-- B2B CTA -->
+        <div class="card" style="padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px;">
+          <div>
+            <p style="font-family:var(--serif);font-size:17px;font-weight:600;margin:0 0 6px;">계열사 입점 문의</p>
+            <p style="font-size:14px;color:var(--muted);margin:0;word-break:keep-all;">파트너십 및 상품 등록에 관심 있으신 분은 아래 채널로 문의해 주세요.</p>
+          </div>
+          <div style="display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap;">
+            <a class="btn btn-primary" href="b2b.html">B2B 파트너십 안내 →</a>
+            <a class="btn btn-ghost" href="contact.html">문의하기</a>
+          </div>
+        </div>
+
+      </div><!-- /.container -->
+    </section>
+
+  </main>
+
+  <!-- ─────────── FOOTER ─────────── -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Sticky header scroll
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+
+    // Tab filtering
+    const tabBtns = document.querySelectorAll('.tab-btn[data-filter]');
+    const groups  = document.querySelectorAll('.lineup-group[data-group]');
+    const countEl = document.getElementById('lineup-count');
+
+    function updateCount(filter) {
+      let n = 0;
+      document.querySelectorAll('.lineup-card').forEach(c => {
+        const g = c.closest('[data-group]');
+        if (!g) return;
+        if (filter === 'all' || g.dataset.group === filter) n++;
+      });
+      countEl.textContent = '총 ' + n + '개 상품';
+    }
+
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        groups.forEach(g => {
+          g.style.display = (filter === 'all' || g.dataset.group === filter) ? '' : 'none';
+        });
+        updateCount(filter);
+      });
+    });
+
+    updateCount('all');
+  </script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

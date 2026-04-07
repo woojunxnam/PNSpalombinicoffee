@@ -238,6 +238,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}machines/`, label: '머신' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
     { href: `${prefix}custom-edition.html`, label: '커스텀 에디션' },
+    { href: `${prefix}lineup.html`, label: '계열사 라인업' },
     { href: `${prefix}b2b.html`, label: 'B2B 파트너십' },
     { href: `${prefix}contact.html`, label: '문의하기' }
   ];
