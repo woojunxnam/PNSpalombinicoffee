@@ -93,6 +93,7 @@
           <button class="tab-btn active" data-filter="all">전체</button>
           <button class="tab-btn" data-filter="pns">PNS 팔롬비니</button>
           <button class="tab-btn" data-filter="partner">블랙빈스</button>
+          <button class="tab-btn" data-filter="beanspace">빈스페이스</button>
           <span class="lineup-count" id="lineup-count"></span>
         </div>
 
@@ -124,6 +125,20 @@
           <button class="lineup-toggle-btn" data-wrap="bb-grid-wrap">더 보기 ∨</button>
         </div>
 
+        <!-- ══ 빈스페이스 ══ -->
+        <!-- 상품 수정: assets/data/bs-products.js -->
+        <div class="lineup-group" data-group="beanspace">
+          <div class="lineup-group-label">
+            <h2>빈스페이스</h2>
+            <span class="lineup-group-tag">beanspacecoffee.com</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid-wrap" id="bs-grid-wrap">
+            <div class="lineup-grid" id="bs-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="bs-grid-wrap">더 보기 ∨</button>
+        </div>
+
         <!-- B2B CTA -->
         <div class="card" style="padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px;">
           <div>
@@ -150,6 +165,7 @@
   <!-- 상품 데이터 → 렌더링 로직 순서로 로드 -->
   <script src="assets/data/pns-products.js"></script>
   <script src="assets/data/bb-products.js"></script>
+  <script src="assets/data/bs-products.js"></script>
   <script src="assets/js/lineup.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
