@@ -124,39 +124,46 @@
     .design-type-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
     .design-type-ex { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-    /* ── SAMPLES GALLERY ── */
-    .samples-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 24px;
+    /* ── SAMPLES SLIDESHOW ── */
+    .slideshow-wrap {
+      position: relative;
+      overflow: hidden;
+      margin-top: 32px;
+      /* fade edges */
+      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
-    .sample-card {
+    .slideshow-track {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      animation: slide-loop 60s linear infinite;
+    }
+    .slideshow-wrap:hover .slideshow-track { animation-play-state: paused; }
+    @keyframes slide-loop {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .slide-card {
+      flex: 0 0 auto;
+      width: 200px;
+      aspect-ratio: 3/4;
       background: #fff;
       border: 1px solid var(--line);
       border-radius: 14px;
       overflow: hidden;
-      aspect-ratio: 3/4;
       display: flex;
       align-items: center;
       justify-content: center;
-      position: relative;
     }
-    .sample-card img {
+    .slide-card img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      padding: 8px;
+      object-fit: cover;
     }
-    .sample-card.add-more {
-      background: var(--bg2);
-      flex-direction: column;
-      gap: 10px;
-      cursor: default;
-      border-style: dashed;
+    @media (max-width: 600px) {
+      .slide-card { width: 150px; }
     }
-    .sample-card.add-more span:first-child { font-size: 28px; }
-    .sample-card.add-more span:last-child { font-size: 12px; color: var(--muted); text-align: center; padding: 0 12px; }
 
     /* ── MOCKUP TOOL ── */
     .mockup-section {
@@ -469,7 +476,7 @@
       .ce-hero-bag img { width: min(180px, 60%); }
       .use-case-grid { grid-template-columns: repeat(2, 1fr); }
       .design-types { grid-template-columns: repeat(2, 1fr); }
-      .samples-grid { grid-template-columns: repeat(2, 1fr); }
+      /* samples now use slideshow — no grid override needed */
       .mockup-layout { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .options-grid { grid-template-columns: 1fr; }
@@ -479,7 +486,6 @@
     @media (max-width: 560px) {
       .use-case-grid { grid-template-columns: 1fr 1fr; }
       .design-types { grid-template-columns: 1fr 1fr; }
-      .samples-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -634,24 +640,68 @@
       </div>
     </section>
 
-    <!-- ── SAMPLES ── -->
+    <!-- ── SAMPLES SLIDESHOW ── -->
     <section class="section" style="padding-top:40px;padding-bottom:0;">
       <div class="container">
         <p class="eyebrow">디자인 샘플</p>
         <h2 class="section-title is-visible">이런 디자인이 가능합니다</h2>
-        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다. 더 많은 샘플은 문의 시 보내드립니다.</p>
-        <div class="samples-grid">
-          <div class="sample-card">
-            <img src="assets/img/custom/sample-01.jpg" alt="커스텀 드립백 샘플 - 흑백 일러스트" loading="lazy"/>
-          </div>
-          <div class="sample-card add-more">
-            <span>+</span>
-            <span>더 많은 샘플은<br/>문의 시 제공해 드립니다</span>
-          </div>
-          <div class="sample-card add-more" style="opacity:.5;">
-            <span>🎨</span>
-            <span>샘플 추가 예정</span>
-          </div>
+        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다. 호버하면 일시정지됩니다.</p>
+      </div>
+      <!-- full-width slideshow (outside container for edge-to-edge) -->
+      <div class="slideshow-wrap">
+        <div class="slideshow-track" id="slideshowTrack">
+          <!-- set 1 -->
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_01.jpg" alt="샘플 01" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_02.jpg" alt="샘플 02" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_03.jpg" alt="샘플 03" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_04.jpg" alt="샘플 04" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_05.jpg" alt="샘플 05" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_06.jpg" alt="샘플 06" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_07.jpg" alt="샘플 07" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_08.jpg" alt="샘플 08" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_09.jpg" alt="샘플 09" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_10.jpg" alt="샘플 10" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_11.jpg" alt="샘플 11" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_12.jpg" alt="샘플 12" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_13.jpg" alt="샘플 13" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_14.jpg" alt="샘플 14" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_15.jpg" alt="샘플 15" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_16.jpg" alt="샘플 16" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_17.jpg" alt="샘플 17" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_18.jpg" alt="샘플 18" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_19.jpg" alt="샘플 19" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_20.jpg" alt="샘플 20" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_21.jpg" alt="샘플 21" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_22.jpg" alt="샘플 22" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_23.jpg" alt="샘플 23" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_24.jpg" alt="샘플 24" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_25.jpg" alt="샘플 25" loading="lazy"/></div>
+          <!-- set 2 (duplicate for seamless infinite loop) -->
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_01.jpg" alt="샘플 01" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_02.jpg" alt="샘플 02" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_03.jpg" alt="샘플 03" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_04.jpg" alt="샘플 04" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_05.jpg" alt="샘플 05" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_06.jpg" alt="샘플 06" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_07.jpg" alt="샘플 07" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_08.jpg" alt="샘플 08" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_09.jpg" alt="샘플 09" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_10.jpg" alt="샘플 10" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_11.jpg" alt="샘플 11" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_12.jpg" alt="샘플 12" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_13.jpg" alt="샘플 13" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_14.jpg" alt="샘플 14" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_15.jpg" alt="샘플 15" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_16.jpg" alt="샘플 16" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_17.jpg" alt="샘플 17" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_18.jpg" alt="샘플 18" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_19.jpg" alt="샘플 19" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_20.jpg" alt="샘플 20" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_21.jpg" alt="샘플 21" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_22.jpg" alt="샘플 22" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_23.jpg" alt="샘플 23" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_24.jpg" alt="샘플 24" loading="lazy"/></div>
+          <div class="slide-card"><img src="assets/img/custom/smpl_img_25.jpg" alt="샘플 25" loading="lazy"/></div>
         </div>
       </div>
     </section>
