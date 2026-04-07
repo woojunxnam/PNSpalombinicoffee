@@ -461,6 +461,15 @@ function applyLang(lang) {
     });
   }, 120);
 
+  /* ── B2B nav dropdown (global, all pages) ── */
+  const b2bDrop = document.querySelector('.nav-dropdown a[href$="b2b.html"]');
+  if (b2bDrop) {
+    if (!b2bDrop.dataset._k) b2bDrop.dataset._k = b2bDrop.innerHTML;
+    b2bDrop.innerHTML = lang === 'en'
+      ? '<span class="nav-dropdown-icon">\uD83C\uDFED</span> View Production Facility'
+      : b2bDrop.dataset._k;
+  }
+
   /* ── Page translations (window.T set by inline <script>) ── */
   if (window.T) {
     window.T.forEach(r => {
