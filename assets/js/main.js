@@ -233,12 +233,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
   const menuItems = [
     { href: `${prefix}index.html`, label: '홈' },
-    { href: `${prefix}products/`, label: '제품' },
+    { type: 'label', label: '제품' },
+    { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
     { href: `${prefix}products/volcano-ruby.html`, label: '볼케이노 루비' },
-    { href: `${prefix}machines/`, label: '머신' },
-    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
     { href: `${prefix}custom-edition.html`, label: '커스텀 에디션' },
     { href: `${prefix}lineup.html`, label: '계열사 라인업' },
+    { href: `${prefix}film.html`, label: '커피 필름지', badge: '준비중' },
+    { type: 'label', label: '서비스' },
+    { href: `${prefix}machines/`, label: '드립백 머신' },
+    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
     { href: `${prefix}b2b.html`, label: 'B2B 파트너십' },
     { href: `${prefix}contact.html`, label: '문의하기' }
   ];
@@ -247,9 +250,13 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   panel.innerHTML = `
     <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
       ${menuItems.map((item) => {
+        if (item.type === 'label') {
+          return `<div class="mobile-nav-label">${item.label}</div>`;
+        }
         const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
         const isCurrent = currentPath === itemPath;
-        return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}</a>`;
+        const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
+        return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
       }).join('')}
     </nav>
   `;

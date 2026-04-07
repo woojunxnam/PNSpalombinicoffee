@@ -1,4 +1,4 @@
-<!--
+﻿<!--
   ╔══════════════════════════════════════════════════════════════╗
   ║  📄 FILE: index.html  |  📁 LOCATION: /products/            ║
   ║  🌐 URL: /PNSpalombinicoffee/products/  |  커피 제품 목록    ║
@@ -7,7 +7,8 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
+  
+  <meta name="theme-color" content="#C07A3D"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>프리미엄 드립백 커피 — PNS 팔롬비니</title>
   <meta name="description" content="이탈리아 헤리티지와 99% 실버스킨 제거 공정이 만든 PNS 팔롬비니 프리미엄 드립백 커피 전 제품."/>
@@ -228,6 +229,10 @@
     .vr-drip-orig  { font-size: 10px; color: var(--muted); font-weight: 400; text-decoration: line-through; margin-left: 3px; }
     @media (max-width: 640px) {
       .vr-drip-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .vr-drip-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+      .vr-drip-info { padding: 6px 7px 8px; }
     }
 
     @media (max-width: 900px) {

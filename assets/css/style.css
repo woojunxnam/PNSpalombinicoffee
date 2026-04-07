@@ -19,7 +19,7 @@
   --container: 1120px;
 }
 
-*{ box-sizing: border-box; }
+*{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html{ scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
 
@@ -686,6 +686,26 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .mobile-nav a:hover {
   background: #fff;
 }
+.mobile-nav-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 14px 2px;
+  opacity: 0.6;
+}
+.mobile-nav-badge {
+  font-size: 9px;
+  font-weight: 700;
+  background: var(--muted);
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  opacity: 0.75;
+  vertical-align: middle;
+}
 .mobile-nav a[aria-current="page"] {
   background: rgba(192,122,61,.12);
   border-color: rgba(192,122,61,.22);
@@ -986,11 +1006,11 @@ body.menu-open .mobile-nav {
     font-size: 10px;
   }
   .insta-link,
-  .store-link { width: 28px; height: 28px; }
+  .store-link { width: 40px; height: 40px; }
   .menu-toggle {
-    width: 34px;
-    height: 34px;
-    border-radius: 11px;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
   }
   .menu-toggle-icon {
     width: 15px;
@@ -1308,6 +1328,12 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   transition: opacity .2s ease, transform .2s ease;
 }
 .machine-card-img:hover .machine-card-img-overlay span { opacity: 1; transform: translateY(0); }
+
+/* 터치 기기: hover 없으므로 오버레이 항상 표시 */
+@media (hover: none) {
+  .machine-card-img-overlay { background: rgba(43,29,20,.22); }
+  .machine-card-img-overlay span { opacity: 1; transform: translateY(0); }
+}
 
 .machine-card-body {
   padding: 20px;
@@ -1893,12 +1919,12 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   }
   .insta-link,
   .store-link {
-    width: 24px;
-    height: 24px;
+    width: 40px;
+    height: 40px;
   }
   .menu-toggle {
-    width: 30px;
-    height: 30px;
+    width: 44px;
+    height: 44px;
   }
 }
 
