@@ -641,6 +641,122 @@
     </div>
   </footer>
 
+  <script>
+    window.T = [
+      /* ── Breadcrumb ── */
+      ['.breadcrumb a', 'Home'],
+      ['.breadcrumb span:last-child', 'Premium Drip Bag Coffee'],
+
+      /* ── Volcano Ruby Feature ── */
+      ['.volcano-feature-card .blend-name', 'Volcano Ruby (VOLCANO RUBY)'],
+      ['.volcano-feature-card .blend-tagline', 'Premium Robusta from volcanic highlands. A signature bean with a heavy body, berry-toned sweetness, and a smoky finish.'],
+      ['.volcano-feature-card .flavor-label', 'Body', 0],
+      ['.volcano-feature-card .flavor-label', 'Sweetness', 1],
+      ['.volcano-feature-card .flavor-label', 'Acidity', 2],
+      ['.volcano-feature-card .flavor-label', 'Finish', 3],
+      ['.volcano-feature-card .flavor-val--text', 'Very Strong', 0],
+      ['.volcano-feature-card .flavor-val--text', 'Medium', 1],
+      ['.volcano-feature-card .flavor-val--text', 'Medium-High', 2],
+      ['.volcano-feature-card .flavor-val--text', 'Strong', 3],
+      ['.volcano-feature-card .blend-tag', 'Dark Chocolate', 0],
+      ['.volcano-feature-card .blend-tag', 'Cherry', 1],
+      ['.volcano-feature-card .blend-tag', 'Smoky', 2],
+      ['.volcano-feature-card .btn-ghost', 'View Details \u2192'],
+
+      /* ── Daily Routine Drip Bag Series ── */
+      ['.vr-drip-series h4', 'Daily Routine Series'],
+      ['.vr-drip-desc', 'Same Volcano Ruby beans, different roast levels. We crafted distinct aroma profiles and body weights to match each moment of your day.'],
+      ['.vr-drip-time', '6 AM', 0],
+      ['.vr-drip-time', '10 AM', 1],
+      ['.vr-drip-time', '2 PM', 2],
+      ['.vr-drip-time', '6 PM', 3],
+      ['.vr-drip-time', '10 PM', 4],
+      ['.vr-drip-cnt', '10 bags', 0],
+      ['.vr-drip-cnt', '10 bags', 1],
+      ['.vr-drip-cnt', '10 bags', 2],
+      ['.vr-drip-cnt', '10 bags', 3],
+      ['.vr-drip-cnt', '15 bags', 4],
+
+      /* ── Product Catalog Cards ── */
+      ['.product-card-name', 'Palombini Drip Bag \u2014 10 Bags', 0],
+      ['.product-card-name', 'Palombini Drip Bag \u2014 10 Bags (Gift Set)', 1],
+      ['.product-card-name', 'Palombini Drip Bag \u2014 30 Bags (Gift Set)', 2],
+      ['.product-card-desc', '100% Italian-roasted beans. Palombini Roma & Gran Bar blends in a drip bag. A premium cup you can enjoy anywhere \u2014 home, office, or on the go.', 0],
+      ['.product-card-desc', 'A gift set featuring Roma and Gran Bar blends. An Italian heritage coffee gift for someone special.', 1],
+      ['.product-card-desc', '30-bag set with three blends: Roma, Gran Bar, and Dolce Italia. A premium coffee gift for holidays, corporate gifting, and special occasions.', 2],
+      ['.product-card-badge', '99% Silverskin Removal', 0],
+      ['.product-card-badge', 'Nitrogen Flushed', 1],
+      ['.product-card-badge', '10 Bags', 2],
+      ['.product-card-badge', 'Gift Packaging', 3],
+      ['.product-card-badge', 'Roma + Gran Bar', 4],
+      ['.product-card-badge', '10 Bags', 5],
+      ['.product-card-badge', 'Premium Gift Box', 6],
+      ['.product-card-badge', '3 Blends', 7],
+      ['.product-card-badge', '30 Bags', 8],
+      ['.product-card-actions .btn-ghost', 'Details', 'all'],
+      ['.product-card-actions .btn-primary', 'Buy Now', 'all'],
+
+      /* ── Bottom CTA Callout ── */
+      ['.callout p', 'For bulk orders or corporate gifting, please contact us.'],
+      ['.callout .btn-primary', 'Visit Smart Store \u2192'],
+      ['.callout .btn-ghost', 'Bulk Order Inquiry', 0],
+      ['.callout .btn-ghost', 'Flavor Guide', 1],
+
+      /* ── Flavor Guide Promo ── */
+      ['.flavor-guide-title', 'Find Your Perfect<br>PALOMBINI Drip Bag'],
+      ['.flavor-guide-desc', 'Answer three simple questions and we will recommend the PALOMBINI drip bag blend that best matches your mood and taste. We start with sensory impressions, then explain the flavor structure behind the match.'],
+      ['.flavor-guide-chip', '15 Blends', 0],
+      ['.flavor-guide-chip', '3-Step Quiz', 1],
+      ['.flavor-guide-chip', '1\u20132 Recommendations', 2],
+      ['.flavor-guide-actions .btn-primary', 'Start the Flavor Guide'],
+      ['.flavor-guide-actions .btn-ghost', 'See Volcano Ruby First'],
+
+      /* ── Why PNS Palombini? ── */
+      ['.section.alt .section-title', 'Why PNS Palombini?'],
+      ['.section.alt .result-card h4', '99% Silverskin Removal', 0],
+      ['.section.alt .result-card p', 'Our Inside-Out process delivers a cleaner, more vibrant cup.', 0],
+      ['.section.alt .result-card h4', 'Italian Heritage', 1],
+      ['.section.alt .result-card p', 'The blending philosophy of Caff\u00E8 Palombini, born in 1940s Rome.', 1],
+      ['.section.alt .result-card h4', 'Volcanic Terroir', 2],
+      ['.section.alt .result-card p', 'Rich body from the basalt soils of Vietnam\u2019s Central Highlands.', 2],
+
+      /* ── Palombini Blend Lineup ── */
+      ['.blends-grid-secondary .blend-name', 'Roma (ROMA)', 0],
+      ['.blends-grid-secondary .blend-tagline', '100% Arabica. A delicate blend with bright citrus and fruit acidity, almond and dried fruit aromas.', 0],
+      ['.blends-grid-secondary .blend-name', 'Gran Bar (GRAN BAR)', 1],
+      ['.blends-grid-secondary .blend-tagline', 'Rich and velvety smooth. A professional barista blend for premium Italian bars.', 1],
+      ['.blends-grid-secondary .blend-name', 'Dolce Italia (DOLCE ITALIA)', 2],
+      ['.blends-grid-secondary .blend-tagline', 'Everyday elegance. A smooth, sweet, Arabica-forward all-day Italian blend.', 2],
+      ['.blends-grid-secondary .flavor-label', 'Bitterness', 0],
+      ['.blends-grid-secondary .flavor-label', 'Sweetness', 1],
+      ['.blends-grid-secondary .flavor-label', 'Acidity', 2],
+      ['.blends-grid-secondary .flavor-label', 'Body', 3],
+      ['.blends-grid-secondary .flavor-label', 'Bitterness', 4],
+      ['.blends-grid-secondary .flavor-label', 'Sweetness', 5],
+      ['.blends-grid-secondary .flavor-label', 'Acidity', 6],
+      ['.blends-grid-secondary .flavor-label', 'Body', 7],
+      ['.blends-grid-secondary .flavor-label', 'Bitterness', 8],
+      ['.blends-grid-secondary .flavor-label', 'Sweetness', 9],
+      ['.blends-grid-secondary .flavor-label', 'Acidity', 10],
+      ['.blends-grid-secondary .flavor-label', 'Body', 11],
+      ['.blends-grid-secondary .blend-tag', 'Citrus', 0],
+      ['.blends-grid-secondary .blend-tag', 'Almond', 1],
+      ['.blends-grid-secondary .blend-tag', 'Bright Acidity', 2],
+      ['.blends-grid-secondary .blend-tag', 'Dark Cacao', 3],
+      ['.blends-grid-secondary .blend-tag', 'Dried Fruit', 4],
+      ['.blends-grid-secondary .blend-tag', 'Sweet Aftertaste', 5],
+      ['.blends-grid-secondary .blend-tag', 'Vanilla', 6],
+      ['.blends-grid-secondary .blend-tag', 'Dried Fruit', 7],
+      ['.blends-grid-secondary .blend-tag', 'Almond', 8],
+      ['.blends-grid-secondary .btn-ghost', 'View Details \u2192', 'all'],
+
+      /* ── Blend Lineup Section Title ── */
+      ['section[style*="padding-bottom:48px"] .section-title', 'Palombini Bean Blends'],
+
+      /* ── Footer ── */
+      ['.footer-sub', '99% Silverskin Removal (in-house process) \u00B7 Caff\u00E8 Palombini Heritage \u00B7 Vietnamese Volcanic Terroir']
+    ];
+  </script>
   <script src="../assets/js/main.js"></script>
 </body>
 </html>

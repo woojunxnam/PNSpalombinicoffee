@@ -72,10 +72,9 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .nav a{
   padding: 8px 10px;
   border-radius: 12px;
-  transition: background .12s ease, color .12s ease;
+  transition: background .12s ease, color .12s ease, opacity .12s ease;
 }
 .nav a:hover{ background: rgba(255,255,255,.8); color: var(--text); }
-/* nav language swap handled by JS — no stacked labels */
 
 /* ?? BUTTONS ?? */
 .btn{

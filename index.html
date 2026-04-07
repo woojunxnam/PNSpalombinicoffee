@@ -555,6 +555,145 @@
   </svg>
 </button>
 
+  <!-- Page-level English translations for elements without data-i18n -->
+  <script>
+  window.T = [
+
+    /* ── Nav dropdown items ── */
+    ['.nav-dropdown a[href="#tech"]',        '<span class="nav-dropdown-icon">\uD83D\uDD2C</span> Technology'],
+    ['.nav-dropdown a[href="#heritage"]',    '<span class="nav-dropdown-icon">\uD83C\uDFDB\uFE0F</span> Heritage'],
+    ['.nav-dropdown a[href="#reviews"]',     '<span class="nav-dropdown-icon">\u2B50</span> Reviews'],
+    ['.nav-dropdown a[href="#faq"]',         '<span class="nav-dropdown-icon">\u2753</span> FAQ'],
+    ['.nav-dropdown a[href="products/"]',    '<span class="nav-dropdown-icon">\u2615</span> PNS Palombini Product Lineup'],
+    ['.nav-dropdown a[href="custom-edition.html"]', '<span class="nav-dropdown-icon">\uD83C\uDFA8</span> Custom Drip Bag Creation'],
+    ['.nav-dropdown a[href="lineup.html"]',  '<span class="nav-dropdown-icon">\uD83C\uDFEA</span> Affiliate Product Lineup'],
+    ['.nav-dropdown a[href="machines/"]',    '<span class="nav-dropdown-icon">\u2699\uFE0F</span> Drip Bag Machines'],
+    ['.nav-dropdown a[href="film.html"]',    '<span class="nav-dropdown-icon">\uD83C\uDF9E\uFE0F</span> Coffee Film <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">Coming Soon</span>'],
+
+    /* ── Technology section: problem paragraphs ── */
+    ['.tech-step.problem p', 'Silverskin falls off as chaff during roasting, yet research shows that <strong>a portion can remain even after roasting</strong>, especially in the <strong>center cut (groove) between the two halves</strong> of the bean.', 0],
+    ['.tech-step.problem p', 'When this residue scorches or mingles with smoke and contaminants in the roast environment, it can manifest in the cup as <strong>a harsh aftertaste, smokiness, and subtle bitterness</strong>.', 1],
+
+    /* ── Technology section: solution paragraphs ── */
+    ['.tech-step.solution p', 'While most processes focus on managing chaff that falls from the surface, we address <strong>the fine silverskin remaining in the center cut (groove)</strong>.', 0],
+    ['.tech-step.solution p', 'We developed an "Inside-Out" process that <strong>removes silverskin to the 99% level, including residue inside the bean (in-house process standard)</strong>.', 1],
+
+    /* ── Technology section: result cards ── */
+    ['.result-card h4', 'A Cleaner First Aroma', 0],
+    ['.result-card p',  'The aroma rises clearly, without any muddiness.', 0],
+    ['.result-card h4', 'A Silkier Texture', 1],
+    ['.result-card p',  'A smooth finish instead of a harsh aftertaste.', 1],
+    ['.result-card h4', 'A Brighter Sweetness', 2],
+    ['.result-card p',  'As the shadow of bitterness fades, natural sweetness and a lingering finish emerge.', 2],
+
+    /* ── Heritage section: Italian connection ── */
+    ['.heritage-card h3', 'The Italian Connection \u2014 Caff\u00E8 Palombini', 0],
+    ['.heritage-card p', 'Our partner <strong>Caff\u00E8 Palombini</strong> is a roastery in Rome that <strong>began in the 1940s</strong>, born from founder Giovanni Palombini\u2019s vision.', 0],
+    ['.heritage-card p', 'Palombini has been <strong>cited as the coffee favored by Pope Paul VI</strong>, and carries a brand story rooted in Rome\u2019s \u201Cprofessional\u201D espresso tradition.', 1],
+    ['.heritage-card p', 'Palombini grew alongside Rome\u2019s professional espresso culture, centered on the Ho.Re.Ca. (hotel, restaurant, caf\u00E9) channel.', 2],
+
+    /* ── Heritage section: Vietnamese origin ── */
+    ['.heritage-card h3', 'The Vietnamese Origin \u2014 Volcanic Terroir', 1],
+    ['.heritage-card p', 'Vietnam\u2019s Central Highlands feature <strong>fertile basalt soils formed by volcanic eruptions</strong>, rich in nutrients with excellent porosity (drainage and aeration), ideal for perennial crops like coffee.', 3],
+    ['.heritage-card p', 'The region\u2019s <strong>red basalt soils and high-altitude environment</strong> contribute to slow, uniform cherry maturation, potentially leading to <strong>superior cup quality</strong>.', 4],
+    ['.heritage-card p', 'Official sources from Dak Lak confirm that <strong>robusta grown in red basalt soil zones</strong> produces <strong>distinctive aroma and flavor quality</strong>.', 5],
+
+    /* ── Heritage callout quote ── */
+    ['.callout', '\u201CWe believe the next level of coffee isn\u2019t about a \u2018darker roast\u2019 \u2014 it\u2019s about <strong>starting from a cleaner bean</strong>.\u201D'],
+
+    /* ── Products section title & lead ── */
+    ['#products .section-title', 'Products'],
+    ['#products > .container > .section-lead', 'From premium drip bag coffee to drip bag packaging machines \u2014 the full PNS Palombini lineup.'],
+
+    /* ── Products: Drip Bag coffee card ── */
+    ['.products-preview-title', 'Premium Drip Bag Coffee', 0],
+    ['.products-preview-desc',  'Italian heritage Caff\u00E8 Palombini \u00D7 Vietnamese volcanic soil. A cleaner, more vivid cup through our 99% silverskin removal Inside-Out process.', 0],
+    ['.products-preview-card .product-card-badge', '10-Pack', 0],
+    ['.products-preview-card .product-card-badge', '30-Pack Gift Set', 1],
+    ['.products-preview-card .product-card-badge', 'Nitrogen Flushed', 2],
+    ['.products-preview-actions .btn-primary', 'Buy on Smart Store \u2192', 0],
+    ['.products-preview-actions .btn-ghost',   'View All Products', 0],
+
+    /* ── Products: Drip Bag machine card ── */
+    ['.products-preview-title', 'Drip Bag Packaging Machines', 1],
+    ['.products-preview-desc',  'From small-batch to mass production. Build the optimal drip bag production system with the MDP Intelligent MD-181, FG-60, and FG-70 lineup.', 1],
+    ['.products-preview-actions .btn-primary', 'Inquire About Machines', 1],
+    ['.products-preview-actions .btn-ghost',   'View All Machines', 1],
+
+    /* ── Volcano Ruby signature feature ── */
+    ['.signature-feature-desc', 'A signature bean crafted from premium robusta grown in Vietnamese volcanic soil, finished with a natural process. A rich body carries cherry-toned impressions and natural sweetness, followed by a long, smoky finish.'],
+    ['.signature-feature-badges .badge', 'Volcanic Soil', 0],
+    ['.signature-feature-badges .badge', 'Natural Process', 1],
+    ['.signature-feature-badges .badge', 'Rich Body', 2],
+    ['.signature-feature-badges .badge', 'Cherry Notes', 3],
+    ['.signature-feature-badges .badge', 'Smoky Finish', 4],
+    ['.signature-feature-actions .btn-primary', 'Volcano Ruby Details'],
+    ['.signature-feature-actions .btn-ghost',   'View All Coffee Products'],
+
+    /* ── Custom Edition section ── */
+    ['#custom-edition .section-eyebrow', 'Your Signature Package'],
+    ['#custom-edition .section-title',   'Custom Edition'],
+    ['#custom-edition .section-lead',    'Your logo, character, illustration, or text \u2014<br>we print any design on a drip bag.<br>From wedding favors to caf\u00E9 private-label products, order from as few as 50 units.'],
+    ['#custom-edition .badge', 'Min. 50 Units', 0],
+    ['#custom-edition .badge', 'Quote on Request', 1],
+    ['#custom-edition .badge', 'Illustration \u00B7 Logo \u00B7 Photo \u00B7 Text', 2],
+    ['#custom-edition .btn-primary', 'Learn More About Custom Edition'],
+    ['#custom-edition .btn-outline',  'Inquire About Design'],
+
+    /* ── B2B section: card descriptions ── */
+    ['.b2b-card p', 'Quality standardization through defect bean and foreign object sorting. A core process for maintaining consistent bean quality.', 0],
+    ['.b2b-card p', 'Automated and stabilized drip bag production. Custom-designed from small startups to large-scale manufacturing.', 1],
+    ['.b2b-card p', 'Aluminum packaging options focused on light and moisture blocking. Nitrogen flushing maximizes freshness.', 2],
+    ['.b2b-card p', 'Custom manufacturing from product design to package design. We complete it under your brand.', 3],
+    /* ── B2B "생산 현장 보기" button ── */
+    ['.b2b-cta .btn-outline', 'View Production Facility \u2192'],
+
+    /* ── Review cards ── */
+    ['.review-text', 'Completely different from other drip bags. The flavor is deep and the aroma is rich. I\u2019ll definitely be reordering. Highly recommended.', 0],
+    ['.review-source', 'Palombini Dolce Italia \u00B7 Naver Store Purchase', 0],
+    ['.review-text', 'I tried it at the Cafe Show and knew it was the best coffee I\u2019d ever had, so I ordered it right away! Fast delivery too.', 1],
+    ['.review-source', 'Palombini Roma \u00B7 Naver Store Purchase', 1],
+    ['.review-text', 'A clean coffee taste. Great for everyday drinking without any heaviness. Finished a whole box in less than a month.', 2],
+    ['.review-source', 'Naver Store Purchase \u00B7 One Month Use', 2],
+    ['.review-text', 'Delicious. I hope it becomes more well-known. The expiration date is very generous, packaging is thorough, and the taste is satisfying.', 3],
+    ['.review-source', 'Naver Store Purchase', 3],
+
+    /* ── FAQ answer bodies ── */
+    /* FAQ 1: How to brew */
+    ['.faq-item:nth-child(1) .faq-answer', '<div class="faq-steps"><div class="faq-step"><span class="faq-step-num">1</span><p>Open the packet and remove the drip bag.</p></div><div class="faq-step"><span class="faq-step-num">2</span><p>Spread the drip bag open on both sides and clip it onto your cup.</p></div><div class="faq-step"><span class="faq-step-num">3</span><p>Pour 15 ml of hot water to moisten the grounds evenly, then let it bloom for 15 seconds. After that, pour 35 ml of water in 3\u20134 stages.</p></div></div><p class="faq-tip">\uD83D\uDCA1 <strong>Temperature Tip:</strong> Use <strong>85\u00B0C</strong> water for a milder taste, or <strong>92\u00B0C</strong> for a bolder cup!</p>'],
+
+    /* FAQ 2: Silverskin removal and taste */
+    ['.faq-item:nth-child(2) .faq-answer', '<p>Silverskin (chaff) contains compounds such as chlorogenic acid, trigonelline, and caffeine that contribute to bitterness and astringency. Research suggests that residual silverskin can cause strong bitterness, harsh aftertaste, and a dry mouthfeel in the cup.</p><p>With PNS Palombini\u2019s Inside-Out process removing silverskin to the 99% level, <strong>the aroma rises more clearly</strong>, <strong>the finish becomes silky smooth</strong>, and <strong>the bean\u2019s natural sweetness and body</strong> are more pronounced.</p>'],
+
+    /* FAQ 3: About Caffè Palombini */
+    ['.faq-item:nth-child(3) .faq-answer', '<p>Caff\u00E8 Palombini is a traditional roastery that began in Rome, Italy in the 1940s. Starting from founder Giovanni Palombini\u2019s philosophy, it became an iconic brand in Rome\u2019s premium espresso culture, noted as the coffee favored by Pope Paul VI.</p><p>Palombini has grown alongside Rome\u2019s professional espresso culture, centered on the Ho.Re.Ca. (hotel, restaurant, caf\u00E9) channel, upholding the standards of authentic Italian espresso.</p>'],
+
+    /* FAQ 4: Shelf life */
+    ['.faq-item:nth-child(4) .faq-answer', '<p><strong>2 years</strong> from the date of manufacture. Our nitrogen-flushed aluminum packaging minimizes oxygen exposure, preserving freshness and aroma over time. Please check the exact best-by date on the sticker at the bottom of the package. After opening, store in a cool, dry place away from direct sunlight.</p>'],
+
+    /* FAQ 5: Bulk / B2B inquiries */
+    ['.faq-item:nth-child(5) .faq-answer', '<p>For bulk orders, OEM/ODM, or corporate supply inquiries, please reach out through the contacts below and we\u2019ll respond promptly.</p><p>\uD83D\uDCDE Phone: <a href="tel:01026045567">010-2604-5567</a><br/>\uD83D\uDCE7 Email: <a href="mailto:sungpavla@daum.net">sungpavla@daum.net</a></p>'],
+
+    /* FAQ 6: Volcanic soil and coffee flavor */
+    ['.faq-item:nth-child(6) .faq-answer', '<p>The basalt (volcanic) soils of Vietnam\u2019s Central Highlands are rich in minerals such as iron, magnesium, and potassium, with excellent drainage and aeration, creating an ideal environment for coffee cherries to <strong>mature slowly and uniformly</strong>.</p><p>Robusta grown in this soil is known for its <strong>full body, chocolate and nutty notes, and low acidity</strong>. The mineral content of volcanic soil contributes to the formation of flavor precursors in the bean, producing <strong>complex, deep flavor profiles</strong>.</p>'],
+
+    /* ── Contact section: person labels and details ── */
+    ['#contact .card:first-child p:nth-of-type(1)', '<span style="font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin:0 0 4px;">Drip Bags \u00B7 Pouches \u00B7 Film</span>'],
+    ['#contact .card:first-child p:nth-of-type(2)', '<strong>Manager: Nam Woo Hyun</strong> <span style="font-size:11px;color:var(--muted);">NAM, WOO HYUN</span>'],
+    ['#contact .card:first-child p:nth-of-type(4)', '<span style="font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent);margin:0 0 4px;">Machinery \u00B7 Equipment \u00B7 B2B</span>'],
+    ['#contact .card:first-child p:nth-of-type(5)', '<strong>Manager: Sung Ki Yong</strong> <span style="font-size:11px;color:var(--muted);">SUNG, KI YONG</span>'],
+    ['#contact .card:first-child p:nth-of-type(7)', '<span style="font-size:13px;color:var(--muted);margin:0 0 16px;"><strong style="color:var(--text);">Smart Store</strong>: <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">smartstore.naver.com/palombini</a></span>'],
+    ['#contact .card:first-child .btn-outline', 'Contact Us \u2192'],
+
+    /* ── Reference links ── */
+    ['.sources li a', 'Palombini History / Pope Paul VI Reference', 0],
+    ['.sources li a', 'Palombini 1940s Origins (HoReCa)', 1],
+    ['.sources li a', 'Post-Roast Residual Silverskin Study (MDPI)', 2],
+    ['.sources li a', 'Dak Lak Basalt Soil / Coffee Quality', 3],
+    ['.sources li a', 'Vietnam Central Highlands Red Basalt Soil', 4]
+
+  ];
+  </script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1047,5 +1047,122 @@
     }
   </script>
   <script src="assets/js/main.js"></script>
+
+  <script>
+  /* ── English translations for Custom Edition page ── */
+  window.T = [
+
+    /* ── HERO ── */
+    ['.ce-hero-title',    'Your Signature<br/>Package'],
+    ['.ce-hero-subtitle', 'Custom Edition'],
+    ['.ce-hero-desc',     'Your illustrations, characters, logos, photos, names&mdash;<br/>we print any design on a PNS Palombini drip bag package.<br/>From wedding favors to corporate gifts and caf&eacute; private-label products.'],
+    ['.ce-chip', '🎨 Freestyle Design',   0],
+    ['.ce-chip', '📦 From 50 Units',      1],
+    ['.ce-chip', '☕ Choose Your Blend',   2],
+    ['.ce-chip', '💌 Request a Quote',     3],
+    ['.ce-hero-actions .btn-primary', '🎨 Preview My Design'],
+    ['.ce-hero-actions .btn-ghost',   '📩 Request Production'],
+
+    /* ── USE CASES ── */
+    ['section:nth-of-type(2) .eyebrow',        'Who Is It For?'],
+    ['section:nth-of-type(2) .section-title',   'Perfect for These Occasions'],
+    ['.use-case-name', 'Wedding Favors',             0],
+    ['.use-case-desc', 'A one-of-a-kind coffee gift featuring your wedding photo, names, and date', 0],
+    ['.use-case-name', 'Corporate Gifts &amp; Promotions', 1],
+    ['.use-case-desc', 'Premium coffee gift sets printed with your company logo', 1],
+    ['.use-case-name', 'Caf&eacute; Private Label',       2],
+    ['.use-case-desc', 'Your own drip bag lineup carrying your caf&eacute; brand identity', 2],
+    ['.use-case-name', 'Birthdays &amp; Anniversaries',   3],
+    ['.use-case-desc', 'Custom coffee gifts to commemorate a special day', 3],
+    ['.use-case-name', 'Pop-up Store Merch',               4],
+    ['.use-case-desc', 'Limited-edition coffee goods that express your brand universe', 4],
+    ['.use-case-name', 'Collabs &amp; IP Editions',        5],
+    ['.use-case-desc', 'Limited-run packages from character or artist collaborations', 5],
+
+    /* ── WHAT YOU CAN PRINT ── */
+    ['section:nth-of-type(3) .eyebrow',        'What Designs Are Possible?'],
+    ['section:nth-of-type(3) .section-title',   'Anything You Can Imagine'],
+    ['.design-type-name', 'Illustrations &amp; Art',  0],
+    ['.design-type-ex',   'Hand drawings, characters, icons, etc.', 0],
+    ['.design-type-name', 'Logos &amp; Branding',     1],
+    ['.design-type-ex',   'Company / caf&eacute; logos, CI / BI', 1],
+    ['.design-type-name', 'Photos &amp; Images',      2],
+    ['.design-type-ex',   'Wedding photos, pet photos, etc.', 2],
+    ['.design-type-name', 'Text &amp; Names',         3],
+    ['.design-type-ex',   'Names, dates, messages, quotes', 3],
+
+    /* ── DESIGN SAMPLES ── */
+    ['section:nth-of-type(4) .eyebrow',        'Design Samples'],
+    ['section:nth-of-type(4) .section-title',   'See What\'s Possible'],
+    ['section:nth-of-type(4) .section-lead',    'Black-and-white illustrations, logos, photos, and more&mdash;a wide range of designs are available.'],
+
+    /* ── MOCKUP TOOL ── */
+    ['.mockup-section h2',        'Preview My Design'],
+    ['.mockup-section .tool-desc','Upload an image to see how it looks on a drip bag instantly.<br/>Works best with black-and-white images on a white background.'],
+    ['.mockup-controls .ctrl-label', 'Preview',         0],
+    ['.mockup-controls .ctrl-label', 'Upload Design',   1],
+    ['.mockup-controls .ctrl-label', 'Tools',           2],
+    ['.mockup-controls .ctrl-label', 'Tips',            3],
+    ['.bag-placeholder-text', 'Upload an image on the right<br/>and a preview will appear here'],
+    ['.upload-title',  'Select or Drag an Image'],
+    ['.upload-hint',   'Logos, illustrations, photos&mdash;any image'],
+    ['#resetBtn',      '🗑 Reset'],
+    ['#downloadBtn',   '⬇ Save'],
+    ['.mockup-controls ul li', 'White-background images appear with a transparent background', 0],
+    ['.mockup-controls ul li', 'PNG files produce the most natural results', 1],
+    ['.mockup-controls ul li', '300 dpi or higher recommended for actual printing', 2],
+    ['.mockup-controls ul li', 'Final print files are submitted separately upon inquiry', 3],
+    ['.mockup-cta .btn-primary', '📩 Request Production with This Design'],
+    ['.mockup-note', 'Take a screenshot of the preview and attach it when you inquire<br/>for a faster quote'],
+
+    /* ── HOW IT WORKS ── */
+    ['section:nth-of-type(6) .eyebrow',      'How It Works'],
+    ['section:nth-of-type(6) .section-title', 'Done in 3 Simple Steps'],
+    ['.step-title', 'Prepare Your Design &amp; Preview',    0],
+    ['.step-desc',  'Get your image, logo, or illustration ready. Use the preview tool above to see how it looks first.', 0],
+    ['.step-title', 'Choose Blend &amp; Quantity',           1],
+    ['.step-desc',  'Pick your preferred blend from Roma, Gran Bar, Dolce Italia, or Volcano Ruby and select a quantity (minimum 50).', 1],
+    ['.step-title', 'Inquire, Quote &amp; Produce',          2],
+    ['.step-desc',  'Send us your design file and we will provide a quote. Once confirmed, production begins.', 2],
+
+    /* ── ORDER OPTIONS ── */
+    ['section:nth-of-type(7) .eyebrow',      'Order Options'],
+    ['section:nth-of-type(7) .section-title', 'Blends &amp; Quantity'],
+    ['.option-badge',  'Blend Selection',   0],
+    ['.option-badge',  'Quantity &amp; Pricing', 1],
+    ['.option-name',   'Choose from 4 Blends', 0],
+    ['.option-desc',   'Select your preferred coffee blend to go inside the package.', 0],
+    ['.option-card.featured .option-detail li', 'Roma &mdash; Bold espresso style',                   0],
+    ['.option-card.featured .option-detail li', 'Gran Bar &mdash; Rich and velvety smooth',           1],
+    ['.option-card.featured .option-detail li', 'Dolce Italia &mdash; Sweet and smooth Arabica',      2],
+    ['.option-card.featured .option-detail li', 'Volcano Ruby &mdash; Signature premium Robusta',     3],
+    ['.option-name',   'Minimum Order: 50 Units', 1],
+    ['.option-desc',   'Unit price and total cost vary by design complexity and quantity.', 1],
+    ['.option-card:not(.featured) .option-detail li', 'Minimum order: 50 units',                      0],
+    ['.option-card:not(.featured) .option-detail li', 'Higher quantities mean lower unit cost',        1],
+    ['.option-card:not(.featured) .option-detail li', 'Pricing: quotes provided upon inquiry',         2],
+    ['.option-card:not(.featured) .option-detail li', 'Mixed-blend configurations available (inquire)',3],
+
+    /* ── FAQ ── */
+    ['section:nth-of-type(8) .eyebrow',      'FAQ'],
+    ['section:nth-of-type(8) .section-title', 'Have Questions?'],
+    ['.ce-faq-q span:first-child', 'What file formats should I submit my design in?',    0],
+    ['.ce-faq-a', 'We accept most image formats including PNG, JPG, AI (Illustrator), and PDF. We recommend high-resolution files of 300 dpi or above for print quality. If your file is low-resolution, we will advise you upon inquiry.', 0],
+    ['.ce-faq-q span:first-child', 'How long does production take?',                     1],
+    ['.ce-faq-a', 'Typically 2&ndash;3 weeks after the design is finalized. Timelines may vary depending on quantity and design complexity, and exact schedules will be provided upon inquiry. For urgent orders, please contact us separately.', 1],
+    ['.ce-faq-q span:first-child', 'What printing method is used?',                      2],
+    ['.ce-faq-a', 'Currently we use monochrome (single-color) printing&mdash;black ink on a white background. A wide range of designs including logos, illustrations, and text are supported. For further questions about printing methods, feel free to reach out.', 2],
+    ['.ce-faq-q span:first-child', 'Can you produce it even if I don\'t have a design?', 3],
+    ['.ce-faq-a', 'We can help with basic text layouts (names, dates, messages). If you need professional illustration or design work, we can connect you with a partner designer&mdash;just ask.', 3],
+    ['.ce-faq-q span:first-child', 'Is it possible to order samples?',                   4],
+    ['.ce-faq-a', 'Sample availability before a full order can be confirmed upon inquiry. We will help you verify print color and quality before you finalize.', 4],
+
+    /* ── BOTTOM CTA ── */
+    ['.ce-cta-title', 'Start Your Custom Order Today'],
+    ['.ce-cta-desc',  'Share your design file, desired quantity, and blend choice, and we\'ll send you a quote right away.'],
+    ['.ce-cta-actions .btn-primary', '📩 Request Production'],
+    ['.ce-cta-actions .btn-ghost',   '🎨 Preview Design'],
+  ];
+  </script>
 </body>
 </html>

@@ -448,17 +448,47 @@ function getLang() {
 function applyLang(lang) {
   localStorage.setItem('pns-lang', lang);
 
-  // Swap nav link text between EN and KO on all pages
-  document.querySelectorAll('.nav a[data-ko]').forEach(a => {
+  /* ── Nav crossfade ── */
+  const navLinks = document.querySelectorAll('.nav a[data-ko]');
+  navLinks.forEach(a => {
     if (!a.dataset.en) a.dataset.en = a.textContent.trim();
-    a.textContent = lang === 'ko' ? a.dataset.ko : a.dataset.en;
+    a.style.opacity = '0';
   });
+  setTimeout(() => {
+    navLinks.forEach(a => {
+      a.textContent = lang === 'ko' ? a.dataset.ko : a.dataset.en;
+      a.style.opacity = '';
+    });
+  }, 120);
 
+  /* ── Page translations (window.T set by inline <script>) ── */
+  if (window.T) {
+    window.T.forEach(r => {
+      const [sel, en, idx] = r;
+      const els = document.querySelectorAll(sel);
+      if (idx === 'all') {
+        els.forEach(el => {
+          if (!el.dataset._k) el.dataset._k = el.innerHTML;
+          el.innerHTML = lang === 'en' ? en : el.dataset._k;
+        });
+      } else {
+        const el = els[idx || 0];
+        if (!el) return;
+        if (!el.dataset._k) el.dataset._k = el.innerHTML;
+        el.innerHTML = lang === 'en' ? en : el.dataset._k;
+      }
+    });
+  }
+
+  /* ── data-i18n system (index.html) ── */
   const t = translations[lang];
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    if (t[key] !== undefined) el.innerHTML = t[key];
-  });
+  if (t) {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.innerHTML = t[key];
+    });
+  }
+
   document.querySelectorAll('.lang-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === lang);
   });

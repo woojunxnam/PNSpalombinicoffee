@@ -202,6 +202,119 @@
     const h = document.querySelector('.site-header');
     window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
   </script>
+  <script>
+    window.T = [
+      /* ── Breadcrumb ── */
+      ['.breadcrumb a', 'Home'],
+      ['.breadcrumb span:last-child', 'Packaging Machines'],
+
+      /* ── Hero Video Overlay ── */
+      ['.machine-hero-video-overlay p:first-child', 'MDP Intelligent · Packaging Machines'],
+      ['.machine-hero-video-overlay h2', 'Drip Bag · Tea Bag · Capsule,<br/>All-in-One Packaging Solutions'],
+      ['.machine-hero-video-overlay p:nth-child(3)', 'Dosing, filling, sealing, cutting, and printing — all in one machine. We offer the optimal packaging solution for every scale, from small startups to large-scale production facilities.'],
+      ['.machine-hero-stat span', 'Machine Lineup', 0],
+      ['.machine-hero-stat span', 'Max Production Speed', 1],
+      ['.machine-hero-stat span', 'Pass Rate', 2],
+      ['.machine-hero-video-overlay .btn-primary', 'Machine Inquiry \u2192'],
+
+      /* ── Page Hero ── */
+      ['.page-hero h1', 'Packaging Machines<br/>Full Lineup'],
+      ['.page-hero-inner > p:last-child', 'Drip bags, tea bags, powder, and capsules — 15 models. We help you find the ideal packaging machine for your production scale and budget.'],
+
+      /* ── Comparison Table Headers ── */
+      ['.specs-table thead th', 'Model', 0],
+      ['.specs-table thead th', 'Type', 1],
+      ['.specs-table thead th', 'Max Speed', 2],
+      ['.specs-table thead th', 'Accuracy', 3],
+      ['.specs-table thead th', 'Weight', 4],
+
+      /* ── Comparison Table — Type Column ── */
+      ['.specs-table tbody tr:nth-child(1) td:nth-child(2)', 'Drip Bag'],
+      ['.specs-table tbody tr:nth-child(2) td:nth-child(2)', 'Drip Bag'],
+      ['.specs-table tbody tr:nth-child(3) td:nth-child(2)', 'Drip Bag'],
+      ['.specs-table tbody tr:nth-child(4) td:nth-child(2)', 'Drip Bag (Inner)'],
+      ['.specs-table tbody tr:nth-child(5) td:nth-child(2)', 'Pyramid Tea Bag'],
+      ['.specs-table tbody tr:nth-child(6) td:nth-child(2)', 'Pyramid + Overwrap'],
+      ['.specs-table tbody tr:nth-child(7) td:nth-child(2)', 'Pyramid + Hand Filling'],
+      ['.specs-table tbody tr:nth-child(8) td:nth-child(2)', 'Pyramid High Speed'],
+      ['.specs-table tbody tr:nth-child(9) td:nth-child(2)', 'Tea Bag Tagging'],
+      ['.specs-table tbody tr:nth-child(10) td:nth-child(2)', 'Granule Packing'],
+      ['.specs-table tbody tr:nth-child(11) td:nth-child(2)', 'Liquid Bag'],
+      ['.specs-table tbody tr:nth-child(12) td:nth-child(2)', 'Powder \u00b7 Ultrasonic'],
+      ['.specs-table tbody tr:nth-child(13) td:nth-child(2)', 'Powder Packaging'],
+      ['.specs-table tbody tr:nth-child(14) td:nth-child(2)', 'Granule Packaging'],
+      ['.specs-table tbody tr:nth-child(15) td:nth-child(2)', 'Coffee Capsule'],
+
+      /* ── Category Headings ── */
+      ['.machines-category-title', 'Drip Bag Machines <span>Drip Bag</span>', 0],
+      ['.machines-category-title', 'Pyramid Tea Bag Machines <span>Tea Bag</span>', 1],
+      ['.machines-category-title', 'Powder \u00b7 Granule \u00b7 Liquid \u00b7 Capsule <span>Other</span>', 2],
+
+      /* ── Machine Card Descriptions ── */
+      /* -- Drip Bag category -- */
+      ['.machines-category:nth-child(1) .machine-card:nth-child(1) .machine-card-body > p:not(.machine-card-tag)', 'Coffee powder and small granule packaging. Integrated dosing, filling, sealing, cutting, counting, and printing. Ultrasonic inner bag sealing.'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(2) .machine-card-body > p:not(.machine-card-tag)', 'Fully automatic tracking and positioning. One-click startup enables single-operator multi-unit operation. Built-in nitrogen flush on each line.'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(3) .machine-card-body > p:not(.machine-card-tag)', 'Mitsubishi PLC 5U high-speed processing. 3D integrated outer bag forming. Robotic clamping for maximum stability.'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(4) .machine-card-body > p:not(.machine-card-tag)', 'Automatic tracking and positioning. One-click startup. Integrated inner bag, outer bag, and date printing.'],
+
+      /* -- Pyramid Tea Bag category -- */
+      ['.machines-category:nth-child(2) .machine-card:nth-child(1) .machine-card-body > p:not(.machine-card-tag)', 'Multi-material: green tea, black tea, coffee, and more. Compatible with nylon, PET, non-woven, and PLA. Ultrasonic sealing for strong, clean bags.'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(2) .machine-card-body > p:not(.machine-card-tag)', 'Inner bag + outer bag overwrap packaging. Precision servo module forking. Automatic defect detection.'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(3) .machine-card-body > p:not(.machine-card-tag)', 'Z hand-filling conveyor. Manual multi-material feeding with multi-formula combinations. Compatible with nylon, PET, and PLA.'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(4) .machine-card-body > p:not(.machine-card-tag)', 'Continuous film feeding with horizontal sealing. Multi-head scale automatic dosing. 36% less waste compared to similar machines.'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(5) .machine-card-body > p:not(.machine-card-tag)', 'I, W, and L-type string tag labeling. 4-servo stable performance. Auto alarm and shutdown for missing string or label.'],
+
+      /* -- Powder/Granule/Liquid/Capsule category -- */
+      ['.machines-category:nth-child(3) .machine-card:nth-child(1) .machine-card-body > p:not(.machine-card-tag)', '6-head electronic load cell. Multi-component packing for green tea, herbal ingredients, granules, and more. Quick material changeover.'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(2) .machine-card-body > p:not(.machine-card-tag)', 'Automatic round-corner bag packaging for coffee extract, enzyme, honey, vinegar, and other liquids. Specialized punching, sealing, and cutting.'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(3) .machine-card-body > p:not(.machine-card-tag)', 'Ultrasonic sealing for clean seal finish. Non-woven film packaging for activated charcoal, mushroom, coffee powder, and more.'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(4) .machine-card-body > p:not(.machine-card-tag)', 'Food, pharmaceutical, chemical, and cosmetic powder. PLC touchscreen control. 3-side and back-seal options available.'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(5) .machine-card-body > p:not(.machine-card-tag)', 'Automatic precision packaging for puffed snacks, pistachios, candy, cake, frozen food, and other bulk or block materials.'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(6) .machine-card-body > p:not(.machine-card-tag)', 'Compatible with K-Cup, espresso, Dolce Gusto, and Lavazza capsules. Dual-column high-speed economy model. PLC servo screw dosing.'],
+
+      /* ── Machine Card Tag (MD-F11) ── */
+      ['.machines-category:nth-child(1) .machine-card:nth-child(4) .machine-card-tag', 'Inner Bag Only'],
+
+      /* ── Machine Card Spec Labels ── */
+      ['.machine-spec-mini-label', 'Speed', 'all'],
+
+      /* ── Fix non-speed spec labels individually ── */
+      ['.machines-category:nth-child(1) .machine-card:nth-child(1) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Accuracy'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(2) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Accuracy'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(3) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Accuracy'],
+      ['.machines-category:nth-child(1) .machine-card:nth-child(4) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(1) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(2) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(3) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(4) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(2) .machine-card:nth-child(5) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Voltage'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(1) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(2) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(3) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(4) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(5) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Pass Rate'],
+      ['.machines-category:nth-child(3) .machine-card:nth-child(6) .machine-spec-mini:nth-child(2) .machine-spec-mini-label', 'Weight'],
+
+      /* ── Machine Card Image Overlays ── */
+      ['.machine-card-img-overlay span', 'View Details \u2192', 'all'],
+
+      /* ── Machine Card Buttons ── */
+      ['.machine-card-actions .btn-ghost', 'View Details', 'all'],
+      ['.machine-card-actions .btn-primary', 'Inquire', 'all'],
+
+      /* ── B2B CTA Section ── */
+      ['.b2b-cta p', 'We assist with all B2B inquiries including spec comparisons, quotes, and installation consultations.'],
+      ['.b2b-cta .btn-primary', 'Contact Us'],
+      ['.b2b-cta .btn-ghost', 'Send Email'],
+
+      /* ── Header CTA ── */
+      ['.header-actions .btn-primary', 'Machine Inquiry'],
+
+      /* ── Footer ── */
+      ['.site-footer .footer-inner > p:nth-child(2)', '\u00a9 <span id="year"></span> PNS Palombini. All rights reserved.'],
+      ['.footer-sub', 'Packaging Machines \u00b7 B2B Solutions \u00b7 MDP Intelligent Equipment']
+    ];
+  </script>
   <script src="../assets/js/main.js"></script>
 </body>
 </html>
