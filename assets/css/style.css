@@ -665,6 +665,9 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transform: translateY(-10px);
   transition: opacity .18s ease, transform .18s ease;
   z-index: 130;
+  max-height: calc(100dvh - 90px - env(safe-area-inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .mobile-nav-inner {
   display: grid;
