@@ -77,13 +77,28 @@
     .ce-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .ce-hero-bag {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      gap: 10px;
+      height: 420px;
+      overflow: hidden;
+      border-radius: 16px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%);
     }
-    .ce-hero-bag img {
-      width: min(260px, 100%);
-      filter: drop-shadow(0 24px 40px rgba(0,0,0,.45));
-      border-radius: 8px;
+    .ce-hero-bag-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ce-hero-bag-col.up   { animation: ce-hero-up   55s linear infinite; }
+    .ce-hero-bag-col.down { animation: ce-hero-down  45s linear infinite; }
+    @keyframes ce-hero-up   { 0%{transform:translateY(0)}    100%{transform:translateY(-50%)} }
+    @keyframes ce-hero-down { 0%{transform:translateY(-50%)} 100%{transform:translateY(0)}    }
+    .ce-hero-bag-col img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 10px;
     }
 
     /* ── USE CASES ── */
@@ -139,7 +154,6 @@
       width: max-content;
       animation: slide-loop 60s linear infinite;
     }
-    .slideshow-wrap:hover .slideshow-track { animation-play-state: paused; }
     @keyframes slide-loop {
       0%   { transform: translateX(0); }
       100% { transform: translateX(-50%); }
@@ -472,8 +486,7 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .ce-hero-inner { grid-template-columns: 1fr; }
-      .ce-hero-bag { order: -1; }
-      .ce-hero-bag img { width: min(180px, 60%); }
+      .ce-hero-bag { order: -1; height: 260px; }
       .use-case-grid { grid-template-columns: repeat(2, 1fr); }
       .design-types { grid-template-columns: repeat(2, 1fr); }
       /* samples now use slideshow — no grid override needed */
@@ -564,7 +577,28 @@
             </div>
           </div>
           <div class="ce-hero-bag">
-            <img src="assets/img/custom/bag-blank.png" alt="커스텀 드립백 패키지 예시"/>
+            <div class="ce-hero-bag-col up">
+              <img src="assets/img/custom/smpl_img_01.jpg" alt=""><img src="assets/img/custom/smpl_img_03.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_05.jpg" alt=""><img src="assets/img/custom/smpl_img_07.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_09.jpg" alt=""><img src="assets/img/custom/smpl_img_11.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_13.jpg" alt=""><img src="assets/img/custom/smpl_img_15.jpg" alt="">
+              <!-- duplicate -->
+              <img src="assets/img/custom/smpl_img_01.jpg" alt=""><img src="assets/img/custom/smpl_img_03.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_05.jpg" alt=""><img src="assets/img/custom/smpl_img_07.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_09.jpg" alt=""><img src="assets/img/custom/smpl_img_11.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_13.jpg" alt=""><img src="assets/img/custom/smpl_img_15.jpg" alt="">
+            </div>
+            <div class="ce-hero-bag-col down">
+              <img src="assets/img/custom/smpl_img_02.jpg" alt=""><img src="assets/img/custom/smpl_img_04.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_06.jpg" alt=""><img src="assets/img/custom/smpl_img_08.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_10.jpg" alt=""><img src="assets/img/custom/smpl_img_12.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_14.jpg" alt=""><img src="assets/img/custom/smpl_img_16.jpg" alt="">
+              <!-- duplicate -->
+              <img src="assets/img/custom/smpl_img_02.jpg" alt=""><img src="assets/img/custom/smpl_img_04.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_06.jpg" alt=""><img src="assets/img/custom/smpl_img_08.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_10.jpg" alt=""><img src="assets/img/custom/smpl_img_12.jpg" alt="">
+              <img src="assets/img/custom/smpl_img_14.jpg" alt=""><img src="assets/img/custom/smpl_img_16.jpg" alt="">
+            </div>
           </div>
         </div>
       </div>
@@ -645,7 +679,7 @@
       <div class="container">
         <p class="eyebrow">디자인 샘플</p>
         <h2 class="section-title is-visible">이런 디자인이 가능합니다</h2>
-        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다. 호버하면 일시정지됩니다.</p>
+        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다.</p>
       </div>
       <!-- full-width slideshow (outside container for edge-to-edge) -->
       <div class="slideshow-wrap">
