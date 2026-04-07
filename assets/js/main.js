@@ -165,6 +165,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   if (!siteHeader || !headerInner) return;
 
   const headerActions = headerInner.querySelector('.header-actions') || headerInner;
+
+  /* inject lang toggle if not already present */
+  if (!headerActions.querySelector('.lang-toggle')) {
+    const lt = document.createElement('div');
+    lt.className = 'lang-toggle';
+    lt.innerHTML = '<button class="lang-btn" data-lang="ko">KO</button><button class="lang-btn" data-lang="en">EN</button>';
+    lt.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (typeof applyLang === 'function') applyLang(btn.dataset.lang);
+      });
+    });
+    headerActions.insertBefore(lt, headerActions.firstChild);
+  }
+
   const panelId = 'mobileNavPanel';
 
   const getActionInsertTarget = () =>
@@ -424,7 +438,15 @@ const translations = {
   }
 };
 
+function getLang() {
+  const stored = localStorage.getItem('pns-lang');
+  if (stored === 'ko' || stored === 'en') return stored;
+  const nav = (navigator.language || 'ko').toLowerCase();
+  return nav.startsWith('ko') ? 'ko' : 'en';
+}
+
 function applyLang(lang) {
+  localStorage.setItem('pns-lang', lang);
   const t = translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
@@ -440,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => applyLang(btn.dataset.lang));
   });
-  applyLang('ko');
+  applyLang(getLang());
 });
 
 /* ── 11. 히어로 슬라이드쇼 ── */

@@ -75,6 +75,21 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transition: background .12s ease, color .12s ease;
 }
 .nav a:hover{ background: rgba(255,255,255,.8); color: var(--text); }
+/* 이중언어 네비 레이블 */
+.nav a[data-ko] {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+.nav a[data-ko]::after {
+  content: attr(data-ko);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: .3px;
+  line-height: 1;
+}
 
 /* ?? BUTTONS ?? */
 .btn{
