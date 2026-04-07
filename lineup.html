@@ -19,242 +19,102 @@
     }
     .lineup-hero .breadcrumb { margin-bottom: 20px; }
     .lineup-hero-eyebrow {
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 10px;
+      font-size: 11px; font-weight: 800; letter-spacing: 1.6px;
+      text-transform: uppercase; color: var(--accent); margin: 0 0 10px;
     }
     .lineup-hero h1 {
-      font-family: var(--serif);
-      font-size: clamp(26px, 4.5vw, 40px);
-      font-weight: 600;
-      margin: 0 0 14px;
-      line-height: 1.2;
+      font-family: var(--serif); font-size: clamp(26px, 4.5vw, 40px);
+      font-weight: 600; margin: 0 0 14px; line-height: 1.2;
     }
     .lineup-hero p {
-      font-size: 15px;
-      color: var(--muted);
-      margin: 0;
-      line-height: 1.85;
-      max-width: 540px;
-      word-break: keep-all;
+      font-size: 15px; color: var(--muted); margin: 0;
+      line-height: 1.85; max-width: 540px; word-break: keep-all;
     }
 
-    /* ── SECTION WRAPPER ─────────────────── */
+    /* ── SECTION ─────────────────────────── */
     .lineup-section { padding: 44px 0 96px; }
 
     /* ── FILTER TABS ─────────────────────── */
-    .lineup-tabs {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
+    .lineup-tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; align-items: center; }
     .tab-btn {
-      padding: 8px 22px;
-      border-radius: 99px;
-      border: 1.5px solid var(--line);
-      background: var(--card);
-      color: var(--muted);
-      font-family: var(--sans);
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all .15s ease;
-      letter-spacing: .2px;
+      padding: 8px 22px; border-radius: 99px; border: 1.5px solid var(--line);
+      background: var(--card); color: var(--muted); font-family: var(--sans);
+      font-size: 13px; font-weight: 700; cursor: pointer; transition: all .15s ease; letter-spacing: .2px;
     }
     .tab-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
-    .tab-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-    .lineup-count {
-      font-size: 12px;
-      color: var(--muted);
-      align-self: center;
-      margin-left: auto;
-    }
+    .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .lineup-count { font-size: 12px; color: var(--muted); margin-left: auto; }
 
     /* ── GROUP LABEL ─────────────────────── */
     .lineup-group { margin-bottom: 52px; }
-    .lineup-group-label {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 22px;
-    }
-    .lineup-group-label h2 {
-      font-family: var(--serif);
-      font-size: 17px;
-      font-weight: 600;
-      margin: 0;
-      white-space: nowrap;
-    }
-    .lineup-group-label-line {
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-    }
+    .lineup-group-label { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .lineup-group-label h2 { font-family: var(--serif); font-size: 17px; font-weight: 600; margin: 0; white-space: nowrap; }
+    .lineup-group-label-line { flex: 1; height: 1px; background: var(--line); }
     .lineup-group-tag {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .7px;
-      text-transform: uppercase;
-      color: var(--muted);
-      background: var(--bg2);
-      border: 1px solid var(--line);
-      padding: 3px 9px;
-      border-radius: 99px;
+      font-size: 10px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase;
+      color: var(--muted); background: var(--bg2); border: 1px solid var(--line);
+      padding: 3px 9px; border-radius: 99px;
     }
 
     /* ── PRODUCT GRID ────────────────────── */
-    .lineup-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px 14px;
-    }
+    .lineup-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 18px 14px; }
 
     /* ── PRODUCT CARD ────────────────────── */
     .lineup-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform .2s ease, box-shadow .2s ease;
-      text-decoration: none;
-      color: var(--text);
-      display: flex;
-      flex-direction: column;
-      position: relative;
+      background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      overflow: hidden; transition: transform .2s ease, box-shadow .2s ease;
+      text-decoration: none; color: var(--text); display: flex; flex-direction: column;
     }
-    .lineup-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--shadow);
-    }
+    .lineup-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
 
-    /* Image wrapper */
     .lc-img {
-      position: relative;
-      aspect-ratio: 1 / 1.05;
-      overflow: hidden;
-      background: var(--bg2);
-      flex-shrink: 0;
+      position: relative; aspect-ratio: 1 / 1.05; overflow: hidden;
+      background: var(--bg2); flex-shrink: 0;
     }
     .lc-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+      width: 100%; height: 100%; object-fit: cover; display: block;
       transition: transform .32s ease;
     }
     .lineup-card:hover .lc-img img { transform: scale(1.05); }
 
-    /* Placeholder image (no real image) */
-    .lc-img-placeholder {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: linear-gradient(135deg, var(--bg2) 0%, #e8dfd7 100%);
-      color: var(--line);
-    }
-    .lc-img-placeholder .ph-icon { font-size: 32px; opacity: .45; }
-    .lc-img-placeholder .ph-label {
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: var(--muted);
-      opacity: .55;
-    }
-
-    /* 준비중 overlay tint */
+    /* 준비중 overlay */
     .lc-img.is-pending::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(247,243,238,.28);
-      pointer-events: none;
+      content: ''; position: absolute; inset: 0;
+      background: rgba(247,243,238,.28); pointer-events: none;
     }
 
-    /* 준비중 badge */
+    /* 준비중 배지 */
     .badge-pending {
-      position: absolute;
-      top: 9px;
-      right: 9px;
-      background: rgba(43,29,20,.72);
-      color: #fff;
-      font-size: 9px;
-      font-weight: 800;
-      letter-spacing: .8px;
-      padding: 3px 8px;
-      border-radius: 99px;
-      z-index: 2;
-      backdrop-filter: blur(4px);
+      position: absolute; top: 9px; right: 9px;
+      background: rgba(43,29,20,.72); color: #fff;
+      font-size: 9px; font-weight: 800; letter-spacing: .8px;
+      padding: 3px 8px; border-radius: 99px; z-index: 2; backdrop-filter: blur(4px);
+    }
+    /* 품절 배지 */
+    .badge-soldout {
+      position: absolute; top: 9px; right: 9px;
+      background: rgba(120,80,60,.80); color: #fff;
+      font-size: 9px; font-weight: 800; letter-spacing: .8px;
+      padding: 3px 8px; border-radius: 99px; z-index: 2; backdrop-filter: blur(4px);
     }
 
-    /* Card body */
-    .lc-body {
-      padding: 12px 13px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-      flex: 1;
-    }
+    .lc-body { padding: 12px 13px 14px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
     .lc-company {
-      font-size: 9.5px;
-      font-weight: 800;
-      letter-spacing: .9px;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 2px;
+      font-size: 9.5px; font-weight: 800; letter-spacing: .9px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 2px;
     }
-    .lc-name {
-      font-size: 12.5px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.45;
-      word-break: keep-all;
-    }
-    .lc-price {
-      margin-top: 7px;
-      font-size: 12px;
-      font-weight: 700;
-    }
+    .lc-company.bb { color: #5B7A44; }   /* 블랙빈스 전용 녹색 */
+    .lc-name { font-size: 12.5px; font-weight: 700; color: var(--text); line-height: 1.45; word-break: keep-all; }
+    .lc-price { margin-top: 7px; font-size: 13px; font-weight: 800; }
     .lc-price.ready { color: var(--text); }
-    .lc-price.pending {
-      color: var(--muted);
-      font-weight: 600;
-      opacity: .7;
-      font-style: italic;
-    }
-
-    /* ── EMPTY PARTNER NOTICE ─────────────── */
-    .lineup-coming-soon {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 48px 24px;
-      background: var(--bg2);
-      border: 1.5px dashed var(--line);
-      border-radius: 18px;
-      color: var(--muted);
-      display: none; /* hidden when placeholders exist */
-    }
+    .lc-price.pending { color: var(--muted); font-weight: 600; opacity: .7; font-style: italic; font-size: 12px; }
+    .lc-price.soldout { color: #aaa; font-style: italic; font-weight: 500; font-size: 12px; }
+    .lc-price-orig { text-decoration: line-through; color: var(--muted); font-weight: 400; font-size: 10.5px; margin-left: 4px; }
 
     /* ── RESPONSIVE ──────────────────────── */
-    @media (max-width: 1060px) {
-      .lineup-grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 840px) {
-      .lineup-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 560px) {
+    @media (max-width: 1060px) { .lineup-grid { grid-template-columns: repeat(4, 1fr); } }
+    @media (max-width: 840px)  { .lineup-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 560px)  {
       .lineup-grid { grid-template-columns: repeat(2, 1fr); gap: 12px 10px; }
       .lineup-hero { padding: 36px 0 28px; }
       .lc-body { padding: 10px 10px 12px; }
@@ -311,7 +171,7 @@
         </div>
         <p class="lineup-hero-eyebrow">PNS &amp; Partners · Product Lineup</p>
         <h1>계열사 상품 라인업</h1>
-        <p>PNS 팔롬비니와 함께하는 파트너 브랜드의 상품을 한눈에 확인하세요.<br/>각 브랜드의 개성 있는 제품들이 순차적으로 업데이트될 예정입니다.</p>
+        <p>PNS 팔롬비니와 함께하는 파트너 브랜드의 상품을 한눈에 확인하세요.<br/>각 브랜드의 개성 있는 제품을 만나보세요.</p>
       </div>
     </section>
 
@@ -319,15 +179,15 @@
     <section class="lineup-section">
       <div class="container">
 
-        <!-- Filter Tabs -->
+        <!-- 필터 탭 -->
         <div class="lineup-tabs">
           <button class="tab-btn active" data-filter="all">전체</button>
           <button class="tab-btn" data-filter="pns">PNS 팔롬비니</button>
-          <button class="tab-btn" data-filter="partner">계열사</button>
-          <span class="lineup-count" id="lineup-count">총 17개 상품</span>
+          <button class="tab-btn" data-filter="partner">블랙빈스</button>
+          <span class="lineup-count" id="lineup-count"></span>
         </div>
 
-        <!-- ── PNS 팔롬비니 ── -->
+        <!-- ══ PNS 팔롬비니 ══ -->
         <div class="lineup-group" data-group="pns">
           <div class="lineup-group-label">
             <h2>PNS 팔롬비니</h2>
@@ -336,10 +196,9 @@
           </div>
           <div class="lineup-grid">
 
-            <!-- 1 -->
             <a class="lineup-card" href="products/drip-10.html">
               <div class="lc-img is-pending">
-                <img src="assets/img/product-drip-10.png" alt="팔롬비니 드립백 10입"/>
+                <img src="assets/img/product-drip-10.png" alt="팔롬비니 드립백 커피 10입"/>
                 <span class="badge-pending">준비중</span>
               </div>
               <div class="lc-body">
@@ -349,7 +208,6 @@
               </div>
             </a>
 
-            <!-- 2 -->
             <a class="lineup-card" href="products/drip-10-gift.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/product-drip-10-gift.jpg" alt="팔롬비니 드립백 10입 선물세트"/>
@@ -362,7 +220,6 @@
               </div>
             </a>
 
-            <!-- 3 -->
             <a class="lineup-card" href="products/drip-30-gift.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/product-drip-30-gift.jpg" alt="팔롬비니 드립백 30입 선물세트"/>
@@ -375,7 +232,6 @@
               </div>
             </a>
 
-            <!-- 4 -->
             <a class="lineup-card" href="products/roma.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/blend-roma.png" alt="Roma 블렌드 드립백"/>
@@ -388,7 +244,6 @@
               </div>
             </a>
 
-            <!-- 5 -->
             <a class="lineup-card" href="products/gran-bar.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/blend-gran-bar.png" alt="Gran Bar 블렌드 드립백"/>
@@ -401,7 +256,6 @@
               </div>
             </a>
 
-            <!-- 6 -->
             <a class="lineup-card" href="products/dolce-italia.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/blend-dolce-italia.png" alt="Dolce Italia 블렌드 드립백"/>
@@ -414,7 +268,6 @@
               </div>
             </a>
 
-            <!-- 7 -->
             <a class="lineup-card" href="custom-edition.html">
               <div class="lc-img is-pending">
                 <img src="assets/img/custom/bag-blank.png" alt="나만의 커스텀 드립백"/>
@@ -427,171 +280,465 @@
               </div>
             </a>
 
-          </div><!-- /.lineup-grid -->
-        </div><!-- /.lineup-group pns -->
+          </div>
+        </div><!-- /pns group -->
 
-        <!-- ── 계열사 상품 ── -->
+        <!-- ══ 블랙빈스 ══ -->
         <div class="lineup-group" data-group="partner">
           <div class="lineup-group-label">
-            <h2>계열사 상품</h2>
-            <span class="lineup-group-tag">Partners</span>
+            <h2>블랙빈스</h2>
+            <span class="lineup-group-tag">blackbeans.kr</span>
             <div class="lineup-group-label-line"></div>
           </div>
           <div class="lineup-grid">
 
-            <!-- Partner placeholder 1~10 -->
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">☕</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 1 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_01.jpg" alt="블랙빈스 원두커피 1kg 모음"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">블랙빈스 원두커피 1kg 모음</div>
+                <div class="lc-price ready">₩13,700<span class="lc-price-orig">₩14,100</span></div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🧴</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 2 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_02.jpg" alt="에스프레소 블렌드"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[라떼추천] 에스프레소 블렌드</div>
+                <div class="lc-price ready">₩20,600</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🎁</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 3 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_03.jpg" alt="문 블렌드"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">문 블렌드</div>
+                <div class="lc-price ready">₩23,900</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🫙</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 4 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_04.jpg" alt="케냐 AA"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[묵직한 바디감 밝은 산미] 케냐 AA</div>
+                <div class="lc-price ready">₩24,200</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🍵</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 5 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_05.jpg" alt="엘살바도르 팬시 SHB"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[부드럽고 달콤한] 엘살바도르 팬시 SHB</div>
+                <div class="lc-price ready">₩25,100</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🛍️</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 6 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_06.jpg" alt="콜롬비아 슈프리모 메델린"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[진한 초콜릿 깔끔한 뒷맛] 콜롬비아 슈프리모 메델린</div>
+                <div class="lc-price ready">₩22,600</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🌿</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 7 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_07.jpg" alt="베트남 아라비카 G1"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">베트남 아라비카 G1</div>
+                <div class="lc-price ready">₩20,600</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🍫</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 8 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_08.jpg" alt="시그니처 블렌드"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[인기 블렌드] 시그니처 블렌드</div>
+                <div class="lc-price ready">₩23,900</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">🏷️</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 9 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_09.jpg" alt="모카 블렌드"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">모카 블렌드</div>
+                <div class="lc-price ready">₩19,600</div>
               </div>
             </a>
 
-            <a class="lineup-card" href="#">
-              <div class="lc-img is-pending">
-                <div class="lc-img-placeholder">
-                  <span class="ph-icon">✨</span>
-                  <span class="ph-label">Coming Soon</span>
-                </div>
-                <span class="badge-pending">준비중</span>
+            <!-- 10 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_10.jpg" alt="마일드 블렌드"/>
               </div>
               <div class="lc-body">
-                <div class="lc-company">계열사</div>
-                <div class="lc-name">파트너사 상품 준비중</div>
-                <div class="lc-price pending">상품 준비중</div>
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[사업자추천] 마일드 블렌드</div>
+                <div class="lc-price ready">₩18,200</div>
               </div>
             </a>
 
-          </div><!-- /.lineup-grid -->
-        </div><!-- /.lineup-group partner -->
+            <!-- 11 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_11.jpg" alt="헤이즐넛 향 커피"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[헤이즐넛 맛집] 헤이즐넛 향 커피</div>
+                <div class="lc-price ready">₩21,500</div>
+              </div>
+            </a>
+
+            <!-- 12 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_12.jpg" alt="인도네시아 발리"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[크리미한 바디감] 인도네시아 발리</div>
+                <div class="lc-price ready">₩24,100</div>
+              </div>
+            </a>
+
+            <!-- 13 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_13.jpg" alt="파프아뉴기니아 PSCA"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[산미/단맛/바디감 균형잡힌] 파프아뉴기니아 PSCA</div>
+                <div class="lc-price ready">₩25,100</div>
+              </div>
+            </a>
+
+            <!-- 14 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_14.jpg" alt="탄자니아 AA"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[고소하고 부드러운 산미] 탄자니아 AA</div>
+                <div class="lc-price ready">₩23,200</div>
+              </div>
+            </a>
+
+            <!-- 15 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_15.jpg" alt="인도 몬순 말라바 AA"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[은은한 단맛 진한 바디감] 인도 몬순 말라바 AA</div>
+                <div class="lc-price ready">₩23,600</div>
+              </div>
+            </a>
+
+            <!-- 16 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_16.jpg" alt="과테말라 제네릭 SHB"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[부드럽고 균형잡힌 바디감] 과테말라 제네릭 SHB</div>
+                <div class="lc-price ready">₩24,300</div>
+              </div>
+            </a>
+
+            <!-- 17 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_17.jpg" alt="파나마 게이샤 프리미엄 커피"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[고급 스페셜티] 파나마 게이샤 프리미엄 커피</div>
+                <div class="lc-price ready">₩35,000</div>
+              </div>
+            </a>
+
+            <!-- 18 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_18.jpg" alt="인도네시아 만델링"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[묵직한 고소함] 인도네시아 만델링</div>
+                <div class="lc-price ready">₩25,400</div>
+              </div>
+            </a>
+
+            <!-- 19 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_19.jpg" alt="7데이즈 드립백 커피 선물세트"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">7데이즈 드립백 커피 선물세트 10g×42P</div>
+                <div class="lc-price ready">₩28,900</div>
+              </div>
+            </a>
+
+            <!-- 20 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_20.jpg" alt="7데이즈 드립백 커피 5종 100개 벌크"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">7데이즈 드립백 커피 5종 100개 벌크</div>
+                <div class="lc-price ready">₩71,200<span class="lc-price-orig">₩74,300</span></div>
+              </div>
+            </a>
+
+            <!-- 21 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_21.jpg" alt="원두커피 대량구매 10kg"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">원두커피 대량 구매 10kg 업소용</div>
+                <div class="lc-price ready">₩180,000</div>
+              </div>
+            </a>
+
+            <!-- 22 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_22.jpg" alt="빈스 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">빈스 블렌드</div>
+                <div class="lc-price ready">₩20,600</div>
+              </div>
+            </a>
+
+            <!-- 23 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_23.jpg" alt="로얄 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">로얄 블렌드</div>
+                <div class="lc-price ready">₩29,900</div>
+              </div>
+            </a>
+
+            <!-- 24 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_24.jpg" alt="프리미엄 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[잔잔한 고소함] 프리미엄 블렌드</div>
+                <div class="lc-price ready">₩23,900</div>
+              </div>
+            </a>
+
+            <!-- 25 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_25.jpg" alt="블루 마운틴 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[인기 블렌드] 블루 마운틴 블렌드</div>
+                <div class="lc-price ready">₩20,600</div>
+              </div>
+            </a>
+
+            <!-- 26 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_26.jpg" alt="아이스 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[아이스 아메리카노 추천] 아이스 블렌드</div>
+                <div class="lc-price ready">₩19,600</div>
+              </div>
+            </a>
+
+            <!-- 27 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_27.jpg" alt="카페 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[사업자추천] 카페 블렌드</div>
+                <div class="lc-price ready">₩20,200</div>
+              </div>
+            </a>
+
+            <!-- 28 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_28.jpg" alt="모닝 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[사업자추천] 모닝 블렌드</div>
+                <div class="lc-price ready">₩20,600</div>
+              </div>
+            </a>
+
+            <!-- 29 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_29.jpg" alt="하우스 블렌드"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[사업자추천] 하우스 블렌드</div>
+                <div class="lc-price ready">₩19,200</div>
+              </div>
+            </a>
+
+            <!-- 30 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_30.jpg" alt="니카라과 SHG"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[부드럽고 깔끔한] 니카라과 SHG</div>
+                <div class="lc-price ready">₩25,300</div>
+              </div>
+            </a>
+
+            <!-- 31 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_31.jpg" alt="코스타리카 SHB"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[부드러운 바디감 밝은 산미] 코스타리카 SHB</div>
+                <div class="lc-price ready">₩23,900</div>
+              </div>
+            </a>
+
+            <!-- 32 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_32.jpg" alt="에디오피아 예가체프 G4"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[화사한 산미 부드러운 바디감] 에디오피아 예가체프 G4</div>
+                <div class="lc-price ready">₩20,500</div>
+              </div>
+            </a>
+
+            <!-- 33 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_33.jpg" alt="에디오피아 예가체프 G2"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[밝은산미 가벼운 바디감] 에디오피아 예가체프 G2</div>
+                <div class="lc-price ready">₩23,500</div>
+              </div>
+            </a>
+
+            <!-- 34 (품절) -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_34.jpg" alt="멕시코 알투라 SHB"/>
+                <span class="badge-soldout">품절</span>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">멕시코 알투라 SHB</div>
+                <div class="lc-price soldout">품절</div>
+              </div>
+            </a>
+
+            <!-- 35 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_35.jpg" alt="에디오피아 모카 시다모 G4"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[부드럽고 깨끗한 산미] 에디오피아 모카 시다모 G4</div>
+                <div class="lc-price ready">₩20,500</div>
+              </div>
+            </a>
+
+            <!-- 36 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_36.jpg" alt="브라질 산토스"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">[모닝커피추천] 브라질 산토스</div>
+                <div class="lc-price ready">₩21,500</div>
+              </div>
+            </a>
+
+            <!-- 37 -->
+            <a class="lineup-card" href="https://blackbeans.kr/product/list.html?cate_no=59" target="_blank" rel="noopener">
+              <div class="lc-img">
+                <img src="assets/img/blackbeans/bb_37.jpg" alt="베트남 로부스타 워시드 G1"/>
+              </div>
+              <div class="lc-body">
+                <div class="lc-company bb">블랙빈스</div>
+                <div class="lc-name">베트남 로부스타 워시드 G1</div>
+                <div class="lc-price ready">₩13,700<span class="lc-price-orig">₩14,100</span></div>
+              </div>
+            </a>
+
+          </div>
+        </div><!-- /partner group -->
 
         <!-- B2B CTA -->
         <div class="card" style="padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px;">
@@ -605,7 +752,7 @@
           </div>
         </div>
 
-      </div><!-- /.container -->
+      </div>
     </section>
 
   </main>
@@ -619,22 +766,20 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Sticky header scroll
     const h = document.querySelector('.site-header');
     window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
 
-    // Tab filtering
+    // 필터 탭
     const tabBtns = document.querySelectorAll('.tab-btn[data-filter]');
     const groups  = document.querySelectorAll('.lineup-group[data-group]');
     const countEl = document.getElementById('lineup-count');
 
     function updateCount(filter) {
       let n = 0;
-      document.querySelectorAll('.lineup-card').forEach(c => {
-        const g = c.closest('[data-group]');
-        if (!g) return;
-        if (filter === 'all' || g.dataset.group === filter) n++;
+      groups.forEach(g => {
+        if (filter === 'all' || g.dataset.group === filter) {
+          n += g.querySelectorAll('.lineup-card').length;
+        }
       });
       countEl.textContent = '총 ' + n + '개 상품';
     }
