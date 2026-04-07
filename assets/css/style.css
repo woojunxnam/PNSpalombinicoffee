@@ -75,21 +75,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   transition: background .12s ease, color .12s ease;
 }
 .nav a:hover{ background: rgba(255,255,255,.8); color: var(--text); }
-/* 이중언어 네비 레이블 */
-.nav a[data-ko] {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1px;
-}
-.nav a[data-ko]::after {
-  content: attr(data-ko);
-  font-size: 9px;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: .3px;
-  line-height: 1;
-}
+/* nav language swap handled by JS — no stacked labels */
 
 /* ?? BUTTONS ?? */
 .btn{
@@ -759,25 +745,24 @@ body.menu-open .mobile-sticky-cta {
 /* ?? ?몄뼱 ?좉? ?? */
 .lang-toggle {
   display: flex;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  overflow: hidden;
-  background: rgba(255,255,255,.6);
+  align-items: center;
 }
 .lang-btn {
-  padding: 6px 12px;
+  padding: 4px 9px;
   border: none;
   background: none;
   font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 600;
   color: var(--muted);
   cursor: pointer;
-  transition: background .15s ease, color .15s ease;
-  letter-spacing: .5px;
+  transition: color .15s;
+  letter-spacing: .8px;
+  line-height: 1;
 }
-.lang-btn:hover  { background: rgba(255,255,255,.8); color: var(--text); }
-.lang-btn.active { background: var(--accent); color: #fff; }
+.lang-btn + .lang-btn { border-left: 1px solid var(--line); }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { color: var(--text); font-weight: 800; }
 
 /* ?? ?몄뒪?洹몃옩 ?꾩씠肄?(?ㅻ뜑) ?? */
 .insta-link,
@@ -1017,16 +1002,8 @@ body.menu-open .mobile-sticky-cta {
   }
   .header-actions > * { flex: 0 0 auto; }
   .header-actions > .btn { display: none; }
-  .lang-toggle {
-    display: inline-flex;
-    padding: 2px;
-    gap: 2px;
-    border-radius: 999px;
-  }
   .lang-btn {
-    min-width: 26px;
-    height: 26px;
-    padding: 0 6px;
+    padding: 3px 7px;
     font-size: 10px;
   }
   .insta-link,
@@ -1932,14 +1909,9 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   .header-actions {
     gap: 2px;
   }
-  .lang-toggle {
-    padding: 1px;
-  }
   .lang-btn {
-    min-width: 20px;
-    height: 22px;
-    padding: 0 4px;
-    font-size: 8px;
+    padding: 2px 6px;
+    font-size: 9px;
   }
   .insta-link,
   .store-link {
@@ -1957,8 +1929,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
     max-width: 78px;
   }
   .lang-btn {
-    min-width: 18px;
-    padding: 0 3px;
+    padding: 2px 5px;
   }
 }
 

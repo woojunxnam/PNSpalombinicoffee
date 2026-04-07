@@ -447,6 +447,13 @@ function getLang() {
 
 function applyLang(lang) {
   localStorage.setItem('pns-lang', lang);
+
+  // Swap nav link text between EN and KO on all pages
+  document.querySelectorAll('.nav a[data-ko]').forEach(a => {
+    if (!a.dataset.en) a.dataset.en = a.textContent.trim();
+    a.textContent = lang === 'ko' ? a.dataset.ko : a.dataset.en;
+  });
+
   const t = translations[lang];
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
