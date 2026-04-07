@@ -728,8 +728,14 @@ body.menu-open .mobile-nav {
 body.menu-open .mobile-nav {
   transform: translateY(0);
 }
+body.menu-open .mobile-sticky-cta {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+}
 .mobile-sticky-cta {
   display: none;
+  transition: opacity .18s ease, transform .18s ease;
 }
 
 /* ?? ?몄뼱 ?좉? ?? */
