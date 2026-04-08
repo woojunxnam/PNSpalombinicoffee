@@ -126,6 +126,12 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   font-weight: 600;
   font-size: clamp(32px, 4.2vw, 52px);
   line-height: 1.12;
+}
+.hero-title--large{
+  font-size: clamp(38px, 5.5vw, 68px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   margin: 0 0 14px;
 }
 .hero-sub{ color: var(--muted); font-size: 16px; margin: 0 0 24px; max-width: 56ch; line-height: 1.75; }
@@ -1070,6 +1076,7 @@ body.menu-open .mobile-sticky-cta {
   .hero { padding: 44px 0 36px; }
   .hero-inner { grid-template-columns: 1fr; gap: 24px; }
   .hero-title { font-size: clamp(26px, 7vw, 38px); }
+  .hero-title--large { font-size: clamp(30px, 8vw, 48px); }
   .hero-sub { font-size: 14px; }
   .hero-media { order: -1; }
   .hero-image { aspect-ratio: 16/9; }
@@ -1133,6 +1140,7 @@ body.menu-open .mobile-sticky-cta {
 /* ?뚰삎 紐⑤컮??(iPhone SE ?? */
 @media (max-width: 390px) {
   .hero-title { font-size: 24px; }
+  .hero-title--large { font-size: 28px; }
   .stats-inner { grid-template-columns: 1fr 1fr; }
   .stat-num { font-size: 20px; }
   .mobile-nav { top: 64px; }
