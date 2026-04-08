@@ -5,28 +5,209 @@
   <meta charset="utf-8"/>
   <meta name="theme-color" content="#C07A3D"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="PNS 팔롬비니 원두 포장 현장 — B2B 생산 파트너십. 페이지 준비중."/>
-  <title>원두 포장 현장 — PNS 팔롬비니 (준비중)</title>
+  <title>생두·원두 대량 주문 — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니 생두·원두 대량 주문. 에티오피아 산지 직송 프리미엄 생두와 전문 로스터의 원두를 B2B로 공급합니다."/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    .coming-soon-wrap { min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 24px; gap:20px; }
-    .coming-soon-icon { font-size:64px; line-height:1; }
-    .coming-soon-badge { display:inline-block; background:var(--accent); color:#fff; font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:6px 16px; border-radius:999px; }
-    .coming-soon-title { font-family:var(--serif); font-size:clamp(28px,5vw,42px); font-weight:600; margin:0; line-height:1.3; }
-    .coming-soon-desc { font-size:16px; color:var(--muted); max-width:480px; line-height:1.8; margin:0; }
-    .coming-soon-contact { background:var(--accent-light); border:1px solid rgba(192,122,61,.2); border-radius:var(--r); padding:20px 28px; max-width:420px; width:100%; }
-    .coming-soon-contact p { margin:0 0 14px; font-size:14px; color:var(--muted); }
-    .coming-soon-contact .btn { width:100%; justify-content:center; margin-bottom:8px; }
+    /* ── HERO ── */
+    .bb-hero {
+      background:
+        radial-gradient(800px 400px at 80% 50%, rgba(160,100,40,.12), transparent 60%),
+        linear-gradient(160deg, #120d08 0%, #1e1409 50%, #120d08 100%);
+      color: #f5ede1;
+      padding: 64px 0 56px;
+    }
+    .bb-hero-inner {
+      display: grid;
+      grid-template-columns: 1fr minmax(260px, .85fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .bb-hero-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: .18em;
+      text-transform: uppercase; color: #c8aa6e; margin-bottom: 14px;
+    }
+    .bb-hero-title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 1.15; font-weight: 600;
+      color: #f5ede1; margin: 0 0 6px;
+    }
+    .bb-hero-subtitle {
+      font-size: clamp(14px, 1.6vw, 17px); font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: #c8aa6e; margin: 0 0 18px;
+    }
+    .bb-hero-desc {
+      font-size: 15px; color: rgba(245,237,225,.78);
+      line-height: 1.85; max-width: 52ch;
+      margin: 0 0 28px; word-break: keep-all;
+    }
+    .bb-hero-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .bb-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(244,236,225,.18);
+      color: rgba(245,237,225,.88);
+      font-size: 12px; font-weight: 600;
+    }
+    .bb-hero-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    /* Hero image grid (2×2) */
+    .bb-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .bb-hero-grid img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: cover; display: block;
+    }
+    .bb-hero-grid-label {
+      position: absolute; bottom: 6px; left: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: .08em;
+      color: #fff; background: rgba(0,0,0,.55);
+      padding: 3px 8px; border-radius: 4px;
+      text-transform: uppercase;
+    }
+    .bb-hero-grid-cell {
+      position: relative; overflow: hidden;
+    }
+    .bb-hero-grid-cell img {
+      transition: transform .4s ease;
+    }
+    .bb-hero-grid-cell:hover img { transform: scale(1.05); }
+
+    /* ── PRODUCT SECTION (생두 / 원두) ── */
+    .bb-product {
+      padding: 56px 0 0;
+    }
+    .bb-product-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+    .bb-product-imgs { display: flex; flex-direction: column; gap: 10px; }
+    .bb-product-imgs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .bb-product-imgs img {
+      width: 100%; border-radius: 14px;
+      object-fit: cover; display: block;
+    }
+    .bb-product-imgs img.full { aspect-ratio: 16/10; }
+    .bb-product-imgs img.half { aspect-ratio: 4/3; }
+    .bb-product-tag {
+      display: inline-block; font-size: 11px; font-weight: 800;
+      letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .bb-product-title {
+      font-family: var(--serif); font-size: clamp(22px, 3vw, 32px);
+      font-weight: 600; color: var(--text); margin: 0 0 8px; line-height: 1.3;
+    }
+    .bb-product-sub {
+      font-size: 14px; font-weight: 600; color: var(--muted);
+      letter-spacing: .04em; margin: 0 0 18px; text-transform: uppercase;
+    }
+    .bb-product-desc {
+      font-size: 14.5px; color: var(--muted); line-height: 1.85;
+      margin: 0 0 20px; word-break: keep-all;
+    }
+    .bb-product-features {
+      display: flex; flex-direction: column; gap: 10px;
+      margin: 0; padding: 0; list-style: none;
+    }
+    .bb-product-features li {
+      display: flex; align-items: baseline; gap: 10px;
+      font-size: 13.5px; color: var(--text); line-height: 1.6;
+    }
+    .bb-product-features li::before {
+      content: ''; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-top: 7px;
+    }
+    .bb-product-features li strong {
+      font-weight: 700; color: var(--text);
+    }
+
+    /* ── USE CASES ── */
+    .use-case-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 14px; margin-top: 28px;
+    }
+    .use-case-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 20px 18px; text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .use-case-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .use-case-icon { font-size: 28px; margin-bottom: 8px; }
+    .use-case-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .use-case-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── B2B CHANNELS ── */
+    .bb-channels {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 14px; margin-top: 28px;
+    }
+    .bb-channel {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 14px; padding: 20px 16px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .bb-channel:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+    .bb-channel-icon { font-size: 26px; margin-bottom: 8px; }
+    .bb-channel-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .bb-channel-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+
+    /* ── CTA BOTTOM ── */
+    .bb-cta {
+      background:
+        radial-gradient(600px 300px at 80% 50%, rgba(160,100,40,.16), transparent 60%),
+        linear-gradient(135deg, #120d08, #1e1409);
+      border-radius: 20px; padding: 44px 40px;
+      color: #f5ede1;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 24px; align-items: center;
+    }
+    .bb-cta-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 600; margin-bottom: 8px;
+    }
+    .bb-cta-desc { font-size: 14px; color: rgba(245,237,225,.72); line-height: 1.7; }
+    .bb-cta-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .bb-hero-inner { grid-template-columns: 1fr; }
+      .bb-hero-grid { order: -1; }
+      .bb-product-inner { grid-template-columns: 1fr; }
+      .bb-product-imgs { order: -1; }
+      .use-case-grid { grid-template-columns: repeat(2, 1fr); }
+      .bb-channels { grid-template-columns: repeat(2, 1fr); }
+      .bb-cta { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .use-case-grid { grid-template-columns: 1fr 1fr; }
+      .bb-channels { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
+
   <header class="site-header" id="top">
     <div class="container header-inner">
-      <a class="brand" href="index.html"><span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
       <nav class="nav" aria-label="주요 메뉴">
         <div class="nav-item">
           <a href="index.html#about" data-ko="브랜드">About</a>
@@ -52,21 +233,17 @@
             <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
           </div>
         </div>
-        <div class="nav-item">
-          <a href="b2b-lineup.html" data-ko="B2B">B2B</a>
-          <div class="nav-dropdown">
+        <div class="nav-item"><a href="b2b-lineup.html" data-ko="B2B">B2B</a><div class="nav-dropdown">
             <a href="b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
             <div class="nav-dropdown-label">드립백 B2B</div>
             <a href="custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
             <a href="b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
             <div class="nav-dropdown-label">원두 생두 B2B</div>
-            <a href="products/volcano-ruby.html"><span class="nav-dropdown-icon">🌋</span> 우리의 원두</a>
-            <a href="b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 원두 생두 생산 현장 보기 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+            <a href="b2b-bean.html" style="color:var(--accent)"><span class="nav-dropdown-icon">☕</span> 생두 원두 대량 주문</a>
             <div class="nav-dropdown-label">봉투 필름지 B2B</div>
             <a href="film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
             <a href="b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
-          </div>
-        </div>
+          </div></div>
         <a href="contact.html" data-ko="문의">Contact</a>
       </nav>
       <div class="header-actions">
@@ -74,48 +251,353 @@
         <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-        <a class="btn btn-primary" href="contact.html">문의하기</a>
+        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>
+        </a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true">
+            <span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span>
+          </span>
+        </button>
       </div>
     </div>
   </header>
 
   <main>
-    <div class="container">
-      <div class="breadcrumb">
-        <a href="index.html">홈</a><span class="breadcrumb-sep">›</span>
-        <a href="b2b.html">B2B</a><span class="breadcrumb-sep">›</span>
-        <span>원두 포장 현장</span>
-      </div>
-    </div>
-    <div class="container">
-      <div class="coming-soon-wrap">
-        <div class="coming-soon-icon">☕</div>
-        <span class="coming-soon-badge">준비중 · Coming Soon</span>
-        <h1 class="coming-soon-title">원두 포장 현장<br/>페이지 준비중입니다</h1>
-        <p class="coming-soon-desc">
-          원두 선별·계량·포장 공정 현장을 곧 소개해드릴 예정입니다.<br/>
-          지금 바로 문의 주시면 상세한 내용을 안내해드립니다.
-        </p>
-        <div class="coming-soon-contact">
-          <p>원두 포장 B2B 파트너십에 대해 궁금한 점을 편하게 문의해주세요.</p>
-          <a class="btn btn-primary" href="contact.html">문의하기</a>
-          <a class="btn btn-ghost" href="mailto:skdngus77@naver.com">이메일 보내기</a>
+
+    <!-- ── HERO ── -->
+    <section class="bb-hero">
+      <div class="container">
+        <div class="bb-hero-inner">
+          <div>
+            <p class="bb-hero-eyebrow">Green Bean · Roasted Bean · B2B Wholesale</p>
+            <h1 class="bb-hero-title">산지에서 로스팅까지,<br/>원두의 모든 것</h1>
+            <p class="bb-hero-subtitle">생두·원두 대량 주문</p>
+            <p class="bb-hero-desc">
+              에티오피아 산지에서 직송하는 프리미엄 생두,<br/>
+              전문 로스터가 볶은 스페셜티 원두—<br/>
+              가공 공장부터 개인 카페까지, B2B 대량 공급합니다.
+            </p>
+            <div class="bb-hero-chips">
+              <span class="bb-chip">🌍 산지 직송</span>
+              <span class="bb-chip">🫘 프리미엄 생두</span>
+              <span class="bb-chip">🔥 맞춤 로스팅</span>
+              <span class="bb-chip">📦 대량 공급</span>
+            </div>
+            <div class="bb-hero-actions">
+              <a class="btn btn-primary" href="contact.html" style="background:linear-gradient(135deg,#c8823f,#ddb56b);color:#21160f;border-color:transparent;">
+                📩 대량 주문 문의하기
+              </a>
+              <a class="btn btn-ghost" href="b2b-lineup.html" style="border-color:rgba(244,236,225,.3);color:#f5ede1;">
+                📋 B2B 라인업 보기
+              </a>
+            </div>
+          </div>
+          <div class="bb-hero-grid">
+            <div class="bb-hero-grid-cell">
+              <img src="products/volcano-ruby/img_11_나무에_열린_체리.jpg" alt="커피 체리"/>
+              <span class="bb-hero-grid-label">Cherry</span>
+            </div>
+            <div class="bb-hero-grid-cell">
+              <img src="products/volcano-ruby/img_06_건조장.jpg" alt="건조장"/>
+              <span class="bb-hero-grid-label">Drying</span>
+            </div>
+            <div class="bb-hero-grid-cell">
+              <img src="products/volcano-ruby/img_01_생두.jpg" alt="생두"/>
+              <span class="bb-hero-grid-label">Green Bean</span>
+            </div>
+            <div class="bb-hero-grid-cell">
+              <img src="products/volcano-ruby/img_02_원두.jpg" alt="원두"/>
+              <span class="bb-hero-grid-label">Roasted</span>
+            </div>
+          </div>
         </div>
-        <a class="btn btn-ghost" href="b2b.html">← 드립백 생산 현장 보기</a>
       </div>
-    </div>
+    </section>
+
+    <!-- ── 생두 SECTION ── -->
+    <section class="section bb-product" style="padding-bottom:0;">
+      <div class="container">
+        <div class="bb-product-inner">
+          <div class="bb-product-imgs">
+            <div class="bb-product-imgs-row">
+              <img class="half" src="products/volcano-ruby/img_04_체리_건조.jpg" alt="체리 건조 과정"/>
+              <img class="half" src="products/volcano-ruby/img_10_컨테이너_싣기_전.jpg" alt="생두 자루"/>
+            </div>
+            <div class="bb-product-imgs-row">
+              <img class="half" src="products/volcano-ruby/img_08_생두_선별기.jpg" alt="생두 선별기"/>
+              <img class="half" src="products/volcano-ruby/img_05_컨테이너.jpg" alt="컨테이너 운송"/>
+            </div>
+          </div>
+          <div>
+            <span class="bb-product-tag">Green Bean</span>
+            <h2 class="bb-product-title">산지 직송<br/>프리미엄 생두</h2>
+            <p class="bb-product-sub">Direct from Origin</p>
+            <p class="bb-product-desc">
+              에티오피아 예가체프, 시다모 등 세계적인 산지에서 직접 선별한
+              스페셜티 등급 생두를 컨테이너 단위로 수입합니다.<br/><br/>
+              농장에서 건조, 선별, 포장까지 전 과정을 직접 관리하여
+              품질의 일관성을 보장합니다. 산지에서 한국까지 최단 루트로 운송하여
+              신선도를 극대화합니다.
+            </p>
+            <ul class="bb-product-features">
+              <li><strong>산지 직거래</strong> — 중간 유통 없이 농장에서 직접 매입</li>
+              <li><strong>스페셜티 등급</strong> — G1 내추럴, 워시드 등 최상급 생두</li>
+              <li><strong>품질 관리</strong> — 핸드픽, 선별기를 통한 결점두 제거</li>
+              <li><strong>유연한 물량</strong> — 60kg 자루 단위부터 컨테이너 단위까지</li>
+              <li><strong>안정적 공급</strong> — 수확 시즌별 선물(船物) 스케줄 공유</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 원두 SECTION ── -->
+    <section class="section bb-product" style="padding-bottom:0;">
+      <div class="container">
+        <div class="bb-product-inner" style="direction:rtl;">
+          <div class="bb-product-imgs" style="direction:ltr;">
+            <img class="full" src="products/volcano-ruby/img_13_원두_두번째.jpg" alt="원두 로스팅"/>
+            <div class="bb-product-imgs-row">
+              <img class="half" src="assets/img/vol_ruby_bag.png" alt="볼케이노 루비 원두 패키지"/>
+              <img class="half" src="products/volcano-ruby/img_03_커피추출.jpg" alt="커피 추출"/>
+            </div>
+          </div>
+          <div style="direction:ltr;">
+            <span class="bb-product-tag">Roasted Bean</span>
+            <h2 class="bb-product-title">전문 로스터의<br/>프리미엄 원두</h2>
+            <p class="bb-product-sub">Professional Roasting</p>
+            <p class="bb-product-desc">
+              산지에서 직접 들여온 생두를 전문 로스터가 프로파일별로 볶아
+              최상의 풍미를 끌어냅니다.<br/><br/>
+              500g, 1kg 단위 소포장부터 대량 벌크 납품까지 유연하게 대응합니다.
+              맞춤 로스팅 프로파일 개발, OEM/ODM 생산, 자체 브랜드 원두 론칭을
+              원스톱으로 지원합니다.
+            </p>
+            <ul class="bb-product-features">
+              <li><strong>맞춤 로스팅</strong> — 고객사 원하는 향미 프로파일 개발</li>
+              <li><strong>유연한 패키징</strong> — 500g · 1kg · 벌크 등 다양한 규격</li>
+              <li><strong>OEM/ODM</strong> — 자체 브랜드 원두 론칭 토탈 지원</li>
+              <li><strong>신선도 보장</strong> — 로스팅 후 48시간 이내 출고</li>
+              <li><strong>품질 인증</strong> — SCA 스페셜티 등급 80점 이상</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 이런 분들이 주문하세요 ── -->
+    <section class="section" style="padding-top:48px;padding-bottom:0;">
+      <div class="container">
+        <p class="eyebrow">어떤 분들이 이용하나요?</p>
+        <h2 class="section-title is-visible">이런 분들이 주문하세요</h2>
+        <div class="use-case-grid">
+          <div class="use-case-card">
+            <div class="use-case-icon">💍</div>
+            <div class="use-case-name">결혼 답례품</div>
+            <div class="use-case-desc">웨딩 사진, 이름, 날짜를 담은 세상에 하나뿐인 커피 선물</div>
+          </div>
+          <div class="use-case-card">
+            <div class="use-case-icon">🏢</div>
+            <div class="use-case-name">기업 선물·판촉품</div>
+            <div class="use-case-desc">회사 로고가 인쇄된 프리미엄 커피 선물세트</div>
+          </div>
+          <div class="use-case-card">
+            <div class="use-case-icon">☕</div>
+            <div class="use-case-name">카페 PB 상품</div>
+            <div class="use-case-desc">카페 브랜드 아이덴티티를 담은 자체 원두 라인업</div>
+          </div>
+          <div class="use-case-card">
+            <div class="use-case-icon">🎂</div>
+            <div class="use-case-name">생일·기념일</div>
+            <div class="use-case-desc">특별한 날을 기억하는 커스텀 커피 선물</div>
+          </div>
+          <div class="use-case-card">
+            <div class="use-case-icon">🎪</div>
+            <div class="use-case-name">팝업 스토어 굿즈</div>
+            <div class="use-case-desc">브랜드 세계관을 담은 한정판 커피 굿즈</div>
+          </div>
+          <div class="use-case-card">
+            <div class="use-case-icon">🤝</div>
+            <div class="use-case-name">콜라보·IP 에디션</div>
+            <div class="use-case-desc">캐릭터, 아티스트 협업 한정판 패키지</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── B2B 납품 채널 ── -->
+    <section class="section" style="padding-top:40px;padding-bottom:0;">
+      <div class="container">
+        <p class="eyebrow">어디에 납품하나요?</p>
+        <h2 class="section-title is-visible">다양한 B2B 납품 채널</h2>
+        <div class="bb-channels">
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🏭</div>
+            <div class="bb-channel-name">가공 공장</div>
+            <div class="bb-channel-desc">로스팅 공장, 음료 공장, 콜드브루 공장, 드립백 공장 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🏬</div>
+            <div class="bb-channel-name">백화점</div>
+            <div class="bb-channel-desc">캡슐, 파드, 콜드브루, 원두, 드립백, 커피 음료, 동결건조 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🏪</div>
+            <div class="bb-channel-name">편의점</div>
+            <div class="bb-channel-desc">커피 OEM, 아이스크림, 빵, 동결 건조, 드립백, 커피 자판기 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🛒</div>
+            <div class="bb-channel-name">유통 매장</div>
+            <div class="bb-channel-desc">커피 재료상, 11번가, 쿠팡, G마켓, 노브랜드 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🛍️</div>
+            <div class="bb-channel-name">중규모 마트</div>
+            <div class="bb-channel-desc">홈플러스 익스프레스, e마트 익스프레스 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">☕</div>
+            <div class="bb-channel-name">프랜차이즈</div>
+            <div class="bb-channel-desc">스타벅스, 투썸플레이스, 더 벤티, 메가커피, 빽다방 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">🏠</div>
+            <div class="bb-channel-name">개인 커피숍</div>
+            <div class="bb-channel-desc">지역 소형 카페, 소형 배달업체 등</div>
+          </div>
+          <div class="bb-channel">
+            <div class="bb-channel-icon">💻</div>
+            <div class="bb-channel-name">인터넷 쇼핑몰</div>
+            <div class="bb-channel-desc">개인 쇼핑몰 및 소규모 쇼핑몰</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="section" style="padding-bottom:60px;">
+      <div class="container">
+        <div class="bb-cta">
+          <div>
+            <h2 class="bb-cta-title">생두·원두 대량 주문,<br/>지금 문의하세요</h2>
+            <p class="bb-cta-desc">산지 직송 생두부터 맞춤 로스팅 원두까지—<br/>전문 담당자가 최적의 솔루션을 제안해 드립니다.</p>
+          </div>
+          <div class="bb-cta-actions">
+            <a class="btn btn-primary" href="contact.html" style="background:linear-gradient(135deg,#c8823f,#ddb56b);color:#21160f;border-color:transparent;white-space:nowrap;">
+              📩 대량 주문 문의하기
+            </a>
+            <a class="btn btn-ghost" href="b2b-lineup.html" style="border-color:rgba(244,236,225,.3);color:#f5ede1;white-space:nowrap;text-align:center;">
+              📋 B2B 라인업 보기
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
     <div class="container footer-inner">
-    <div class="footer-biz">
-      <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
+    <div class="footer-biz">      <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
       <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
     </div>
-      <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" class="footer-insta" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          @palombini_eunhaeng
+        </a>
+      </div>
+      <p>&copy; <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
+
   <script src="assets/js/main.js"></script>
+
+  <script>
+  /* ── English translations ── */
+  window.T = [
+    /* HERO */
+    ['.bb-hero-title',    'From Origin to Roast,<br/>Everything in Bean'],
+    ['.bb-hero-subtitle', 'Green Bean &amp; Roasted Bean Wholesale'],
+    ['.bb-hero-desc',     'Premium green beans shipped direct from Ethiopian origins,<br/>specialty roasted beans by expert roasters&mdash;<br/>B2B bulk supply from processing plants to individual cafes.'],
+    ['.bb-chip', '🌍 Direct from Origin',    0],
+    ['.bb-chip', '🫘 Premium Green Bean',    1],
+    ['.bb-chip', '🔥 Custom Roasting',       2],
+    ['.bb-chip', '📦 Bulk Supply',            3],
+    ['.bb-hero-actions .btn-primary', '📩 Request Bulk Order'],
+    ['.bb-hero-actions .btn-ghost',   '📋 View B2B Lineup'],
+    ['.bb-hero-grid-label', 'Cherry',   0],
+    ['.bb-hero-grid-label', 'Drying',   1],
+    ['.bb-hero-grid-label', 'Green Bean',2],
+    ['.bb-hero-grid-label', 'Roasted',  3],
+
+    /* 생두 */
+    ['.bb-product:nth-of-type(1) .bb-product-tag',   'Green Bean'],
+    ['.bb-product:nth-of-type(1) .bb-product-title',  'Direct from Origin<br/>Premium Green Beans'],
+    ['.bb-product:nth-of-type(1) .bb-product-sub',    'Direct from Origin'],
+    ['.bb-product:nth-of-type(1) .bb-product-desc',   'We import specialty-grade green beans selected directly from world-renowned origins including Yirgacheffe and Sidamo, Ethiopia, by the container.<br/><br/>We manage the entire process from farming to drying, sorting, and packaging on-site, ensuring consistent quality. Beans are shipped via the shortest route from origin to Korea, maximizing freshness.'],
+    ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Direct Trade</strong> — Purchased directly from farms, no middlemen', 0],
+    ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Specialty Grade</strong> — Top-tier G1 Natural, Washed, and more', 1],
+    ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Quality Control</strong> — Handpicking and machine sorting to remove defects', 2],
+    ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Flexible Volume</strong> — From 60kg sacks to full container loads', 3],
+    ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Stable Supply</strong> — Seasonal shipment schedules shared in advance', 4],
+
+    /* 원두 */
+    ['.bb-product:nth-of-type(2) .bb-product-tag',   'Roasted Bean'],
+    ['.bb-product:nth-of-type(2) .bb-product-title',  'Premium Beans by<br/>Expert Roasters'],
+    ['.bb-product:nth-of-type(2) .bb-product-sub',    'Professional Roasting'],
+    ['.bb-product:nth-of-type(2) .bb-product-desc',   'Green beans sourced directly from origin are roasted by expert roasters using tailored profiles to bring out the finest flavors.<br/><br/>We flexibly handle everything from 500g and 1kg retail packs to large bulk deliveries. Custom roast profile development, OEM/ODM production, and private-label bean launches are supported end-to-end.'],
+    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Custom Roasting</strong> — Develop flavor profiles to your specifications', 0],
+    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Flexible Packaging</strong> — 500g, 1kg, bulk, and more', 1],
+    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>OEM/ODM</strong> — Full support for private-label bean launches', 2],
+    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Freshness Guaranteed</strong> — Shipped within 48 hours of roasting', 3],
+    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Quality Certified</strong> — SCA Specialty grade 80+ points', 4],
+
+    /* 이런 분들이 주문하세요 */
+    ['section:nth-of-type(4) .eyebrow',        'Who Orders?'],
+    ['section:nth-of-type(4) .section-title',   'Perfect for These Occasions'],
+    ['.use-case-name', 'Wedding Favors',              0],
+    ['.use-case-desc', 'One-of-a-kind coffee gifts with your wedding photo, names, and date', 0],
+    ['.use-case-name', 'Corporate Gifts',              1],
+    ['.use-case-desc', 'Premium coffee gift sets with your company logo printed', 1],
+    ['.use-case-name', 'Caf&eacute; PB Products',     2],
+    ['.use-case-desc', 'Your own bean lineup that carries your caf&eacute; brand identity', 2],
+    ['.use-case-name', 'Birthdays &amp; Anniversaries',3],
+    ['.use-case-desc', 'Custom coffee gifts that mark a special day', 3],
+    ['.use-case-name', 'Pop-up Store Goods',            4],
+    ['.use-case-desc', 'Limited-edition coffee goods that embody your brand universe', 4],
+    ['.use-case-name', 'Collabs &amp; IP Editions',    5],
+    ['.use-case-desc', 'Limited-run packages with character or artist collaborations', 5],
+
+    /* B2B 납품 채널 */
+    ['section:nth-of-type(5) .eyebrow',        'Where Do We Supply?'],
+    ['section:nth-of-type(5) .section-title',   'Diverse B2B Supply Channels'],
+    ['.bb-channel-name', 'Processing Plants',       0],
+    ['.bb-channel-desc', 'Roasting plants, beverage factories, cold brew plants, drip bag factories, etc.', 0],
+    ['.bb-channel-name', 'Department Stores',        1],
+    ['.bb-channel-desc', 'Capsules, pods, cold brew, beans, drip bags, coffee beverages, freeze-dried, etc.', 1],
+    ['.bb-channel-name', 'Convenience Stores',       2],
+    ['.bb-channel-desc', 'Coffee OEM, ice cream, bread, freeze-dried, drip bags, vending machines, etc.', 2],
+    ['.bb-channel-name', 'Retail &amp; Distribution',3],
+    ['.bb-channel-desc', 'Coffee suppliers, 11st, Coupang, Gmarket, No Brand, etc.', 3],
+    ['.bb-channel-name', 'Mid-size Marts',           4],
+    ['.bb-channel-desc', 'Homeplus Express, E-mart Express, etc.', 4],
+    ['.bb-channel-name', 'Franchises',               5],
+    ['.bb-channel-desc', 'Starbucks, A Twosome Place, The Venti, Mega Coffee, Paik&rsquo;s, etc.', 5],
+    ['.bb-channel-name', 'Independent Cafes',        6],
+    ['.bb-channel-desc', 'Local small cafes, small delivery businesses, etc.', 6],
+    ['.bb-channel-name', 'Online Shops',             7],
+    ['.bb-channel-desc', 'Personal online stores and small-scale shopping malls', 7],
+
+    /* CTA */
+    ['.bb-cta-title', 'Green Bean &amp; Roasted Bean Wholesale&mdash;<br/>Inquire Now'],
+    ['.bb-cta-desc',  'From direct-origin green beans to custom-roasted beans&mdash;<br/>our specialist will suggest the optimal solution for you.'],
+    ['.bb-cta-actions .btn-primary', '📩 Request Bulk Order'],
+    ['.bb-cta-actions .btn-ghost',   '📋 View B2B Lineup'],
+  ];
+  </script>
 
   <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
