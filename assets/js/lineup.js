@@ -63,17 +63,21 @@ function renderProducts(products, company, companyClass, gridEl, opts) {
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ▶ 1. 상품 카드 렌더링 */
-  renderProducts(PNS_PRODUCTS, 'PNS 팔롬비니', null,
-    document.getElementById('pns-grid'));
+  if (typeof PNS_PRODUCTS !== 'undefined')
+    renderProducts(PNS_PRODUCTS, 'PNS 팔롬비니', null,
+      document.getElementById('pns-grid'));
 
-  renderProducts(BB_PRODUCTS, '블랙빈스', 'bb',
-    document.getElementById('bb-grid'), { url: BB_STORE_URL });
+  if (typeof BB_PRODUCTS !== 'undefined')
+    renderProducts(BB_PRODUCTS, '블랙빈스', 'bb',
+      document.getElementById('bb-grid'), { url: BB_STORE_URL });
 
-  renderProducts(BS_PRODUCTS, '빈스페이스', 'bs',
-    document.getElementById('bs-grid'));
+  if (typeof BS_PRODUCTS !== 'undefined')
+    renderProducts(BS_PRODUCTS, '빈스페이스', 'bs',
+      document.getElementById('bs-grid'));
 
-  renderProducts(KL_PRODUCTS, 'KL인터내셔널', 'kl',
-    document.getElementById('kl-grid'));
+  if (typeof KL_PRODUCTS !== 'undefined')
+    renderProducts(KL_PRODUCTS, 'KL인터내셔널', 'kl',
+      document.getElementById('kl-grid'));
 
   /* ▶ 2. 연도 표시 */
   const yearEl = document.getElementById('year');

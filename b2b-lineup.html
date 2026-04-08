@@ -91,23 +91,89 @@
       </div>
     </section>
 
-    <!-- ─────────── PRODUCTS (EMPTY) ─────────── -->
+    <!-- ─────────── POPUP MODAL ─────────── -->
+    <div class="lc-modal-overlay" id="lcOverlay" role="dialog" aria-modal="true" aria-label="상품 상세">
+      <div class="lc-modal" id="lcModal">
+        <button class="lc-modal-close" id="lcClose" aria-label="닫기">&#x2715;</button>
+        <div class="lc-modal-img-wrap">
+          <img id="lcModalImg" src="" alt=""/>
+        </div>
+        <div class="lc-modal-body">
+          <div class="lc-modal-company" id="lcModalCompany"></div>
+          <p class="lc-modal-name" id="lcModalName"></p>
+          <p class="lc-modal-sub"  id="lcModalSub"></p>
+          <div class="lc-modal-btns">
+            <button class="lc-modal-btn lc-modal-btn-store"   id="lcStoreBtn">스토어 바로가기 →</button>
+            <a      class="lc-modal-btn lc-modal-btn-contact" href="contact.html">대량 구매 문의 →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────── PRODUCTS ─────────── -->
     <section class="lineup-section">
       <div class="container">
 
-        <!-- 빈 상태 안내 -->
-        <div style="text-align:center; padding:80px 20px;">
-          <div style="font-size:3rem; margin-bottom:20px;">📋</div>
-          <h2 style="font-family:var(--serif); font-size:1.5rem; color:var(--accent2); margin:0 0 12px;">B2B 상품 준비 중입니다</h2>
-          <p style="font-size:1rem; color:var(--muted); max-width:48ch; margin:0 auto 32px; line-height:1.8;">
-            B2B 파트너를 위한 상품이 곧 등록됩니다.<br>
-            드립백 OEM, 원두, 봉투 필름지, 패키징 장비 등<br>
-            다양한 B2B 상품을 준비하고 있습니다.
-          </p>
-          <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
-            <a class="btn btn-primary" href="contact.html">B2B 문의하기</a>
-            <a class="btn btn-ghost" href="b2b.html">드립백 생산 현장 보기</a>
+        <!-- 필터 탭 -->
+        <div class="lineup-tabs">
+          <button class="tab-btn active" data-filter="all">전체</button>
+          <button class="tab-btn" data-filter="drip">드립백 커피</button>
+          <button class="tab-btn" data-filter="bean">원두</button>
+          <button class="tab-btn" data-filter="film">필름지</button>
+          <button class="tab-btn" data-filter="pouch">원두 봉투</button>
+          <span class="lineup-count" id="lineup-count"></span>
+        </div>
+
+        <!-- ══ 드립백 커피 ══ -->
+        <div class="lineup-group" data-group="drip">
+          <div class="lineup-group-label">
+            <h2>드립백 커피</h2>
+            <span class="lineup-group-tag">Drip Bag Coffee</span>
+            <div class="lineup-group-label-line"></div>
           </div>
+          <div class="lineup-grid-wrap" id="drip-grid-wrap">
+            <div class="lineup-grid" id="drip-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="drip-grid-wrap">더 보기 ∨</button>
+        </div>
+
+        <!-- ══ 원두 ══ -->
+        <div class="lineup-group" data-group="bean">
+          <div class="lineup-group-label">
+            <h2>원두</h2>
+            <span class="lineup-group-tag">Coffee Beans</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid-wrap" id="bean-grid-wrap">
+            <div class="lineup-grid" id="bean-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="bean-grid-wrap">더 보기 ∨</button>
+        </div>
+
+        <!-- ══ 필름지 ══ -->
+        <div class="lineup-group" data-group="film">
+          <div class="lineup-group-label">
+            <h2>필름지</h2>
+            <span class="lineup-group-tag">Packaging Film</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid-wrap" id="film-grid-wrap">
+            <div class="lineup-grid" id="film-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="film-grid-wrap">더 보기 ∨</button>
+        </div>
+
+        <!-- ══ 원두 봉투 ══ -->
+        <div class="lineup-group" data-group="pouch">
+          <div class="lineup-group-label">
+            <h2>원두 봉투</h2>
+            <span class="lineup-group-tag">Bean Pouch</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid-wrap" id="pouch-grid-wrap">
+            <div class="lineup-grid" id="pouch-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="pouch-grid-wrap">더 보기 ∨</button>
         </div>
 
         <!-- B2B CTA -->
@@ -137,6 +203,20 @@
     </div>
   </footer>
 
+  <script src="assets/data/b2b-products.js"></script>
+  <script src="assets/js/lineup.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var co = 'PNS 팔롬비니';
+    renderProducts(B2B_DRIP,  co, null, document.getElementById('drip-grid'));
+    renderProducts(B2B_BEAN,  co, null, document.getElementById('bean-grid'));
+    renderProducts(B2B_FILM,  co, null, document.getElementById('film-grid'));
+    renderProducts(B2B_POUCH, co, null, document.getElementById('pouch-grid'));
+    /* 카운트 갱신 */
+    var countEl = document.getElementById('lineup-count');
+    if (countEl) countEl.textContent = '총 ' + document.querySelectorAll('.lineup-card').length + '개 상품';
+  });
+  </script>
   <script src="assets/js/main.js"></script>
 
   <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
