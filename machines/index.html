@@ -228,6 +228,9 @@
       line-height: 1.75;
       margin: 0 0 8px;
     }
+    /* EN text hidden by default (Korean first) */
+    .video-card-body .en-title,
+    .video-card-body .en-desc { display: none; }
     .video-card-body .en-title {
       font-size: 0.8rem;
       color: var(--muted);
@@ -245,9 +248,7 @@
       opacity: .7;
     }
 
-    /* Language toggle: hide EN text in KO mode, hide KO text in EN mode */
-    html[lang="ko"] .en-title,
-    html[lang="ko"] .en-desc { display: none; }
+    /* Language toggle: EN mode shows English, hides Korean */
     html[lang="en"] .video-card-body > h3,
     html[lang="en"] .video-card-body > p:not(.video-num):not(.en-title):not(.en-desc) { display: none; }
     html[lang="en"] .en-title,
