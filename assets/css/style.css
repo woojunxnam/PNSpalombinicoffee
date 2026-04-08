@@ -695,6 +695,15 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 }
 .btn-volcano:hover { background: #c0392b; color: #fff; }
 
+/* nav volcano link */
+.nav > a.nav-volcano {
+  color: #c0392b;
+  font-weight: 700;
+}
+.nav > a.nav-volcano:hover {
+  color: #e74c3c;
+}
+
 /* ?? ?ㅻ뜑 ?ㅻⅨ履??≪뀡 洹몃９ ?? */
 .header-actions {
   display: flex;

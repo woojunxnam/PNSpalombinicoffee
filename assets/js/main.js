@@ -263,7 +263,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기', badge: '준비중' },
     { type: 'label', label: '기타' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
-    { href: `${prefix}contact.html`, label: '문의하기' }
+    { href: `${prefix}contact.html`, label: '문의하기' },
+    { href: '#', label: '고객·협력사', badge: '준비중' }
   ];
 
   panel.setAttribute('data-global-mobile-nav', '');
