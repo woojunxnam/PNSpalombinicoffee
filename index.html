@@ -198,9 +198,12 @@
     <!-- TECHNOLOGY -->
     <section class="section alt" id="tech">
       <div class="container">
-        <p class="section-eyebrow" style="color:var(--accent); text-align:center; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin:0 0 8px;">Inside-Out Process</p>
-        <h2 class="section-title" data-i18n="tech-title">실버스킨을 99% 제거하는 기술</h2>
-        <p class="section-lead" style="text-align:center; max-width:64ch; margin:0 auto 48px;">커피 원두를 감싸는 얇은 막, <strong>실버스킨(은피)</strong>. 대부분의 로스팅 공정에서 놓치는 이 잔여물이 컵 품질을 좌우합니다.</p>
+        <!-- Tech hero header -->
+        <div class="tech-header">
+          <span class="tech-header-badge">Inside-Out Process</span>
+          <h2 class="tech-header-title" data-i18n="tech-title">실버스킨을 99% 제거하는 기술</h2>
+          <p class="tech-header-sub">커피 원두를 감싸는 얇은 막, <strong>실버스킨(은피)</strong>.<br>대부분의 로스팅 공정에서 놓치는 이 잔여물이 <strong>컵 품질을 좌우</strong>합니다.</p>
+        </div>
 
         <!-- ① 실버스킨이란 — 원두 단면 다이어그램 -->
         <div class="tech-anatomy">
@@ -739,7 +742,7 @@
     ['.nav-dropdown a[href="film.html"]',    '<span class="nav-dropdown-icon">\uD83C\uDF9E\uFE0F</span> Coffee Film <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">Coming Soon</span>'],
 
     /* ── Technology section: intro ── */
-    ['#tech .section-lead', 'The thin membrane wrapping the coffee bean \u2014 <strong>silverskin</strong>. This residue, missed by most roasting processes, determines cup quality.'],
+    ['.tech-header-sub', 'The thin membrane wrapping the coffee bean \u2014 <strong>silverskin</strong>.<br>This residue, missed by most roasting processes, <strong>determines cup quality</strong>.'],
     ['.tech-anatomy-text h3', 'Silverskin: The Hidden Membrane Inside the Bean'],
     ['.tech-anatomy-text p', 'Silverskin is the <strong>thin protective membrane (testa)</strong> that directly wraps the bean inside the coffee cherry. It makes up about <strong>4\u20135%</strong> of green bean dry weight, composed mainly of <strong>cellulose/hemicellulose (60%+)</strong>, chlorogenic acid, and melanoidins.', 0],
     ['.tech-anatomy-text p', 'During roasting, surface silverskin separates as \u201Cchaff\u201D through heat and expansion, but <strong>silverskin folded into the center cut (crease)</strong> cannot be removed by standard roasting.', 1],
