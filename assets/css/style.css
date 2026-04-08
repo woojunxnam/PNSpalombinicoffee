@@ -218,6 +218,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 /* ?? GRIDS ?? */
 .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .grid-3{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
 /* ?? CARDS ?? */
 .card{
@@ -964,6 +965,7 @@ body.menu-open .mobile-sticky-cta {
   .menu-toggle { display: inline-flex; }
   .stats-inner { gap: 0; }
   .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
   .tech-flow { grid-template-columns: 1fr; }
   .tech-arrow { transform: rotate(90deg); justify-self: center; }
   .product-features { grid-template-columns: 1fr 1fr; }
@@ -1101,6 +1103,7 @@ body.menu-open .mobile-sticky-cta {
   /* 洹몃━??*/
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
 
   /* 湲곗닠 ?뱀뀡 */
   .tech-flow { grid-template-columns: 1fr; }
