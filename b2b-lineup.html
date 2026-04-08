@@ -20,6 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/lineup.css">
+  <style>
+    @media (max-width: 900px) {
+      .lineup-group [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
+      .lineup-group [style*="grid-template-columns:repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+    }
+  </style>
 </head>
 <body>
 
@@ -140,6 +146,47 @@
             <div class="lineup-grid" id="drip-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="drip-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
+
+          <!-- 이런 분들이 주문하세요 (드립백) -->
+          <div style="margin-top:28px;">
+            <p class="eyebrow">어떤 분들이 이용하나요?</p>
+            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">이런 분들이 주문하세요</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">💍</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">결혼 답례품</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">웨딩 사진, 이름, 날짜를 담은 세상에 하나뿐인 커피 선물</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🏢</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">기업 선물·판촉품</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">회사 로고가 인쇄된 프리미엄 커피 선물세트</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">☕</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">카페 PB 상품</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">카페 브랜드 아이덴티티를 담은 자체 드립백 라인업</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🎂</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">생일·기념일</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">특별한 날을 기억하는 커스텀 커피 선물</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🎪</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">팝업 스토어 굿즈</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">브랜드 세계관을 담은 한정판 커피 굿즈</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🤝</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">콜라보·IP 에디션</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">캐릭터, 아티스트 협업 한정판 패키지</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:18px;">
+              <a class="btn btn-primary" href="custom-edition.html" style="color:#fff !important">나만의 드립백 제작 →</a>
+            </div>
+          </div>
         </div>
 
         <!-- ══ 원두 ══ -->
@@ -153,6 +200,57 @@
             <div class="lineup-grid" id="bean-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="bean-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
+
+          <!-- 다양한 B2B 납품 채널 (원두·생두) -->
+          <div style="margin-top:28px;">
+            <p class="eyebrow">어디에 납품하나요?</p>
+            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">다양한 B2B 납품 채널</h3>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🏭</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">가공 공장</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">로스팅 공장, 음료 공장, 콜드브루 공장, 드립백 공장 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🏬</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">백화점</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">캡슐, 파드, 콜드브루, 원두, 드립백, 커피 음료, 동결건조 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🏪</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">편의점</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">커피 OEM, 아이스크림, 빵, 동결 건조, 드립백, 커피 자판기 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🛒</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">유통 매장</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">커피 재료상, 11번가, 쿠팡, G마켓, 노브랜드 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🛍️</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">중규모 마트</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">홈플러스 익스프레스, e마트 익스프레스 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">☕</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">프랜차이즈</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">스타벅스, 투썸플레이스, 더 벤티, 메가커피, 빽다방 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">🏠</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">개인 커피숍</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">지역 소형 카페, 소형 배달업체 등</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
+                <div style="font-size:26px;margin-bottom:8px;">💻</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">인터넷 쇼핑몰</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.65;">개인 쇼핑몰 및 소규모 쇼핑몰</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:18px;">
+              <a class="btn btn-primary" href="b2b-bean.html" style="color:#fff !important">생두 원두 대량 주문 →</a>
+            </div>
+          </div>
         </div>
 
         <!-- ══ 필름지 ══ -->
@@ -166,6 +264,47 @@
             <div class="lineup-grid" id="film-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="film-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
+
+          <!-- 이런 분들이 주문하세요 (봉투·필름지) -->
+          <div style="margin-top:28px;">
+            <p class="eyebrow">어떤 분들이 이용하나요?</p>
+            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">이런 분들이 주문하세요</h3>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">☕</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">커피 로스터리</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">자체 브랜드 원두 봉투로 프리미엄 이미지 구축</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🏪</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">카페 · 프랜차이즈</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">매장 아이덴티티를 담은 통일된 패키지</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🏭</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">식품 제조사</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">OEM/ODM 포장재 대량 생산</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🛒</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">온라인 셀러</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">스마트스토어, 쿠팡 등 이커머스 출시용</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🎪</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">팝업 · 마켓</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">한정판 굿즈용 소량 커스텀 패키지</div>
+              </div>
+              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
+                <div style="font-size:28px;margin-bottom:8px;">🤝</div>
+                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">유통 · 납품사</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.6;">거래처 브랜드에 맞춘 패키지 제작</div>
+              </div>
+            </div>
+            <div style="text-align:center;margin-top:18px;">
+              <a class="btn btn-primary" href="film-custom.html" style="color:#fff !important">봉투 필름지 맞춤 주문 →</a>
+            </div>
+          </div>
         </div>
 
 
