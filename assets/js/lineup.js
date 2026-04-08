@@ -252,9 +252,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function initLoadMoreWrap(wrap) {
     const grid  = wrap.querySelector('.lineup-grid');
     const cards = Array.from(grid.querySelectorAll('.lineup-card'));
-    const btn   = document.querySelector(`.lineup-toggle-btn[data-wrap="${wrap.id}"]`);
+    const moreBtn = document.querySelector(`.lineup-toggle-btn[data-wrap="${wrap.id}"]`);
 
-    if (cards.length < 2) { if (btn) btn.style.display = 'none'; return; }
+    if (cards.length < 2) { if (moreBtn) moreBtn.style.display = 'none'; return; }
 
     // 각 행의 시작 top 위치 수집 (wrap 기준 상대 좌표)
     const wrapTop = wrap.getBoundingClientRect().top;
@@ -266,31 +266,70 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const totalRows = rowTops.length;
-    if (totalRows <= 2) { if (btn) btn.style.display = 'none'; return; }
+    if (totalRows <= 2) { if (moreBtn) moreBtn.style.display = 'none'; return; }
+
+    // 접기 버튼 동적 생성 — 더 보기 옆에 배치
+    const collapseBtn = document.createElement('button');
+    collapseBtn.className = 'lineup-toggle-btn';
+    collapseBtn.textContent = '접기 ∧';
+    collapseBtn.style.display = 'none';
+
+    // 두 버튼을 가로로 나란히
+    const btnRow = document.createElement('div');
+    btnRow.style.cssText = 'display:flex;gap:10px;justify-content:center;margin-top:14px;';
+    moreBtn.parentNode.insertBefore(btnRow, moreBtn);
+    moreBtn.style.margin = '0';
+    btnRow.appendChild(moreBtn);
+    btnRow.appendChild(collapseBtn);
 
     let visibleRows = 2;
 
-    // 2줄만 표시
+    // 2줄만 표시 + 페이드 효과
     wrap.style.transition = 'none';
     wrap.style.overflow   = 'hidden';
     wrap.style.maxHeight  = rowTops[2] + 'px';
+    wrap.classList.add('collapsed');
     requestAnimationFrame(() => requestAnimationFrame(() => {
       wrap.style.transition = 'max-height .4s ease';
     }));
 
-    if (!btn) return;
-    btn.textContent = '더 보기 ∨';
-    btn.style.display = 'block';
+    moreBtn.textContent = '더 보기 ∨';
+    moreBtn.style.display = 'block';
 
-    btn.addEventListener('click', () => {
+    moreBtn.addEventListener('click', () => {
       visibleRows += 2;
+      collapseBtn.style.display = 'block';
       if (visibleRows >= totalRows) {
         wrap.style.maxHeight = wrap.scrollHeight + 'px';
-        btn.style.display = 'none';
+        wrap.classList.remove('collapsed');
+        moreBtn.style.display = 'none';
         setTimeout(() => { wrap.style.maxHeight = 'none'; wrap.style.overflow = 'visible'; }, 420);
       } else {
         wrap.style.maxHeight = rowTops[visibleRows] + 'px';
+        // collapsed 유지 → 페이드 효과 유지
       }
+    });
+
+    collapseBtn.addEventListener('click', () => {
+      visibleRows = 2;
+      wrap.style.overflow = 'hidden';
+      wrap.classList.add('collapsed');
+      // maxHeight 'none'인 경우(전체 펼쳐진 상태)에만 scrollHeight 경유, 그 외엔 직접 축소
+      if (!wrap.style.maxHeight || wrap.style.maxHeight === 'none') {
+        wrap.style.transition = 'none';
+        wrap.style.maxHeight  = wrap.scrollHeight + 'px';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          wrap.style.transition = 'max-height .4s ease';
+          wrap.style.maxHeight  = rowTops[2] + 'px';
+        }));
+      } else {
+        wrap.style.maxHeight = rowTops[2] + 'px';
+      }
+      moreBtn.style.display = 'block';
+      collapseBtn.style.display = 'none';
+      setTimeout(() => {
+        wrap.closest('.lineup-group').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
     });
   }
 
