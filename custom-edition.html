@@ -143,14 +143,14 @@
 
     /* ── SAMPLES MASONRY GALLERY ── */
     .masonry-gallery {
-      columns: 4;
-      column-gap: 14px;
+      columns: 6;
+      column-gap: 10px;
       margin-top: 32px;
     }
     .masonry-item {
       break-inside: avoid;
-      margin-bottom: 14px;
-      border-radius: 14px;
+      margin-bottom: 10px;
+      border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
       position: relative;
@@ -184,8 +184,33 @@
       transition: background .2s;
     }
     .masonry-load-more button:hover { background: #a8672f; }
+    .masonry-btns {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .masonry-btns button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 36px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .masonry-btns button:hover { background: #a8672f; }
+    .masonry-btns button.ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1.5px solid var(--accent);
+    }
+    .masonry-btns button.ghost:hover { background: var(--accent-light); }
+    @media (max-width: 1100px) { .masonry-gallery { columns: 4; } }
     @media (max-width: 900px)  { .masonry-gallery { columns: 3; } }
-    @media (max-width: 600px)  { .masonry-gallery { columns: 2; column-gap: 10px; } .masonry-item { margin-bottom: 10px; } }
+    @media (max-width: 600px)  { .masonry-gallery { columns: 2; column-gap: 8px; } .masonry-item { margin-bottom: 8px; } }
 
     /* ── LIGHTBOX ── */
     .lightbox-overlay {
@@ -805,8 +830,9 @@
         <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="커스텀 드립백 샘플 67" loading="lazy"/></div>
         <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="커스텀 드립백 샘플 68" loading="lazy"/></div>
         </div>
-        <div class="masonry-load-more" id="masonryLoadMore">
-          <button onclick="showAllSamples()">전체 68개 샘플 보기 ↓</button>
+        <div class="masonry-btns" id="masonryBtns">
+          <button id="masonryExpandBtn" onclick="showAllSamples()">전체 68개 샘플 보기 ↓</button>
+          <button id="masonryCollapseBtn" class="ghost" style="display:none" onclick="collapseSamples()">축소 ↑</button>
         </div>
       </div>
     </section>
@@ -1131,8 +1157,17 @@
   <script>
   /* 전체 샘플 보기 */
   function showAllSamples() {
-    document.querySelectorAll('.masonry-item[style]').forEach(el => el.style.display = '');
-    document.getElementById('masonryLoadMore').style.display = 'none';
+    document.querySelectorAll('.masonry-item').forEach(el => el.style.display = '');
+    document.getElementById('masonryExpandBtn').style.display = 'none';
+    document.getElementById('masonryCollapseBtn').style.display = '';
+  }
+  /* 축소 */
+  function collapseSamples() {
+    const items = document.querySelectorAll('.masonry-item');
+    items.forEach((el, i) => { if (i >= 24) el.style.display = 'none'; });
+    document.getElementById('masonryExpandBtn').style.display = '';
+    document.getElementById('masonryCollapseBtn').style.display = 'none';
+    document.getElementById('masonryGallery').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   /* 라이트박스 */
