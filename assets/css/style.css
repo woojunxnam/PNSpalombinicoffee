@@ -68,9 +68,9 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   overflow-wrap: break-word;
 }
 
-.nav{ display:flex; gap:4px; color:var(--muted); font-weight:600; font-size:14px; }
+.nav{ display:flex; gap:1px; color:var(--muted); font-weight:600; font-size:13px; white-space:nowrap; }
 .nav a{
-  padding: 8px 10px;
+  padding: 8px 7px;
   border-radius: 12px;
   transition: background .12s ease, color .12s ease, opacity .12s ease;
 }
@@ -1085,6 +1085,10 @@ body.menu-open .mobile-sticky-cta {
    ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧 */
 
 /* ?쒕툝由?*/
+@media (max-width: 1200px) {
+  .nav { font-size: 12px; }
+  .nav a { padding: 8px 5px; }
+}
 @media (max-width: 1024px) {
   .nav { display: none; }
   .menu-toggle { display: inline-flex; }
