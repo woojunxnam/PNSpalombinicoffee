@@ -1931,6 +1931,24 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
   gap: 52px;
   align-items: center;
 }
+.machine-hero-slideshow {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3/4;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.6);
+  overflow: hidden;
+}
+.mh-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .8s ease;
+}
+.mh-slide.active { opacity: 1; }
 .machine-hero-video video {
   width: 100%;
   height: auto;
@@ -1980,6 +1998,7 @@ a.machine-card-img { display: block; text-decoration: none; color: inherit; }
 @media (max-width: 780px) {
   .machine-hero-video-inner { grid-template-columns: 1fr; gap: 28px; }
   .machine-hero-video video { max-width: 280px; margin: 0 auto; }
+  .machine-hero-slideshow { max-width: 280px; margin: 0 auto; }
 }
 
 /* Scroll-to-top Button */
