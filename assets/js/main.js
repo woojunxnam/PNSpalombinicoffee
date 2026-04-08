@@ -624,7 +624,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 /* ── Scroll-to-top Button ── */
-(function () {
+document.addEventListener('DOMContentLoaded', () => {
   const btn = document.getElementById('scrollTopBtn');
   if (!btn) return;
   window.addEventListener('scroll', () => {
@@ -633,4 +633,4 @@ document.addEventListener('DOMContentLoaded', () => {
   btn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
-})();
+});
