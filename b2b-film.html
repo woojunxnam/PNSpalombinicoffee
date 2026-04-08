@@ -5,22 +5,219 @@
   <meta charset="utf-8"/>
   <meta name="theme-color" content="#C07A3D"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="description" content="PNS 팔롬비니 봉투 필름지 생산 현장 — B2B 생산 파트너십. 페이지 준비중."/>
-  <title>봉투 필름지 생산 현장 — PNS 팔롬비니 (준비중)</title>
+  <meta name="description" content="PNS 팔롬비니 봉투 필름지 생산 현장 — 소재 선택부터 그라비어 인쇄, 납품까지. B2B 패키징 파트너십."/>
+  <title>봉투 필름지 생산 현장 — PNS 팔롬비니</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    .coming-soon-wrap { min-height:60vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 24px; gap:20px; }
-    .coming-soon-icon { font-size:64px; line-height:1; }
-    .coming-soon-badge { display:inline-block; background:var(--accent); color:#fff; font-size:12px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:6px 16px; border-radius:999px; }
-    .coming-soon-title { font-family:var(--serif); font-size:clamp(28px,5vw,42px); font-weight:600; margin:0; line-height:1.3; }
-    .coming-soon-desc { font-size:16px; color:var(--muted); max-width:480px; line-height:1.8; margin:0; }
-    .coming-soon-contact { background:var(--accent-light); border:1px solid rgba(192,122,61,.2); border-radius:var(--r); padding:20px 28px; max-width:420px; width:100%; }
-    .coming-soon-contact p { margin:0 0 14px; font-size:14px; color:var(--muted); }
-    .coming-soon-contact .btn { width:100%; justify-content:center; margin-bottom:8px; }
+    :root {
+      --bf-dark: #0d0d0d;
+      --bf-dark2: #131313;
+      --bf-dark3: #1a1a1a;
+      --bf-gold: #c9a96e;
+      --bf-gold-dim: rgba(201,169,110,0.15);
+      --bf-gold-border: rgba(201,169,110,0.25);
+      --bf-text: rgba(255,255,255,0.88);
+      --bf-muted: rgba(255,255,255,0.45);
+    }
+    body { background: var(--bf-dark); color: var(--bf-text); }
+
+    /* ── HERO ── */
+    .bf-hero {
+      position: relative;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 100px 0 80px;
+    }
+    .bf-hero-video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.25;
+    }
+    .bf-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.9) 100%);
+    }
+    .bf-hero .container { position: relative; z-index: 2; }
+    .bf-hero-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 2.5px;
+      text-transform: uppercase; color: var(--bf-gold); margin-bottom: 16px;
+    }
+    .bf-hero h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600; color: #fff; line-height: 1.3; margin: 0 0 14px;
+    }
+    .bf-hero h1 span { color: var(--bf-gold); }
+    .bf-hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      color: rgba(255,255,255,0.5); font-weight: 300; margin: 0 0 28px;
+    }
+    .bf-hero-desc {
+      font-size: 1.05rem; color: var(--bf-text);
+      max-width: 560px; line-height: 1.85; margin-bottom: 36px;
+    }
+    .bf-hero-badges {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px;
+    }
+    .bf-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 999px;
+      background: var(--bf-gold-dim); border: 1px solid var(--bf-gold-border);
+      color: var(--bf-gold); font-size: 13px; font-weight: 700;
+    }
+    .bf-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+    /* ── SECTION COMMON ── */
+    .bf-section {
+      padding: 80px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .bf-section-alt { background: var(--bf-dark2); }
+    .bf-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--bf-gold); margin-bottom: 12px;
+    }
+    .bf-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+      font-weight: 600; color: #fff; margin: 0 0 10px; line-height: 1.3;
+    }
+    .bf-subtitle {
+      font-size: 1rem; color: var(--bf-muted); margin-bottom: 40px;
+      max-width: 600px; line-height: 1.7;
+    }
+
+    /* ── FACILITY GRID ── */
+    .bf-facility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .bf-facility-card {
+      position: relative; border-radius: 16px; overflow: hidden;
+      aspect-ratio: 16/10;
+    }
+    .bf-facility-card.wide { grid-column: span 2; }
+    .bf-facility-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .bf-facility-card:hover img { transform: scale(1.04); }
+    .bf-facility-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 14px 18px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      color: #fff; font-size: 13px; font-weight: 600;
+    }
+    @media (max-width: 768px) {
+      .bf-facility-grid { grid-template-columns: 1fr 1fr; }
+      .bf-facility-card.wide { grid-column: span 2; }
+    }
+    @media (max-width: 480px) {
+      .bf-facility-grid { grid-template-columns: 1fr; }
+      .bf-facility-card.wide { grid-column: span 1; }
+    }
+
+    /* ── MATERIAL LAYERS ── */
+    .bf-material-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .bf-material-card {
+      background: var(--bf-dark3); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 36px 32px;
+    }
+    .bf-material-label {
+      font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
+      color: var(--bf-gold); text-transform: uppercase; margin-bottom: 6px;
+    }
+    .bf-material-name {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 1.3rem; font-weight: 600; color: #fff; margin-bottom: 14px;
+    }
+    .bf-material-desc {
+      font-size: 14px; color: var(--bf-muted); line-height: 1.8; margin-bottom: 20px;
+    }
+    .bf-layers {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .bf-layer {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 16px;
+      border-left: 3px solid var(--bf-gold);
+    }
+    .bf-layer:nth-child(2) { border-left-color: #6BA3D6; }
+    .bf-layer:nth-child(3) { border-left-color: #8BC49E; }
+    .bf-layer-name { font-size: 14px; font-weight: 700; color: #fff; min-width: 100px; }
+    .bf-layer-role { font-size: 12.5px; color: var(--bf-muted); }
+    .bf-material-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px;
+    }
+    .bf-mtag {
+      padding: 5px 12px; border-radius: 999px; font-size: 11.5px; font-weight: 700;
+      background: rgba(255,255,255,0.06); color: var(--bf-text);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    @media (max-width: 768px) { .bf-material-grid { grid-template-columns: 1fr; } }
+
+    /* ── PROCESS STEPS ── */
+    .bf-steps {
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px;
+      counter-reset: step;
+    }
+    .bf-step {
+      text-align: center; position: relative;
+      padding: 28px 16px;
+      background: var(--bf-dark3);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px;
+      counter-increment: step;
+    }
+    .bf-step::before {
+      content: 'STEP 0' counter(step);
+      display: block; font-size: 10px; font-weight: 800;
+      letter-spacing: 1.5px; color: var(--bf-gold); margin-bottom: 10px;
+    }
+    .bf-step-icon { font-size: 32px; margin-bottom: 10px; }
+    .bf-step-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .bf-step-desc { font-size: 12px; color: var(--bf-muted); line-height: 1.6; }
+    @media (max-width: 900px) { .bf-steps { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 600px) { .bf-steps { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── WHY PNS ── */
+    .bf-why-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .bf-why-card {
+      background: var(--bf-dark3); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 16px; padding: 32px 24px; text-align: center;
+    }
+    .bf-why-icon { font-size: 36px; margin-bottom: 12px; }
+    .bf-why-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .bf-why-desc { font-size: 13px; color: var(--bf-muted); line-height: 1.65; }
+    @media (max-width: 768px) { .bf-why-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── CTA ── */
+    .bf-cta {
+      text-align: center; padding: 80px 24px;
+      background: linear-gradient(160deg, #1a1008, #2b1a0e);
+      border-radius: 24px;
+    }
+    .bf-cta h2 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      color: #fff; margin: 0 0 12px;
+    }
+    .bf-cta p {
+      font-size: 15px; color: rgba(255,255,255,0.6); margin-bottom: 28px;
+    }
+    .bf-cta-actions { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -55,9 +252,9 @@
         <div class="nav-item">
           <a href="b2b.html" data-ko="B2B">B2B</a>
           <div class="nav-dropdown">
-            <a href="b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
-            <a href="b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 원두 포장 현장 보기 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
-            <a href="b2b-film.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 생산 현장 보기 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+            <a href="b2b.html"><span class="nav-dropdown-icon">&#x1F3ED;</span> 드립백 생산 현장 보기</a>
+            <a href="b2b-bean.html"><span class="nav-dropdown-icon">&#x2615;</span> 원두 포장 현장 보기 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">준비중</span></a>
+            <a href="b2b-film.html" style="color:var(--accent)"><span class="nav-dropdown-icon">&#x1F4E6;</span> 봉투 필름지 생산 현장 보기</a>
           </div>
         </div>
         <a href="contact.html" data-ko="문의">Contact</a>
@@ -72,49 +269,248 @@
   </header>
 
   <main>
-    <div class="container">
-      <div class="breadcrumb">
-        <a href="index.html">홈</a><span class="breadcrumb-sep">›</span>
-        <a href="b2b.html">B2B</a><span class="breadcrumb-sep">›</span>
-        <span>봉투 필름지 생산 현장</span>
-      </div>
-    </div>
-    <div class="container">
-      <div class="coming-soon-wrap">
-        <div class="coming-soon-icon">📦</div>
-        <span class="coming-soon-badge">준비중 · Coming Soon</span>
-        <h1 class="coming-soon-title">봉투 필름지 생산 현장<br/>페이지 준비중입니다</h1>
-        <p class="coming-soon-desc">
-          봉투 필름지 생산 공정 현장을 곧 소개해드릴 예정입니다.<br/>
-          지금 바로 문의 주시면 소재·규격·인쇄 사양을 안내해드립니다.
-        </p>
-        <div class="coming-soon-contact">
-          <p>봉투 필름지 B2B 파트너십에 대해 궁금한 점을 편하게 문의해주세요.</p>
-          <a class="btn btn-primary" href="contact.html">문의하기</a>
-          <a class="btn btn-ghost" href="mailto:skdngus77@naver.com">이메일 보내기</a>
+
+    <!-- ── HERO ── -->
+    <section class="bf-hero">
+      <video class="bf-hero-video" autoplay muted loop playsinline>
+        <source src="assets/video/film-production.mp4" type="video/mp4"/>
+      </video>
+      <div class="bf-hero-overlay"></div>
+      <div class="container">
+        <div class="breadcrumb" style="margin-bottom:28px;">
+          <a href="index.html" style="color:var(--bf-muted);">홈</a><span class="breadcrumb-sep" style="color:var(--bf-muted);">›</span>
+          <a href="b2b.html" style="color:var(--bf-muted);">B2B</a><span class="breadcrumb-sep" style="color:var(--bf-muted);">›</span>
+          <span style="color:var(--bf-gold);">봉투 필름지 생산 현장</span>
         </div>
-        <a class="btn btn-ghost" href="b2b.html">← 드립백 생산 현장 보기</a>
+        <p class="bf-hero-eyebrow">Film &amp; Packaging Production</p>
+        <h1>브랜드의 가치를 담는<br/><span>패키징, 직접 생산합니다</span></h1>
+        <p class="bf-hero-sub">Food-Grade Film &amp; Pouch — OEM / ODM</p>
+        <p class="bf-hero-desc">
+          식품용 봉투·필름지의 소재 선택부터 그라비어 인쇄, 검수, 납품까지.<br/>
+          자체 생산 시설과 전문 파트너 공장을 통해 소량부터 대량까지 유연하게 대응합니다.
+        </p>
+        <div class="bf-hero-badges">
+          <span class="bf-badge">&#x1F3ED; 자체 생산 시설</span>
+          <span class="bf-badge">&#x1F3A8; 커스텀 인쇄</span>
+          <span class="bf-badge">&#x1F4E6; 소량 주문 가능</span>
+          <span class="bf-badge">&#x2705; 식품 안전 기준</span>
+        </div>
+        <div class="bf-hero-actions">
+          <a class="btn btn-primary" href="contact.html">필름지 제작 문의 →</a>
+          <a class="btn btn-outline" href="#facility" style="border-color:rgba(255,255,255,0.3);color:#fff;">생산 시설 보기 ↓</a>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ── FACILITY ── -->
+    <section class="bf-section" id="facility">
+      <div class="container">
+        <p class="bf-eyebrow">Production Facility</p>
+        <h2 class="bf-title">최신 설비를 갖춘 클린룸 생산 환경</h2>
+        <p class="bf-subtitle">
+          식품 안전 기준을 충족하는 클린룸 시설에서 원단 보관, 그라비어 인쇄, 품질 검사, 출하까지 전 공정이 이루어집니다.
+        </p>
+        <div class="bf-facility-grid">
+          <div class="bf-facility-card wide">
+            <img src="assets/img/film-09.jpg" alt="그라비어 인쇄기" loading="lazy"/>
+            <div class="bf-facility-caption">RC-PACK 그라비어 인쇄 라인 — 고정밀 다색 인쇄</div>
+          </div>
+          <div class="bf-facility-card">
+            <img src="assets/img/film-01.jpg" alt="원단 보관실" loading="lazy"/>
+            <div class="bf-facility-caption">클린룸 원단 보관실</div>
+          </div>
+          <div class="bf-facility-card">
+            <img src="assets/img/film-02.jpg" alt="생산 라인" loading="lazy"/>
+            <div class="bf-facility-caption">대형 필름 생산 라인 전경</div>
+          </div>
+          <div class="bf-facility-card">
+            <img src="assets/img/film-03.jpg" alt="품질 검사" loading="lazy"/>
+            <div class="bf-facility-caption">QC 품질 검사실</div>
+          </div>
+          <div class="bf-facility-card wide">
+            <img src="assets/img/film-08.jpg" alt="클린 복도" loading="lazy"/>
+            <div class="bf-facility-caption">방진·방습 관리 복도 — 식품 안전 동선</div>
+          </div>
+          <div class="bf-facility-card">
+            <img src="assets/img/film-07.jpg" alt="환경 설비" loading="lazy"/>
+            <div class="bf-facility-caption">RTO 환경정화 설비</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── MATERIAL GUIDE ── -->
+    <section class="bf-section bf-section-alt" id="material">
+      <div class="container">
+        <p class="bf-eyebrow">Material Guide</p>
+        <h2 class="bf-title">용도에 맞는 최적의 소재 구성</h2>
+        <p class="bf-subtitle">
+          내용물의 특성과 유통 조건에 따라 최적의 레이어 구조를 제안합니다.<br/>
+          방습, 차광, 산소 차단 — 원두의 맛과 향을 최대한 보존하는 소재를 선택하세요.
+        </p>
+        <div class="bf-material-grid">
+
+          <!-- 3-Layer -->
+          <div class="bf-material-card">
+            <p class="bf-material-label">Premium · 3 Layer</p>
+            <p class="bf-material-name">알루미늄 3겹 구조</p>
+            <p class="bf-material-desc">
+              최고 수준의 차단성. 로스팅 원두의 장기 보관에 최적화된 구조로,<br/>
+              빛·습기·산소를 완벽하게 차단하여 신선도를 극대화합니다.
+            </p>
+            <div class="bf-layers">
+              <div class="bf-layer">
+                <span class="bf-layer-name">PET</span>
+                <span class="bf-layer-role">외층 — 인쇄면, 내구성, 광택</span>
+              </div>
+              <div class="bf-layer">
+                <span class="bf-layer-name">Aluminium</span>
+                <span class="bf-layer-role">중층 — 완벽한 차광·방습·산소 차단</span>
+              </div>
+              <div class="bf-layer">
+                <span class="bf-layer-name">LLDPE</span>
+                <span class="bf-layer-role">내층 — 열접합(실링), 식품 직접 접촉</span>
+              </div>
+            </div>
+            <div class="bf-material-tags">
+              <span class="bf-mtag">&#x2600;&#xFE0F; 완벽 차광</span>
+              <span class="bf-mtag">&#x1F4A7; 방습</span>
+              <span class="bf-mtag">&#x1F6E1;&#xFE0F; 산소 차단</span>
+              <span class="bf-mtag">원두 장기 보관</span>
+            </div>
+          </div>
+
+          <!-- 2-Layer -->
+          <div class="bf-material-card">
+            <p class="bf-material-label">Standard · 2 Layer</p>
+            <p class="bf-material-name">나일론 2겹 구조</p>
+            <p class="bf-material-desc">
+              가성비와 실용성을 갖춘 구조. 생두 보관이나 단기 유통 제품에 적합하며,<br/>
+              투명·반투명 제품으로 응용 가능합니다.
+            </p>
+            <div class="bf-layers">
+              <div class="bf-layer">
+                <span class="bf-layer-name">Nylon</span>
+                <span class="bf-layer-role">외층 — 내구성, 내열성, 인쇄 적합</span>
+              </div>
+              <div class="bf-layer">
+                <span class="bf-layer-name">LLDPE</span>
+                <span class="bf-layer-role">내층 — 열접합(실링), 식품 직접 접촉</span>
+              </div>
+            </div>
+            <div class="bf-material-tags">
+              <span class="bf-mtag">&#x1F4B0; 가성비</span>
+              <span class="bf-mtag">&#x1F50D; 투명 가능</span>
+              <span class="bf-mtag">생두·단기 유통</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PROCESS ── -->
+    <section class="bf-section" id="process">
+      <div class="container">
+        <p class="bf-eyebrow">Production Process</p>
+        <h2 class="bf-title">5단계 원스톱 제작 프로세스</h2>
+        <p class="bf-subtitle">상담부터 납품까지, 전 과정을 직접 관리합니다.</p>
+        <div class="bf-steps">
+          <div class="bf-step">
+            <div class="bf-step-icon">&#x1F4CB;</div>
+            <div class="bf-step-title">상담 · 컨설팅</div>
+            <div class="bf-step-desc">소재, 규격, 수량, 보관 조건 등<br/>스펙 맞춤 상담</div>
+          </div>
+          <div class="bf-step">
+            <div class="bf-step-icon">&#x1F3A8;</div>
+            <div class="bf-step-title">디자인 · 시안</div>
+            <div class="bf-step-desc">인쇄 방식에 맞는<br/>색상·레이아웃 디자인 제작</div>
+          </div>
+          <div class="bf-step">
+            <div class="bf-step-icon">&#x1F52C;</div>
+            <div class="bf-step-title">시안 확인 · R&amp;D</div>
+            <div class="bf-step-desc">인쇄 시안 검토 및<br/>소재 적합성 테스트</div>
+          </div>
+          <div class="bf-step">
+            <div class="bf-step-icon">&#x2699;&#xFE0F;</div>
+            <div class="bf-step-title">그라비어 인쇄 · 제작</div>
+            <div class="bf-step-desc">고정밀 그라비어 인쇄<br/>원단 합지·슬리팅·제대</div>
+          </div>
+          <div class="bf-step">
+            <div class="bf-step-icon">&#x1F69A;</div>
+            <div class="bf-step-title">검수 · 납품</div>
+            <div class="bf-step-desc">QC 품질 검사 완료 후<br/>안전 포장하여 납품</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── WHY PNS ── -->
+    <section class="bf-section bf-section-alt" id="why">
+      <div class="container">
+        <p class="bf-eyebrow">Why PNS</p>
+        <h2 class="bf-title">왜 PNS 팔롬비니인가?</h2>
+        <p class="bf-subtitle">드립백부터 필름지까지, 커피 패키징의 모든 것을 한곳에서.</p>
+        <div class="bf-why-grid">
+          <div class="bf-why-card">
+            <div class="bf-why-icon">&#x1F4E6;</div>
+            <div class="bf-why-title">소량 주문 가능</div>
+            <div class="bf-why-desc">대형 업체와 달리 소규모 브랜드도 부담 없이 시작할 수 있는 유연한 MOQ</div>
+          </div>
+          <div class="bf-why-card">
+            <div class="bf-why-icon">&#x1F3A8;</div>
+            <div class="bf-why-title">커스텀 디자인 인쇄</div>
+            <div class="bf-why-desc">브랜드 로고, 컬러, 레이아웃 — 원하는 디자인을 그대로 패키지에</div>
+          </div>
+          <div class="bf-why-card">
+            <div class="bf-why-icon">&#x1F50D;</div>
+            <div class="bf-why-title">원스톱 솔루션</div>
+            <div class="bf-why-desc">드립백 생산 + 봉투 필름지 + 원두 포장까지 하나의 파트너로 해결</div>
+          </div>
+          <div class="bf-why-card">
+            <div class="bf-why-icon">&#x2705;</div>
+            <div class="bf-why-title">식품 안전 인증</div>
+            <div class="bf-why-desc">클린룸 환경에서 생산, 식품 접촉 소재 기준 충족 및 QC 검수 완료</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="bf-section" style="border:none;">
+      <div class="container">
+        <div class="bf-cta">
+          <p class="bf-eyebrow" style="margin-bottom:16px;">Get Started</p>
+          <h2>소재·규격·인쇄 사양을<br/>지금 바로 상담해보세요</h2>
+          <p>브랜드에 맞는 최적의 패키징을 함께 설계합니다.<br/>소량 샘플부터 대량 양산까지 편하게 문의해주세요.</p>
+          <div class="bf-cta-actions">
+            <a class="btn btn-primary" href="contact.html">문의하기 →</a>
+            <a class="btn btn-outline" href="mailto:skdngus77@naver.com" style="border-color:rgba(255,255,255,0.3);color:#fff;">이메일 보내기</a>
+            <a class="btn btn-outline" href="b2b.html" style="border-color:rgba(255,255,255,0.3);color:#fff;">← 드립백 생산 현장 보기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer class="site-footer">
+  <footer class="site-footer" style="background:var(--bf-dark);">
     <div class="container footer-inner">
-    <div class="footer-biz">
-      <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
-      <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
-    </div>
+      <div class="footer-biz">
+        <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
+        <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
+      </div>
       <p>© <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
     </div>
   </footer>
-  <script src="assets/js/main.js"></script>
 
+  <script src="assets/js/main.js"></script>
   <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
-  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
-       fill="none" stroke="currentColor" stroke-width="2.5"
-       stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="18 15 12 9 6 15"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
 </body>
 </html>
