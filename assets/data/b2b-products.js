@@ -17,178 +17,81 @@
 
 /* ── 드립백 커피 ──────────────────────────────────────────── */
 const B2B_DRIP = [
-  {
-    name: "팔롬비니 드립백 커피 10입",
-    img:  "assets/img/product-drip-10.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "팔롬비니 드립백 10입 선물세트",
-    img:  "assets/img/product-drip-10-gift.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "팔롬비니 드립백 30입 선물세트",
-    img:  "assets/img/product-drip-30-gift.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "팔롬비니 드립백 35입 명절선물세트",
-    img:  "assets/img/product-drip-35-gift.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "팔롬비니 드립백 가방세트 32개입",
-    img:  "assets/img/product-drip-bag32-gift.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  }
+  { name: "드립백 디자인 01", img: "assets/img/custom/samples2/smpl_img_01.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 02", img: "assets/img/custom/samples2/smpl_img_02.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 03", img: "assets/img/custom/samples2/smpl_img_03.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 04", img: "assets/img/custom/samples2/smpl_img_04.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 05", img: "assets/img/custom/samples2/smpl_img_05.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 06", img: "assets/img/custom/samples2/smpl_img_06.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 07", img: "assets/img/custom/samples2/smpl_img_07.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 08", img: "assets/img/custom/samples2/smpl_img_08.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 09", img: "assets/img/custom/samples2/smpl_img_09.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 10", img: "assets/img/custom/samples2/smpl_img_10.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 11", img: "assets/img/custom/samples2/smpl_img_11.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 12", img: "assets/img/custom/samples2/smpl_img_12.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 13", img: "assets/img/custom/samples2/smpl_img_13.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 14", img: "assets/img/custom/samples2/smpl_img_14.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 15", img: "assets/img/custom/samples2/smpl_img_15.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 16", img: "assets/img/custom/samples2/smpl_img_16.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 17", img: "assets/img/custom/samples2/smpl_img_17.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 18", img: "assets/img/custom/samples2/smpl_img_18.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 19", img: "assets/img/custom/samples2/smpl_img_19.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 20", img: "assets/img/custom/samples2/smpl_img_20.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 21", img: "assets/img/custom/samples2/smpl_img_21.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 22", img: "assets/img/custom/samples2/smpl_img_22.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 23", img: "assets/img/custom/samples2/smpl_img_23.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 24", img: "assets/img/custom/samples2/smpl_img_24.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 25", img: "assets/img/custom/samples2/smpl_img_25.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 26", img: "assets/img/custom/samples2/smpl_img_26.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 27", img: "assets/img/custom/samples2/smpl_img_27.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 28", img: "assets/img/custom/samples2/smpl_img_28.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 29", img: "assets/img/custom/samples2/smpl_img_29.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 30", img: "assets/img/custom/samples2/smpl_img_30.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 31", img: "assets/img/custom/samples2/smpl_img_31.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 32", img: "assets/img/custom/samples2/smpl_img_32.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 33", img: "assets/img/custom/samples2/smpl_img_33.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 34", img: "assets/img/custom/samples2/smpl_img_34.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 35", img: "assets/img/custom/samples2/smpl_img_35.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 36", img: "assets/img/custom/samples2/smpl_img_36.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 37", img: "assets/img/custom/samples2/smpl_img_37.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 38", img: "assets/img/custom/samples2/smpl_img_38.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 39", img: "assets/img/custom/samples2/smpl_img_39.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 40", img: "assets/img/custom/samples2/smpl_img_40.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 41", img: "assets/img/custom/samples2/smpl_img_41.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 42", img: "assets/img/custom/samples2/smpl_img_42.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 43", img: "assets/img/custom/samples2/smpl_img_43.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 44", img: "assets/img/custom/samples2/smpl_img_44.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 45", img: "assets/img/custom/samples2/smpl_img_45.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 46", img: "assets/img/custom/samples2/smpl_img_46.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 47", img: "assets/img/custom/samples2/smpl_img_47.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 48", img: "assets/img/custom/samples2/smpl_img_48.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 49", img: "assets/img/custom/samples2/smpl_img_49.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 50", img: "assets/img/custom/samples2/smpl_img_50.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 51", img: "assets/img/custom/samples2/smpl_img_51.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 52", img: "assets/img/custom/samples2/smpl_img_52.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 53", img: "assets/img/custom/samples2/smpl_img_53.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 54", img: "assets/img/custom/samples2/smpl_img_54.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 55", img: "assets/img/custom/samples2/smpl_img_55.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 56", img: "assets/img/custom/samples2/smpl_img_56.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 57", img: "assets/img/custom/samples2/smpl_img_57.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 58", img: "assets/img/custom/samples2/smpl_img_58.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 59", img: "assets/img/custom/samples2/smpl_img_59.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 60", img: "assets/img/custom/samples2/smpl_img_60.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 61", img: "assets/img/custom/samples2/smpl_img_61.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 62", img: "assets/img/custom/samples2/smpl_img_62.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 63", img: "assets/img/custom/samples2/smpl_img_63.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 64", img: "assets/img/custom/samples2/smpl_img_64.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 65", img: "assets/img/custom/samples2/smpl_img_65.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 66", img: "assets/img/custom/samples2/smpl_img_66.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 67", img: "assets/img/custom/samples2/smpl_img_67.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "드립백 디자인 68", img: "assets/img/custom/samples2/smpl_img_68.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" }
 ];
 
 /* ── 원두 ─────────────────────────────────────────────────── */
-const B2B_BEAN = [
-  {
-    name: "이탈리아 로스팅 로마 원두 1kg",
-    img:  "assets/img/blend-roma.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "이탈리아 로스팅 그란바 원두 1kg",
-    img:  "assets/img/blend-gran-bar.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "이탈리아 로스팅 돌체 원두 1kg",
-    img:  "assets/img/blend-dolce-italia.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "볼케이노 루비 G1 내추럴 500g",
-    img:  "assets/img/vol_ruby_bag.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "볼케이노 루비 G1 내추럴 1kg",
-    img:  "assets/img/vol_ruby_bag.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  }
-];
+const B2B_BEAN = [];
 
 /* ── 필름지 ───────────────────────────────────────────────── */
-const B2B_FILM = [
-  {
-    name: "커피 필름지 — 디자인 A",
-    img:  "assets/img/film-01.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "커피 필름지 — 디자인 B",
-    img:  "assets/img/film-02.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "커피 필름지 — 디자인 C",
-    img:  "assets/img/film-03.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "커피 필름지 — 디자인 D",
-    img:  "assets/img/film-04.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "커피 필름지 — 디자인 E",
-    img:  "assets/img/film-05.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  }
-];
+const B2B_FILM = [];
 
 /* ── 원두 봉투 ────────────────────────────────────────────── */
-const B2B_POUCH = [
-  {
-    name: "원두 봉투 — 디자인 A",
-    img:  "assets/img/film-06.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "원두 봉투 — 디자인 B",
-    img:  "assets/img/film-07.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "원두 봉투 — 디자인 C",
-    img:  "assets/img/film-08.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "원두 봉투 — 디자인 D",
-    img:  "assets/img/film-09.jpg",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    priceType: "custom",
-    price: "견적 문의"
-  },
-  {
-    name: "원두 봉투 — 커스텀 제작",
-    img:  "assets/img/custom/bag-blank.png",
-    url:  "#",
-    sub:  "B2B 대량 구매 문의를 통해 견적을 받아보세요.",
-    badge: "커스텀",
-    badgeType: "ready",
-    priceType: "custom",
-    price: "견적 문의"
-  }
-];
+const B2B_POUCH = [];

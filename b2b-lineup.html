@@ -208,11 +208,22 @@
   <script>
   document.addEventListener('DOMContentLoaded', function() {
     var co = 'PNS 팔롬비니';
-    renderProducts(B2B_DRIP,  co, null, document.getElementById('drip-grid'));
-    renderProducts(B2B_BEAN,  co, null, document.getElementById('bean-grid'));
-    renderProducts(B2B_FILM,  co, null, document.getElementById('film-grid'));
-    renderProducts(B2B_POUCH, co, null, document.getElementById('pouch-grid'));
-    /* 카운트 갱신 */
+    var sets = [
+      { data: B2B_DRIP,  grid: 'drip-grid',  group: 'drip' },
+      { data: B2B_BEAN,  grid: 'bean-grid',  group: 'bean' },
+      { data: B2B_FILM,  grid: 'film-grid',  group: 'film' },
+      { data: B2B_POUCH, grid: 'pouch-grid', group: 'pouch' }
+    ];
+    sets.forEach(function(s) {
+      if (s.data.length) {
+        renderProducts(s.data, co, null, document.getElementById(s.grid));
+      } else {
+        var grp = document.querySelector('.lineup-group[data-group="' + s.group + '"]');
+        if (grp) grp.style.display = 'none';
+        var tab = document.querySelector('.tab-btn[data-filter="' + s.group + '"]');
+        if (tab) tab.style.display = 'none';
+      }
+    });
     var countEl = document.getElementById('lineup-count');
     if (countEl) countEl.textContent = '총 ' + document.querySelectorAll('.lineup-card').length + '개 상품';
   });
