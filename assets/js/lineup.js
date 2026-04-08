@@ -274,11 +274,12 @@ document.addEventListener('DOMContentLoaded', () => {
     collapseBtn.textContent = '접기 ∧';
     collapseBtn.style.display = 'none';
 
-    // 두 버튼을 가로로 나란히
+    // 두 버튼을 동일한 너비로 가로 나란히
     const btnRow = document.createElement('div');
     btnRow.style.cssText = 'display:flex;gap:10px;justify-content:center;margin-top:14px;';
     moreBtn.parentNode.insertBefore(btnRow, moreBtn);
-    moreBtn.style.margin = '0';
+    moreBtn.style.cssText    = 'margin:0;width:140px;';
+    collapseBtn.style.cssText = 'margin:0;width:140px;';
     btnRow.appendChild(moreBtn);
     btnRow.appendChild(collapseBtn);
 
