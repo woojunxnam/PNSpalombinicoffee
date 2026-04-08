@@ -257,7 +257,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
     { type: 'label', label: '서비스' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
-    { href: `${prefix}b2b.html`, label: 'B2B 파트너십' },
+    { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
+    { href: `${prefix}b2b-bean.html`, label: '원두 포장 현장 보기', badge: '준비중' },
+    { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기', badge: '준비중' },
     { href: `${prefix}contact.html`, label: '문의하기' }
   ];
 

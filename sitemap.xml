@@ -4,6 +4,8 @@
   <!-- 메인 페이지 -->
   <url><loc>https://www.pnscoffee.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://www.pnscoffee.com/b2b.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pnscoffee.com/b2b-bean.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.pnscoffee.com/b2b-film.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://www.pnscoffee.com/contact.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://www.pnscoffee.com/lineup.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.pnscoffee.com/custom-edition.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
