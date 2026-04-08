@@ -18,6 +18,49 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
   <link rel="stylesheet" href="../assets/css/style.css">
   <style>
+    /* ── ACCESSORIES GRID ── */
+    .acc-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .acc-grid { grid-template-columns: repeat(2, 1fr); }
+      .acc-card--wide { grid-column: span 2; }
+    }
+    .acc-card {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow2);
+    }
+    .acc-img-wrap {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #f5f0eb;
+    }
+    .acc-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .acc-body {
+      padding: 12px 14px 14px;
+    }
+    .acc-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent2);
+      margin: 0 0 3px;
+    }
+    .acc-en {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.4;
+    }
     .table-group-header td {
       background: rgba(192,122,61,.12);
       font-weight: 700;
@@ -236,6 +279,51 @@
               <p class="en-title">FG-70 Drip Bag Machine · Mitsubishi PLC, 3D Bag Former, Top of Lineup</p>
               <p>FG-70 드립백 패키징 머신 실제 작동 영상입니다. 미쓰비시 5U PLC와 6개 서보 모터로 분당 최대 70백을 생산합니다. 아우터백 포머에 3D 통합 성형 기술을 적용해 백 모양이 깔끔하고, 로봇 클램핑 방식으로 순알루미늄·알루미늄 증착·종이 필름 등 다양한 소재를 안정적으로 처리합니다. 정확도 ±0.1g, 합격률 99.9%.</p>
               <p class="en-desc">The FG-70 drip bag packaging machine in operation. Mitsubishi 5U PLC with 6 servo motors, up to 70 bags per minute. A 3D-integrated outer bag former produces consistently clean bag shapes, and robotic clamping handles pure aluminium, deposited aluminium, and paper film with equal stability. Accuracy ±0.1g, pass rate 99.9%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 패키징 라인 주변기기 -->
+    <section class="section" style="padding:40px 0 0;">
+      <div class="container">
+        <h2 class="machines-category-title" style="margin-bottom:8px;">패키징 라인 필수 주변기기 <span>Line Accessories</span></h2>
+        <p style="font-size:0.88rem;color:var(--muted);margin:0 0 24px;">머신 구매 시 함께 구비하면 완전한 패키징 라인을 구성할 수 있습니다.</p>
+        <div class="acc-grid">
+          <div class="acc-card">
+            <div class="acc-img-wrap"><img src="../assets/img/acc-air-compressor.jpg" alt="식품용 에어 컴프레셔" loading="lazy"></div>
+            <div class="acc-body">
+              <p class="acc-name">식품용 에어 컴프레셔</p>
+              <p class="acc-en">Food-Grade Air Compressor</p>
+            </div>
+          </div>
+          <div class="acc-card">
+            <div class="acc-img-wrap"><img src="../assets/img/acc-nitrogen-tanks.jpg" alt="질소·산소 탱크" loading="lazy"></div>
+            <div class="acc-body">
+              <p class="acc-name">질소·산소 탱크</p>
+              <p class="acc-en">Nitrogen &amp; Oxygen Tanks</p>
+            </div>
+          </div>
+          <div class="acc-card">
+            <div class="acc-img-wrap"><img src="../assets/img/acc-air-dryer.jpg" alt="식품용 에어 건조기" loading="lazy"></div>
+            <div class="acc-body">
+              <p class="acc-name">식품용 에어 건조기</p>
+              <p class="acc-en">Food-Grade Air Dryer</p>
+            </div>
+          </div>
+          <div class="acc-card">
+            <div class="acc-img-wrap"><img src="../assets/img/acc-nitrogen-generator.png" alt="질소 발생기" loading="lazy"></div>
+            <div class="acc-body">
+              <p class="acc-name">질소 발생기</p>
+              <p class="acc-en">Nitrogen Generator</p>
+            </div>
+          </div>
+          <div class="acc-card acc-card--wide">
+            <div class="acc-img-wrap"><img src="../assets/img/acc-everything-else.png" alt="패키징 라인 전체 구성" loading="lazy"></div>
+            <div class="acc-body">
+              <p class="acc-name">풀 패키징 라인 구성 예시</p>
+              <p class="acc-en">Full Line Configuration</p>
             </div>
           </div>
         </div>
