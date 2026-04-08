@@ -249,17 +249,20 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}index.html`, label: '홈' },
     { type: 'label', label: '제품' },
     { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
-    { href: `${prefix}products/volcano-ruby.html`, label: '볼케이노 루비' },
-    { href: `${prefix}custom-edition.html`, label: '커스텀 에디션' },
+    { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
+    { href: `${prefix}custom-edition.html`, label: '나만의 드립백 제작' },
     { href: `${prefix}lineup.html`, label: '계열사 라인업' },
     { href: `${prefix}film.html`, label: '커피 필름지', badge: '준비중' },
     { type: 'label', label: '자동화 장비' },
     { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
-    { type: 'label', label: '서비스' },
-    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
+    { type: 'label', label: 'B2B' },
+    { href: `${prefix}b2b-lineup.html`, label: 'B2B 상품 라인업' },
     { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
-    { href: `${prefix}b2b-bean.html`, label: '원두 포장 현장 보기', badge: '준비중' },
+    { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
+    { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
     { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기', badge: '준비중' },
+    { type: 'label', label: '기타' },
+    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
     { href: `${prefix}contact.html`, label: '문의하기' }
   ];
 
@@ -273,7 +276,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
         const isCurrent = currentPath === itemPath;
         const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
-        return `<a href="${item.href}"${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
+        const cls = item.volcano ? ' class="mobile-nav-volcano"' : '';
+        return `<a href="${item.href}"${cls}${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
       }).join('')}
     </nav>
   `;

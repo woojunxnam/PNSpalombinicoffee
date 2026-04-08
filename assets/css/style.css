@@ -824,6 +824,14 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   opacity: 0.75;
   vertical-align: middle;
 }
+.mobile-nav a.mobile-nav-volcano {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: rgba(192,57,43,.06);
+}
+.mobile-nav a.mobile-nav-volcano::after {
+  color: #c0392b;
+}
 .mobile-nav a[aria-current="page"] {
   background: rgba(192,122,61,.12);
   border-color: rgba(192,122,61,.22);
