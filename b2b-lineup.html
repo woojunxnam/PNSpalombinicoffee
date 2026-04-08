@@ -120,7 +120,6 @@
           <button class="tab-btn" data-filter="drip">드립백 커피</button>
           <button class="tab-btn" data-filter="bean">원두·생두</button>
           <button class="tab-btn" data-filter="film">봉투·필름지</button>
-          <button class="tab-btn" data-filter="pouch">원두 봉투</button>
           <span class="lineup-count" id="lineup-count"></span>
         </div>
 
@@ -163,18 +162,6 @@
           <button class="lineup-toggle-btn" data-wrap="film-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
         </div>
 
-        <!-- ══ 원두 봉투 ══ -->
-        <div class="lineup-group" data-group="pouch">
-          <div class="lineup-group-label">
-            <h2>원두 봉투</h2>
-            <span class="lineup-group-tag">Bean Pouch</span>
-            <div class="lineup-group-label-line"></div>
-          </div>
-          <div class="lineup-grid-wrap" id="pouch-grid-wrap">
-            <div class="lineup-grid" id="pouch-grid"><!-- JS 렌더링 --></div>
-          </div>
-          <button class="lineup-toggle-btn" data-wrap="pouch-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
-        </div>
 
         <!-- B2B CTA -->
         <div class="card" style="padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px;">
@@ -211,8 +198,7 @@
     var sets = [
       { data: B2B_DRIP,  grid: 'drip-grid',  group: 'drip' },
       { data: B2B_BEAN,  grid: 'bean-grid',  group: 'bean' },
-      { data: B2B_FILM,  grid: 'film-grid',  group: 'film' },
-      { data: B2B_POUCH, grid: 'pouch-grid', group: 'pouch' }
+      { data: B2B_FILM,  grid: 'film-grid',  group: 'film' }
     ];
     sets.forEach(function(s) {
       if (s.data.length) {

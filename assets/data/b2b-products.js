@@ -89,11 +89,9 @@ const B2B_DRIP = [
 
 /* ── 원두·생두 ────────────────────────────────────────────── */
 const B2B_BEAN = [
-  { name: "원두·생두 01", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두·생두 02", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두·생두 03", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두·생두 04", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두·생두 05", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" }
+  { name: "피앤에스 볼케이노 루비 G1 내추럴 500g", img: "assets/img/vol_ruby_bag.png", url: "https://smartstore.naver.com/palombini/products/13281122385", sub: "네이버 스마트스토어에서 구매하실 수 있습니다.", price: 13000 },
+  { name: "피앤에스 볼케이노 루비 G1 내추럴 1kg", img: "assets/img/vol_ruby_bag.png", url: "https://smartstore.naver.com/palombini/products/13270525319", sub: "네이버 스마트스토어에서 구매하실 수 있습니다.", price: 25000 },
+  { name: "볼케이노 루비 생두 G1 내추럴", img: "products/volcano-ruby/img_10_컨테이너_싣기_전.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" }
 ];
 
 /* ── 봉투·필름지 ─────────────────────────────────────────── */
@@ -145,13 +143,4 @@ const B2B_FILM = [
   { name: "필름지 디자인 06", img: "assets/img/custom/film-transparent/film_06.png", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
   { name: "필름지 디자인 07", img: "assets/img/custom/film-transparent/film_07.png", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
   { name: "필름지 디자인 08", img: "assets/img/custom/film-transparent/film_08.png", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" }
-];
-
-/* ── 원두 봉투 ────────────────────────────────────────────── */
-const B2B_POUCH = [
-  { name: "원두 봉투 01", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두 봉투 02", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두 봉투 03", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두 봉투 04", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
-  { name: "원두 봉투 05", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" }
 ];
