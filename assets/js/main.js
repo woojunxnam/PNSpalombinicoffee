@@ -442,13 +442,14 @@ const translations = {
 };
 
 function getLang() {
-  const stored = localStorage.getItem('pns-lang');
+  /* Always start with Korean. EN is opt-in per session via sessionStorage. */
+  const stored = sessionStorage.getItem('pns-lang');
   if (stored === 'ko' || stored === 'en') return stored;
   return 'ko';
 }
 
 function applyLang(lang) {
-  localStorage.setItem('pns-lang', lang);
+  sessionStorage.setItem('pns-lang', lang);
 
   /* ── Nav crossfade ── */
   const navLinks = document.querySelectorAll('.nav a[data-ko]');
