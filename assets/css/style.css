@@ -338,6 +338,11 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .footer-inner p{ margin:0 0 6px; color:var(--muted); font-size:13px; }
 .footer-inner p:last-child{ margin:0; }
 .footer-sub{ font-size:12px !important; opacity:.7; }
+/* FOOTER BIZ INFO */
+.footer-biz{ border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:16px; }
+.footer-biz-title{ font-size:0.7rem; font-weight:700; color:var(--accent2); margin:0 0 5px; letter-spacing:0.5px; }
+.footer-biz p{ font-size:0.7rem !important; color:var(--muted) !important; line-height:1.85 !important; margin:0 0 2px !important; }
+.footer-biz strong{ color:var(--accent2); font-weight:600; }
 
 /* ?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧?먥븧
    ANIMATIONS & SCROLL REVEAL
