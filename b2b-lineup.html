@@ -226,6 +226,12 @@
     });
     var countEl = document.getElementById('lineup-count');
     if (countEl) countEl.textContent = '총 ' + document.querySelectorAll('.lineup-card').length + '개 상품';
+    /* 렌더링 후 collapse 초기화 (레이아웃 완료 후 행 높이 측정) */
+    setTimeout(function() {
+      document.querySelectorAll('.lineup-grid-wrap').forEach(function(wrap) {
+        if (window.initCollapseWrap) window.initCollapseWrap(wrap);
+      });
+    }, 100);
   });
   </script>
   <script src="assets/js/main.js"></script>

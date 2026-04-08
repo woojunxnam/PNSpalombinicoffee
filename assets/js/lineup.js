@@ -248,4 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.lineup-grid-wrap').forEach(initCollapseWrap);
 
+  /* 외부에서 접근 가능하도록 전역 노출 (B2B 페이지 등 별도 렌더링 후 호출용) */
+  window.initCollapseWrap = initCollapseWrap;
+
 }); // end DOMContentLoaded
