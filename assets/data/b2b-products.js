@@ -89,8 +89,8 @@ const B2B_DRIP = [
 
 /* ── 원두·생두 ────────────────────────────────────────────── */
 const B2B_BEAN = [
-  { name: "피앤에스 볼케이노 루비 G1 내추럴 500g", img: "assets/img/vol_ruby_bag.png", url: "https://smartstore.naver.com/palombini/products/13281122385", sub: "네이버 스마트스토어에서 구매하실 수 있습니다.", price: 13000 },
-  { name: "피앤에스 볼케이노 루비 G1 내추럴 1kg", img: "assets/img/vol_ruby_bag.png", url: "https://smartstore.naver.com/palombini/products/13270525319", sub: "네이버 스마트스토어에서 구매하실 수 있습니다.", price: 25000 },
+  { name: "피앤에스 볼케이노 루비 G1 내추럴 500g", img: "assets/img/vol_ruby_bag.png", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
+  { name: "피앤에스 볼케이노 루비 G1 내추럴 1kg", img: "assets/img/vol_ruby_bag.png", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" },
   { name: "볼케이노 루비 생두 G1 내추럴", img: "products/volcano-ruby/img_10_컨테이너_싣기_전.jpg", url: "#", sub: "B2B 대량 구매 문의를 통해 견적을 받아보세요.", priceType: "custom", price: "견적 문의" }
 ];
 
