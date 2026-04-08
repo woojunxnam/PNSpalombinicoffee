@@ -25,6 +25,17 @@
     }
     body { background: var(--bf-dark); color: var(--bf-text); }
 
+    /* header dark override */
+    .site-header { background: rgba(13,13,13,0.94); backdrop-filter: blur(12px); }
+    .site-header .brand-name { color: #fff; }
+    .site-header .nav > a,
+    .site-header .nav .nav-item > a { color: rgba(255,255,255,0.8); }
+    .site-header .nav > a:hover,
+    .site-header .nav .nav-item > a:hover { color: var(--bf-gold); }
+    .site-header .nav-dropdown { background: #1a1a1a; border-color: rgba(255,255,255,0.08); }
+    .site-header .nav-dropdown a { color: rgba(255,255,255,0.75); }
+    .site-header .nav-dropdown a:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
     /* ── HERO ── */
     .bf-hero {
       position: relative;
