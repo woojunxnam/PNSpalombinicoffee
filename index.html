@@ -146,12 +146,12 @@
     <section class="section" id="about">
       <div class="container">
         <h2 class="section-title" data-i18n="about-title">About Us</h2>
-        <p class="section-lead" data-i18n="about-lead">
-          PNS 팔롬비니는 단순한 커피 브랜드가 아닙니다.<br>
-          이탈리아 로마 <strong>Caffè Palombini(1946)</strong>의 로스팅 헤리티지와 베트남 화산토에서 자란 <strong>볼케이노 루비 원두</strong>,
-          그리고 국내 자체 생산 인프라를 결합하여 <strong>원두 수입부터 드립백 OEM, 봉투 필름지, 패키징 장비</strong>까지 —
-          커피 브랜드가 필요로 하는 모든 것을 하나의 파트너로 제공합니다.
-        </p>
+        <div class="section-lead about-lines" data-i18n="about-lead">
+          <p>PNS 팔롬비니는 단순한 커피 브랜드가 아닙니다.</p>
+          <p>이탈리아 로마 <strong>Caffè Palombini(1946)</strong>의 로스팅 헤리티지와 베트남 화산토에서 자란 <strong>볼케이노 루비 원두</strong>,</p>
+          <p>그리고 국내 자체 생산 인프라를 결합하여 <strong>원두 수입부터 드립백 OEM, 봉투 필름지, 패키징 장비</strong>까지 —</p>
+          <p>커피 브랜드가 필요로 하는 모든 것을 <strong>하나의 파트너</strong>로 제공합니다.</p>
+        </div>
 
         <!-- MISSION / VISION / CORE VALUES -->
         <div class="mission-vision" style="margin-top:48px;">
@@ -198,27 +198,90 @@
     <!-- TECHNOLOGY -->
     <section class="section alt" id="tech">
       <div class="container">
-        <h2 class="section-title" data-i18n="tech-title">Our Technology: The "Inside-Out" Difference</h2>
+        <p class="section-eyebrow" style="color:var(--accent); text-align:center; font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin:0 0 8px;">Inside-Out Process</p>
+        <h2 class="section-title" data-i18n="tech-title">실버스킨을 99% 제거하는 기술</h2>
+        <p class="section-lead" style="text-align:center; max-width:64ch; margin:0 auto 48px;">커피 원두를 감싸는 얇은 막, <strong>실버스킨(은피)</strong>. 대부분의 로스팅 공정에서 놓치는 이 잔여물이 컵 품질을 좌우합니다.</p>
+
+        <!-- ① 실버스킨이란 — 원두 단면 다이어그램 -->
+        <div class="tech-anatomy">
+          <div class="tech-anatomy-diagram">
+            <div class="bean-cross">
+              <div class="bean-layer bean-outer" title="원두 (Endosperm)">
+                <div class="bean-layer bean-silverskin" title="실버스킨 (Silverskin)">
+                  <div class="bean-center-cut"></div>
+                </div>
+              </div>
+              <div class="bean-labels">
+                <span class="bean-label" style="top:10%; left:50%;">파치먼트 (Parchment)</span>
+                <span class="bean-label" style="top:32%; left:15%;">원두 (Endosperm)</span>
+                <span class="bean-label bean-label--accent" style="top:55%; left:50%;">실버스킨 (Silver Skin)</span>
+                <span class="bean-label" style="top:78%; left:50%;">센터 컷 (Center Cut)</span>
+              </div>
+            </div>
+          </div>
+          <div class="tech-anatomy-text">
+            <h3 style="font-family:var(--serif); color:var(--accent2); margin:0 0 16px;">실버스킨, 원두 안쪽에 숨은 막</h3>
+            <p>실버스킨은 커피 체리의 가장 안쪽에서 원두를 직접 감싸는 <strong>얇은 보호막(종피)</strong>입니다. 생두 건조 중량의 약 <strong>4~5%</strong>를 차지하며, 주성분은 <strong>셀룰로스·헤미셀룰로스(60%+)</strong>와 클로로겐산, 멜라노이딘 등입니다.</p>
+            <p>로스팅 중 표면의 실버스킨은 열과 팽창으로 '채프(chaff)'로 분리되지만, <strong>센터 컷(중심 홈) 안쪽에 접혀 들어간 실버스킨</strong>은 일반 로스팅으로 제거되지 않습니다.</p>
+          </div>
+        </div>
+
+        <!-- ② 실버스킨이 맛에 미치는 영향 — 성분 카드 -->
+        <h3 class="tech-sub-title">실버스킨 잔류가 맛에 미치는 영향</h3>
+        <div class="grid-4 tech-compound-grid" style="margin-bottom:48px;">
+          <div class="card tech-compound-card">
+            <div class="tech-compound-icon" style="color:#c0392b;">CGA</div>
+            <h4>클로로겐산</h4>
+            <p>떫은맛(astringency)과 쓴맛의 주요 원인. 로스팅 중 락톤으로 변환되어 쓴맛에 직접 기여합니다.</p>
+          </div>
+          <div class="card tech-compound-card">
+            <div class="tech-compound-icon" style="color:#8e6e3a;">M</div>
+            <h4>멜라노이딘</h4>
+            <p>마이야르 반응 생성물. 실버스킨에 불균일하게 분포하며 거친 뒷맛과 탄 인상을 만듭니다.</p>
+          </div>
+          <div class="card tech-compound-card">
+            <div class="tech-compound-icon" style="color:#7f8c8d;">F</div>
+            <h4>식이섬유 60%+</h4>
+            <p>셀룰로스·리그닌으로 구성된 종이 같은 질감. 커피 음료에 기여하는 것 없이 탁함만 더합니다.</p>
+          </div>
+          <div class="card tech-compound-card">
+            <div class="tech-compound-icon" style="color:#d4a017;">H</div>
+            <h4>Hexanal 외 휘발성</h4>
+            <p>지방향, 녹색(green) 계열의 불쾌한 향기 물질이 섬세한 원두 향을 가립니다.</p>
+          </div>
+        </div>
+
+        <!-- ③ 문제 → 해결 비교 -->
         <div class="tech-flow">
           <div class="tech-step problem">
             <div class="tech-step-icon">⚠️</div>
-            <h3 data-i18n="tech-prob-title">문제: 대부분이 놓치는 지점</h3>
-            <p>실버스킨(silverskin)은 로스팅 과정에서 '차프(chaff)'로 떨어져 나가지만, 연구에 따르면 <strong>로스팅 이후에도 일정 비율이 남을 수 있고</strong>, 특히 <strong>원두 두 조각 사이(센터 컷/홈)</strong>에 잔존하기도 합니다.</p>
-            <p>이 잔여물이 고열 환경에서 그을리거나 연기·오염물과 함께 로스트 환경을 탁하게 만들면, 컵에서는 <strong>거친 뒷맛, 스모키함, 미세한 쓴맛의 인상</strong>으로 나타날 수 있습니다.</p>
+            <h3 data-i18n="tech-prob-title">일반 로스팅의 한계</h3>
+            <p>표면의 실버스킨은 열풍·팽창으로 '채프'로 분리되지만, <strong>센터 컷(중심 홈) 안쪽에 접혀 들어간 실버스킨</strong>은 제거되지 않습니다.</p>
+            <p>분쇄 시 비로소 노출되는 이 잔여물이 컵에서 <strong>거친 뒷맛, 떫은 질감, 탁한 향</strong>으로 나타납니다.</p>
           </div>
           <div class="tech-arrow">→</div>
           <div class="tech-step solution">
             <div class="tech-step-icon">✦</div>
-            <h3 data-i18n="tech-sol-title">해결: Inside-Out, 센터 컷까지</h3>
-            <p>대부분의 공정이 "겉에서 떨어지는 차프 관리"에 집중한다면, 우리는 <strong>센터 컷(홈)에 남는 미세 실버스킨까지</strong> 다룹니다.</p>
-            <p>우리는 <strong>원두의 안쪽 잔여물까지 포함해 99% 수준으로 실버스킨을 제거(자체 공정 기준)</strong>하는 "Inside-Out" 프로세스를 구축했습니다.</p>
+            <h3 data-i18n="tech-sol-title">Inside-Out: 센터 컷까지</h3>
+            <p>우리는 겉에서 떨어지는 채프가 아니라, <strong>원두 안쪽 홈에 남는 미세 실버스킨</strong>까지 다룹니다.</p>
+            <p><strong>원두의 안쪽 잔여물까지 포함해 99% 수준으로 실버스킨을 제거</strong>(자체 공정 기준)하는 "Inside-Out" 프로세스를 구축했습니다.</p>
           </div>
         </div>
+
+        <!-- ④ 결과: 컵에서 느껴지는 차이 -->
         <h3 class="results-title" data-i18n="tech-result-title">결과: 컵에서 느껴지는 차이</h3>
         <div class="grid-3">
-          <div class="result-card"><div class="result-icon">☕</div><h4>더 깨끗한 첫 향</h4><p>향이 탁해지지 않고 또렷하게 올라옵니다.</p></div>
-          <div class="result-card"><div class="result-icon">✨</div><h4>더 매끈한 질감</h4><p>거친 뒷맛 대신 부드러운 피니시.</p></div>
-          <div class="result-card"><div class="result-icon">🍯</div><h4>더 선명한 단맛</h4><p>'쓴맛의 그림자'가 줄어들수록 단맛·여운이 남습니다.</p></div>
+          <div class="result-card"><div class="result-icon">☕</div><h4>더 깨끗한 첫 향</h4><p>탁함 없이 또렷하게 올라오는 아로마. 원두 본연의 캐릭터가 선명해집니다.</p></div>
+          <div class="result-card"><div class="result-icon">✨</div><h4>더 매끈한 질감</h4><p>떫은 뒷맛과 종이 같은 거친 질감 대신, 실크처럼 부드러운 피니시.</p></div>
+          <div class="result-card"><div class="result-icon">🍯</div><h4>더 선명한 단맛</h4><p>쓴맛의 그림자가 걷히면 숨어 있던 단맛과 여운이 비로소 드러납니다.</p></div>
+        </div>
+
+        <!-- ⑤ 학술 근거 -->
+        <div class="tech-evidence" style="margin-top:40px; text-align:center; padding:24px; background:rgba(192,122,61,0.06); border-radius:12px; border:1px solid rgba(192,122,61,0.15);">
+          <p style="font-size:13px; color:var(--muted); margin:0; line-height:1.7;">
+            <strong style="color:var(--accent2);">학술 근거</strong> — 정유현(2022), <em>"볶은 커피 원두 실버스킨 제거에 따른 성분·향기 분석"</em>, 한국커피문화연구.<br>
+            GC-MS 및 전자코 분석 결과, 실버스킨 제거 커피가 일반 커피 대비 <strong>맛과 향이 현격히 향상</strong>됨을 확인.
+          </p>
         </div>
       </div>
     </section>
@@ -234,6 +297,9 @@
             <p>우리가 협업하는 <strong>Caffè Palombini</strong>는 로마에서 <strong>1940년대에 시작</strong>된 로스터리로, 창립자 Giovanni Palombini의 비전에서 출발했습니다.</p>
             <p>Palombini는 <strong>교황 바오로 6세가 즐겨 마신 커피로 언급</strong>되어 왔고, 로마의 '프로페셔널' 에스프레소를 지향해온 브랜드 스토리를 갖고 있습니다.</p>
             <p>Palombini는 Ho.Re.Ca.(호텔·레스토랑·카페) 채널을 중심으로 로마의 프로페셔널 에스프레소 문화와 함께 성장한 브랜드입니다.</p>
+            <div style="margin-top:20px;">
+              <a class="btn btn-outline btn-sm" href="products/">팔롬비니 제품 보기 →</a>
+            </div>
           </div>
           <div class="card heritage-card">
             <div class="heritage-flag"><span class="fi fi-vn"></span> Vietnam</div>
@@ -241,6 +307,9 @@
             <p>베트남 중부고원은 <strong>화산 분출로 형성된 비옥한 현무암 토양</strong>이 넓게 분포하며, 영양분이 풍부하고 다공성(배수·통기)이 좋아 커피 같은 다년생 작물 재배에 적합합니다.</p>
             <p>이 지역의 <strong>'레드 바잘트(붉은 현무암) 토양'과 고지대 환경</strong>이 체리의 느리고 균일한 성숙에 기여하고, 결과적으로 <strong>더 나은 컵 품질</strong>로 이어질 수 있습니다.</p>
             <p>현지(닥락) 공식 자료 역시 <strong>붉은 현무암 토양 지대의 로부스타</strong>가 <strong>향과 풍미가 뚜렷한 품질</strong>을 만든다고 언급합니다.</p>
+            <div style="margin-top:20px;">
+              <a class="btn btn-outline btn-sm" href="products/volcano-ruby.html">볼케이노 루비 보기 →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -638,8 +707,11 @@
     ['.stat-label', 'Custom Drip Bag<br/>Min. Order Qty', 2],
     ['.stat-label', 'Bean \u2192 Drip Bag \u2192 Film \u2192 Machine<br/>All-in-One Solution', 3],
 
-    /* ── About section lead ── */
-    ['#about .section-lead', 'PNS Palombini is more than a coffee brand.<br>Combining the roasting heritage of Rome\u2019s <strong>Caff\u00E8 Palombini (1946)</strong> with <strong>Volcano Ruby beans</strong> grown in Vietnamese volcanic soil and domestic production infrastructure \u2014 from <strong>bean import to drip bag OEM, coffee film, and packaging machines</strong> \u2014 we provide everything a coffee brand needs through a single partner.'],
+    /* ── About section lead (4 lines) ── */
+    ['#about .about-lines p', 'PNS Palombini is more than a coffee brand.', 0],
+    ['#about .about-lines p', 'Combining the roasting heritage of Rome\u2019s <strong>Caff\u00E8 Palombini (1946)</strong> with <strong>Volcano Ruby beans</strong> grown in Vietnamese volcanic soil,', 1],
+    ['#about .about-lines p', 'and domestic production infrastructure \u2014 from <strong>bean import to drip bag OEM, coffee film, and packaging machines</strong> \u2014', 2],
+    ['#about .about-lines p', 'we provide everything a coffee brand needs through <strong>a single partner</strong>.', 3],
 
     /* ── Mission / Vision / Core Values ── */
     ['.mission-vision .grid-2 .card:nth-child(1) h3', 'Every step that completes<br>the value of coffee, as one partner.'],
@@ -666,21 +738,39 @@
     ['.nav-dropdown a[href="machines/"]',    '<span class="nav-dropdown-icon">\u2699\uFE0F</span> Drip Bag Machines'],
     ['.nav-dropdown a[href="film.html"]',    '<span class="nav-dropdown-icon">\uD83C\uDF9E\uFE0F</span> Coffee Film <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">Coming Soon</span>'],
 
-    /* ── Technology section: problem paragraphs ── */
-    ['.tech-step.problem p', 'Silverskin falls off as chaff during roasting, yet research shows that <strong>a portion can remain even after roasting</strong>, especially in the <strong>center cut (groove) between the two halves</strong> of the bean.', 0],
-    ['.tech-step.problem p', 'When this residue scorches or mingles with smoke and contaminants in the roast environment, it can manifest in the cup as <strong>a harsh aftertaste, smokiness, and subtle bitterness</strong>.', 1],
+    /* ── Technology section: intro ── */
+    ['#tech .section-lead', 'The thin membrane wrapping the coffee bean \u2014 <strong>silverskin</strong>. This residue, missed by most roasting processes, determines cup quality.'],
+    ['.tech-anatomy-text h3', 'Silverskin: The Hidden Membrane Inside the Bean'],
+    ['.tech-anatomy-text p', 'Silverskin is the <strong>thin protective membrane (testa)</strong> that directly wraps the bean inside the coffee cherry. It makes up about <strong>4\u20135%</strong> of green bean dry weight, composed mainly of <strong>cellulose/hemicellulose (60%+)</strong>, chlorogenic acid, and melanoidins.', 0],
+    ['.tech-anatomy-text p', 'During roasting, surface silverskin separates as \u201Cchaff\u201D through heat and expansion, but <strong>silverskin folded into the center cut (crease)</strong> cannot be removed by standard roasting.', 1],
+    ['.tech-sub-title', 'How Residual Silverskin Affects Taste'],
 
-    /* ── Technology section: solution paragraphs ── */
-    ['.tech-step.solution p', 'While most processes focus on managing chaff that falls from the surface, we address <strong>the fine silverskin remaining in the center cut (groove)</strong>.', 0],
-    ['.tech-step.solution p', 'We developed an "Inside-Out" process that <strong>removes silverskin to the 99% level, including residue inside the bean (in-house process standard)</strong>.', 1],
+    /* ── Technology: compound cards ── */
+    ['.tech-compound-card h4', 'Chlorogenic Acid', 0],
+    ['.tech-compound-card p', 'Primary cause of astringency and bitterness. Converts to lactones during roasting, directly contributing to bitter taste.', 0],
+    ['.tech-compound-card h4', 'Melanoidins', 1],
+    ['.tech-compound-card p', 'Maillard reaction products. Unevenly distributed in silverskin, creating harsh aftertaste and burnt impressions.', 1],
+    ['.tech-compound-card h4', 'Dietary Fiber 60%+', 2],
+    ['.tech-compound-card p', 'Paper-like texture from cellulose and lignin. Adds nothing to the brew except muddiness.', 2],
+    ['.tech-compound-card h4', 'Hexanal & Volatiles', 3],
+    ['.tech-compound-card p', 'Fatty, green-note off-flavors that mask the delicate aroma of the bean.', 3],
 
-    /* ── Technology section: result cards ── */
+    /* ── Technology: problem/solution paragraphs ── */
+    ['.tech-step.problem p', 'Surface silverskin separates as \u201Cchaff\u201D through heat, but <strong>silverskin folded into the center cut (crease)</strong> remains intact.', 0],
+    ['.tech-step.problem p', 'Exposed only after grinding, this residue produces <strong>harsh aftertaste, astringent texture, and muddied aroma</strong> in the cup.', 1],
+    ['.tech-step.solution p', 'We target not the chaff that falls from the surface, but <strong>the fine silverskin hidden inside the bean\u2019s crease</strong>.', 0],
+    ['.tech-step.solution p', '<strong>We remove silverskin to the 99% level, including residue inside the bean</strong> (in-house process standard), through our \u201CInside-Out\u201D process.', 1],
+
+    /* ── Technology: result cards ── */
     ['.result-card h4', 'A Cleaner First Aroma', 0],
-    ['.result-card p',  'The aroma rises clearly, without any muddiness.', 0],
+    ['.result-card p',  'Aroma rises clearly with no muddiness. The bean\u2019s true character shines through.', 0],
     ['.result-card h4', 'A Silkier Texture', 1],
-    ['.result-card p',  'A smooth finish instead of a harsh aftertaste.', 1],
+    ['.result-card p',  'Instead of astringent aftertaste and papery roughness, a silk-smooth finish.', 1],
     ['.result-card h4', 'A Brighter Sweetness', 2],
-    ['.result-card p',  'As the shadow of bitterness fades, natural sweetness and a lingering finish emerge.', 2],
+    ['.result-card p',  'As the shadow of bitterness lifts, hidden sweetness and lingering notes finally emerge.', 2],
+
+    /* ── Technology: evidence ── */
+    ['.tech-evidence p', '<strong>Academic Evidence</strong> \u2014 Jung Yu-hyun (2022), <em>\u201CComponent and Aroma Analysis of Roasted Coffee Beans After Silverskin Removal\u201D</em>, Korean Coffee Culture Research.<br>GC-MS and electronic nose analysis confirmed that silverskin-removed coffee showed <strong>significantly improved taste and aroma</strong> compared to standard coffee.'],
 
     /* ── Heritage section: Italian connection ── */
     ['.heritage-card h3', 'The Italian Connection \u2014 Caff\u00E8 Palombini', 0],
@@ -693,6 +783,10 @@
     ['.heritage-card p', 'Vietnam\u2019s Central Highlands feature <strong>fertile basalt soils formed by volcanic eruptions</strong>, rich in nutrients with excellent porosity (drainage and aeration), ideal for perennial crops like coffee.', 3],
     ['.heritage-card p', 'The region\u2019s <strong>red basalt soils and high-altitude environment</strong> contribute to slow, uniform cherry maturation, potentially leading to <strong>superior cup quality</strong>.', 4],
     ['.heritage-card p', 'Official sources from Dak Lak confirm that <strong>robusta grown in red basalt soil zones</strong> produces <strong>distinctive aroma and flavor quality</strong>.', 5],
+
+    /* ── Heritage link buttons ── */
+    ['.heritage-card:nth-child(1) .btn-outline', 'View Palombini Products \u2192'],
+    ['.heritage-card:nth-child(2) .btn-outline', 'View Volcano Ruby \u2192'],
 
     /* ── Heritage callout quote ── */
     ['.callout', '\u201CWe believe the next level of coffee isn\u2019t about a \u2018darker roast\u2019 \u2014 it\u2019s about <strong>starting from a cleaner bean</strong>.\u201D'],
