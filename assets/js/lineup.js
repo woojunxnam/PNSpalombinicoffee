@@ -51,9 +51,10 @@ function renderProducts(products, company, companyClass, gridEl, opts) {
   gridEl.innerHTML = products.map(p => {
     const url = p.url || dUrl;
     const sub = p.sub ||
-      (url.includes('naver.com')          ? '네이버 스마트스토어에서 구매하실 수 있습니다.' :
-       url.includes('blackbeans.kr')      ? '블랙빈스 스토어에서 구매하실 수 있습니다.'     :
-       url.includes('beanspacecoffee.com') ? '빈스페이스 스토어에서 구매하실 수 있습니다.'   : '');
+      (url.includes('naver.com')             ? '네이버 스마트스토어에서 구매하실 수 있습니다.'   :
+       url.includes('blackbeans.kr')         ? '블랙빈스 스토어에서 구매하실 수 있습니다.'       :
+       url.includes('beanspacecoffee.com')   ? '빈스페이스 스토어에서 구매하실 수 있습니다.'     :
+       url.includes('klinternational.co.kr') ? 'KL인터내셔널 스토어에서 확인하실 수 있습니다.'   : '');
     return renderCard({ ...p, url, sub }, company, companyClass);
   }).join('\n');
 }
@@ -70,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderProducts(BS_PRODUCTS, '빈스페이스', 'bs',
     document.getElementById('bs-grid'));
+
+  renderProducts(KL_PRODUCTS, 'KL인터내셔널', 'kl',
+    document.getElementById('kl-grid'));
 
   /* ▶ 2. 연도 표시 */
   const yearEl = document.getElementById('year');
@@ -119,11 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const sub     = card.dataset.sub || '';
     const isBB    = !!card.querySelector('.lc-company.bb');
     const isBS    = !!card.querySelector('.lc-company.bs');
+    const isKL    = !!card.querySelector('.lc-company.kl');
 
     modalImg.src          = img ? img.src : '';
     modalImg.alt          = name;
     modalCo.textContent   = company;
-    modalCo.className     = 'lc-modal-company' + (isBB ? ' bb' : isBS ? ' bs' : '');
+    modalCo.className     = 'lc-modal-company' + (isBB ? ' bb' : isBS ? ' bs' : isKL ? ' kl' : '');
     modalName.textContent = name;
     modalSub.textContent  = sub;
 
@@ -135,10 +140,11 @@ document.addEventListener('DOMContentLoaded', () => {
       storeBtn.disabled    = false;
       storeBtn._url        = url;
       storeBtn.textContent =
-        url.includes('naver.com')          ? '네이버 스토어 바로가기 →'     :
-        url.includes('blackbeans.kr')      ? '블랙빈스 스토어 바로가기 →'   :
-        url.includes('beanspacecoffee.com') ? '빈스페이스 스토어 바로가기 →' :
-                                             '상품 페이지 바로가기 →';
+        url.includes('naver.com')            ? '네이버 스토어 바로가기 →'       :
+        url.includes('blackbeans.kr')        ? '블랙빈스 스토어 바로가기 →'     :
+        url.includes('beanspacecoffee.com')  ? '빈스페이스 스토어 바로가기 →'   :
+        url.includes('klinternational.co.kr') ? 'KL인터내셔널 스토어 바로가기 →' :
+                                               '상품 페이지 바로가기 →';
     }
 
     overlay.classList.add('open');

@@ -101,6 +101,7 @@
           <button class="tab-btn" data-filter="pns">PNS 팔롬비니</button>
           <button class="tab-btn" data-filter="partner">블랙빈스</button>
           <button class="tab-btn" data-filter="beanspace">빈스페이스</button>
+          <button class="tab-btn" data-filter="kl">KL인터내셔널</button>
           <span class="lineup-count" id="lineup-count"></span>
         </div>
 
@@ -146,6 +147,20 @@
           <button class="lineup-toggle-btn" data-wrap="bs-grid-wrap">더 보기 ∨</button>
         </div>
 
+        <!-- ══ KL인터내셔널 ══ -->
+        <!-- 상품 수정: assets/data/kl-products.js -->
+        <div class="lineup-group" data-group="kl">
+          <div class="lineup-group-label">
+            <h2>KL인터내셔널</h2>
+            <span class="lineup-group-tag">klinternational.co.kr</span>
+            <div class="lineup-group-label-line"></div>
+          </div>
+          <div class="lineup-grid-wrap" id="kl-grid-wrap">
+            <div class="lineup-grid" id="kl-grid"><!-- JS 렌더링 --></div>
+          </div>
+          <button class="lineup-toggle-btn" data-wrap="kl-grid-wrap">더 보기 ∨</button>
+        </div>
+
         <!-- B2B CTA -->
         <div class="card" style="padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px;">
           <div>
@@ -177,6 +192,7 @@
   <script src="assets/data/pns-products.js"></script>
   <script src="assets/data/bb-products.js"></script>
   <script src="assets/data/bs-products.js"></script>
+  <script src="assets/data/kl-products.js"></script>
   <script src="assets/js/lineup.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
