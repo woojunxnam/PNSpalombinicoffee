@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(() => requestAnimationFrame(() => { wrap.style.transition = ''; }));
   }
 
-  document.querySelectorAll('.lineup-toggle-btn').forEach(btn => {
+  document.querySelectorAll('.lineup-toggle-btn:not([data-mode="loadmore"])').forEach(btn => {
     const wrap = document.getElementById(btn.dataset.wrap);
     if (!wrap) return;
 
@@ -248,7 +248,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.lineup-grid-wrap').forEach(initCollapseWrap);
 
+  /* ▶ 6. 2줄씩 더 보기 ──────────────────────────────────────── */
+  function initLoadMoreWrap(wrap) {
+    const grid  = wrap.querySelector('.lineup-grid');
+    const cards = Array.from(grid.querySelectorAll('.lineup-card'));
+    const btn   = document.querySelector(`.lineup-toggle-btn[data-wrap="${wrap.id}"]`);
+
+    if (cards.length < 2) { if (btn) btn.style.display = 'none'; return; }
+
+    // 각 행의 시작 top 위치 수집 (wrap 기준 상대 좌표)
+    const wrapTop = wrap.getBoundingClientRect().top;
+    const rowTops = [];
+    let prevTop = null;
+    cards.forEach(card => {
+      const t = Math.round(card.getBoundingClientRect().top - wrapTop);
+      if (prevTop === null || t > prevTop + 10) { rowTops.push(t); prevTop = t; }
+    });
+
+    const totalRows = rowTops.length;
+    if (totalRows <= 2) { if (btn) btn.style.display = 'none'; return; }
+
+    let visibleRows = 2;
+
+    // 2줄만 표시
+    wrap.style.transition = 'none';
+    wrap.style.overflow   = 'hidden';
+    wrap.style.maxHeight  = rowTops[2] + 'px';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      wrap.style.transition = 'max-height .4s ease';
+    }));
+
+    if (!btn) return;
+    btn.textContent = '더 보기 ∨';
+    btn.style.display = 'block';
+
+    btn.addEventListener('click', () => {
+      visibleRows += 2;
+      if (visibleRows >= totalRows) {
+        wrap.style.maxHeight = wrap.scrollHeight + 'px';
+        btn.style.display = 'none';
+        setTimeout(() => { wrap.style.maxHeight = 'none'; wrap.style.overflow = 'visible'; }, 420);
+      } else {
+        wrap.style.maxHeight = rowTops[visibleRows] + 'px';
+      }
+    });
+  }
+
   /* 외부에서 접근 가능하도록 전역 노출 (B2B 페이지 등 별도 렌더링 후 호출용) */
-  window.initCollapseWrap = initCollapseWrap;
+  window.initCollapseWrap  = initCollapseWrap;
+  window.initLoadMoreWrap  = initLoadMoreWrap;
 
 }); // end DOMContentLoaded

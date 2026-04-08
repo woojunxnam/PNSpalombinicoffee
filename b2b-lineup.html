@@ -134,7 +134,7 @@
           <div class="lineup-grid-wrap" id="drip-grid-wrap">
             <div class="lineup-grid" id="drip-grid"><!-- JS 렌더링 --></div>
           </div>
-          <button class="lineup-toggle-btn" data-wrap="drip-grid-wrap">더 보기 ∨</button>
+          <button class="lineup-toggle-btn" data-wrap="drip-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
         </div>
 
         <!-- ══ 원두 ══ -->
@@ -147,7 +147,7 @@
           <div class="lineup-grid-wrap" id="bean-grid-wrap">
             <div class="lineup-grid" id="bean-grid"><!-- JS 렌더링 --></div>
           </div>
-          <button class="lineup-toggle-btn" data-wrap="bean-grid-wrap">더 보기 ∨</button>
+          <button class="lineup-toggle-btn" data-wrap="bean-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
         </div>
 
         <!-- ══ 필름지 ══ -->
@@ -160,7 +160,7 @@
           <div class="lineup-grid-wrap" id="film-grid-wrap">
             <div class="lineup-grid" id="film-grid"><!-- JS 렌더링 --></div>
           </div>
-          <button class="lineup-toggle-btn" data-wrap="film-grid-wrap">더 보기 ∨</button>
+          <button class="lineup-toggle-btn" data-wrap="film-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
         </div>
 
         <!-- ══ 원두 봉투 ══ -->
@@ -173,7 +173,7 @@
           <div class="lineup-grid-wrap" id="pouch-grid-wrap">
             <div class="lineup-grid" id="pouch-grid"><!-- JS 렌더링 --></div>
           </div>
-          <button class="lineup-toggle-btn" data-wrap="pouch-grid-wrap">더 보기 ∨</button>
+          <button class="lineup-toggle-btn" data-wrap="pouch-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
         </div>
 
         <!-- B2B CTA -->
@@ -226,10 +226,10 @@
     });
     var countEl = document.getElementById('lineup-count');
     if (countEl) countEl.textContent = '총 ' + document.querySelectorAll('.lineup-card').length + '개 상품';
-    /* 렌더링 후 collapse 초기화 (레이아웃 완료 후 행 높이 측정) */
+    /* 렌더링 후 2줄씩 더 보기 초기화 (레이아웃 완료 후 행 높이 측정) */
     setTimeout(function() {
       document.querySelectorAll('.lineup-grid-wrap').forEach(function(wrap) {
-        if (window.initCollapseWrap) window.initCollapseWrap(wrap);
+        if (window.initLoadMoreWrap) window.initLoadMoreWrap(wrap);
       });
     }, 100);
   });
