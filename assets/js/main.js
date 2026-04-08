@@ -441,8 +441,7 @@ const translations = {
 function getLang() {
   const stored = localStorage.getItem('pns-lang');
   if (stored === 'ko' || stored === 'en') return stored;
-  const nav = (navigator.language || 'ko').toLowerCase();
-  return nav.startsWith('ko') ? 'ko' : 'en';
+  return 'ko';
 }
 
 function applyLang(lang) {
