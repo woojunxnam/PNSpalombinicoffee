@@ -141,44 +141,102 @@
     .design-type-name { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
     .design-type-ex { font-size: 11px; color: var(--muted); line-height: 1.5; }
 
-    /* ── SAMPLES SLIDESHOW ── */
-    .slideshow-wrap {
-      position: relative;
-      overflow: hidden;
+    /* ── SAMPLES MASONRY GALLERY ── */
+    .masonry-gallery {
+      columns: 4;
+      column-gap: 14px;
       margin-top: 32px;
-      /* fade edges */
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
     }
-    .slideshow-track {
-      display: flex;
-      gap: 16px;
-      width: max-content;
-      animation: slide-loop 30s linear infinite;
-    }
-    @keyframes slide-loop {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .slide-card {
-      flex: 0 0 auto;
-      width: 200px;
-      aspect-ratio: 3/4;
-      background: #fff;
-      border: 1px solid var(--line);
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 14px;
       border-radius: 14px;
       overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      background: #fff;
+      border: 1px solid var(--line);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .masonry-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
+    }
+    .masonry-item img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .masonry-load-more {
       display: flex;
+      justify-content: center;
+      margin-top: 28px;
+    }
+    .masonry-load-more button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 12px 36px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .masonry-load-more button:hover { background: #a8672f; }
+    @media (max-width: 900px)  { .masonry-gallery { columns: 3; } }
+    @media (max-width: 600px)  { .masonry-gallery { columns: 2; column-gap: 10px; } .masonry-item { margin-bottom: 10px; } }
+
+    /* ── LIGHTBOX ── */
+    .lightbox-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.88);
+      z-index: 9999;
+      display: none;
       align-items: center;
       justify-content: center;
+      padding: 24px;
     }
-    .slide-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .lightbox-overlay.open { display: flex; }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.5);
+      object-fit: contain;
     }
-    @media (max-width: 600px) {
-      .slide-card { width: 150px; }
+    .lightbox-close {
+      position: absolute;
+      top: 20px; right: 28px;
+      background: none; border: none;
+      color: #fff; font-size: 32px;
+      cursor: pointer; line-height: 1;
+      z-index: 10000;
+    }
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,.15);
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s;
+      z-index: 10000;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,.3); }
+    .lightbox-prev { left: 16px; }
+    .lightbox-next { right: 16px; }
+    .lightbox-counter {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255,255,255,.7);
+      font-size: 13px; font-weight: 600;
     }
 
     /* ── MOCKUP TOOL ── */
@@ -491,7 +549,7 @@
       .ce-hero-bag { order: -1; height: 260px; }
       .use-case-grid { grid-template-columns: repeat(2, 1fr); }
       .design-types { grid-template-columns: repeat(2, 1fr); }
-      /* samples now use slideshow — no grid override needed */
+      /* samples now use masonry gallery */
       .mockup-layout { grid-template-columns: 1fr; }
       .steps-grid { grid-template-columns: 1fr; }
       .options-grid { grid-template-columns: 1fr; }
@@ -670,157 +728,97 @@
       </div>
     </section>
 
-    <!-- ── SAMPLES SLIDESHOW ── -->
+    <!-- ── SAMPLES MASONRY GALLERY ── -->
     <section class="section" style="padding-top:40px;padding-bottom:0;">
       <div class="container">
         <p class="eyebrow">디자인 샘플</p>
         <h2 class="section-title is-visible">이런 디자인이 가능합니다</h2>
-        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다.</p>
-      </div>
-      <!-- full-width slideshow (outside container for edge-to-edge) -->
-      <div class="slideshow-wrap">
-        <div class="slideshow-track" id="slideshowTrack">
-          <!-- set 1 -->
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="샘플 01" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_02.jpg" alt="샘플 02" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_03.jpg" alt="샘플 03" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_04.jpg" alt="샘플 04" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_05.jpg" alt="샘플 05" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_06.jpg" alt="샘플 06" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_07.jpg" alt="샘플 07" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_08.jpg" alt="샘플 08" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_09.jpg" alt="샘플 09" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_10.jpg" alt="샘플 10" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_11.jpg" alt="샘플 11" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_12.jpg" alt="샘플 12" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_13.jpg" alt="샘플 13" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_14.jpg" alt="샘플 14" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_15.jpg" alt="샘플 15" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_16.jpg" alt="샘플 16" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_17.jpg" alt="샘플 17" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_18.jpg" alt="샘플 18" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_19.jpg" alt="샘플 19" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_20.jpg" alt="샘플 20" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_21.jpg" alt="샘플 21" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_22.jpg" alt="샘플 22" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_23.jpg" alt="샘플 23" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_24.jpg" alt="샘플 24" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_25.jpg" alt="샘플 25" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_26.jpg" alt="샘플 26" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_27.jpg" alt="샘플 27" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_28.jpg" alt="샘플 28" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_29.jpg" alt="샘플 29" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_30.jpg" alt="샘플 30" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_31.jpg" alt="샘플 31" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_32.jpg" alt="샘플 32" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_33.jpg" alt="샘플 33" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_34.jpg" alt="샘플 34" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_35.jpg" alt="샘플 35" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_36.jpg" alt="샘플 36" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_37.jpg" alt="샘플 37" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_38.jpg" alt="샘플 38" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_39.jpg" alt="샘플 39" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_40.jpg" alt="샘플 40" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_41.jpg" alt="샘플 41" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_42.jpg" alt="샘플 42" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_43.jpg" alt="샘플 43" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_44.jpg" alt="샘플 44" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_45.jpg" alt="샘플 45" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_46.jpg" alt="샘플 46" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_47.jpg" alt="샘플 47" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_48.jpg" alt="샘플 48" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_49.jpg" alt="샘플 49" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_50.jpg" alt="샘플 50" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_51.jpg" alt="샘플 51" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_52.jpg" alt="샘플 52" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_53.jpg" alt="샘플 53" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_54.jpg" alt="샘플 54" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_55.jpg" alt="샘플 55" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_56.jpg" alt="샘플 56" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_57.jpg" alt="샘플 57" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_58.jpg" alt="샘플 58" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_59.jpg" alt="샘플 59" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_60.jpg" alt="샘플 60" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_61.jpg" alt="샘플 61" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_62.jpg" alt="샘플 62" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_63.jpg" alt="샘플 63" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_64.jpg" alt="샘플 64" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_65.jpg" alt="샘플 65" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_66.jpg" alt="샘플 66" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="샘플 67" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="샘플 68" loading="lazy"/></div>
-          <!-- set 2 (duplicate for seamless infinite loop) -->
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="샘플 01" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_02.jpg" alt="샘플 02" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_03.jpg" alt="샘플 03" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_04.jpg" alt="샘플 04" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_05.jpg" alt="샘플 05" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_06.jpg" alt="샘플 06" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_07.jpg" alt="샘플 07" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_08.jpg" alt="샘플 08" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_09.jpg" alt="샘플 09" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_10.jpg" alt="샘플 10" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_11.jpg" alt="샘플 11" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_12.jpg" alt="샘플 12" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_13.jpg" alt="샘플 13" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_14.jpg" alt="샘플 14" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_15.jpg" alt="샘플 15" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_16.jpg" alt="샘플 16" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_17.jpg" alt="샘플 17" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_18.jpg" alt="샘플 18" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_19.jpg" alt="샘플 19" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_20.jpg" alt="샘플 20" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_21.jpg" alt="샘플 21" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_22.jpg" alt="샘플 22" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_23.jpg" alt="샘플 23" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_24.jpg" alt="샘플 24" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_25.jpg" alt="샘플 25" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_26.jpg" alt="샘플 26" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_27.jpg" alt="샘플 27" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_28.jpg" alt="샘플 28" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_29.jpg" alt="샘플 29" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_30.jpg" alt="샘플 30" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_31.jpg" alt="샘플 31" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_32.jpg" alt="샘플 32" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_33.jpg" alt="샘플 33" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_34.jpg" alt="샘플 34" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_35.jpg" alt="샘플 35" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_36.jpg" alt="샘플 36" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_37.jpg" alt="샘플 37" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_38.jpg" alt="샘플 38" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_39.jpg" alt="샘플 39" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_40.jpg" alt="샘플 40" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_41.jpg" alt="샘플 41" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_42.jpg" alt="샘플 42" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_43.jpg" alt="샘플 43" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_44.jpg" alt="샘플 44" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_45.jpg" alt="샘플 45" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_46.jpg" alt="샘플 46" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_47.jpg" alt="샘플 47" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_48.jpg" alt="샘플 48" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_49.jpg" alt="샘플 49" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_50.jpg" alt="샘플 50" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_51.jpg" alt="샘플 51" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_52.jpg" alt="샘플 52" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_53.jpg" alt="샘플 53" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_54.jpg" alt="샘플 54" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_55.jpg" alt="샘플 55" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_56.jpg" alt="샘플 56" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_57.jpg" alt="샘플 57" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_58.jpg" alt="샘플 58" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_59.jpg" alt="샘플 59" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_60.jpg" alt="샘플 60" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_61.jpg" alt="샘플 61" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_62.jpg" alt="샘플 62" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_63.jpg" alt="샘플 63" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_64.jpg" alt="샘플 64" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_65.jpg" alt="샘플 65" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_66.jpg" alt="샘플 66" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="샘플 67" loading="lazy"/></div>
-          <div class="slide-card"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="샘플 68" loading="lazy"/></div>
+        <p class="section-lead is-visible" style="margin-bottom:0;">흑백 일러스트, 로고, 사진 등 다양한 디자인이 가능합니다.<br/>이미지를 클릭하면 크게 보실 수 있습니다.</p>
+
+        <div class="masonry-gallery" id="masonryGallery">
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="커스텀 드립백 샘플 01" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_02.jpg" alt="커스텀 드립백 샘플 02" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_03.jpg" alt="커스텀 드립백 샘플 03" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_04.jpg" alt="커스텀 드립백 샘플 04" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_05.jpg" alt="커스텀 드립백 샘플 05" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_06.jpg" alt="커스텀 드립백 샘플 06" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_07.jpg" alt="커스텀 드립백 샘플 07" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_08.jpg" alt="커스텀 드립백 샘플 08" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_09.jpg" alt="커스텀 드립백 샘플 09" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_10.jpg" alt="커스텀 드립백 샘플 10" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_11.jpg" alt="커스텀 드립백 샘플 11" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_12.jpg" alt="커스텀 드립백 샘플 12" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_13.jpg" alt="커스텀 드립백 샘플 13" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_14.jpg" alt="커스텀 드립백 샘플 14" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_15.jpg" alt="커스텀 드립백 샘플 15" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_16.jpg" alt="커스텀 드립백 샘플 16" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_17.jpg" alt="커스텀 드립백 샘플 17" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_18.jpg" alt="커스텀 드립백 샘플 18" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_19.jpg" alt="커스텀 드립백 샘플 19" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_20.jpg" alt="커스텀 드립백 샘플 20" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_21.jpg" alt="커스텀 드립백 샘플 21" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_22.jpg" alt="커스텀 드립백 샘플 22" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_23.jpg" alt="커스텀 드립백 샘플 23" loading="lazy"/></div>
+        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_24.jpg" alt="커스텀 드립백 샘플 24" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_25.jpg" alt="커스텀 드립백 샘플 25" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_26.jpg" alt="커스텀 드립백 샘플 26" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_27.jpg" alt="커스텀 드립백 샘플 27" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_28.jpg" alt="커스텀 드립백 샘플 28" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_29.jpg" alt="커스텀 드립백 샘플 29" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_30.jpg" alt="커스텀 드립백 샘플 30" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_31.jpg" alt="커스텀 드립백 샘플 31" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_32.jpg" alt="커스텀 드립백 샘플 32" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_33.jpg" alt="커스텀 드립백 샘플 33" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_34.jpg" alt="커스텀 드립백 샘플 34" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_35.jpg" alt="커스텀 드립백 샘플 35" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_36.jpg" alt="커스텀 드립백 샘플 36" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_37.jpg" alt="커스텀 드립백 샘플 37" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_38.jpg" alt="커스텀 드립백 샘플 38" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_39.jpg" alt="커스텀 드립백 샘플 39" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_40.jpg" alt="커스텀 드립백 샘플 40" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_41.jpg" alt="커스텀 드립백 샘플 41" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_42.jpg" alt="커스텀 드립백 샘플 42" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_43.jpg" alt="커스텀 드립백 샘플 43" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_44.jpg" alt="커스텀 드립백 샘플 44" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_45.jpg" alt="커스텀 드립백 샘플 45" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_46.jpg" alt="커스텀 드립백 샘플 46" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_47.jpg" alt="커스텀 드립백 샘플 47" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_48.jpg" alt="커스텀 드립백 샘플 48" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_49.jpg" alt="커스텀 드립백 샘플 49" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_50.jpg" alt="커스텀 드립백 샘플 50" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_51.jpg" alt="커스텀 드립백 샘플 51" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_52.jpg" alt="커스텀 드립백 샘플 52" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_53.jpg" alt="커스텀 드립백 샘플 53" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_54.jpg" alt="커스텀 드립백 샘플 54" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_55.jpg" alt="커스텀 드립백 샘플 55" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_56.jpg" alt="커스텀 드립백 샘플 56" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_57.jpg" alt="커스텀 드립백 샘플 57" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_58.jpg" alt="커스텀 드립백 샘플 58" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_59.jpg" alt="커스텀 드립백 샘플 59" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_60.jpg" alt="커스텀 드립백 샘플 60" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_61.jpg" alt="커스텀 드립백 샘플 61" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_62.jpg" alt="커스텀 드립백 샘플 62" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_63.jpg" alt="커스텀 드립백 샘플 63" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_64.jpg" alt="커스텀 드립백 샘플 64" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_65.jpg" alt="커스텀 드립백 샘플 65" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_66.jpg" alt="커스텀 드립백 샘플 66" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="커스텀 드립백 샘플 67" loading="lazy"/></div>
+        <div class="masonry-item" style="display:none"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="커스텀 드립백 샘플 68" loading="lazy"/></div>
+        </div>
+        <div class="masonry-load-more" id="masonryLoadMore">
+          <button onclick="showAllSamples()">전체 68개 샘플 보기 ↓</button>
         </div>
       </div>
     </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+      <button class="lightbox-close" id="lightboxClose">&#x2715;</button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev">&#x276E;</button>
+      <img class="lightbox-img" id="lightboxImg" src="" alt=""/>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext">&#x276F;</button>
+      <div class="lightbox-counter" id="lightboxCounter"></div>
+    </div>
 
     <!-- ── MOCKUP TOOL ── -->
     <section class="section" id="mockup-tool" style="padding-bottom:0;">
@@ -1129,6 +1127,74 @@
       if (!isOpen) item.classList.add('open');
     }
   </script>
+  <!-- ── MASONRY GALLERY + LIGHTBOX JS ── -->
+  <script>
+  /* 전체 샘플 보기 */
+  function showAllSamples() {
+    document.querySelectorAll('.masonry-item[style]').forEach(el => el.style.display = '');
+    document.getElementById('masonryLoadMore').style.display = 'none';
+  }
+
+  /* 라이트박스 */
+  (function() {
+    const overlay = document.getElementById('lightboxOverlay');
+    const img     = document.getElementById('lightboxImg');
+    const counter = document.getElementById('lightboxCounter');
+    let items = [], idx = 0;
+
+    function getVisibleItems() {
+      return Array.from(document.querySelectorAll('.masonry-item')).filter(
+        el => el.style.display !== 'none'
+      );
+    }
+
+    function show(i) {
+      items = getVisibleItems();
+      idx = i;
+      const src = items[idx].querySelector('img').src;
+      img.src = src;
+      counter.textContent = (idx + 1) + ' / ' + items.length;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function hide() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      img.src = '';
+    }
+
+    document.getElementById('masonryGallery').addEventListener('click', function(e) {
+      const item = e.target.closest('.masonry-item');
+      if (!item) return;
+      const visible = getVisibleItems();
+      const i = visible.indexOf(item);
+      if (i >= 0) show(i);
+    });
+
+    document.getElementById('lightboxClose').addEventListener('click', hide);
+    overlay.addEventListener('click', function(e) { if (e.target === overlay) hide(); });
+    document.getElementById('lightboxPrev').addEventListener('click', function(e) {
+      e.stopPropagation();
+      idx = (idx - 1 + items.length) % items.length;
+      img.src = items[idx].querySelector('img').src;
+      counter.textContent = (idx + 1) + ' / ' + items.length;
+    });
+    document.getElementById('lightboxNext').addEventListener('click', function(e) {
+      e.stopPropagation();
+      idx = (idx + 1) % items.length;
+      img.src = items[idx].querySelector('img').src;
+      counter.textContent = (idx + 1) + ' / ' + items.length;
+    });
+    document.addEventListener('keydown', function(e) {
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') hide();
+      if (e.key === 'ArrowLeft')  document.getElementById('lightboxPrev').click();
+      if (e.key === 'ArrowRight') document.getElementById('lightboxNext').click();
+    });
+  })();
+  </script>
+
   <script src="assets/js/main.js"></script>
 
   <script>
