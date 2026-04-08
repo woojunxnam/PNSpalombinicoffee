@@ -88,10 +88,28 @@ const B2B_DRIP = [
 ];
 
 /* ── 원두 ─────────────────────────────────────────────────── */
-const B2B_BEAN = [];
+const B2B_BEAN = [
+  { name: "원두 01", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 02", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 03", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 04", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 05", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" }
+];
 
 /* ── 필름지 ───────────────────────────────────────────────── */
-const B2B_FILM = [];
+const B2B_FILM = [
+  { name: "필름지 01", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "필름지 02", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "필름지 03", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "필름지 04", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "필름지 05", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" }
+];
 
 /* ── 원두 봉투 ────────────────────────────────────────────── */
-const B2B_POUCH = [];
+const B2B_POUCH = [
+  { name: "원두 봉투 01", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 봉투 02", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 봉투 03", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 봉투 04", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" },
+  { name: "원두 봉투 05", img: "assets/img/pns-logo-upscaled.png", url: "#", sub: "상품 준비 중입니다. 문의 주시면 안내드립니다.", badge: "준비중", badgeType: "pending", priceType: "pending" }
+];
