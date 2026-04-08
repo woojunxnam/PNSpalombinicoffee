@@ -21,9 +21,95 @@
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/lineup.css">
   <style>
+    /* ── Category header (big & distinctive) ── */
+    .lineup-cat-header {
+      padding: 28px 0 20px;
+      position: relative;
+    }
+    .lineup-cat-header::after {
+      content: '';
+      display: block;
+      width: 56px; height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      margin-top: 16px;
+    }
+    .lineup-cat-eyebrow {
+      font-size: 11px; font-weight: 800;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 8px; display: block;
+    }
+    .lineup-cat-title {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 600; margin: 0 0 6px;
+      line-height: 1.2; color: var(--accent2);
+    }
+    .lineup-cat-desc {
+      font-size: 14.5px; color: var(--muted);
+      margin: 0; line-height: 1.7;
+      max-width: 50ch; word-break: keep-all;
+    }
+
+    /* ── Info section (above products) ── */
+    .lineup-info-section {
+      background: var(--bg2, #f7f3ee);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 28px 24px;
+      margin: 20px 0 28px;
+    }
+    .lineup-info-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+    }
+    .lineup-info-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); flex-shrink: 0;
+    }
+    .lineup-info-title {
+      font-family: var(--serif);
+      font-size: 18px; font-weight: 600; margin: 0;
+    }
+    .lineup-info-grid {
+      display: grid; gap: 12px;
+    }
+    .lineup-info-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .lineup-info-grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .lineup-info-card {
+      background: var(--card, #fff);
+      border: 1px solid var(--line);
+      border-radius: 14px; padding: 18px 16px;
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .lineup-info-card:hover {
+      transform: translateY(-3px); box-shadow: var(--shadow);
+    }
+    .lineup-info-icon { font-size: 26px; margin-bottom: 8px; }
+    .lineup-info-name { font-size: 13.5px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .lineup-info-desc { font-size: 11.5px; color: var(--muted); line-height: 1.6; }
+    .lineup-info-cta { text-align: center; margin-top: 16px; }
+
+    /* ── Grid sub-label ── */
+    .lineup-grid-label {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 16px;
+      font-size: 13px; font-weight: 700;
+      color: var(--muted); letter-spacing: .04em;
+    }
+    .lineup-grid-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--line);
+    }
+
     @media (max-width: 900px) {
-      .lineup-group [style*="grid-template-columns:repeat(4"] { grid-template-columns: repeat(2, 1fr) !important; }
-      .lineup-group [style*="grid-template-columns:repeat(3"] { grid-template-columns: repeat(2, 1fr) !important; }
+      .lineup-info-grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .lineup-info-grid-4 { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .lineup-info-section { padding: 20px 18px 18px; border-radius: 14px; }
+      .lineup-info-grid-3 { grid-template-columns: 1fr 1fr; }
+      .lineup-info-grid-4 { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -50,9 +136,7 @@
           <a href="#" data-ko="제품">Products</a>
           <div class="nav-dropdown">
             <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
-            <a href="custom-edition.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> &#xB098;&#xB9CC;&#xC758; &#xB4DC;&#xB9BD;&#xBC31; &#xC81C;&#xC791;</a>
             <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
-            <a href="film.html"><span class="nav-dropdown-icon">&#x1F39E;&#xFE0F;</span> &#xCEE4;&#xD53C; &#xD544;&#xB984;&#xC9C0; <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">&#xC900;&#xBE44;&#xC911;</span></a>
           </div>
         </div>
         <div class="nav-item">
@@ -137,174 +221,183 @@
 
         <!-- ══ 드립백 커피 ══ -->
         <div class="lineup-group" data-group="drip">
-          <div class="lineup-group-label">
-            <h2>드립백 커피</h2>
-            <span class="lineup-group-tag">Drip Bag Coffee</span>
-            <div class="lineup-group-label-line"></div>
+          <div class="lineup-cat-header">
+            <span class="lineup-cat-eyebrow">Drip Bag Coffee</span>
+            <h2 class="lineup-cat-title">드립백 커피</h2>
+            <p class="lineup-cat-desc">맞춤 디자인과 프리미엄 원두로 만드는 B2B 드립백 커피</p>
           </div>
+
+          <div class="lineup-info-section">
+            <div class="lineup-info-header">
+              <span class="lineup-info-dot"></span>
+              <h3 class="lineup-info-title">이런 분들이 주문하세요</h3>
+            </div>
+            <div class="lineup-info-grid lineup-info-grid-3">
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">💍</div>
+                <div class="lineup-info-name">결혼 답례품</div>
+                <div class="lineup-info-desc">웨딩 사진, 이름, 날짜를 담은 세상에 하나뿐인 커피 선물</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏢</div>
+                <div class="lineup-info-name">기업 선물·판촉품</div>
+                <div class="lineup-info-desc">회사 로고가 인쇄된 프리미엄 커피 선물세트</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">☕</div>
+                <div class="lineup-info-name">카페 PB 상품</div>
+                <div class="lineup-info-desc">카페 브랜드 아이덴티티를 담은 자체 드립백 라인업</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🎂</div>
+                <div class="lineup-info-name">생일·기념일</div>
+                <div class="lineup-info-desc">특별한 날을 기억하는 커스텀 커피 선물</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🎪</div>
+                <div class="lineup-info-name">팝업 스토어 굿즈</div>
+                <div class="lineup-info-desc">브랜드 세계관을 담은 한정판 커피 굿즈</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🤝</div>
+                <div class="lineup-info-name">콜라보·IP 에디션</div>
+                <div class="lineup-info-desc">캐릭터, 아티스트 협업 한정판 패키지</div>
+              </div>
+            </div>
+            <div class="lineup-info-cta">
+              <a class="btn btn-primary" href="custom-edition.html" style="color:#fff !important">나만의 드립백 제작 →</a>
+            </div>
+          </div>
+
+          <div class="lineup-grid-label">샘플 디자인</div>
           <div class="lineup-grid-wrap" id="drip-grid-wrap">
             <div class="lineup-grid" id="drip-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="drip-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
-
-          <!-- 이런 분들이 주문하세요 (드립백) -->
-          <div style="margin-top:28px;">
-            <p class="eyebrow">어떤 분들이 이용하나요?</p>
-            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">이런 분들이 주문하세요</h3>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">💍</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">결혼 답례품</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">웨딩 사진, 이름, 날짜를 담은 세상에 하나뿐인 커피 선물</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🏢</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">기업 선물·판촉품</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">회사 로고가 인쇄된 프리미엄 커피 선물세트</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">☕</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">카페 PB 상품</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">카페 브랜드 아이덴티티를 담은 자체 드립백 라인업</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🎂</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">생일·기념일</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">특별한 날을 기억하는 커스텀 커피 선물</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🎪</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">팝업 스토어 굿즈</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">브랜드 세계관을 담은 한정판 커피 굿즈</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🤝</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">콜라보·IP 에디션</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">캐릭터, 아티스트 협업 한정판 패키지</div>
-              </div>
-            </div>
-            <div style="text-align:center;margin-top:18px;">
-              <a class="btn btn-primary" href="custom-edition.html" style="color:#fff !important">나만의 드립백 제작 →</a>
-            </div>
-          </div>
         </div>
 
-        <!-- ══ 원두 ══ -->
+        <!-- ══ 원두·생두 ══ -->
         <div class="lineup-group" data-group="bean">
-          <div class="lineup-group-label">
-            <h2>원두·생두</h2>
-            <span class="lineup-group-tag">Beans & Green Beans</span>
-            <div class="lineup-group-label-line"></div>
+          <div class="lineup-cat-header">
+            <span class="lineup-cat-eyebrow">Beans &amp; Green Beans</span>
+            <h2 class="lineup-cat-title">원두·생두</h2>
+            <p class="lineup-cat-desc">산지 직송 생두부터 맞춤 로스팅 원두까지, B2B 대량 공급</p>
           </div>
+
+          <div class="lineup-info-section">
+            <div class="lineup-info-header">
+              <span class="lineup-info-dot"></span>
+              <h3 class="lineup-info-title">다양한 B2B 납품 채널</h3>
+            </div>
+            <div class="lineup-info-grid lineup-info-grid-4">
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏭</div>
+                <div class="lineup-info-name">가공 공장</div>
+                <div class="lineup-info-desc">로스팅 공장, 음료 공장, 콜드브루 공장, 드립백 공장 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏬</div>
+                <div class="lineup-info-name">백화점</div>
+                <div class="lineup-info-desc">캡슐, 파드, 콜드브루, 원두, 드립백, 커피 음료, 동결건조 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏪</div>
+                <div class="lineup-info-name">편의점</div>
+                <div class="lineup-info-desc">커피 OEM, 아이스크림, 빵, 동결 건조, 드립백, 커피 자판기 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🛒</div>
+                <div class="lineup-info-name">유통 매장</div>
+                <div class="lineup-info-desc">커피 재료상, 11번가, 쿠팡, G마켓, 노브랜드 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🛍️</div>
+                <div class="lineup-info-name">중규모 마트</div>
+                <div class="lineup-info-desc">홈플러스 익스프레스, e마트 익스프레스 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">☕</div>
+                <div class="lineup-info-name">프랜차이즈</div>
+                <div class="lineup-info-desc">스타벅스, 투썸플레이스, 더 벤티, 메가커피, 빽다방 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏠</div>
+                <div class="lineup-info-name">개인 커피숍</div>
+                <div class="lineup-info-desc">지역 소형 카페, 소형 배달업체 등</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">💻</div>
+                <div class="lineup-info-name">인터넷 쇼핑몰</div>
+                <div class="lineup-info-desc">개인 쇼핑몰 및 소규모 쇼핑몰</div>
+              </div>
+            </div>
+            <div class="lineup-info-cta">
+              <a class="btn btn-primary" href="b2b-bean.html" style="color:#fff !important">생두 원두 대량 주문 →</a>
+            </div>
+          </div>
+
+          <div class="lineup-grid-label">상품 목록</div>
           <div class="lineup-grid-wrap" id="bean-grid-wrap">
             <div class="lineup-grid" id="bean-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="bean-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
-
-          <!-- 다양한 B2B 납품 채널 (원두·생두) -->
-          <div style="margin-top:28px;">
-            <p class="eyebrow">어디에 납품하나요?</p>
-            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">다양한 B2B 납품 채널</h3>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🏭</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">가공 공장</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">로스팅 공장, 음료 공장, 콜드브루 공장, 드립백 공장 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🏬</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">백화점</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">캡슐, 파드, 콜드브루, 원두, 드립백, 커피 음료, 동결건조 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🏪</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">편의점</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">커피 OEM, 아이스크림, 빵, 동결 건조, 드립백, 커피 자판기 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🛒</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">유통 매장</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">커피 재료상, 11번가, 쿠팡, G마켓, 노브랜드 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🛍️</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">중규모 마트</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">홈플러스 익스프레스, e마트 익스프레스 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">☕</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">프랜차이즈</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">스타벅스, 투썸플레이스, 더 벤티, 메가커피, 빽다방 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">🏠</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">개인 커피숍</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">지역 소형 카페, 소형 배달업체 등</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 16px;">
-                <div style="font-size:26px;margin-bottom:8px;">💻</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:6px;">인터넷 쇼핑몰</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.65;">개인 쇼핑몰 및 소규모 쇼핑몰</div>
-              </div>
-            </div>
-            <div style="text-align:center;margin-top:18px;">
-              <a class="btn btn-primary" href="b2b-bean.html" style="color:#fff !important">생두 원두 대량 주문 →</a>
-            </div>
-          </div>
         </div>
 
-        <!-- ══ 필름지 ══ -->
+        <!-- ══ 봉투·필름지 ══ -->
         <div class="lineup-group" data-group="film">
-          <div class="lineup-group-label">
-            <h2>봉투·필름지</h2>
-            <span class="lineup-group-tag">Pouch & Film</span>
-            <div class="lineup-group-label-line"></div>
+          <div class="lineup-cat-header">
+            <span class="lineup-cat-eyebrow">Pouch &amp; Film</span>
+            <h2 class="lineup-cat-title">봉투·필름지</h2>
+            <p class="lineup-cat-desc">브랜드를 완성하는 맞춤형 포장재 솔루션</p>
           </div>
+
+          <div class="lineup-info-section">
+            <div class="lineup-info-header">
+              <span class="lineup-info-dot"></span>
+              <h3 class="lineup-info-title">이런 분들이 주문하세요</h3>
+            </div>
+            <div class="lineup-info-grid lineup-info-grid-3">
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">☕</div>
+                <div class="lineup-info-name">커피 로스터리</div>
+                <div class="lineup-info-desc">자체 브랜드 원두 봉투로 프리미엄 이미지 구축</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏪</div>
+                <div class="lineup-info-name">카페 · 프랜차이즈</div>
+                <div class="lineup-info-desc">매장 아이덴티티를 담은 통일된 패키지</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🏭</div>
+                <div class="lineup-info-name">식품 제조사</div>
+                <div class="lineup-info-desc">OEM/ODM 포장재 대량 생산</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🛒</div>
+                <div class="lineup-info-name">온라인 셀러</div>
+                <div class="lineup-info-desc">스마트스토어, 쿠팡 등 이커머스 출시용</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🎪</div>
+                <div class="lineup-info-name">팝업 · 마켓</div>
+                <div class="lineup-info-desc">한정판 굿즈용 소량 커스텀 패키지</div>
+              </div>
+              <div class="lineup-info-card">
+                <div class="lineup-info-icon">🤝</div>
+                <div class="lineup-info-name">유통 · 납품사</div>
+                <div class="lineup-info-desc">거래처 브랜드에 맞춘 패키지 제작</div>
+              </div>
+            </div>
+            <div class="lineup-info-cta">
+              <a class="btn btn-primary" href="film-custom.html" style="color:#fff !important">봉투 필름지 맞춤 주문 →</a>
+            </div>
+          </div>
+
+          <div class="lineup-grid-label">샘플 디자인</div>
           <div class="lineup-grid-wrap" id="film-grid-wrap">
             <div class="lineup-grid" id="film-grid"><!-- JS 렌더링 --></div>
           </div>
           <button class="lineup-toggle-btn" data-wrap="film-grid-wrap" data-mode="loadmore">더 보기 ∨</button>
-
-          <!-- 이런 분들이 주문하세요 (봉투·필름지) -->
-          <div style="margin-top:28px;">
-            <p class="eyebrow">어떤 분들이 이용하나요?</p>
-            <h3 style="font-family:var(--serif);font-size:clamp(20px,2.5vw,28px);font-weight:600;margin:0 0 20px;">이런 분들이 주문하세요</h3>
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">☕</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">커피 로스터리</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">자체 브랜드 원두 봉투로 프리미엄 이미지 구축</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🏪</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">카페 · 프랜차이즈</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">매장 아이덴티티를 담은 통일된 패키지</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🏭</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">식품 제조사</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">OEM/ODM 포장재 대량 생산</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🛒</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">온라인 셀러</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">스마트스토어, 쿠팡 등 이커머스 출시용</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🎪</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">팝업 · 마켓</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">한정판 굿즈용 소량 커스텀 패키지</div>
-              </div>
-              <div style="background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;text-align:center;">
-                <div style="font-size:28px;margin-bottom:8px;">🤝</div>
-                <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px;">유통 · 납품사</div>
-                <div style="font-size:12px;color:var(--muted);line-height:1.6;">거래처 브랜드에 맞춘 패키지 제작</div>
-              </div>
-            </div>
-            <div style="text-align:center;margin-top:18px;">
-              <a class="btn btn-primary" href="film-custom.html" style="color:#fff !important">봉투 필름지 맞춤 주문 →</a>
-            </div>
-          </div>
         </div>
 
 

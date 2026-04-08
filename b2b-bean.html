@@ -92,7 +92,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 32px;
-      align-items: start;
+      align-items: center;
     }
     .bb-product-imgs { display: flex; flex-direction: column; gap: 10px; }
     .bb-product-imgs-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -166,6 +166,115 @@
     .bb-channel-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
     .bb-channel-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
 
+    /* ── WONDU (원두) DARK SECTION ── */
+    .bb-wondu {
+      background:
+        radial-gradient(700px 350px at 20% 60%, rgba(160,100,40,.10), transparent 60%),
+        linear-gradient(165deg, #120d08 0%, #1e1409 50%, #120d08 100%);
+      color: #f5ede1;
+      padding: 64px 0 !important;
+      position: relative;
+    }
+    .bb-wondu::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(80%, 900px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,170,110,.4), transparent);
+    }
+    .bb-wondu .bb-product-tag { color: #c8aa6e; }
+    .bb-wondu .bb-product-title { color: #f5ede1; }
+    .bb-wondu .bb-product-sub { color: rgba(200,170,110,.65); }
+    .bb-wondu .bb-product-desc { color: rgba(245,237,225,.72); }
+    .bb-wondu-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+    .bb-wondu-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .bb-wondu-main-img {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .bb-wondu-main-img img {
+      width: 100%;
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      display: block;
+    }
+    .bb-wondu-main-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      border: 1.5px solid rgba(200,170,110,.3);
+      pointer-events: none;
+    }
+    .bb-wondu-sub-imgs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .bb-wondu-sub-imgs img {
+      width: 100%;
+      border-radius: 12px;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+      border: 1px solid rgba(200,170,110,.15);
+    }
+    .bb-wondu-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .bb-wondu-feat {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(200,170,110,.12);
+      border-radius: 12px;
+      padding: 14px 14px;
+      transition: background .2s;
+    }
+    .bb-wondu-feat:hover {
+      background: rgba(255,255,255,.07);
+    }
+    .bb-wondu-feat:last-child {
+      grid-column: span 2;
+    }
+    .bb-wondu-feat-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 36px; height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(200,170,110,.1);
+      border-radius: 10px;
+    }
+    .bb-wondu-feat strong {
+      display: block;
+      font-size: 13px; font-weight: 700;
+      color: #f5ede1;
+      margin-bottom: 2px;
+    }
+    .bb-wondu-feat-desc {
+      font-size: 12px;
+      color: rgba(245,237,225,.55);
+      line-height: 1.5;
+    }
+
     /* ── CTA BOTTOM ── */
     .bb-cta {
       background:
@@ -190,6 +299,8 @@
       .bb-hero-grid { order: -1; }
       .bb-product-inner { grid-template-columns: 1fr; }
       .bb-product-imgs { order: -1; }
+      .bb-wondu-inner { grid-template-columns: 1fr; }
+      .bb-wondu-gallery { order: -1; }
       .use-case-grid { grid-template-columns: repeat(2, 1fr); }
       .bb-channels { grid-template-columns: repeat(2, 1fr); }
       .bb-cta { grid-template-columns: 1fr; }
@@ -197,6 +308,8 @@
     @media (max-width: 560px) {
       .use-case-grid { grid-template-columns: 1fr 1fr; }
       .bb-channels { grid-template-columns: 1fr 1fr; }
+      .bb-wondu-features { grid-template-columns: 1fr; }
+      .bb-wondu-feat:last-child { grid-column: span 1; }
     }
   </style>
 </head>
@@ -222,9 +335,7 @@
           <a href="#" data-ko="제품">Products</a>
           <div class="nav-dropdown">
             <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
-            <a href="custom-edition.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> &#xB098;&#xB9CC;&#xC758; &#xB4DC;&#xB9BD;&#xBC31; &#xC81C;&#xC791;</a>
             <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
-            <a href="film.html"><span class="nav-dropdown-icon">&#x1F39E;&#xFE0F;</span> &#xCEE4;&#xD53C; &#xD544;&#xB984;&#xC9C0; <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 6px;border-radius:4px;margin-left:4px;">&#xC900;&#xBE44;&#xC911;</span></a>
           </div>
         </div>
         <div class="nav-item">
@@ -352,18 +463,11 @@
       </div>
     </section>
 
-    <!-- ── 원두 SECTION ── -->
-    <section class="section bb-product" style="padding-bottom:0;">
+    <!-- ── 원두 SECTION (dark theme) ── -->
+    <section class="section bb-product bb-wondu">
       <div class="container">
-        <div class="bb-product-inner" style="direction:rtl;">
-          <div class="bb-product-imgs" style="direction:ltr;">
-            <img class="full" src="products/volcano-ruby/img_13_원두_두번째.jpg" alt="원두 로스팅"/>
-            <div class="bb-product-imgs-row">
-              <img class="half" src="assets/img/vol_ruby_bag.png" alt="볼케이노 루비 원두 패키지"/>
-              <img class="half" src="products/volcano-ruby/img_03_커피추출.jpg" alt="커피 추출"/>
-            </div>
-          </div>
-          <div style="direction:ltr;">
+        <div class="bb-wondu-inner">
+          <div>
             <span class="bb-product-tag">Roasted Bean</span>
             <h2 class="bb-product-title">전문 로스터의<br/>프리미엄 원두</h2>
             <p class="bb-product-sub">Professional Roasting</p>
@@ -374,13 +478,52 @@
               맞춤 로스팅 프로파일 개발, OEM/ODM 생산, 자체 브랜드 원두 론칭을
               원스톱으로 지원합니다.
             </p>
-            <ul class="bb-product-features">
-              <li><strong>맞춤 로스팅</strong> — 고객사 원하는 향미 프로파일 개발</li>
-              <li><strong>유연한 패키징</strong> — 500g · 1kg · 벌크 등 다양한 규격</li>
-              <li><strong>OEM/ODM</strong> — 자체 브랜드 원두 론칭 토탈 지원</li>
-              <li><strong>신선도 보장</strong> — 로스팅 후 48시간 이내 출고</li>
-              <li><strong>품질 인증</strong> — SCA 스페셜티 등급 80점 이상</li>
-            </ul>
+            <div class="bb-wondu-features">
+              <div class="bb-wondu-feat">
+                <span class="bb-wondu-feat-icon">🔥</span>
+                <div>
+                  <strong>맞춤 로스팅</strong>
+                  <span class="bb-wondu-feat-desc">고객사 원하는 향미 프로파일 개발</span>
+                </div>
+              </div>
+              <div class="bb-wondu-feat">
+                <span class="bb-wondu-feat-icon">📦</span>
+                <div>
+                  <strong>유연한 패키징</strong>
+                  <span class="bb-wondu-feat-desc">500g · 1kg · 벌크 등 다양한 규격</span>
+                </div>
+              </div>
+              <div class="bb-wondu-feat">
+                <span class="bb-wondu-feat-icon">🏷️</span>
+                <div>
+                  <strong>OEM/ODM</strong>
+                  <span class="bb-wondu-feat-desc">자체 브랜드 원두 론칭 토탈 지원</span>
+                </div>
+              </div>
+              <div class="bb-wondu-feat">
+                <span class="bb-wondu-feat-icon">⏱️</span>
+                <div>
+                  <strong>신선도 보장</strong>
+                  <span class="bb-wondu-feat-desc">로스팅 후 48시간 이내 출고</span>
+                </div>
+              </div>
+              <div class="bb-wondu-feat">
+                <span class="bb-wondu-feat-icon">✅</span>
+                <div>
+                  <strong>품질 인증</strong>
+                  <span class="bb-wondu-feat-desc">SCA 스페셜티 등급 80점 이상</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="bb-wondu-gallery">
+            <div class="bb-wondu-main-img">
+              <img src="products/volcano-ruby/img_13_원두_두번째.jpg" alt="원두 로스팅"/>
+            </div>
+            <div class="bb-wondu-sub-imgs">
+              <img src="assets/img/vol_ruby_bag.png" alt="볼케이노 루비 원두 패키지"/>
+              <img src="products/volcano-ruby/img_03_커피추출.jpg" alt="커피 추출"/>
+            </div>
           </div>
         </div>
       </div>
@@ -505,15 +648,20 @@
     ['.bb-product:nth-of-type(1) .bb-product-features li', '<strong>Stable Supply</strong> — Seasonal shipment schedules shared in advance', 4],
 
     /* 원두 */
-    ['.bb-product:nth-of-type(2) .bb-product-tag',   'Roasted Bean'],
-    ['.bb-product:nth-of-type(2) .bb-product-title',  'Premium Beans by<br/>Expert Roasters'],
-    ['.bb-product:nth-of-type(2) .bb-product-sub',    'Professional Roasting'],
-    ['.bb-product:nth-of-type(2) .bb-product-desc',   'Green beans sourced directly from origin are roasted by expert roasters using tailored profiles to bring out the finest flavors.<br/><br/>We flexibly handle everything from 500g and 1kg retail packs to large bulk deliveries. Custom roast profile development, OEM/ODM production, and private-label bean launches are supported end-to-end.'],
-    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Custom Roasting</strong> — Develop flavor profiles to your specifications', 0],
-    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Flexible Packaging</strong> — 500g, 1kg, bulk, and more', 1],
-    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>OEM/ODM</strong> — Full support for private-label bean launches', 2],
-    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Freshness Guaranteed</strong> — Shipped within 48 hours of roasting', 3],
-    ['.bb-product:nth-of-type(2) .bb-product-features li', '<strong>Quality Certified</strong> — SCA Specialty grade 80+ points', 4],
+    ['.bb-wondu .bb-product-tag',   'Roasted Bean'],
+    ['.bb-wondu .bb-product-title',  'Premium Beans by<br/>Expert Roasters'],
+    ['.bb-wondu .bb-product-sub',    'Professional Roasting'],
+    ['.bb-wondu .bb-product-desc',   'Green beans sourced directly from origin are roasted by expert roasters using tailored profiles to bring out the finest flavors.<br/><br/>We flexibly handle everything from 500g and 1kg retail packs to large bulk deliveries. Custom roast profile development, OEM/ODM production, and private-label bean launches are supported end-to-end.'],
+    ['.bb-wondu-feat strong', 'Custom Roasting', 0],
+    ['.bb-wondu-feat-desc', 'Develop flavor profiles to your specifications', 0],
+    ['.bb-wondu-feat strong', 'Flexible Packaging', 1],
+    ['.bb-wondu-feat-desc', '500g, 1kg, bulk, and more', 1],
+    ['.bb-wondu-feat strong', 'OEM/ODM', 2],
+    ['.bb-wondu-feat-desc', 'Full support for private-label bean launches', 2],
+    ['.bb-wondu-feat strong', 'Freshness Guaranteed', 3],
+    ['.bb-wondu-feat-desc', 'Shipped within 48 hours of roasting', 3],
+    ['.bb-wondu-feat strong', 'Quality Certified', 4],
+    ['.bb-wondu-feat-desc', 'SCA Specialty grade 80+ points', 4],
 
     /* B2B 납품 채널 */
     ['section:nth-of-type(4) .eyebrow',        'Where Do We Supply?'],
