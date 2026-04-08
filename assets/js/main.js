@@ -253,8 +253,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}custom-edition.html`, label: '커스텀 에디션' },
     { href: `${prefix}lineup.html`, label: '계열사 라인업' },
     { href: `${prefix}film.html`, label: '커피 필름지', badge: '준비중' },
+    { type: 'label', label: '자동화 장비' },
+    { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
     { type: 'label', label: '서비스' },
-    { href: `${prefix}machines/`, label: '드립백 머신' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
     { href: `${prefix}b2b.html`, label: 'B2B 파트너십' },
     { href: `${prefix}contact.html`, label: '문의하기' }
