@@ -574,9 +574,15 @@
       gap: 12px;
       text-align: left;
       transition: all .15s;
+      cursor: pointer;
     }
-    .rec-result-item:first-child {
+    .rec-result-item:hover {
       border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .rec-result-item.selected {
+      border-color: var(--accent);
+      background: rgba(200,170,110,.06);
       box-shadow: 0 4px 16px rgba(192,122,61,.12);
     }
     .rec-result-rank {
@@ -590,7 +596,7 @@
       color: var(--muted);
       flex-shrink: 0;
     }
-    .rec-result-item:first-child .rec-result-rank {
+    .rec-result-item.selected .rec-result-rank {
       background: var(--accent);
       border-color: var(--accent);
       color: #fff;
@@ -756,7 +762,7 @@
       .spin-wheel { width: 220px; height: 220px; }
       .spin-center-btn { width: 66px; height: 66px; font-size: 12px; }
       .fun-fact-cards { grid-template-columns: 1fr; }
-      .share-btns { flex-direction: column; align-items: center; }
+      .share-btn { padding: 8px 12px; font-size: 11.5px; }
     }
   </style>
 </head>
@@ -1125,7 +1131,28 @@
     }
   };
 
-  /* ── All items flat for random pick ─────── */
+  /* ── Weighted random pool (excludes bingsu, dessert, cake) ── */
+  const TIER_WEIGHTS = {
+    coffee: 3, ade: 3, icedtea: 3,
+    latte: 2, fruittea: 2, blacktea: 2, herbtea: 2,
+    smoothie: 1, gelato: 1
+  };
+
+  function getRandomPool() {
+    const pool = [];
+    for (const [catId, weight] of Object.entries(TIER_WEIGHTS)) {
+      const cat = DRINKS[catId] || DESSERTS[catId];
+      if (!cat) continue;
+      cat.items.forEach((name, i) => {
+        const item = { name, cat: cat.name, icon: cat.icon, catId, idx: i };
+        for (let w = 0; w < weight; w++) pool.push(item);
+      });
+    }
+    return pool;
+  }
+  const RANDOM_POOL = getRandomPool();
+
+  /* ── All items (excluding bingsu) for stats reference ─────── */
   function getAllItems() {
     const all = [];
     for (const [catId, cat] of Object.entries(DRINKS)) {
@@ -1134,6 +1161,7 @@
       });
     }
     for (const [catId, cat] of Object.entries(DESSERTS)) {
+      if (catId === 'bingsu') continue;
       cat.items.forEach((name, i) => {
         all.push({ name, cat: cat.name, icon: cat.icon, catId, idx: i });
       });
@@ -1207,7 +1235,7 @@
     textEl.classList.add('spinning');
 
     function shuffle() {
-      const item = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
+      const item = RANDOM_POOL[Math.floor(Math.random() * RANDOM_POOL.length)];
       textEl.textContent = item.icon + ' ' + item.name;
 
       shuffleCount++;
@@ -1216,7 +1244,7 @@
         setTimeout(shuffle, delay);
       } else {
         textEl.classList.remove('spinning');
-        const pick = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
+        const pick = RANDOM_POOL[Math.floor(Math.random() * RANDOM_POOL.length)];
         textEl.textContent = pick.icon + ' ' + pick.name;
 
         setTimeout(() => {
@@ -1281,14 +1309,14 @@
      RECOMMENDATION FLOW
   ══════════════════════════════════════════════════════ */
   const REC_STEPS = [
-    {
+    { // 0: type
       q: '어떤 종류를 원하세요?',
       choices: [
         { icon: '\u2615', label: '음료', sub: '커피, 차, 에이드 등', value: 'drink' },
-        { icon: '\uD83C\uDF70', label: '디저트', sub: '케이크, 빙수, 젤라또', value: 'dessert' }
+        { icon: '\uD83C\uDF70', label: '디저트', sub: '케이크, 젤라또, 간식', value: 'dessert' }
       ]
     },
-    {
+    { // 1: coffee pref (drink only)
       q: '커피를 좋아하세요?',
       condition: (ans) => ans[0] === 'drink',
       choices: [
@@ -1296,7 +1324,26 @@
         { icon: '\uD83C\uDF3F', label: '논커피가 좋아요', sub: '카페인 없이도 맛있게', value: 'nocoffee' }
       ]
     },
-    {
+    { // 2: nocoffee sub-type (nocoffee only)
+      q: '어떤 음료가 끌리세요?',
+      condition: (ans) => ans[0] === 'drink' && ans[1] === 'nocoffee',
+      choices: [
+        { icon: '\uD83E\uDD5B', label: '라떼류', sub: '부드럽고 달콤하게', value: 'nc-latte' },
+        { icon: '\uD83C\uDF4B', label: '에이드·아이스티', sub: '상큼하고 시원하게', value: 'nc-ade' },
+        { icon: '\uD83C\uDF75', label: '차 (과일·홍차·허브)', sub: '향긋한 한 잔', value: 'nc-tea' },
+        { icon: '\uD83E\uDD64', label: '스무디·프라페', sub: '시원하고 부드럽게', value: 'nc-smoothie' }
+      ]
+    },
+    { // 3: dessert sub-type (dessert only)
+      q: '어떤 디저트가 끌리세요?',
+      condition: (ans) => ans[0] === 'dessert',
+      choices: [
+        { icon: '\uD83C\uDF82', label: '케이크', sub: '달콤한 한 조각', value: 'ds-cake' },
+        { icon: '\uD83C\uDF66', label: '젤라또', sub: '이탈리안 아이스크림', value: 'ds-gelato' },
+        { icon: '\uD83E\uDD50', label: '간식 빵류', sub: '갈릭브레드, 모카번 등', value: 'ds-bread' }
+      ]
+    },
+    { // 4: mood
       q: '어떤 기분이세요?',
       isMood: true,
       moods: [
@@ -1306,7 +1353,7 @@
         { icon: '\uD83C\uDF6B', label: '달콤함', value: 'sweet' }
       ]
     },
-    {
+    { // 5: temp (drink only)
       q: '온도는 어떻게?',
       condition: (ans) => ans[0] === 'drink',
       choices: [
@@ -1407,34 +1454,60 @@
   /* ══════════════════════════════════════════════════════
      RECOMMENDATION ENGINE
   ══════════════════════════════════════════════════════ */
+  let selectedRecIdx = 0;
+
+  function selectRecItem(el) {
+    document.querySelectorAll('.rec-result-item').forEach(item => item.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedRecIdx = parseInt(el.dataset.idx);
+  }
+
   function showRecResults() {
     const type = recAnswers[0];
-    const coffee = recAnswers[1];
-    const mood = recAnswers[2];
-    const temp = recAnswers[3];
+    const coffeeChoice = recAnswers[1];
+    const ncSubType = recAnswers[2];
+    const dsSubType = recAnswers[3];
+    const mood = recAnswers[4];
+    const temp = recAnswers[5];
 
     let picks = [];
 
     if (type === 'dessert') {
+      const dessertFilter = {
+        'ds-cake': ['cake'],
+        'ds-gelato': ['gelato'],
+        'ds-bread': ['dessert']
+      };
+      const allowedCats = dessertFilter[dsSubType] || ['cake', 'gelato', 'dessert'];
+
       for (const [catId, cat] of Object.entries(DESSERTS)) {
+        if (catId === 'bingsu') continue;
+        if (!allowedCats.includes(catId)) continue;
         cat.items.forEach(name => {
           picks.push({ name, cat: cat.name, icon: cat.icon, catId, score: Math.random() });
         });
       }
       picks.forEach(p => {
         if (mood === 'sweet') p.score += (p.catId === 'cake' || p.catId === 'gelato') ? 2 : 1;
-        if (mood === 'refresh') p.score += (p.catId === 'bingsu' || p.catId === 'gelato') ? 2 : 0;
+        if (mood === 'refresh') p.score += p.catId === 'gelato' ? 2 : 0;
         if (mood === 'energy') p.score += p.catId === 'dessert' ? 1.5 : 0.5;
         if (mood === 'relax') p.score += p.catId === 'cake' ? 2 : 1;
       });
     } else {
-      const drinkCats = coffee === 'coffee'
-        ? { coffee: DRINKS.coffee }
-        : coffee === 'nocoffee'
-        ? { latte: DRINKS.latte, ade: DRINKS.ade, smoothie: DRINKS.smoothie,
-            fruittea: DRINKS.fruittea, icedtea: DRINKS.icedtea,
-            blacktea: DRINKS.blacktea, herbtea: DRINKS.herbtea }
-        : DRINKS;
+      let drinkCats;
+      if (coffeeChoice === 'coffee') {
+        drinkCats = { coffee: DRINKS.coffee };
+      } else if (ncSubType === 'nc-latte') {
+        drinkCats = { latte: DRINKS.latte };
+      } else if (ncSubType === 'nc-ade') {
+        drinkCats = { ade: DRINKS.ade, icedtea: DRINKS.icedtea };
+      } else if (ncSubType === 'nc-tea') {
+        drinkCats = { fruittea: DRINKS.fruittea, blacktea: DRINKS.blacktea, herbtea: DRINKS.herbtea };
+      } else if (ncSubType === 'nc-smoothie') {
+        drinkCats = { smoothie: DRINKS.smoothie };
+      } else {
+        drinkCats = DRINKS;
+      }
 
       for (const [catId, cat] of Object.entries(drinkCats)) {
         cat.items.forEach((name, i) => {
@@ -1456,12 +1529,13 @@
     picks.sort((a, b) => b.score - a.score);
     const top = picks.slice(0, 4);
     lastRecPicks = top;
+    selectedRecIdx = 0;
 
     showPanel('panelRecResult');
 
     const listEl = document.getElementById('recResultList');
     listEl.innerHTML = top.map((p, i) => `
-      <div class="rec-result-item">
+      <div class="rec-result-item${i === 0 ? ' selected' : ''}" data-idx="${i}" onclick="selectRecItem(this)">
         <div class="rec-result-rank">${i + 1}</div>
         <div class="rec-result-info">
           <div class="rec-result-name">${p.name}</div>
@@ -1495,13 +1569,14 @@
     if (!stats.items) stats.items = {};
     if (!stats.categories) stats.categories = {};
 
-    // Determine which items to track based on current context
     const itemsToTrack = [];
     if (lastRandomPick) {
       itemsToTrack.push(lastRandomPick);
     }
     if (lastRecPicks.length > 0) {
-      itemsToTrack.push(...lastRecPicks);
+      // Only track the selected item, not all 4
+      const selected = lastRecPicks[selectedRecIdx] || lastRecPicks[0];
+      itemsToTrack.push(selected);
     }
 
     itemsToTrack.forEach(p => {
@@ -1673,9 +1748,12 @@
     const reason = section.querySelector('.reason-chips .survey-chip.selected')?.dataset.v || '';
     const data = { mbti, sex, age, reason, timestamp: new Date().toISOString() };
 
-    // Add picked items to survey data
+    // Add picked items to survey data (only selected item)
     if (lastRandomPick) data.picks = [lastRandomPick.name];
-    if (lastRecPicks.length > 0) data.picks = lastRecPicks.map(p => p.name);
+    if (lastRecPicks.length > 0) {
+      const selected = lastRecPicks[selectedRecIdx] || lastRecPicks[0];
+      data.picks = [selected.name];
+    }
 
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
     surveys.push(data);
@@ -1789,7 +1867,7 @@
   /* ── Kakao Init (safe — only if SDK loaded) ── */
   try {
     if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
-      Kakao.init('YOUR_KAKAO_APP_KEY');
+      Kakao.init('6faff893442e821d02968a6fab466e85');
     }
   } catch(e) {}
 
