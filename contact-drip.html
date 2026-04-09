@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>B2B 드립백 맞춤 주문 문의 — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니 B2B 드립백 맞춤 제작 문의. 디자인, 원두, 수량을 선택하고 견적을 요청하세요."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ── HERO ── */
+    .cd-hero { background:var(--accent2); padding:72px 0 48px; text-align:center; position:relative; overflow:hidden; }
+    .cd-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 60% 50%,rgba(192,122,61,.2) 0%,transparent 70%); }
+    .cd-hero-eyebrow { font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; position:relative; }
+    .cd-hero h1 { font-family:var(--serif); font-size:clamp(24px,3.5vw,38px); color:#fff; margin:0 0 10px; position:relative; }
+    .cd-hero-desc { color:rgba(255,255,255,.6); font-size:14px; max-width:480px; margin:0 auto; line-height:1.7; position:relative; }
+
+    /* ── STEP INDICATOR ── */
+    .cd-steps { display:flex; justify-content:center; gap:8px; margin-bottom:36px; }
+    .cd-step { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--muted); font-weight:600; }
+    .cd-step-num { width:32px; height:32px; border-radius:50%; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--muted); transition:all .3s; }
+    .cd-step.active .cd-step-num { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .cd-step.done .cd-step-num { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .cd-step.active { color:var(--accent2); }
+    .cd-step-line { width:40px; height:2px; background:var(--line); }
+    .cd-step-line.active { background:var(--accent); }
+
+    /* ── FORM CONTAINER ── */
+    .cd-form-wrap { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:40px; max-width:720px; margin:0 auto; }
+    .cd-form-title { font-family:var(--serif); font-size:20px; color:var(--accent2); margin:0 0 6px; }
+    .cd-form-subtitle { font-size:13px; color:var(--muted); margin:0 0 28px; }
+    .cd-panel { display:none; }
+    .cd-panel.active { display:block; }
+
+    /* ── FORM FIELDS ── */
+    .cd-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .cd-group { margin-bottom:20px; }
+    .cd-group label { display:block; font-size:13px; font-weight:600; color:var(--text); margin-bottom:6px; }
+    .cd-group label .req { color:var(--accent); margin-left:2px; }
+    .cd-group input, .cd-group select, .cd-group textarea {
+      width:100%; padding:11px 14px; border:1.5px solid var(--line); border-radius:10px;
+      background:var(--bg); color:var(--text); font-family:var(--sans); font-size:14px;
+      box-sizing:border-box; outline:none; transition:border-color .2s;
+    }
+    .cd-group input:focus, .cd-group select:focus, .cd-group textarea:focus { border-color:var(--accent); }
+    .cd-group textarea { resize:vertical; min-height:80px; }
+
+    /* ── RADIO CARDS ── */
+    .cd-radio-cards { display:flex; gap:12px; flex-wrap:wrap; }
+    .cd-radio-card { flex:1; min-width:120px; }
+    .cd-radio-card input { display:none; }
+    .cd-radio-card label {
+      display:flex; flex-direction:column; align-items:center; gap:6px;
+      padding:16px 12px; border:2px solid var(--line); border-radius:12px;
+      cursor:pointer; transition:all .2s; text-align:center; font-size:13px; font-weight:600; color:var(--text);
+    }
+    .cd-radio-card label .cd-rc-icon { font-size:24px; }
+    .cd-radio-card label .cd-rc-sub { font-size:11px; color:var(--muted); font-weight:400; }
+    .cd-radio-card input:checked + label { border-color:var(--accent); background:rgba(192,122,61,.06); color:var(--accent); }
+
+    /* ── COFFEE CARDS ── */
+    .cd-coffee-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+    .cd-coffee-card { position:relative; }
+    .cd-coffee-card input { display:none; }
+    .cd-coffee-card label {
+      display:block; padding:16px; border:2px solid var(--line); border-radius:14px;
+      cursor:pointer; transition:all .2s;
+    }
+    .cd-coffee-card input:checked + label { border-color:var(--accent); background:rgba(192,122,61,.05); }
+    .cd-coffee-name { font-size:15px; font-weight:700; color:var(--accent2); margin-bottom:4px; }
+    .cd-coffee-sub { font-size:11px; color:var(--muted); margin-bottom:8px; }
+    .cd-coffee-tags { display:flex; flex-wrap:wrap; gap:4px; }
+    .cd-coffee-tag {
+      font-size:10px; font-weight:600; padding:3px 8px; border-radius:99px;
+      background:rgba(192,122,61,.08); color:var(--accent); border:1px solid rgba(192,122,61,.15);
+    }
+    .cd-coffee-bar { display:flex; align-items:center; gap:6px; margin-top:6px; font-size:11px; color:var(--muted); }
+    .cd-coffee-bar-track { flex:1; height:4px; background:var(--line); border-radius:2px; overflow:hidden; }
+    .cd-coffee-bar-fill { height:100%; background:var(--accent); border-radius:2px; }
+
+    /* ── CHIP SELECT (quantity, film, packaging) ── */
+    .cd-chip-group { display:flex; flex-wrap:wrap; gap:8px; }
+    .cd-chip input { display:none; }
+    .cd-chip label {
+      display:inline-block; padding:9px 18px; border:1.5px solid var(--line); border-radius:10px;
+      font-size:13px; font-weight:600; color:var(--text); cursor:pointer; transition:all .2s;
+    }
+    .cd-chip input:checked + label { border-color:var(--accent); background:var(--accent); color:#fff; }
+
+    /* ── CONDITIONAL ── */
+    .cd-conditional { display:none; margin-top:12px; }
+    .cd-conditional.show { display:block; }
+
+    /* ── DOWNLOAD BUTTON ── */
+    .cd-download {
+      display:inline-flex; align-items:center; gap:8px; padding:12px 24px;
+      border:2px dashed var(--accent); border-radius:12px; color:var(--accent);
+      font-size:13px; font-weight:700; text-decoration:none; margin-top:8px;
+      transition:background .2s;
+    }
+    .cd-download:hover { background:rgba(192,122,61,.06); }
+    .cd-download-note { font-size:11px; color:var(--muted); margin-top:6px; }
+
+    /* ── NOTICE BOX ── */
+    .cd-notice {
+      background:rgba(192,122,61,.06); border:1px solid rgba(192,122,61,.15);
+      border-radius:10px; padding:14px 18px; font-size:12px; color:var(--muted);
+      line-height:1.7; margin-top:12px;
+    }
+
+    /* ── BUTTONS ── */
+    .cd-actions { display:flex; justify-content:space-between; margin-top:32px; gap:12px; }
+    .cd-btn {
+      padding:13px 28px; border-radius:10px; font-size:14px; font-weight:700;
+      border:none; cursor:pointer; font-family:var(--sans); transition:all .2s;
+    }
+    .cd-btn-prev { background:var(--bg2,#f0ebe5); color:var(--muted); }
+    .cd-btn-prev:hover { background:var(--line); }
+    .cd-btn-next { background:var(--accent); color:#fff; margin-left:auto; }
+    .cd-btn-next:hover { background:#a8672f; }
+    .cd-btn-submit { background:linear-gradient(135deg,#c8823f,#ddb56b); color:#21160f; margin-left:auto; }
+    .cd-btn-submit:hover { filter:brightness(1.05); }
+
+    /* ── STATUS ── */
+    .cd-status { margin-top:16px; padding:12px 16px; border-radius:10px; font-size:13px; display:none; }
+    .cd-status.success { display:block; background:#e8f5e9; color:#2e7d32; }
+    .cd-status.error { display:block; background:#fce4ec; color:#c62828; }
+
+    /* ── CHECKBOX ── */
+    .cd-check { display:flex; align-items:flex-start; gap:8px; margin-top:16px; }
+    .cd-check input[type="checkbox"] { width:18px; height:18px; margin-top:1px; accent-color:var(--accent); flex-shrink:0; }
+    .cd-check label { font-size:12px; color:var(--muted); line-height:1.6; cursor:pointer; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:640px) {
+      .cd-form-wrap { padding:24px 18px; }
+      .cd-row { grid-template-columns:1fr; }
+      .cd-coffee-grid { grid-template-columns:1fr; }
+      .cd-steps { gap:4px; }
+      .cd-step-line { width:20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <div class="nav-item">
+          <a href="index.html#about" data-ko="브랜드">About</a>
+          <div class="nav-dropdown">
+            <a href="index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> Technology</a>
+            <a href="index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> Heritage</a>
+            <a href="index.html#reviews"><span class="nav-dropdown-icon">&#x2B50;</span> Reviews</a>
+            <a href="index.html#faq"><span class="nav-dropdown-icon">&#x2753;</span> FAQ</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" data-ko="제품">Products</a>
+          <div class="nav-dropdown">
+            <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+            <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+          </div>
+        </div>
+        <a href="products/volcano-ruby.html" class="nav-volcano" data-ko="🌋 볼케이노 루비">🌋 Volcano Ruby</a>
+        <div class="nav-item">
+          <a href="machines/" data-ko="자동화 장비">Machines</a>
+          <div class="nav-dropdown">
+            <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="b2b-lineup.html" data-ko="B2B">B2B</a><div class="nav-dropdown">
+            <a href="b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
+            <div class="nav-dropdown-label">드립백 B2B</div>
+            <a href="custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
+            <a href="b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
+            <div class="nav-dropdown-label">원두 생두 B2B</div>
+            <a href="b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 생두 원두 대량 주문</a>
+            <div class="nav-dropdown-label">봉투 필름지 B2B</div>
+            <a href="film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
+            <a href="b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기</a>
+          </div></div>
+        <div class="nav-item"><a href="contact.html" data-ko="문의">Contact</a><div class="nav-dropdown">
+            <a href="contact.html"><span class="nav-dropdown-icon">💬</span> 일반 문의</a>
+            <a href="contact-drip.html" style="color:var(--accent)"><span class="nav-dropdown-icon">☕</span> B2B 드립백 문의</a>
+            <a href="contact-bean.html"><span class="nav-dropdown-icon">🫘</span> B2B 생두 원두 문의</a>
+            <a href="#" style="opacity:.5"><span class="nav-dropdown-icon">📦</span> B2B 봉투 필름지 문의 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 5px;border-radius:4px;margin-left:3px;">준비중</span></a>
+          </div></div>
+        <a href="partners.html" data-ko="고객·협력사">Partners</a>
+      </nav>
+      <div class="header-actions">
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"/><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"/><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"/><path d="M9 13.5h6"/><path d="M9 16.5h6"/></svg>
+        </a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── HERO ── -->
+    <section class="cd-hero">
+      <div class="container">
+        <p class="cd-hero-eyebrow">B2B Drip Bag Inquiry</p>
+        <h1>드립백 맞춤 주문 문의</h1>
+        <p class="cd-hero-desc">디자인, 원두, 수량을 선택하고 견적을 요청하세요.<br/>영업일 1~2일 내 담당자가 연락드립니다.</p>
+      </div>
+    </section>
+
+    <!-- ── FORM SECTION ── -->
+    <section class="section" style="padding-top:48px;padding-bottom:64px;">
+      <div class="container">
+
+        <!-- Step Indicator -->
+        <div class="cd-steps">
+          <div class="cd-step active" data-step="1">
+            <span class="cd-step-num">1</span>
+            <span>기본 정보</span>
+          </div>
+          <div class="cd-step-line"></div>
+          <div class="cd-step" data-step="2">
+            <span class="cd-step-num">2</span>
+            <span>디자인</span>
+          </div>
+          <div class="cd-step-line"></div>
+          <div class="cd-step" data-step="3">
+            <span class="cd-step-num">3</span>
+            <span>제품 사양</span>
+          </div>
+        </div>
+
+        <form id="dripForm" class="cd-form-wrap" novalidate>
+
+          <!-- ═══ STEP 1: 기본 정보 ═══ -->
+          <div class="cd-panel active" id="panel1">
+            <h2 class="cd-form-title">기본 정보</h2>
+            <p class="cd-form-subtitle">문의하시는 분의 연락처를 입력해 주세요.</p>
+
+            <div class="cd-row">
+              <div class="cd-group">
+                <label>이름 <span class="req">*</span></label>
+                <input type="text" id="d_name" required placeholder="홍길동"/>
+              </div>
+              <div class="cd-group">
+                <label>전화번호 <span class="req">*</span></label>
+                <input type="tel" id="d_phone" required placeholder="010-0000-0000"/>
+              </div>
+            </div>
+            <div class="cd-row">
+              <div class="cd-group">
+                <label>업체명 <span class="req">*</span></label>
+                <input type="text" id="d_company" required placeholder="(주)커피코리아"/>
+              </div>
+              <div class="cd-group">
+                <label>이메일 <span class="req">*</span></label>
+                <input type="email" id="d_email" required placeholder="example@company.com"/>
+              </div>
+            </div>
+
+            <div class="cd-actions">
+              <span></span>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(2)">다음 단계 →</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 2: 디자인 ═══ -->
+          <div class="cd-panel" id="panel2">
+            <h2 class="cd-form-title">디자인 선택</h2>
+            <p class="cd-form-subtitle">드립백 패키지에 인쇄할 디자인을 알려주세요.</p>
+
+            <div class="cd-group">
+              <label>디자인 보유 여부 <span class="req">*</span></label>
+              <div class="cd-radio-cards">
+                <div class="cd-radio-card">
+                  <input type="radio" name="d_has_design" id="d_design_yes" value="yes" onchange="toggleDesign('yes')"/>
+                  <label for="d_design_yes">
+                    <span class="cd-rc-icon">🎨</span>
+                    디자인 있음
+                    <span class="cd-rc-sub">파일을 준비했어요</span>
+                  </label>
+                </div>
+                <div class="cd-radio-card">
+                  <input type="radio" name="d_has_design" id="d_design_no" value="no" onchange="toggleDesign('no')"/>
+                  <label for="d_design_no">
+                    <span class="cd-rc-icon">✏️</span>
+                    디자인 없음
+                    <span class="cd-rc-sub">제작을 의뢰할게요</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 디자인 있음 -->
+            <div class="cd-conditional" id="design_yes_panel">
+              <div class="cd-group">
+                <label>디자인 설명</label>
+                <textarea id="d_design_desc_yes" placeholder="디자인 컨셉이나 특이사항을 간단히 알려주세요."></textarea>
+              </div>
+              <div class="cd-notice">
+                📎 디자인 파일(AI, PSD, PDF, JPG 등)은 문의 확인 후 담당자 이메일(<strong>skdngus77@naver.com</strong>)로 보내주세요.
+              </div>
+            </div>
+
+            <!-- 디자인 없음 -->
+            <div class="cd-conditional" id="design_no_panel">
+              <div class="cd-group">
+                <label>원하는 디자인 설명</label>
+                <textarea id="d_design_desc_no" placeholder="원하는 느낌, 색상, 포함할 텍스트 등을 자유롭게 적어주세요. 예: '미니멀한 흑백 디자인, 회사 로고 중앙 배치'"></textarea>
+              </div>
+              <p style="font-size:12px;color:var(--muted);margin:0 0 8px;">또는 <a href="custom-edition.html#samples" style="color:var(--accent);font-weight:600;">샘플 갤러리</a>에서 참고 디자인을 확인해 보세요.</p>
+            </div>
+
+            <!-- 칼집 다운로드 -->
+            <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line);">
+              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px;">디자인 칼집 (가이드 파일)</label>
+              <a class="cd-download" href="#" onclick="alert('디자인 칼집 파일은 곧 업데이트 예정입니다. 담당자에게 문의해 주세요.');return false;">
+                📐 드립백 디자인 칼집 다운로드 (PDF)
+              </a>
+              <p class="cd-download-note">* 칼집 파일은 곧 업데이트 예정입니다. 디자인 작업 시 참고용 가이드입니다.</p>
+            </div>
+
+            <div class="cd-actions">
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(1)">← 이전</button>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(3)">다음 단계 →</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 3: 제품 사양 ═══ -->
+          <div class="cd-panel" id="panel3">
+            <h2 class="cd-form-title">제품 사양</h2>
+            <p class="cd-form-subtitle">원두, 수량, 포장 옵션을 선택해 주세요.</p>
+
+            <!-- 원두 선택 -->
+            <div class="cd-group">
+              <label>사용 원두 선택 <span class="req">*</span></label>
+              <div class="cd-coffee-grid">
+                <div class="cd-coffee-card">
+                  <input type="radio" name="d_coffee" id="d_coffee_granbar" value="그란바"/>
+                  <label for="d_coffee_granbar">
+                    <div class="cd-coffee-name">Gran Bar 그란바</div>
+                    <div class="cd-coffee-sub">미디엄-다크 · Arabica 40% + Robusta 60%</div>
+                    <div class="cd-coffee-tags">
+                      <span class="cd-coffee-tag">다크 코코아</span>
+                      <span class="cd-coffee-tag">고소한 견과류</span>
+                      <span class="cd-coffee-tag">풍부한 바디</span>
+                    </div>
+                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:70%"></div></div></div>
+                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:25%"></div></div></div>
+                  </label>
+                </div>
+                <div class="cd-coffee-card">
+                  <input type="radio" name="d_coffee" id="d_coffee_dolce" value="돌체이탈리아"/>
+                  <label for="d_coffee_dolce">
+                    <div class="cd-coffee-name">Dolce Italia 돌체이탈리아</div>
+                    <div class="cd-coffee-sub">미디엄 · 아라비카 중심 블렌드</div>
+                    <div class="cd-coffee-tags">
+                      <span class="cd-coffee-tag">바닐라</span>
+                      <span class="cd-coffee-tag">아몬드</span>
+                      <span class="cd-coffee-tag">부드러운 단맛</span>
+                    </div>
+                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:65%"></div></div></div>
+                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:35%"></div></div></div>
+                  </label>
+                </div>
+                <div class="cd-coffee-card">
+                  <input type="radio" name="d_coffee" id="d_coffee_roma" value="로마"/>
+                  <label for="d_coffee_roma">
+                    <div class="cd-coffee-name">Roma 로마</div>
+                    <div class="cd-coffee-sub">미디엄 · 100% Arabica</div>
+                    <div class="cd-coffee-tags">
+                      <span class="cd-coffee-tag">시트러스</span>
+                      <span class="cd-coffee-tag">트로피컬</span>
+                      <span class="cd-coffee-tag">밝은 산미</span>
+                    </div>
+                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:50%"></div></div></div>
+                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:72%"></div></div></div>
+                  </label>
+                </div>
+                <div class="cd-coffee-card">
+                  <input type="radio" name="d_coffee" id="d_coffee_volcano" value="볼케이노 루비"/>
+                  <label for="d_coffee_volcano">
+                    <div class="cd-coffee-name">Volcano Ruby 볼케이노 루비</div>
+                    <div class="cd-coffee-sub">G1 내추럴 · 프리미엄 로부스타</div>
+                    <div class="cd-coffee-tags">
+                      <span class="cd-coffee-tag">다크 초콜릿</span>
+                      <span class="cd-coffee-tag">베리</span>
+                      <span class="cd-coffee-tag">스모키</span>
+                    </div>
+                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:85%"></div></div></div>
+                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:20%"></div></div></div>
+                  </label>
+                </div>
+              </div>
+              <div style="margin-top:12px;">
+                <div class="cd-coffee-card">
+                  <input type="radio" name="d_coffee" id="d_coffee_blend12" value="블렌드 12종 선택"/>
+                  <label for="d_coffee_blend12" style="text-align:center;">
+                    <div class="cd-coffee-name">팔롬비니 블렌드 12종</div>
+                    <div class="cd-coffee-sub">다양한 블렌드 라인업에서 자유롭게 선택 가능</div>
+                  </label>
+                </div>
+                <div class="cd-conditional" id="blend12_panel">
+                  <div class="cd-group" style="margin-top:12px;">
+                    <label>원하는 블렌드를 알려주세요</label>
+                    <textarea id="d_blend12_detail" placeholder="원하는 블렌드명 또는 선호하는 맛 프로필을 알려주세요. 담당자가 최적의 블렌드를 추천해 드립니다."></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 주문 수량 -->
+            <div class="cd-group">
+              <label>주문 수량 <span class="req">*</span></label>
+              <div class="cd-chip-group">
+                <div class="cd-chip"><input type="radio" name="d_qty" id="d_qty_100" value="100"/><label for="d_qty_100">100개</label></div>
+                <div class="cd-chip"><input type="radio" name="d_qty" id="d_qty_200" value="200"/><label for="d_qty_200">200개</label></div>
+                <div class="cd-chip"><input type="radio" name="d_qty" id="d_qty_500" value="500"/><label for="d_qty_500">500개</label></div>
+                <div class="cd-chip"><input type="radio" name="d_qty" id="d_qty_1000" value="1000"/><label for="d_qty_1000">1,000개</label></div>
+                <div class="cd-chip"><input type="radio" name="d_qty" id="d_qty_other" value="기타" onchange="document.getElementById('d_qty_detail').style.display='block'"/><label for="d_qty_other">기타</label></div>
+              </div>
+              <input type="text" id="d_qty_detail" placeholder="희망 수량을 입력해 주세요" style="display:none;margin-top:10px;"/>
+            </div>
+
+            <!-- 필름지 선택 -->
+            <div class="cd-group">
+              <label>드립백 필름지 <span class="req">*</span></label>
+              <div class="cd-chip-group">
+                <div class="cd-chip"><input type="radio" name="d_film" id="d_film_white" value="흰색"/><label for="d_film_white">흰색</label></div>
+                <div class="cd-chip"><input type="radio" name="d_film" id="d_film_gold" value="골드"/><label for="d_film_gold">골드</label></div>
+                <div class="cd-chip"><input type="radio" name="d_film" id="d_film_custom" value="맞춤 디자인"/><label for="d_film_custom">맞춤 디자인</label></div>
+              </div>
+            </div>
+
+            <!-- 포장 방법 -->
+            <div class="cd-group">
+              <label>포장 방법 <span class="req">*</span></label>
+              <div class="cd-chip-group">
+                <div class="cd-chip"><input type="radio" name="d_pkg" id="d_pkg_single" value="낱개 포장"/><label for="d_pkg_single">낱개 포장</label></div>
+                <div class="cd-chip"><input type="radio" name="d_pkg" id="d_pkg_box" value="팔롬비니 박스"/><label for="d_pkg_box">팔롬비니 박스</label></div>
+                <div class="cd-chip"><input type="radio" name="d_pkg" id="d_pkg_other" value="기타"/><label for="d_pkg_other">기타</label></div>
+              </div>
+            </div>
+
+            <!-- 희망 제작 날짜 -->
+            <div class="cd-group">
+              <label>희망 제작 날짜</label>
+              <input type="date" id="d_date"/>
+              <div class="cd-notice" style="margin-top:8px;">
+                📅 수량, 디자인, 필름지 등에 따라 제작 일정이 달라질 수 있습니다. 정확한 일정은 상담 시 안내해 드립니다.
+              </div>
+            </div>
+
+            <!-- 기타 요청사항 -->
+            <div class="cd-group">
+              <label>기타 요청사항</label>
+              <textarea id="d_notes" placeholder="추가로 알려주실 내용이 있으시면 자유롭게 적어주세요."></textarea>
+            </div>
+
+            <!-- 샘플 요청 -->
+            <div class="cd-check">
+              <input type="checkbox" id="d_sample"/>
+              <label for="d_sample">제작 전 샘플을 먼저 받아보고 싶습니다</label>
+            </div>
+
+            <!-- 개인정보 동의 -->
+            <div class="cd-check">
+              <input type="checkbox" id="d_agree" required/>
+              <label for="d_agree"><strong>개인정보 수집 및 이용에 동의합니다.</strong> 수집된 정보(이름, 전화번호, 이메일, 업체명)는 견적 안내 및 상담 목적으로만 사용되며, 목적 달성 후 즉시 파기됩니다.</label>
+            </div>
+
+            <div class="cd-actions">
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(2)">← 이전</button>
+              <button type="submit" class="cd-btn cd-btn-submit" id="dripSubmitBtn">📩 견적 요청하기</button>
+            </div>
+
+            <div class="cd-status" id="dripStatus"></div>
+          </div>
+
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-sitemap">
+        <div class="footer-col">
+          <h4>브랜드</h4>
+          <a href="index.html#about">회사 소개</a>
+          <a href="index.html#tech">기술력</a>
+          <a href="index.html#heritage">헤리티지</a>
+          <a href="index.html#reviews">고객 후기</a>
+          <a href="index.html#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>제품</h4>
+          <a href="products/">팔롬비니 상품 라인업</a>
+          <a href="lineup.html">계열사 상품 라인업</a>
+          <a href="products/volcano-ruby.html">볼케이노 루비</a>
+          <a href="machines/">패키징 머신 라인업</a>
+        </div>
+        <div class="footer-col">
+          <h4>B2B</h4>
+          <a href="b2b-lineup.html">B2B 상품 라인업</a>
+          <a href="custom-edition.html">드립백 맞춤 주문</a>
+          <a href="b2b.html">드립백 생산 현장</a>
+          <a href="b2b-bean.html">생두·원두 대량 주문</a>
+          <a href="film-custom.html">봉투 필름지 맞춤 주문</a>
+        </div>
+        <div class="footer-col">
+          <h4>고객지원</h4>
+          <a href="contact.html">문의하기</a>
+          <a href="partners.html">고객·협력사</a>
+          <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">네이버 스마트스토어</a>
+          <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-biz">
+        <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
+        <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+        <p class="footer-sub">원두에서 패키지까지 &middot; Caff&egrave; Palombini Heritage &middot; Volcano Ruby &middot; Custom Drip Bag &middot; Packaging Machines</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    var header = document.querySelector('.site-header');
+    window.addEventListener('scroll', function() { header.classList.toggle('scrolled', window.scrollY > 20); }, {passive:true});
+
+    /* ── Step Navigation ── */
+    var currentStep = 1;
+    function goStep(n) {
+      // Validate current step before moving forward
+      if (n > currentStep) {
+        if (currentStep === 1) {
+          var fields = ['d_name','d_phone','d_company','d_email'];
+          for (var i = 0; i < fields.length; i++) {
+            var f = document.getElementById(fields[i]);
+            if (!f.value.trim()) { f.focus(); f.reportValidity(); return; }
+          }
+        }
+      }
+      currentStep = n;
+      document.querySelectorAll('.cd-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.getElementById('panel' + n).classList.add('active');
+      document.querySelectorAll('.cd-step').forEach(function(s) {
+        var sn = parseInt(s.getAttribute('data-step'));
+        s.classList.remove('active','done');
+        if (sn === n) s.classList.add('active');
+        else if (sn < n) s.classList.add('done');
+      });
+      document.querySelectorAll('.cd-step-line').forEach(function(l, i) {
+        l.classList.toggle('active', i < n - 1);
+      });
+      window.scrollTo({top: document.querySelector('.cd-steps').offsetTop - 100, behavior:'smooth'});
+    }
+
+    /* ── Design Toggle ── */
+    function toggleDesign(val) {
+      document.getElementById('design_yes_panel').classList.toggle('show', val === 'yes');
+      document.getElementById('design_no_panel').classList.toggle('show', val === 'no');
+    }
+
+    /* ── Blend 12 Toggle ── */
+    document.querySelectorAll('input[name="d_coffee"]').forEach(function(r) {
+      r.addEventListener('change', function() {
+        document.getElementById('blend12_panel').classList.toggle('show', this.value === '블렌드 12종 선택');
+      });
+    });
+
+    /* ── Qty Other Toggle ── */
+    document.querySelectorAll('input[name="d_qty"]').forEach(function(r) {
+      r.addEventListener('change', function() {
+        document.getElementById('d_qty_detail').style.display = this.value === '기타' ? 'block' : 'none';
+      });
+    });
+
+    /* ── Form Submit ── */
+    var GAS_URL = 'https://script.google.com/macros/s/AKfycbz_YMOtKlhnpF2F51dhyHlpCn99C1AKoTJQ59W5hCWzZCDwbzCKDgHd-WMfs60SE4I0Sw/exec';
+
+    document.getElementById('dripForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      if (!document.getElementById('d_agree').checked) {
+        alert('개인정보 수집 및 이용에 동의해 주세요.');
+        return;
+      }
+
+      var btn = document.getElementById('dripSubmitBtn');
+      var status = document.getElementById('dripStatus');
+      btn.disabled = true;
+      btn.textContent = '보내는 중...';
+      status.className = 'cd-status';
+
+      var hasDesign = document.querySelector('input[name="d_has_design"]:checked');
+      var coffee = document.querySelector('input[name="d_coffee"]:checked');
+      var qty = document.querySelector('input[name="d_qty"]:checked');
+      var film = document.querySelector('input[name="d_film"]:checked');
+      var pkg = document.querySelector('input[name="d_pkg"]:checked');
+
+      var data = {
+        form_type: 'B2B 드립백 문의',
+        name: document.getElementById('d_name').value,
+        phone: document.getElementById('d_phone').value,
+        company: document.getElementById('d_company').value,
+        email: document.getElementById('d_email').value,
+        has_design: hasDesign ? hasDesign.value : '',
+        design_description: hasDesign && hasDesign.value === 'yes' ? document.getElementById('d_design_desc_yes').value : document.getElementById('d_design_desc_no').value,
+        coffee: coffee ? coffee.value : '',
+        blend12_detail: document.getElementById('d_blend12_detail').value,
+        quantity: qty ? (qty.value === '기타' ? '기타: ' + document.getElementById('d_qty_detail').value : qty.value) : '',
+        film_type: film ? film.value : '',
+        packaging: pkg ? pkg.value : '',
+        desired_date: document.getElementById('d_date').value,
+        sample_request: document.getElementById('d_sample').checked ? '예' : '아니오',
+        notes: document.getElementById('d_notes').value,
+        submitted_at: new Date().toLocaleString('ko-KR', {timeZone:'Asia/Seoul'})
+      };
+
+      try {
+        await fetch(GAS_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
+        status.className = 'cd-status success';
+        status.textContent = '✅ 문의가 성공적으로 전달되었습니다! 영업일 1~2일 내로 담당자가 연락드리겠습니다.';
+        this.reset();
+        goStep(1);
+      } catch(err) {
+        status.className = 'cd-status error';
+        status.textContent = '❌ 전송 중 오류가 발생했습니다. 이메일(skdngus77@naver.com)로 직접 문의해 주세요.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '📩 견적 요청하기';
+      }
+    });
+  </script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -261,10 +261,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
     { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
     { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기', badge: '준비중' },
+    { type: 'label', label: '문의' },
+    { href: `${prefix}contact.html`, label: '일반 문의' },
+    { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
+    { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
+    { href: '#', label: 'B2B 봉투 필름지 문의', badge: '준비중' },
     { type: 'label', label: '기타' },
     { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
-    { href: `${prefix}contact.html`, label: '문의하기' },
-    { href: '#', label: '고객·협력사', badge: '준비중' }
+    { href: `${prefix}partners.html`, label: '고객·협력사' }
   ];
 
   panel.setAttribute('data-global-mobile-nav', '');
