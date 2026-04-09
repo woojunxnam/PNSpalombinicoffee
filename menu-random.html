@@ -753,15 +753,77 @@
       100% { opacity: 0; transform: translateY(80vh) rotate(720deg) scale(.3); }
     }
 
+    /* ── PAIRING RESULT ─────────────────────── */
+    .pairing-result-wrap {
+      display: flex; gap: 10px; align-items: stretch; margin-bottom: 20px;
+    }
+    .pairing-card {
+      flex: 1; background: var(--card); border: 1.5px solid var(--line);
+      border-radius: 16px; padding: 20px 12px; text-align: center;
+    }
+    .pairing-card:first-child { border-color: var(--accent); box-shadow: 0 4px 16px rgba(192,122,61,.12); }
+    .pairing-plus {
+      display: flex; align-items: center; font-size: 22px; color: var(--accent); font-weight: 800;
+    }
+    .pairing-icon { font-size: 32px; margin-bottom: 8px; display: block; }
+    .pairing-name { font-family: var(--serif); font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+    .pairing-cat { font-size: 10.5px; color: var(--muted); }
+    .pairing-label {
+      font-size: 9px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--accent-dk); margin-bottom: 8px;
+    }
+
+    /* ── TOURNAMENT ─────────────────────────── */
+    .vs-round-info { text-align: center; margin-bottom: 20px; }
+    .vs-round-badge {
+      display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .1em;
+      color: #fff; background: var(--accent); border-radius: 8px; padding: 5px 14px; margin-bottom: 10px;
+    }
+    .vs-question { font-family: var(--serif); font-size: clamp(16px,4vw,20px); font-weight: 600; }
+    .vs-area { display: flex; gap: 12px; align-items: stretch; margin-bottom: 16px; }
+    .vs-card {
+      flex: 1; background: var(--card); border: 2.5px solid var(--line); border-radius: 18px;
+      padding: 28px 14px; text-align: center; cursor: pointer; transition: all .2s;
+    }
+    .vs-card:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(43,29,20,.08); }
+    .vs-card:active { transform: translateY(0); }
+    .vs-card-icon { font-size: 36px; display: block; margin-bottom: 10px; }
+    .vs-card-name { font-family: var(--serif); font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+    .vs-card-cat { font-size: 11px; color: var(--muted); }
+    .vs-divider { display: flex; align-items: center; font-size: 18px; font-weight: 900; color: var(--accent); }
+    .vs-progress { display: flex; gap: 5px; justify-content: center; margin-top: 16px; }
+    .vs-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--bg2); border: 1px solid var(--line); transition: all .2s; }
+    .vs-dot.done { background: var(--accent); border-color: var(--accent); }
+    .vs-dot.current { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 8px rgba(200,170,110,.5); transform: scale(1.3); }
+    .vs-winner-title { font-family: var(--serif); font-size: clamp(20px,5vw,26px); font-weight: 600; margin: 8px 0 4px; }
+    .vs-winner-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+    /* ── STATS RESET ───────────────────────── */
+    .stats-reset { text-align: center; margin-top: 8px; }
+    .stats-reset-btn {
+      background: none; border: none; font-size: 10px; color: var(--muted);
+      cursor: pointer; opacity: .5; font-family: var(--sans); text-decoration: underline;
+    }
+    .stats-reset-btn:hover { opacity: 1; color: var(--accent); }
+
     /* ── RESPONSIVE ─────────────────────────── */
     @media (max-width: 400px) {
-      .mr-mode-cards { grid-template-columns: 1fr; }
+      .mr-mode-cards { grid-template-columns: 1fr 1fr; }
+      .mr-mode-card { padding: 18px 10px; }
+      .mr-mode-name { font-size: 13px; }
+      .mr-mode-desc { font-size: 10.5px; }
       .mood-grid { grid-template-columns: repeat(2, 1fr); }
       .rec-choices { grid-template-columns: 1fr; }
       .spin-wheel-wrap { width: 220px; height: 220px; }
       .spin-wheel { width: 220px; height: 220px; }
       .spin-center-btn { width: 66px; height: 66px; font-size: 12px; }
       .fun-fact-cards { grid-template-columns: 1fr; }
+      .vs-area { gap: 8px; }
+      .vs-card { padding: 20px 10px; }
+      .vs-card-name { font-size: 13px; }
+      .pairing-result-wrap { gap: 6px; }
+      .pairing-card { padding: 14px 8px; }
+      .pairing-name { font-size: 12.5px; }
       .share-btn { padding: 8px 12px; font-size: 11.5px; }
     }
   </style>
@@ -796,6 +858,16 @@
           <span class="mr-mode-icon">&#x1F9ED;</span>
           <div class="mr-mode-name">맞춤 추천</div>
           <div class="mr-mode-desc">취향에 딱 맞는<br/>메뉴를 찾아드려요</div>
+        </div>
+        <div class="mr-mode-card" onclick="startPairing()">
+          <span class="mr-mode-icon">&#x1F370;</span>
+          <div class="mr-mode-name">페어링 추천</div>
+          <div class="mr-mode-desc">음료+디저트<br/>찰떡 조합 추천</div>
+        </div>
+        <div class="mr-mode-card" onclick="startTournament()">
+          <span class="mr-mode-icon">&#x1F3C6;</span>
+          <div class="mr-mode-name">메뉴 월드컵</div>
+          <div class="mr-mode-desc">8강 토너먼트!<br/>내 최애 메뉴 찾기</div>
         </div>
       </div>
     </div>
@@ -1036,6 +1108,66 @@
         </div>
       </div>
     </div>
+
+    <!-- ═══ PANEL 4: PAIRING ═══ -->
+    <div class="mr-panel" id="panelPairing">
+      <div id="pairingFlow"></div>
+      <div id="pairingResult" style="display:none;">
+        <div style="text-align:center;">
+          <div style="font-size:36px; margin-bottom:8px;">&#x1F370;&#x2615;</div>
+          <div class="rec-results-title">오늘의 찰떡 페어링</div>
+          <div class="rec-results-sub" id="pairingResultSub">당신을 위한 조합!</div>
+        </div>
+        <div class="pairing-result-wrap" id="pairingCards"></div>
+
+        <div class="stat-bar-wrap" id="pairingStatWrap">
+          <div class="stat-bar-title">&#x1F4CA; LIVE PICK STATS</div>
+          <div class="stat-bars" id="pairingStatBars"></div>
+        </div>
+        <div class="fun-facts" id="pairingFunFacts"></div>
+
+        <div class="share-section">
+          <div class="share-title">&#x1F4E2; &#xACF5;&#xC720;&#xD558;&#xAE30;</div>
+          <div class="share-btns">
+            <button class="share-btn share-btn-kakao" onclick="shareKakao('pairing')"><span class="share-btn-icon">&#x1F4AC;</span> &#xCE74;&#xCE74;&#xC624;&#xD1A1;</button>
+            <button class="share-btn share-btn-x" onclick="shareX('pairing')"><span class="share-btn-icon">&#x1D54F;</span> &#xD2B8;&#xC704;&#xD130;</button>
+            <button class="share-btn share-btn-copy" onclick="shareCopy('pairing')"><span class="share-btn-icon">&#x1F4CB;</span> &#xBCF5;&#xC0AC;</button>
+          </div>
+        </div>
+
+        <div class="survey-section" id="pairingSurveySection">
+          <div class="survey-card">
+            <div class="survey-title">&#x1F4CB; &#xAC04;&#xB2E8; &#xC124;&#xBB38;</div>
+            <div class="survey-sub">더 나은 추천을 위해 알려주세요!<br/>선택하지 않아도 괜찮아요.</div>
+            <div class="survey-row"><span class="survey-label">MBTI</span><div class="survey-chips mbti-chips"><span class="survey-chip" data-v="E">E</span><span class="survey-chip" data-v="I">I</span><span class="survey-chip" data-v="S">S</span><span class="survey-chip" data-v="N">N</span><span class="survey-chip" data-v="T">T</span><span class="survey-chip" data-v="F">F</span><span class="survey-chip" data-v="J">J</span><span class="survey-chip" data-v="P">P</span></div></div>
+            <div class="survey-row"><span class="survey-label">성별</span><div class="survey-chips sex-chips"><span class="survey-chip" data-v="M">남성</span><span class="survey-chip" data-v="F">여성</span></div></div>
+            <div class="survey-row"><span class="survey-label">연령대</span><div class="survey-chips age-chips"><span class="survey-chip" data-v="10">10대</span><span class="survey-chip" data-v="20">20대</span><span class="survey-chip" data-v="30">30대</span><span class="survey-chip" data-v="40">40대</span><span class="survey-chip" data-v="50">50+</span></div></div>
+            <div class="survey-row"><span class="survey-label">방문 이유</span><div class="survey-chips reason-chips"><span class="survey-chip" data-v="work">작업/공부</span><span class="survey-chip" data-v="date">데이트</span><span class="survey-chip" data-v="friends">친구 만남</span><span class="survey-chip" data-v="alone">혼자 힐링</span><span class="survey-chip" data-v="takeout">테이크아웃</span></div></div>
+            <div class="mr-btn-row" style="margin-top:20px;">
+              <button class="mr-btn mr-btn-primary" onclick="submitSurvey('pairingSurveySection')">&#x2714; 제출하기</button>
+              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey('pairingSurveySection')">건너뛰기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mr-btn-row" style="margin-top:24px;">
+          <button class="mr-btn mr-btn-primary" onclick="startPairing()">&#x1F504; 다시 추천받기</button>
+          <button class="mr-btn mr-btn-secondary" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+        </div>
+      </div>
+      <div class="mr-btn-row" id="pairingBackRow">
+        <button class="mr-btn mr-btn-ghost" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 5: TOURNAMENT ═══ -->
+    <div class="mr-panel" id="panelTournament">
+      <div id="tournamentArea"></div>
+      <div class="mr-btn-row" id="tournamentBackRow">
+        <button class="mr-btn mr-btn-ghost" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+      </div>
+    </div>
+
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1196,9 +1328,12 @@
     '맛있는 음료 한 잔이 스트레스를 날려줄 거예요.'
   ];
 
-  /* ── Last pick state (for sharing) ─────── */
+  /* ── Last pick state (for sharing & tracking) ─────── */
+  let lastFlowType = null; // 'random','rec','pairing','tournament'
   let lastRandomPick = null;
   let lastRecPicks = [];
+  let lastPairingPicks = null; // { drink, dessert }
+  let lastTournamentPick = null;
 
   /* ══════════════════════════════════════════════════════
      PANEL NAVIGATION
@@ -1258,6 +1393,7 @@
   }
 
   function showSpinResult(pick) {
+    lastFlowType = 'random';
     lastRandomPick = pick;
 
     document.getElementById('resultEmoji').textContent = pick.icon;
@@ -1528,6 +1664,7 @@
 
     picks.sort((a, b) => b.score - a.score);
     const top = picks.slice(0, 4);
+    lastFlowType = 'rec';
     lastRecPicks = top;
     selectedRecIdx = 0;
 
@@ -1570,13 +1707,15 @@
     if (!stats.categories) stats.categories = {};
 
     const itemsToTrack = [];
-    if (lastRandomPick) {
+    if (lastFlowType === 'random' && lastRandomPick) {
       itemsToTrack.push(lastRandomPick);
-    }
-    if (lastRecPicks.length > 0) {
-      // Only track the selected item, not all 4
+    } else if (lastFlowType === 'rec' && lastRecPicks.length > 0) {
       const selected = lastRecPicks[selectedRecIdx] || lastRecPicks[0];
       itemsToTrack.push(selected);
+    } else if (lastFlowType === 'pairing' && lastPairingPicks) {
+      itemsToTrack.push(lastPairingPicks.drink, lastPairingPicks.dessert);
+    } else if (lastFlowType === 'tournament' && lastTournamentPick) {
+      itemsToTrack.push(lastTournamentPick);
     }
 
     itemsToTrack.forEach(p => {
@@ -1614,6 +1753,20 @@
           <span class="stat-pct">${pct}%</span>
         </div>`;
     }).join('');
+    bars.innerHTML += '<div class="stats-reset"><button class="stats-reset-btn" onclick="resetAllStats()">통계 초기화</button></div>';
+  }
+
+  function resetAllStats() {
+    if (!confirm('모든 통계 데이터를 초기화하시겠습니까?')) return;
+    localStorage.removeItem('pns_pick_stats');
+    localStorage.removeItem('pns_surveys');
+    ['spinStatWrap','recStatWrap','pairingStatWrap','tournamentStatWrap'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.style.display = 'none';
+    });
+    ['spinFunFacts','recFunFacts','pairingFunFacts','tournamentFunFacts'].forEach(id => {
+      const el = document.getElementById(id); if (el) el.innerHTML = '';
+    });
+    showToast('통계가 초기화되었습니다.');
   }
 
   /* ══════════════════════════════════════════════════════
@@ -1748,11 +1901,16 @@
     const reason = section.querySelector('.reason-chips .survey-chip.selected')?.dataset.v || '';
     const data = { mbti, sex, age, reason, timestamp: new Date().toISOString() };
 
-    // Add picked items to survey data (only selected item)
-    if (lastRandomPick) data.picks = [lastRandomPick.name];
-    if (lastRecPicks.length > 0) {
-      const selected = lastRecPicks[selectedRecIdx] || lastRecPicks[0];
-      data.picks = [selected.name];
+    // Add picked items to survey data
+    if (lastFlowType === 'random' && lastRandomPick) data.picks = [lastRandomPick.name];
+    else if (lastFlowType === 'rec' && lastRecPicks.length > 0) {
+      data.picks = [(lastRecPicks[selectedRecIdx] || lastRecPicks[0]).name];
+    }
+    else if (lastFlowType === 'pairing' && lastPairingPicks) {
+      data.picks = [lastPairingPicks.drink.name, lastPairingPicks.dessert.name];
+    }
+    else if (lastFlowType === 'tournament' && lastTournamentPick) {
+      data.picks = [lastTournamentPick.name];
     }
 
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
@@ -1766,10 +1924,10 @@
     showToast('감사합니다! 설문이 저장되었습니다.');
 
     // Refresh stats and fun facts after survey
-    renderStats('spinStatWrap', 'spinStatBars');
-    renderStats('recStatWrap', 'recStatBars');
-    renderFunFacts('spinFunFacts');
-    renderFunFacts('recFunFacts');
+    ['spinStatWrap','recStatWrap','pairingStatWrap','tournamentStatWrap'].forEach((id, i) => {
+      renderStats(id, id.replace('Wrap','Bars'));
+    });
+    ['spinFunFacts','recFunFacts','pairingFunFacts','tournamentFunFacts'].forEach(id => renderFunFacts(id));
   }
 
   function skipSurvey(sectionId) {
@@ -1796,36 +1954,57 @@
       return `\u2728 나를 위한 추천 메뉴\n\n${list}\n\n` +
              `PNS 팔롬비니에서 추천받았어요!\n${SHARE_URL}`;
     }
+    if (mode === 'pairing' && lastPairingPicks) {
+      return `\uD83C\uDF70 오늘의 찰떡 페어링\n\n` +
+             `\u2615 ${lastPairingPicks.drink.name}\n` +
+             `\uD83C\uDF70 ${lastPairingPicks.dessert.name}\n\n` +
+             `PNS 팔롬비니에서 추천받았어요!\n${SHARE_URL}`;
+    }
+    if (mode === 'tournament' && lastTournamentPick) {
+      return `\uD83C\uDFC6 메뉴 월드컵 우승!\n\n` +
+             `${lastTournamentPick.icon} ${lastTournamentPick.name}\n\n` +
+             `PNS 팔롬비니에서 뽑았어요!\n${SHARE_URL}`;
+    }
     return `PNS 팔롬비니 메뉴 추천받기\n${SHARE_URL}`;
   }
 
   function shareKakao(mode) {
     if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
-      // Fallback: copy to clipboard
       shareCopy(mode);
-      showToast('카카오톡 SDK가 로드되지 않아 클립보드에 복사했습니다.');
+      showToast('카카오톡 SDK가 초기화되지 않았습니다. 클립보드에 복사했어요.');
       return;
     }
-    const text = getShareText(mode);
-    const title = mode === 'random'
-      ? (lastRandomPick ? `${lastRandomPick.icon} 오늘의 메뉴: ${lastRandomPick.name}` : '오늘 뭐 마시지?')
-      : '\u2728 나를 위한 추천 메뉴';
-    const desc = mode === 'random'
-      ? document.getElementById('fortuneText').textContent
-      : lastRecPicks.map(p => p.name).join(', ');
-
-    Kakao.Share.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: title,
-        description: desc,
-        imageUrl: 'https://www.pnscoffee.com/assets/img/pns-logo-upscaled.png',
-        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
-      },
-      buttons: [
-        { title: '나도 뽑아보기', link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL } }
-      ]
-    });
+    let title = '오늘 뭐 마시지?', desc = 'PNS 팔롬비니 메뉴 추천';
+    if (mode === 'random' && lastRandomPick) {
+      title = `${lastRandomPick.icon} 오늘의 메뉴: ${lastRandomPick.name}`;
+      desc = document.getElementById('fortuneText').textContent;
+    } else if (mode === 'rec' && lastRecPicks.length > 0) {
+      title = '\u2728 나를 위한 추천 메뉴';
+      desc = lastRecPicks.map(p => p.name).join(', ');
+    } else if (mode === 'pairing' && lastPairingPicks) {
+      title = '\uD83C\uDF70 오늘의 찰떡 페어링';
+      desc = `${lastPairingPicks.drink.name} + ${lastPairingPicks.dessert.name}`;
+    } else if (mode === 'tournament' && lastTournamentPick) {
+      title = '\uD83C\uDFC6 메뉴 월드컵 우승!';
+      desc = lastTournamentPick.name;
+    }
+    try {
+      Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: title,
+          description: desc,
+          imageUrl: 'https://www.pnscoffee.com/assets/img/pns-logo-upscaled.png',
+          link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
+        },
+        buttons: [
+          { title: '나도 뽑아보기', link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL } }
+        ]
+      });
+    } catch(e) {
+      shareCopy(mode);
+      showToast('카카오 공유 오류: ' + e.message);
+    }
   }
 
   function shareX(mode) {
@@ -1862,6 +2041,339 @@
     el.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     PAIRING FLOW (drink + dessert combo)
+  ══════════════════════════════════════════════════════ */
+  const PAIRING_STEPS = [
+    {
+      q: '오늘 어떤 느낌이에요?',
+      choices: [
+        { icon: '\u2600\uFE0F', label: '활기찬', sub: '에너지 넘치는 하루', value: 'energetic' },
+        { icon: '\uD83C\uDF19', label: '편안한', sub: '여유로운 시간', value: 'cozy' },
+        { icon: '\uD83C\uDF38', label: '달콤한', sub: '기분 좋은 하루', value: 'sweet' },
+        { icon: '\uD83C\uDF43', label: '상쾌한', sub: '가볍고 산뜻하게', value: 'fresh' }
+      ]
+    },
+    {
+      q: '카페인은 괜찮으세요?',
+      choices: [
+        { icon: '\u2615', label: '카페인 OK', sub: '커피도 좋아요!', value: 'caffeine' },
+        { icon: '\uD83C\uDF3F', label: '카페인 NO', sub: '논커피로 부드럽게', value: 'decaf' }
+      ]
+    },
+    {
+      q: '디저트는 어떤 스타일?',
+      choices: [
+        { icon: '\uD83C\uDF82', label: '케이크', sub: '촉촉한 한 조각', value: 'cake' },
+        { icon: '\uD83C\uDF66', label: '젤라또', sub: '시원한 아이스크림', value: 'gelato' },
+        { icon: '\uD83E\uDD50', label: '빵·간식', sub: '갈릭브레드, 모카번', value: 'bread' }
+      ]
+    }
+  ];
+
+  let pairingAnswers = [];
+  let pairingStepIdx = 0;
+
+  function startPairing() {
+    pairingAnswers = [];
+    pairingStepIdx = 0;
+    document.getElementById('pairingResult').style.display = 'none';
+    document.getElementById('pairingBackRow').style.display = '';
+    document.getElementById('pairingSurveySection').classList.remove('show');
+    showPanel('panelPairing');
+    renderPairingStep();
+  }
+
+  function renderPairingStep() {
+    if (pairingStepIdx >= PAIRING_STEPS.length) {
+      showPairingResult();
+      return;
+    }
+    const step = PAIRING_STEPS[pairingStepIdx];
+    const stepNum = pairingStepIdx + 1;
+    const flow = document.getElementById('pairingFlow');
+    flow.innerHTML = `
+      <div class="rec-step">
+        <div class="rec-step-num">STEP ${stepNum} / ${PAIRING_STEPS.length}</div>
+        <div class="rec-question">${step.q}</div>
+        <div class="rec-choices" style="${step.choices.length > 2 ? 'grid-template-columns:1fr 1fr;' : ''}">
+          ${step.choices.map(c => `
+            <div class="rec-choice" onclick="pickPairingChoice('${c.value}', this)">
+              <span class="rec-choice-icon">${c.icon}</span>
+              <div class="rec-choice-label">${c.label}</div>
+              <div class="rec-choice-sub">${c.sub}</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+  }
+
+  function pickPairingChoice(value, el) {
+    el.classList.add('selected');
+    setTimeout(() => {
+      pairingAnswers.push(value);
+      pairingStepIdx++;
+      renderPairingStep();
+    }, 250);
+  }
+
+  function showPairingResult() {
+    const mood = pairingAnswers[0];    // energetic, cozy, sweet, fresh
+    const caffeine = pairingAnswers[1]; // caffeine, decaf
+    const dessertType = pairingAnswers[2]; // cake, gelato, bread
+
+    // === Pick a drink ===
+    let drinkPool = [];
+    const drinkSrc = caffeine === 'caffeine'
+      ? { coffee: DRINKS.coffee }
+      : { latte: DRINKS.latte, ade: DRINKS.ade, fruittea: DRINKS.fruittea,
+          icedtea: DRINKS.icedtea, blacktea: DRINKS.blacktea, herbtea: DRINKS.herbtea, smoothie: DRINKS.smoothie };
+
+    for (const [catId, cat] of Object.entries(drinkSrc)) {
+      cat.items.forEach((name, i) => {
+        const tag = cat.tags ? cat.tags[i] : '';
+        let score = Math.random();
+        if (mood === 'energetic' && (tag === 'strong' || tag === 'classic' || tag === 'refresh')) score += 2;
+        if (mood === 'cozy' && (tag === 'sweet' || tag === 'calm' || tag === 'aromatic' || tag === 'tea')) score += 2;
+        if (mood === 'sweet' && (tag === 'sweet' || tag === 'chocolate' || tag === 'dessert' || tag === 'fruity')) score += 2;
+        if (mood === 'fresh' && (tag === 'refresh' || tag === 'citrus' || tag === 'tropical' || tag === 'mint')) score += 2;
+        drinkPool.push({ name, cat: cat.name, icon: cat.icon, catId, score });
+      });
+    }
+    drinkPool.sort((a, b) => b.score - a.score);
+    const drink = drinkPool[0];
+
+    // === Pick a dessert ===
+    const dsCatMap = { cake: 'cake', gelato: 'gelato', bread: 'dessert' };
+    const dsCat = DESSERTS[dsCatMap[dessertType]];
+    const dessertItems = dsCat.items.map(name => ({
+      name, cat: dsCat.name, icon: dsCat.icon, catId: dsCatMap[dessertType], score: Math.random()
+    }));
+    dessertItems.sort((a, b) => b.score - a.score);
+    const dessert = dessertItems[0];
+
+    lastFlowType = 'pairing';
+    lastPairingPicks = { drink, dessert };
+
+    // Render result
+    document.getElementById('pairingFlow').innerHTML = '';
+    document.getElementById('pairingBackRow').style.display = 'none';
+    const resultEl = document.getElementById('pairingResult');
+    resultEl.style.display = 'block';
+
+    document.getElementById('pairingCards').innerHTML = `
+      <div class="pairing-card">
+        <div class="pairing-label">DRINK</div>
+        <span class="pairing-icon">${drink.icon}</span>
+        <div class="pairing-name">${drink.name}</div>
+        <div class="pairing-cat">${drink.cat}</div>
+      </div>
+      <div class="pairing-plus">+</div>
+      <div class="pairing-card">
+        <div class="pairing-label">DESSERT</div>
+        <span class="pairing-icon">${dessert.icon}</span>
+        <div class="pairing-name">${dessert.name}</div>
+        <div class="pairing-cat">${dessert.cat}</div>
+      </div>`;
+
+    renderStats('pairingStatWrap', 'pairingStatBars');
+    renderFunFacts('pairingFunFacts');
+    setTimeout(() => document.getElementById('pairingSurveySection').classList.add('show'), 800);
+    fireConfetti();
+  }
+
+  /* ══════════════════════════════════════════════════════
+     TOURNAMENT (메뉴 월드컵 — 8-item bracket)
+  ══════════════════════════════════════════════════════ */
+  let tBracket = [];
+  let tWinners = [];
+  let tMatchIdx = 0;
+  let tTotalMatches = 0;
+  let tCompletedMatches = 0;
+
+  function getUniqueItems(count) {
+    const seen = new Set();
+    const items = [];
+    const shuffled = [...RANDOM_POOL].sort(() => Math.random() - 0.5);
+    for (const item of shuffled) {
+      if (!seen.has(item.name)) {
+        seen.add(item.name);
+        items.push({ ...item });
+        if (items.length >= count) break;
+      }
+    }
+    return items;
+  }
+
+  function startTournament() {
+    tBracket = getUniqueItems(8);
+    tWinners = [];
+    tMatchIdx = 0;
+    tTotalMatches = 7; // 4 + 2 + 1
+    tCompletedMatches = 0;
+    showPanel('panelTournament');
+    document.getElementById('tournamentBackRow').style.display = '';
+    renderTournamentMatch();
+  }
+
+  function getRoundLabel() {
+    if (tBracket.length === 8) return '8\uAC15';
+    if (tBracket.length === 4) return '4\uAC15';
+    if (tBracket.length === 2) return '\uACB0\uC2B9';
+    return '';
+  }
+
+  function getRoundQ() {
+    if (tBracket.length === 8) return '\uC5B4\uB5A4 \uBA54\uB274\uAC00 \uB354 \uB04C\uB9AC\uB098\uC694?';
+    if (tBracket.length === 4) return '\uC900\uACB0\uC2B9! \uCD5C\uC560\uB97C \uACE8\uB77C\uC8FC\uC138\uC694';
+    if (tBracket.length === 2) return '\uACB0\uC2B9\uC804! \uB2F9\uC2E0\uC758 1\uC704\uB294?';
+    return '';
+  }
+
+  function renderTournamentMatch() {
+    if (tBracket.length === 1) {
+      showTournamentWinner(tBracket[0]);
+      return;
+    }
+
+    const a = tBracket[tMatchIdx * 2];
+    const b = tBracket[tMatchIdx * 2 + 1];
+    const area = document.getElementById('tournamentArea');
+
+    // Progress dots
+    let dots = '';
+    for (let i = 0; i < tTotalMatches; i++) {
+      const cls = i < tCompletedMatches ? 'done' : i === tCompletedMatches ? 'current' : '';
+      dots += `<div class="vs-dot ${cls}"></div>`;
+    }
+
+    area.innerHTML = `
+      <div class="vs-round-info">
+        <div class="vs-round-badge">${getRoundLabel()} ${tMatchIdx + 1}/${Math.floor(tBracket.length / 2)}</div>
+        <div class="vs-question">${getRoundQ()}</div>
+      </div>
+      <div class="vs-area">
+        <div class="vs-card" onclick="pickTournament(0)">
+          <span class="vs-card-icon">${a.icon}</span>
+          <div class="vs-card-name">${a.name}</div>
+          <div class="vs-card-cat">${a.cat}</div>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="vs-card" onclick="pickTournament(1)">
+          <span class="vs-card-icon">${b.icon}</span>
+          <div class="vs-card-name">${b.name}</div>
+          <div class="vs-card-cat">${b.cat}</div>
+        </div>
+      </div>
+      <div class="vs-progress">${dots}</div>`;
+  }
+
+  function pickTournament(idx) {
+    const a = tBracket[tMatchIdx * 2];
+    const b = tBracket[tMatchIdx * 2 + 1];
+    const winner = idx === 0 ? a : b;
+
+    // Visual feedback
+    const cards = document.querySelectorAll('.vs-card');
+    cards[idx].style.borderColor = 'var(--accent)';
+    cards[idx].style.background = 'rgba(200,170,110,.08)';
+    cards[1 - idx].style.opacity = '.4';
+
+    tWinners.push(winner);
+    tCompletedMatches++;
+    tMatchIdx++;
+
+    setTimeout(() => {
+      if (tMatchIdx >= Math.floor(tBracket.length / 2)) {
+        tBracket = [...tWinners];
+        tWinners = [];
+        tMatchIdx = 0;
+      }
+      renderTournamentMatch();
+    }, 500);
+  }
+
+  function showTournamentWinner(winner) {
+    lastFlowType = 'tournament';
+    lastTournamentPick = winner;
+
+    document.getElementById('tournamentBackRow').style.display = 'none';
+    const area = document.getElementById('tournamentArea');
+    area.innerHTML = `
+      <div style="text-align:center; animation: fadeUp .4s ease;">
+        <div style="font-size:56px; margin-bottom:4px;">\uD83C\uDFC6</div>
+        <div class="vs-winner-title">${winner.name}</div>
+        <div class="vs-winner-sub">${winner.cat} \u2014 \uB2F9\uC2E0\uC758 \uCD5C\uC560 \uBA54\uB274!</div>
+
+        <div class="result-card" style="margin-top:20px; text-align:center;">
+          <span class="result-emoji">${winner.icon}</span>
+          <div class="result-label">CHAMPION</div>
+          <div class="result-menu-name">${winner.name}</div>
+          <div class="result-cat">${winner.cat}</div>
+        </div>
+
+        <div class="stat-bar-wrap" id="tournamentStatWrap">
+          <div class="stat-bar-title">\uD83D\uDCCA LIVE PICK STATS</div>
+          <div class="stat-bars" id="tournamentStatBars"></div>
+        </div>
+        <div class="fun-facts" id="tournamentFunFacts"></div>
+
+        <div class="share-section">
+          <div class="share-title">\uD83D\uDCE2 \uACF5\uC720\uD558\uAE30</div>
+          <div class="share-btns">
+            <button class="share-btn share-btn-kakao" onclick="shareKakao('tournament')"><span class="share-btn-icon">\uD83D\uDCAC</span> \uCE74\uCE74\uC624\uD1A1</button>
+            <button class="share-btn share-btn-x" onclick="shareX('tournament')"><span class="share-btn-icon">\uD835\uDD4F</span> \uD2B8\uC704\uD130</button>
+            <button class="share-btn share-btn-copy" onclick="shareCopy('tournament')"><span class="share-btn-icon">\uD83D\uDCCB</span> \uBCF5\uC0AC</button>
+          </div>
+        </div>
+
+        <div class="survey-section" id="tournamentSurveySection">
+          <div class="survey-card">
+            <div class="survey-title">\uD83D\uDCCB \uAC04\uB2E8 \uC124\uBB38</div>
+            <div class="survey-sub">\uB354 \uB098\uC740 \uCD94\uCC9C\uC744 \uC704\uD574 \uC54C\uB824\uC8FC\uC138\uC694!<br/>\uC120\uD0DD\uD558\uC9C0 \uC54A\uC544\uB3C4 \uAD1C\uCC2E\uC544\uC694.</div>
+            <div class="survey-row"><span class="survey-label">MBTI</span><div class="survey-chips mbti-chips"><span class="survey-chip" data-v="E">E</span><span class="survey-chip" data-v="I">I</span><span class="survey-chip" data-v="S">S</span><span class="survey-chip" data-v="N">N</span><span class="survey-chip" data-v="T">T</span><span class="survey-chip" data-v="F">F</span><span class="survey-chip" data-v="J">J</span><span class="survey-chip" data-v="P">P</span></div></div>
+            <div class="survey-row"><span class="survey-label">\uC131\uBCC4</span><div class="survey-chips sex-chips"><span class="survey-chip" data-v="M">\uB0A8\uC131</span><span class="survey-chip" data-v="F">\uC5EC\uC131</span></div></div>
+            <div class="survey-row"><span class="survey-label">\uC5F0\uB839\uB300</span><div class="survey-chips age-chips"><span class="survey-chip" data-v="10">10\uB300</span><span class="survey-chip" data-v="20">20\uB300</span><span class="survey-chip" data-v="30">30\uB300</span><span class="survey-chip" data-v="40">40\uB300</span><span class="survey-chip" data-v="50">50+</span></div></div>
+            <div class="survey-row"><span class="survey-label">\uBC29\uBB38 \uC774\uC720</span><div class="survey-chips reason-chips"><span class="survey-chip" data-v="work">\uC791\uC5C5/\uACF5\uBD80</span><span class="survey-chip" data-v="date">\uB370\uC774\uD2B8</span><span class="survey-chip" data-v="friends">\uCE5C\uAD6C \uB9CC\uB0A8</span><span class="survey-chip" data-v="alone">\uD63C\uC790 \uD790\uB9C1</span><span class="survey-chip" data-v="takeout">\uD14C\uC774\uD06C\uC544\uC6C3</span></div></div>
+            <div class="mr-btn-row" style="margin-top:20px;">
+              <button class="mr-btn mr-btn-primary" onclick="submitSurvey('tournamentSurveySection')">\u2714 \uC81C\uCD9C\uD558\uAE30</button>
+              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey('tournamentSurveySection')">\uAC74\uB108\uB6F0\uAE30</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mr-btn-row" style="margin-top:24px;">
+          <button class="mr-btn mr-btn-primary" onclick="startTournament()">\uD83D\uDD04 \uB2E4\uC2DC \uB3C4\uC804</button>
+          <button class="mr-btn mr-btn-secondary" onclick="showPanel('panelIntro')">\u2190 \uCC98\uC74C\uC73C\uB85C</button>
+        </div>
+      </div>`;
+
+    // Init survey chips for dynamically created content
+    const section = document.getElementById('tournamentSurveySection');
+    section.querySelectorAll('.mbti-chips').forEach(container => {
+      container.addEventListener('click', e => {
+        const chip = e.target.closest('.survey-chip');
+        if (!chip) return;
+        const pairs = { E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J' };
+        container.querySelector('.survey-chip[data-v="' + pairs[chip.dataset.v] + '"]')?.classList.remove('selected');
+        chip.classList.toggle('selected');
+      });
+    });
+    section.querySelectorAll('.sex-chips, .age-chips, .reason-chips').forEach(container => {
+      container.addEventListener('click', e => {
+        const chip = e.target.closest('.survey-chip');
+        if (!chip) return;
+        container.querySelectorAll('.survey-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      });
+    });
+
+    renderStats('tournamentStatWrap', 'tournamentStatBars');
+    renderFunFacts('tournamentFunFacts');
+    setTimeout(() => section.classList.add('show'), 800);
+    fireConfetti();
   }
 
   /* ── Kakao Init (safe — only if SDK loaded) ── */
