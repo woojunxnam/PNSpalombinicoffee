@@ -245,47 +245,89 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   }
 
   const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
-  const menuItems = [
+
+  const renderNavItem = (item) => {
+    const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
+    if (!item.href || item.href === '#') {
+      return `<a href="#" aria-disabled="true">${item.label}${badge}</a>`;
+    }
+    const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
+    const isCurrent = currentPath === itemPath;
+    const cls = item.volcano ? ' class="mobile-nav-volcano"' : '';
+    return `<a href="${item.href}"${cls}${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
+  };
+
+  const menuGroups = [
     { href: `${prefix}index.html`, label: '홈' },
-    { type: 'label', label: '브랜드' },
-    { href: `${prefix}index.html#tech`, label: 'Technology' },
-    { href: `${prefix}index.html#heritage`, label: 'Heritage' },
-    { href: `${prefix}index.html#reviews`, label: 'Reviews' },
-    { href: `${prefix}index.html#faq`, label: 'FAQ' },
-    { type: 'label', label: '제품' },
-    { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
-    { href: `${prefix}lineup.html`, label: '협력사 라인업' },
-    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
-    { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
-    { type: 'label', label: '자동화 장비' },
-    { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
-    { type: 'label', label: 'B2B' },
-    { href: `${prefix}b2b-lineup.html`, label: 'B2B 상품 라인업' },
-    { href: `${prefix}custom-edition.html`, label: '드립백 맞춤 주문' },
-    { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
-    { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
-    { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
-    { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기', badge: '준비중' },
-    { type: 'label', label: '문의' },
-    { href: `${prefix}contact.html`, label: '일반 문의' },
-    { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
-    { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
-    { href: '#', label: 'B2B 봉투 필름지 문의', badge: '준비중' },
-    { href: `${prefix}partners.html`, label: '고객·협력사', badge: '준비중' },
+    {
+      type: 'group', label: '브랜드',
+      items: [
+        { href: `${prefix}index.html#tech`, label: 'Technology' },
+        { href: `${prefix}index.html#heritage`, label: 'Heritage' },
+        { href: `${prefix}index.html#reviews`, label: 'Reviews' },
+        { href: `${prefix}index.html#faq`, label: 'FAQ' },
+      ]
+    },
+    {
+      type: 'group', label: '제품',
+      items: [
+        { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
+        { href: `${prefix}lineup.html`, label: '협력사 라인업' },
+        { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
+      ]
+    },
+    {
+      type: 'group', label: '자동화 장비',
+      items: [
+        { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
+      ]
+    },
+    {
+      type: 'group', label: 'B2B',
+      items: [
+        { href: `${prefix}b2b-lineup.html`, label: 'B2B 상품 라인업' },
+        { href: `${prefix}custom-edition.html`, label: '드립백 맞춤 주문' },
+        { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
+        { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
+        { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
+        { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기' },
+      ]
+    },
+    {
+      type: 'group', label: '문의',
+      items: [
+        { href: `${prefix}contact.html`, label: '일반 문의' },
+        { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
+        { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
+        { href: '#', label: 'B2B 봉투 필름지 문의' },
+      ]
+    },
+    { href: `${prefix}partners.html`, label: '고객·협력사' },
   ];
 
   panel.setAttribute('data-global-mobile-nav', '');
   panel.innerHTML = `
     <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
-      ${menuItems.map((item) => {
-        if (item.type === 'label') {
-          return `<div class="mobile-nav-label">${item.label}</div>`;
+      ${menuGroups.map((item) => {
+        if (item.type === 'group') {
+          const hasActive = item.items.some(child => {
+            if (!child.href || child.href === '#') return false;
+            const cp = new URL(child.href, window.location.href).pathname.replace(/\/$/, '/index.html');
+            return currentPath === cp;
+          });
+          return `<div class="mobile-nav-group${hasActive ? ' open' : ''}">
+            <button class="mobile-nav-group-btn" type="button" aria-expanded="${hasActive}">
+              ${item.label}
+              <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
+            </button>
+            <div class="mobile-nav-group-items">
+              <div class="mobile-nav-group-inner">
+                ${item.items.map(renderNavItem).join('')}
+              </div>
+            </div>
+          </div>`;
         }
-        const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
-        const isCurrent = currentPath === itemPath;
-        const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
-        const cls = item.volcano ? ' class="mobile-nav-volcano"' : '';
-        return `<a href="${item.href}"${cls}${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
+        return renderNavItem(item);
       }).join('')}
     </nav>
   `;
@@ -308,6 +350,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 
   backdrop.addEventListener('click', () => setMenu(false));
+
+  panel.querySelectorAll('.mobile-nav-group-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const group = btn.closest('.mobile-nav-group');
+      const isOpen = group.classList.contains('open');
+      panel.querySelectorAll('.mobile-nav-group.open').forEach((g) => {
+        g.classList.remove('open');
+        g.querySelector('.mobile-nav-group-btn').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        group.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
   panel.querySelectorAll('a').forEach((link) => {
     link.addEventListener('click', () => setMenu(false));
   });
