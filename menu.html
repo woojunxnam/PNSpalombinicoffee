@@ -104,6 +104,21 @@
       white-space: nowrap;
     }
 
+    /* ── LANG BAR ────────────────────────────── */
+    .lang-bar {
+      background: rgba(247,243,238,.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      padding: 7px 14px;
+    }
+    .lang-bar-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+    }
+
     /* ── LANG SWITCHER ───────────────────────── */
     .lang-switcher {
       display: flex;
@@ -382,16 +397,22 @@
       </div>
       <div class="menu-header-controls">
         <a href="menu-random.html" class="menu-title-badge" id="menuBadge" style="text-decoration:none;">&#x1F3B2; PICK</a>
-        <div class="lang-switcher" id="langSwitcher">
-          <button class="lang-btn active" data-lang="ko"><span class="flag">&#x1F1F0;&#x1F1F7;</span> 한국어</button>
-          <button class="lang-btn" data-lang="en"><span class="flag">&#x1F1FA;&#x1F1F8;</span> EN</button>
-          <button class="lang-btn" data-lang="zh"><span class="flag">&#x1F1E8;&#x1F1F3;</span> 中</button>
-          <button class="lang-btn" data-lang="ja"><span class="flag">&#x1F1EF;&#x1F1F5;</span> 日</button>
-          <button class="lang-btn" data-lang="vi"><span class="flag">&#x1F1FB;&#x1F1F3;</span> VI</button>
-        </div>
       </div>
     </div>
   </header>
+
+  <!-- LANG SWITCHER BAR -->
+  <div class="lang-bar" id="langBar">
+    <div class="lang-bar-inner">
+      <div class="lang-switcher" id="langSwitcher">
+        <button class="lang-btn active" data-lang="ko"><span class="flag">&#x1F1F0;&#x1F1F7;</span> 한국어</button>
+        <button class="lang-btn" data-lang="en"><span class="flag">&#x1F1FA;&#x1F1F8;</span> EN</button>
+        <button class="lang-btn" data-lang="zh"><span class="flag">&#x1F1E8;&#x1F1F3;</span> 中</button>
+        <button class="lang-btn" data-lang="ja"><span class="flag">&#x1F1EF;&#x1F1F5;</span> 日</button>
+        <button class="lang-btn" data-lang="vi"><span class="flag">&#x1F1FB;&#x1F1F3;</span> VI</button>
+      </div>
+    </div>
+  </div>
 
   <!-- CATEGORY NAV -->
   <nav class="cat-nav" id="catNav">
