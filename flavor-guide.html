@@ -10,6 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
 <link rel="stylesheet" href="assets/css/style.css">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 <style>
   /* ── TOKENS ───────────────────────────────────────────── */
   :root {
@@ -599,6 +602,29 @@
   .result-link:hover { transform: translateY(-1px); border-color: rgba(200,170,110,.32); background: rgba(200,170,110,.08); }
   @media (max-width: 860px) { .fg-page-intro { padding: 0 16px; } .fg-page-card { padding: 24px 20px; } }
 
+  /* ── SURVEY (dark theme) ─────────────────────────────── */
+  .fg-survey {
+    margin-top: 28px; padding: 24px 20px;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--r-lg); display: none;
+  }
+  .fg-survey.show { display: block; animation: fadeUp .4s ease; }
+  .fg-survey-title { font-size: .85rem; font-weight: 600; color: var(--gold); margin-bottom: 4px; }
+  .fg-survey-sub { font-size: .75rem; color: var(--muted); margin-bottom: 16px; line-height: 1.5; }
+  .fg-survey-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .fg-survey-label { font-size: .72rem; font-weight: 600; color: var(--gold-lt); min-width: 50px; }
+  .fg-survey-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .fg-chip {
+    font-size: .72rem; padding: 5px 12px; border-radius: 99px;
+    border: 1px solid var(--border); background: rgba(255,255,255,.04);
+    color: var(--cream); cursor: pointer; transition: all .15s;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .fg-chip:hover { border-color: var(--gold); }
+  .fg-chip.selected { background: var(--gold); border-color: var(--gold); color: var(--bg); font-weight: 600; }
+  .fg-survey-btns { display: flex; gap: 8px; margin-top: 18px; }
+  .fg-survey-btns button { flex: 1; }
+
 </style>
 </head>
 
@@ -995,6 +1021,48 @@
       <p class="result-sub">아래 블렌드가 취향에 가장 잘 맞습니다</p>
     </div>
     <div class="flavor-cards-wrap" id="resultCards"></div>
+    <!-- SURVEY -->
+    <div class="fg-survey" id="fgSurvey">
+      <div class="fg-survey-title">📋 간단 설문</div>
+      <div class="fg-survey-sub">더 나은 추천을 위해 알려주세요! 선택하지 않아도 괜찮아요.</div>
+      <div class="fg-survey-row">
+        <span class="fg-survey-label">MBTI</span>
+        <div class="fg-survey-chips fg-mbti-chips">
+          <span class="fg-chip" data-v="E">E</span><span class="fg-chip" data-v="I">I</span>
+          <span class="fg-chip" data-v="S">S</span><span class="fg-chip" data-v="N">N</span>
+          <span class="fg-chip" data-v="T">T</span><span class="fg-chip" data-v="F">F</span>
+          <span class="fg-chip" data-v="J">J</span><span class="fg-chip" data-v="P">P</span>
+          <span class="fg-chip" data-v="?">모름</span>
+        </div>
+      </div>
+      <div class="fg-survey-row">
+        <span class="fg-survey-label">성별</span>
+        <div class="fg-survey-chips fg-sex-chips">
+          <span class="fg-chip" data-v="M">남성</span><span class="fg-chip" data-v="F">여성</span>
+        </div>
+      </div>
+      <div class="fg-survey-row">
+        <span class="fg-survey-label">연령대</span>
+        <div class="fg-survey-chips fg-age-chips">
+          <span class="fg-chip" data-v="10">10대</span><span class="fg-chip" data-v="20">20대</span>
+          <span class="fg-chip" data-v="30">30대</span><span class="fg-chip" data-v="40">40대</span>
+          <span class="fg-chip" data-v="50">50+</span>
+        </div>
+      </div>
+      <div class="fg-survey-row">
+        <span class="fg-survey-label">방문 이유</span>
+        <div class="fg-survey-chips fg-reason-chips">
+          <span class="fg-chip" data-v="work">작업/공부</span><span class="fg-chip" data-v="date">데이트</span>
+          <span class="fg-chip" data-v="friends">친구 만남</span><span class="fg-chip" data-v="alone">혼자 힐링</span>
+          <span class="fg-chip" data-v="takeout">테이크아웃</span>
+        </div>
+      </div>
+      <div class="fg-survey-btns">
+        <button class="btn-primary" onclick="submitFgSurvey()">✔ 제출하기</button>
+        <button class="btn-ghost" onclick="skipFgSurvey()">건너뛰기</button>
+      </div>
+    </div>
+
     <div class="result-actions">
       <button class="btn-primary" onclick="restartQuiz()">다른 블렌드 찾아보기 →</button>
       <a class="result-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">스마트스토어에서 보기</a>
@@ -1332,7 +1400,10 @@ function answer(qKey, value) {
   }
 }
 
+let lastResultKeys = [];
+
 function showResult(keys) {
+  lastResultKeys = keys;
   const container = document.getElementById('resultCards');
   container.innerHTML = '';
 
@@ -1374,11 +1445,120 @@ function showResult(keys) {
 
   goTo('result');
 
+  // Show survey after result
+  const survey = document.getElementById('fgSurvey');
+  survey.classList.remove('show');
+  setTimeout(() => survey.classList.add('show'), 600);
+
+  // Save quiz result to Firestore (without survey)
+  saveToFirestore('flavorGuide', {
+    answers: { ...answers },
+    resultBlends: keys.map(k => BLENDS[k]?.name || k)
+  });
+
   setTimeout(() => {
     document.querySelectorAll('.profile-bar-fill').forEach(bar => {
       bar.style.width = bar.dataset.target;
     });
   }, 200);
+}
+
+/* ══════════════════════════════════════════════════════════
+   SURVEY CHIP LOGIC
+══════════════════════════════════════════════════════════ */
+(function initFgSurveyChips() {
+  // MBTI: axis-pair + "모름"
+  document.querySelectorAll('.fg-mbti-chips').forEach(container => {
+    container.addEventListener('click', e => {
+      const chip = e.target.closest('.fg-chip');
+      if (!chip) return;
+      const v = chip.dataset.v;
+      if (v === '?') {
+        container.querySelectorAll('.fg-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      } else {
+        container.querySelector('.fg-chip[data-v="?"]')?.classList.remove('selected');
+        const pairs = { E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J' };
+        container.querySelector('.fg-chip[data-v="' + pairs[v] + '"]')?.classList.remove('selected');
+        chip.classList.toggle('selected');
+      }
+    });
+  });
+  // Single-select groups
+  document.querySelectorAll('.fg-sex-chips, .fg-age-chips, .fg-reason-chips').forEach(container => {
+    container.addEventListener('click', e => {
+      const chip = e.target.closest('.fg-chip');
+      if (!chip) return;
+      container.querySelectorAll('.fg-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+    });
+  });
+})();
+
+function submitFgSurvey() {
+  const survey = document.getElementById('fgSurvey');
+  const mbtiChips = Array.from(survey.querySelectorAll('.fg-mbti-chips .fg-chip.selected'));
+  const mbti = mbtiChips.some(c => c.dataset.v === '?') ? '?' : mbtiChips.map(c => c.dataset.v).join('');
+  const sex = survey.querySelector('.fg-sex-chips .fg-chip.selected')?.dataset.v || '';
+  const age = survey.querySelector('.fg-age-chips .fg-chip.selected')?.dataset.v || '';
+  const reason = survey.querySelector('.fg-reason-chips .fg-chip.selected')?.dataset.v || '';
+
+  saveToFirestore('flavorGuideSurveys', {
+    mbti, sex, age, reason,
+    answers: { ...answers },
+    resultBlends: lastResultKeys.map(k => BLENDS[k]?.name || k)
+  });
+
+  survey.classList.remove('show');
+  showFgToast('감사합니다! 설문이 저장되었습니다.');
+}
+
+function skipFgSurvey() {
+  document.getElementById('fgSurvey').classList.remove('show');
+}
+
+/* Toast */
+let fgToastTimer;
+function showFgToast(msg) {
+  let el = document.getElementById('fgToast');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'fgToast';
+    el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--bg);padding:12px 24px;border-radius:99px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(fgToastTimer);
+  fgToastTimer = setTimeout(() => el.style.opacity = '0', 2200);
+}
+
+/* ══════════════════════════════════════════════════════════
+   FIREBASE INIT
+══════════════════════════════════════════════════════════ */
+let db = null;
+try {
+  if (typeof firebase !== 'undefined') {
+    firebase.initializeApp({
+      apiKey: "AIzaSyC_m8ez_LbcnfoOVinMQbrPeJ-u5Ym8nUg",
+      authDomain: "pnspalombini.firebaseapp.com",
+      projectId: "pnspalombini",
+      storageBucket: "pnspalombini.firebasestorage.app",
+      messagingSenderId: "273634072112",
+      appId: "1:273634072112:web:f0129f89f4277f97a07ff5"
+    });
+    db = firebase.firestore();
+  }
+} catch(e) {}
+
+function saveToFirestore(collectionName, data) {
+  if (!db) return;
+  db.collection(collectionName).add({
+    ...data,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+  }).catch(function(err) {
+    console.warn('[Firebase] Write failed:', collectionName, err.message);
+  });
 }
 
 </script>
