@@ -11,6 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
   <!-- Kakao SDK -->
   <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.7/kakao.min.js" integrity="sha384-tJkjbtDbvoxO+diRuDtwRO9JXR7pjWnfjfRn5ePUpl7e7RJCxKCwwnfqUAdXh53p" crossorigin="anonymous"></script>
+  <!-- Firebase SDK (compat for static site) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -1762,6 +1765,8 @@
     itemsToTrack.forEach(p => {
       stats.items[p.name] = (stats.items[p.name] || 0) + 1;
       stats.categories[p.catId] = (stats.categories[p.catId] || 0) + 1;
+      // Save to Firestore
+      saveToFirestore('picks', { flow: lastFlowType, itemName: p.name, category: p.catId });
     });
     stats.total = (stats.total || 0) + itemsToTrack.length;
     localStorage.setItem('pns_pick_stats', JSON.stringify(stats));
@@ -2044,6 +2049,9 @@
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
     surveys.push(data);
     localStorage.setItem('pns_surveys', JSON.stringify(surveys));
+
+    // Save to Firestore (fire-and-forget)
+    saveToFirestore('surveys', data);
 
     // Track picks only on survey submit
     trackCurrentPicks();
@@ -2333,6 +2341,13 @@
 
   function showLadderResult(payerIdx) {
     const payer = ladderPlayers[payerIdx];
+    lastLadderPayer = payer;
+    // Save ladder game to Firestore
+    saveToFirestore('ladderGames', {
+      players: [...ladderPlayers],
+      playerCount: ladderPlayers.length,
+      payer: payer
+    });
     const resultEl = document.getElementById('ladderResult');
     resultEl.style.display = 'block';
     resultEl.innerHTML = `
@@ -2578,6 +2593,38 @@
     }
   } catch(e) {
     console.warn('[Kakao] Init failed:', e.message);
+  }
+
+  /* ── Firebase Init ── */
+  let db = null;
+  try {
+    if (typeof firebase !== 'undefined') {
+      firebase.initializeApp({
+        apiKey: "AIzaSyC_m8ez_LbcnfoOVinMQbrPeJ-u5Ym8nUg",
+        authDomain: "pnspalombini.firebaseapp.com",
+        projectId: "pnspalombini",
+        storageBucket: "pnspalombini.firebasestorage.app",
+        messagingSenderId: "273634072112",
+        appId: "1:273634072112:web:f0129f89f4277f97a07ff5"
+      });
+      db = firebase.firestore();
+      console.log('[Firebase] Firestore initialized');
+    }
+  } catch(e) {
+    console.warn('[Firebase] Init failed:', e.message);
+  }
+
+  /** Save document to Firestore (fire-and-forget, never blocks UI) */
+  function saveToFirestore(collectionName, data) {
+    if (!db) return;
+    db.collection(collectionName).add({
+      ...data,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }).then(function(ref) {
+      console.log('[Firebase] Saved to', collectionName, ref.id);
+    }).catch(function(err) {
+      console.warn('[Firebase] Write failed:', collectionName, err.message);
+    });
   }
 
   </script>
