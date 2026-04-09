@@ -247,16 +247,21 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
   const menuItems = [
     { href: `${prefix}index.html`, label: '홈' },
+    { type: 'label', label: '브랜드' },
+    { href: `${prefix}index.html#tech`, label: 'Technology' },
+    { href: `${prefix}index.html#heritage`, label: 'Heritage' },
+    { href: `${prefix}index.html#reviews`, label: 'Reviews' },
+    { href: `${prefix}index.html#faq`, label: 'FAQ' },
     { type: 'label', label: '제품' },
     { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
-    { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
-    { href: `${prefix}custom-edition.html`, label: '나만의 드립백 제작' },
     { href: `${prefix}lineup.html`, label: '협력사 라인업' },
-    { href: `${prefix}film.html`, label: '커피 필름지', badge: '준비중' },
+    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
+    { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
     { type: 'label', label: '자동화 장비' },
     { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
     { type: 'label', label: 'B2B' },
     { href: `${prefix}b2b-lineup.html`, label: 'B2B 상품 라인업' },
+    { href: `${prefix}custom-edition.html`, label: '드립백 맞춤 주문' },
     { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
     { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
     { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
@@ -266,9 +271,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
     { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
     { href: '#', label: 'B2B 봉투 필름지 문의', badge: '준비중' },
-    { type: 'label', label: '기타' },
-    { href: `${prefix}flavor-guide.html`, label: 'Flavor Guide' },
-    { href: `${prefix}partners.html`, label: '고객·협력사' }
+    { href: `${prefix}partners.html`, label: '고객·협력사', badge: '준비중' },
   ];
 
   panel.setAttribute('data-global-mobile-nav', '');
