@@ -160,6 +160,25 @@
     .cb-check input[type="checkbox"] { width:18px; height:18px; margin-top:1px; accent-color:var(--accent); flex-shrink:0; }
     .cb-check label { font-size:12px; color:var(--muted); line-height:1.6; cursor:pointer; }
 
+    /* ── VALIDATION ERROR ── */
+    .cb-error-msg {
+      display:none; margin-top:8px; padding:10px 14px; border-radius:8px;
+      background:#fce4ec; color:#c62828; font-size:12px; font-weight:600;
+    }
+    .cb-error-msg.show { display:block; }
+    .cb-group.has-error input, .cb-group.has-error textarea { border-color:#c62828; }
+
+    /* ── PREVIEW ── */
+    .cb-preview-table { width:100%; border-collapse:collapse; margin-top:16px; }
+    .cb-preview-table tr { border-bottom:1px solid var(--line); }
+    .cb-preview-table th {
+      text-align:left; padding:10px 12px; font-size:12px; font-weight:700;
+      color:var(--muted); width:120px; vertical-align:top; white-space:nowrap;
+    }
+    .cb-preview-table td { padding:10px 12px; font-size:13px; color:var(--text); }
+    .cb-preview-table td:empty::after { content:'미입력'; color:var(--muted); font-style:italic; }
+    .cb-preview-note { font-size:12px; color:var(--muted); margin-top:16px; line-height:1.7; text-align:center; }
+
     /* ── RESPONSIVE ── */
     @media (max-width:640px) {
       .cb-form-wrap { padding:24px 18px; }
@@ -265,6 +284,11 @@
             <span class="cb-step-num">3</span>
             <span>주문 상세</span>
           </div>
+          <div class="cb-step-line"></div>
+          <div class="cb-step" data-step="4">
+            <span class="cb-step-num">4</span>
+            <span>미리보기</span>
+          </div>
         </div>
 
         <form id="beanForm" class="cb-form-wrap" novalidate>
@@ -295,6 +319,7 @@
               </div>
             </div>
 
+            <div class="cb-error-msg" id="step1_error"></div>
             <div class="cb-actions">
               <span></span>
               <button type="button" class="cb-btn cb-btn-next" onclick="goStep(2)">다음 단계 →</button>
@@ -449,6 +474,7 @@
               <p class="cb-download-note">* 칼집 파일은 곧 업데이트 예정입니다. 디자인 작업 시 참고용 가이드입니다.</p>
             </div>
 
+            <div class="cb-error-msg" id="step2_error"></div>
             <div class="cb-actions">
               <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(1)">← 이전</button>
               <button type="button" class="cb-btn cb-btn-next" onclick="goStep(3)">다음 단계 →</button>
@@ -529,6 +555,22 @@
               <label for="b_sample">제작 전 샘플을 먼저 받아보고 싶습니다</label>
             </div>
 
+            <div class="cb-error-msg" id="step3_error"></div>
+            <div class="cb-actions">
+              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(2)">← 이전</button>
+              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(4)">미리보기 →</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 4: 미리보기 ═══ -->
+          <div class="cb-panel" id="panel4">
+            <h2 class="cb-form-title">작성 문의 미리보기</h2>
+            <p class="cb-form-subtitle">입력하신 내용을 확인한 후 견적을 요청해 주세요.</p>
+
+            <table class="cb-preview-table" id="beanPreviewTable"></table>
+
+            <p class="cb-preview-note">📝 수정이 필요하면 '← 이전' 버튼으로 돌아가 수정하세요.</p>
+
             <!-- 개인정보 동의 -->
             <div class="cb-check">
               <input type="checkbox" id="b_agree" required/>
@@ -536,7 +578,7 @@
             </div>
 
             <div class="cb-actions">
-              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(2)">← 이전</button>
+              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(3)">← 이전</button>
               <button type="submit" class="cb-btn cb-btn-submit" id="beanSubmitBtn">📩 견적 요청하기</button>
             </div>
 
@@ -598,16 +640,63 @@
     var header = document.querySelector('.site-header');
     window.addEventListener('scroll', function() { header.classList.toggle('scrolled', window.scrollY > 20); }, {passive:true});
 
+    /* ── Helpers ── */
+    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function showErr(id, msg) { var el = document.getElementById(id); if(el){el.textContent = msg; el.classList.add('show');} }
+    function hideErr(id) { var el = document.getElementById(id); if(el){el.classList.remove('show');} }
+
     /* ── Step Navigation ── */
     var currentStep = 1;
     function goStep(n) {
       if (n > currentStep) {
         if (currentStep === 1) {
-          var fields = ['b_name','b_phone','b_company','b_email'];
+          var missing = [];
+          var fields = [
+            {id:'b_name', label:'이름'},
+            {id:'b_phone', label:'전화번호'},
+            {id:'b_company', label:'업체명'},
+            {id:'b_email', label:'이메일'}
+          ];
           for (var i = 0; i < fields.length; i++) {
-            var f = document.getElementById(fields[i]);
-            if (!f.value.trim()) { f.focus(); f.reportValidity(); return; }
+            var f = document.getElementById(fields[i].id);
+            if (!f.value.trim()) { missing.push(fields[i].label); f.parentElement.classList.add('has-error'); }
+            else { f.parentElement.classList.remove('has-error'); }
           }
+          var emailF = document.getElementById('b_email');
+          if (emailF.value.trim() && !isValidEmail(emailF.value.trim())) {
+            showErr('step1_error', '이메일 형식이 올바르지 않습니다. (예: example@company.com)');
+            emailF.parentElement.classList.add('has-error');
+            emailF.focus(); return;
+          }
+          if (missing.length) {
+            showErr('step1_error', '다음 필수 항목을 입력해 주세요: ' + missing.join(', '));
+            document.getElementById(fields.find(function(x){return !document.getElementById(x.id).value.trim()}).id).focus();
+            return;
+          }
+          hideErr('step1_error');
+        }
+        if (currentStep === 2) {
+          var missing2 = [];
+          if (!document.querySelector('input[name="b_bean_type"]:checked')) missing2.push('생두/원두 선택');
+          if (!document.querySelector('input[name="b_coffee"]:checked')) missing2.push('원두 블렌드');
+          if (!document.querySelector('input[name="b_has_design"]:checked')) missing2.push('포장 디자인 보유 여부');
+          if (missing2.length) {
+            showErr('step2_error', '다음 필수 항목을 선택해 주세요: ' + missing2.join(', '));
+            return;
+          }
+          hideErr('step2_error');
+        }
+        if (currentStep === 3) {
+          var missing3 = [];
+          if (!document.querySelector('input[name="b_weight"]:checked')) missing3.push('포장 무게');
+          if (!document.querySelector('input[name="b_qty"]:checked')) missing3.push('주문 수량');
+          if (!document.querySelector('input[name="b_bag_type"]:checked')) missing3.push('봉지 타입');
+          if (missing3.length) {
+            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
+            return;
+          }
+          hideErr('step3_error');
+          buildPreview();
         }
       }
       currentStep = n;
@@ -623,6 +712,38 @@
         l.classList.toggle('active', i < n - 1);
       });
       window.scrollTo({top: document.querySelector('.cb-steps').offsetTop - 100, behavior:'smooth'});
+    }
+
+    /* ── Build Preview ── */
+    function buildPreview() {
+      var beanType = document.querySelector('input[name="b_bean_type"]:checked');
+      var hasDesign = document.querySelector('input[name="b_has_design"]:checked');
+      var coffee = document.querySelector('input[name="b_coffee"]:checked');
+      var weight = document.querySelector('input[name="b_weight"]:checked');
+      var qty = document.querySelector('input[name="b_qty"]:checked');
+      var bagType = document.querySelector('input[name="b_bag_type"]:checked');
+      var designDesc = hasDesign && hasDesign.value === 'yes' ? document.getElementById('b_design_desc_yes').value : document.getElementById('b_design_desc_no').value;
+
+      var rows = [
+        ['이름', document.getElementById('b_name').value],
+        ['전화번호', document.getElementById('b_phone').value],
+        ['업체명', document.getElementById('b_company').value],
+        ['이메일', document.getElementById('b_email').value],
+        ['생두/원두', beanType ? beanType.value : ''],
+        ['원두 블렌드', coffee ? coffee.value : ''],
+        ['포장 디자인', hasDesign ? (hasDesign.value === 'yes' ? '있음' : '없음 (제작 의뢰)') : ''],
+        ['디자인 설명', designDesc],
+        ['첨부 파일', uploadedFiles.map(function(f){return f.name}).join(', ')],
+        ['포장 무게', weight ? (weight.value === '기타' ? '기타: ' + document.getElementById('b_weight_detail').value : weight.value) : ''],
+        ['주문 수량', qty ? (qty.value === '기타' ? '기타: ' + document.getElementById('b_qty_detail').value : qty.value + '개') : ''],
+        ['봉지 타입', bagType ? bagType.value : ''],
+        ['희망 제작 날짜', document.getElementById('b_date').value],
+        ['샘플 요청', document.getElementById('b_sample').checked ? '예' : '아니오'],
+        ['기타 요청사항', document.getElementById('b_notes').value]
+      ];
+      document.getElementById('beanPreviewTable').innerHTML = rows.map(function(r) {
+        return '<tr><th>' + r[0] + '</th><td>' + (r[1] || '') + '</td></tr>';
+      }).join('');
     }
 
     /* ── Design Toggle ── */

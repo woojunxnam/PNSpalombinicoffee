@@ -169,6 +169,25 @@
     .cd-check input[type="checkbox"] { width:18px; height:18px; margin-top:1px; accent-color:var(--accent); flex-shrink:0; }
     .cd-check label { font-size:12px; color:var(--muted); line-height:1.6; cursor:pointer; }
 
+    /* ── VALIDATION ERROR ── */
+    .cd-error-msg {
+      display:none; margin-top:8px; padding:10px 14px; border-radius:8px;
+      background:#fce4ec; color:#c62828; font-size:12px; font-weight:600;
+    }
+    .cd-error-msg.show { display:block; }
+    .cd-group.has-error input, .cd-group.has-error textarea { border-color:#c62828; }
+
+    /* ── PREVIEW ── */
+    .cd-preview-table { width:100%; border-collapse:collapse; margin-top:16px; }
+    .cd-preview-table tr { border-bottom:1px solid var(--line); }
+    .cd-preview-table th {
+      text-align:left; padding:10px 12px; font-size:12px; font-weight:700;
+      color:var(--muted); width:120px; vertical-align:top; white-space:nowrap;
+    }
+    .cd-preview-table td { padding:10px 12px; font-size:13px; color:var(--text); }
+    .cd-preview-table td:empty::after { content:'미입력'; color:var(--muted); font-style:italic; }
+    .cd-preview-note { font-size:12px; color:var(--muted); margin-top:16px; line-height:1.7; text-align:center; }
+
     /* ── RESPONSIVE ── */
     @media (max-width:640px) {
       .cd-form-wrap { padding:24px 18px; }
@@ -274,6 +293,11 @@
             <span class="cd-step-num">3</span>
             <span>제품 사양</span>
           </div>
+          <div class="cd-step-line"></div>
+          <div class="cd-step" data-step="4">
+            <span class="cd-step-num">4</span>
+            <span>미리보기</span>
+          </div>
         </div>
 
         <form id="dripForm" class="cd-form-wrap" novalidate>
@@ -304,6 +328,7 @@
               </div>
             </div>
 
+            <div class="cd-error-msg" id="step1_error"></div>
             <div class="cd-actions">
               <span></span>
               <button type="button" class="cd-btn cd-btn-next" onclick="goStep(2)">다음 단계 →</button>
@@ -376,6 +401,7 @@
               <p class="cd-download-note">* 칼집 파일은 곧 업데이트 예정입니다. 디자인 작업 시 참고용 가이드입니다.</p>
             </div>
 
+            <div class="cd-error-msg" id="step2_error"></div>
             <div class="cd-actions">
               <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(1)">← 이전</button>
               <button type="button" class="cd-btn cd-btn-next" onclick="goStep(3)">다음 단계 →</button>
@@ -454,20 +480,20 @@
                 </div>
                 <div class="cd-conditional" id="blend12_panel">
                   <div class="cd-group" style="margin-top:12px;">
-                    <label>원하는 블렌드를 선택해 주세요 (복수 선택 가능)</label>
+                    <label>원하는 블렌드를 선택해 주세요</label>
                     <div class="cd-blend12-grid">
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_birch" value="Birch"/><label for="d_b12_birch">🌿 Birch</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_jujube" value="Jujube"/><label for="d_b12_jujube">🫐 Jujube</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_juniper" value="Juniper"/><label for="d_b12_juniper">🌲 Juniper</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_magnolia" value="Magnolia"/><label for="d_b12_magnolia">🌸 Magnolia</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_miru" value="Miru"/><label for="d_b12_miru">🍃 Miru</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_poplar" value="Poplar"/><label for="d_b12_poplar">🍂 Poplar</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_sequoia" value="Sequoia"/><label for="d_b12_sequoia">🌳 Sequoia</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_silverberry" value="Silverberry"/><label for="d_b12_silverberry">✨ Silverberry</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_spruce" value="Spruce"/><label for="d_b12_spruce">🌲 Spruce</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_tamarind" value="Tamarind"/><label for="d_b12_tamarind">🍋 Tamarind</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_willow" value="Willow"/><label for="d_b12_willow">🍃 Willow</label></div>
-                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_zelkova" value="Zelkova"/><label for="d_b12_zelkova">🌲 Zelkova</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_birch" value="Birch"/><label for="d_b12_birch">🌿 Birch</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_jujube" value="Jujube"/><label for="d_b12_jujube">🫐 Jujube</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_juniper" value="Juniper"/><label for="d_b12_juniper">🌲 Juniper</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_magnolia" value="Magnolia"/><label for="d_b12_magnolia">🌸 Magnolia</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_miru" value="Miru"/><label for="d_b12_miru">🍃 Miru</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_poplar" value="Poplar"/><label for="d_b12_poplar">🍂 Poplar</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_sequoia" value="Sequoia"/><label for="d_b12_sequoia">🌳 Sequoia</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_silverberry" value="Silverberry"/><label for="d_b12_silverberry">✨ Silverberry</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_spruce" value="Spruce"/><label for="d_b12_spruce">🌲 Spruce</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_tamarind" value="Tamarind"/><label for="d_b12_tamarind">🍋 Tamarind</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_willow" value="Willow"/><label for="d_b12_willow">🍃 Willow</label></div>
+                      <div class="cd-blend12-chip"><input type="radio" name="d_blend12" id="d_b12_zelkova" value="Zelkova"/><label for="d_b12_zelkova">🌲 Zelkova</label></div>
                     </div>
                   </div>
                   <div class="cd-group" style="margin-top:12px;">
@@ -532,6 +558,22 @@
               <label for="d_sample">제작 전 샘플을 먼저 받아보고 싶습니다</label>
             </div>
 
+            <div class="cd-error-msg" id="step3_error"></div>
+            <div class="cd-actions">
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(2)">← 이전</button>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(4)">미리보기 →</button>
+            </div>
+          </div>
+
+          <!-- ═══ STEP 4: 미리보기 ═══ -->
+          <div class="cd-panel" id="panel4">
+            <h2 class="cd-form-title">작성 문의 미리보기</h2>
+            <p class="cd-form-subtitle">입력하신 내용을 확인한 후 견적을 요청해 주세요.</p>
+
+            <table class="cd-preview-table" id="dripPreviewTable"></table>
+
+            <p class="cd-preview-note">📝 수정이 필요하면 '← 이전' 버튼으로 돌아가 수정하세요.</p>
+
             <!-- 개인정보 동의 -->
             <div class="cd-check">
               <input type="checkbox" id="d_agree" required/>
@@ -539,7 +581,7 @@
             </div>
 
             <div class="cd-actions">
-              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(2)">← 이전</button>
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(3)">← 이전</button>
               <button type="submit" class="cd-btn cd-btn-submit" id="dripSubmitBtn">📩 견적 요청하기</button>
             </div>
 
@@ -601,17 +643,62 @@
     var header = document.querySelector('.site-header');
     window.addEventListener('scroll', function() { header.classList.toggle('scrolled', window.scrollY > 20); }, {passive:true});
 
+    /* ── Helpers ── */
+    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function showErr(id, msg) { var el = document.getElementById(id); if(el){el.textContent = msg; el.classList.add('show');} }
+    function hideErr(id) { var el = document.getElementById(id); if(el){el.classList.remove('show');} }
+
     /* ── Step Navigation ── */
     var currentStep = 1;
     function goStep(n) {
       // Validate current step before moving forward
       if (n > currentStep) {
         if (currentStep === 1) {
-          var fields = ['d_name','d_phone','d_company','d_email'];
+          var missing = [];
+          var fields = [
+            {id:'d_name', label:'이름'},
+            {id:'d_phone', label:'전화번호'},
+            {id:'d_company', label:'업체명'},
+            {id:'d_email', label:'이메일'}
+          ];
           for (var i = 0; i < fields.length; i++) {
-            var f = document.getElementById(fields[i]);
-            if (!f.value.trim()) { f.focus(); f.reportValidity(); return; }
+            var f = document.getElementById(fields[i].id);
+            if (!f.value.trim()) { missing.push(fields[i].label); f.parentElement.classList.add('has-error'); }
+            else { f.parentElement.classList.remove('has-error'); }
           }
+          var emailF = document.getElementById('d_email');
+          if (emailF.value.trim() && !isValidEmail(emailF.value.trim())) {
+            showErr('step1_error', '이메일 형식이 올바르지 않습니다. (예: example@company.com)');
+            emailF.parentElement.classList.add('has-error');
+            emailF.focus(); return;
+          }
+          if (missing.length) {
+            showErr('step1_error', '다음 필수 항목을 입력해 주세요: ' + missing.join(', '));
+            document.getElementById(fields.find(function(x){return !document.getElementById(x.id).value.trim()}).id).focus();
+            return;
+          }
+          hideErr('step1_error');
+        }
+        if (currentStep === 2) {
+          var hasDesign = document.querySelector('input[name="d_has_design"]:checked');
+          if (!hasDesign) {
+            showErr('step2_error', '디자인 보유 여부를 선택해 주세요.');
+            return;
+          }
+          hideErr('step2_error');
+        }
+        if (currentStep === 3) {
+          var missing3 = [];
+          if (!document.querySelector('input[name="d_coffee"]:checked')) missing3.push('사용 원두');
+          if (!document.querySelector('input[name="d_qty"]:checked')) missing3.push('주문 수량');
+          if (!document.querySelector('input[name="d_film"]:checked')) missing3.push('드립백 필름지');
+          if (!document.querySelector('input[name="d_pkg"]:checked')) missing3.push('포장 방법');
+          if (missing3.length) {
+            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
+            return;
+          }
+          hideErr('step3_error');
+          buildPreview();
         }
       }
       currentStep = n;
@@ -627,6 +714,39 @@
         l.classList.toggle('active', i < n - 1);
       });
       window.scrollTo({top: document.querySelector('.cd-steps').offsetTop - 100, behavior:'smooth'});
+    }
+
+    /* ── Build Preview ── */
+    function buildPreview() {
+      var hasDesign = document.querySelector('input[name="d_has_design"]:checked');
+      var coffee = document.querySelector('input[name="d_coffee"]:checked');
+      var blend12 = document.querySelector('input[name="d_blend12"]:checked');
+      var qty = document.querySelector('input[name="d_qty"]:checked');
+      var film = document.querySelector('input[name="d_film"]:checked');
+      var pkg = document.querySelector('input[name="d_pkg"]:checked');
+      var designDesc = hasDesign && hasDesign.value === 'yes' ? document.getElementById('d_design_desc_yes').value : document.getElementById('d_design_desc_no').value;
+      var coffeeVal = coffee ? coffee.value : '';
+      if (coffeeVal === '블렌드 12종 선택' && blend12) coffeeVal = '블렌드 12종 — ' + blend12.value;
+
+      var rows = [
+        ['이름', document.getElementById('d_name').value],
+        ['전화번호', document.getElementById('d_phone').value],
+        ['업체명', document.getElementById('d_company').value],
+        ['이메일', document.getElementById('d_email').value],
+        ['디자인', hasDesign ? (hasDesign.value === 'yes' ? '있음' : '없음 (제작 의뢰)') : ''],
+        ['디자인 설명', designDesc],
+        ['첨부 파일', uploadedFiles.map(function(f){return f.name}).join(', ')],
+        ['사용 원두', coffeeVal],
+        ['주문 수량', qty ? (qty.value === '기타' ? '기타: ' + document.getElementById('d_qty_detail').value : qty.value + '개') : ''],
+        ['드립백 필름지', film ? film.value : ''],
+        ['포장 방법', pkg ? pkg.value : ''],
+        ['희망 제작 날짜', document.getElementById('d_date').value],
+        ['샘플 요청', document.getElementById('d_sample').checked ? '예' : '아니오'],
+        ['기타 요청사항', document.getElementById('d_notes').value]
+      ];
+      document.getElementById('dripPreviewTable').innerHTML = rows.map(function(r) {
+        return '<tr><th>' + r[0] + '</th><td>' + (r[1] || '') + '</td></tr>';
+      }).join('');
     }
 
     /* ── Design Toggle ── */
@@ -706,7 +826,7 @@
         has_design: hasDesign ? hasDesign.value : '',
         design_description: hasDesign && hasDesign.value === 'yes' ? document.getElementById('d_design_desc_yes').value : document.getElementById('d_design_desc_no').value,
         coffee: coffee ? coffee.value : '',
-        blend12_selections: Array.from(document.querySelectorAll('input[name="d_blend12"]:checked')).map(function(c){return c.value}).join(', '),
+        blend12_selection: (function(){ var c = document.querySelector('input[name="d_blend12"]:checked'); return c ? c.value : ''; })(),
         blend12_detail: document.getElementById('d_blend12_detail').value,
         uploaded_files: uploadedFiles.map(function(f){return f.name}).join(', '),
         quantity: qty ? (qty.value === '기타' ? '기타: ' + document.getElementById('d_qty_detail').value : qty.value) : '',
