@@ -323,6 +323,8 @@
       .bb-channels { grid-template-columns: 1fr 1fr; }
       .bb-wondu-features { grid-template-columns: 1fr; }
       .bb-wondu-feat:last-child { grid-column: span 1; }
+      .bb-pkg-card { grid-template-columns: 1fr !important; }
+      .bb-pkg-card > div:last-child { border-left: none !important; border-top: 1px solid rgba(0,0,0,.07); }
     }
   </style>
 </head>
@@ -336,7 +338,7 @@
       </a>
       <nav class="nav" aria-label="주요 메뉴">
         <div class="nav-item">
-          <a href="index.html#about" data-ko="브랜드">About</a>
+          <a href="index.html#about" data-en="About">브랜드</a>
           <div class="nav-dropdown">
             <a href="index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> Technology</a>
             <a href="index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> Heritage</a>
@@ -345,20 +347,20 @@
           </div>
         </div>
         <div class="nav-item">
-          <a href="#" data-ko="제품">Products</a>
+          <a href="#" data-en="Products">제품</a>
           <div class="nav-dropdown">
             <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
             <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
           </div>
         </div>
-        <a href="products/volcano-ruby.html" class="nav-volcano" data-ko="🌋 볼케이노 루비">🌋 Volcano Ruby</a>
+        <a href="products/volcano-ruby.html" class="nav-volcano" data-en="🌋 Volcano Ruby">🌋 볼케이노 루비</a>
         <div class="nav-item">
-          <a href="machines/" data-ko="자동화 장비">Machines</a>
+          <a href="machines/" data-en="Machines">자동화 장비</a>
           <div class="nav-dropdown">
             <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
           </div>
         </div>
-        <div class="nav-item"><a href="b2b-lineup.html" data-ko="B2B">B2B</a><div class="nav-dropdown">
+        <div class="nav-item"><a href="b2b-lineup.html" data-en="B2B">B2B</a><div class="nav-dropdown">
             <a href="b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
             <div class="nav-dropdown-label">드립백 B2B</div>
             <a href="custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
@@ -369,13 +371,13 @@
             <a href="film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
             <a href="b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기</a>
           </div></div>
-        <div class="nav-item"><a href="contact.html" data-ko="문의">Contact</a><div class="nav-dropdown">
+        <div class="nav-item"><a href="contact.html" data-en="Contact">문의</a><div class="nav-dropdown">
             <a href="contact.html"><span class="nav-dropdown-icon">💬</span> 일반 문의</a>
             <a href="contact-drip.html"><span class="nav-dropdown-icon">☕</span> B2B 드립백 문의</a>
             <a href="contact-bean.html"><span class="nav-dropdown-icon">🫘</span> B2B 생두 원두 문의</a>
             <a href="#" style="opacity:.5"><span class="nav-dropdown-icon">📦</span> B2B 봉투 필름지 문의 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 5px;border-radius:4px;margin-left:3px;">준비중</span></a>
           </div></div>
-        <a href="partners.html" data-ko="고객·협력사">Partners</a>
+        <a href="partners.html" data-en="Partners">고객·협력사</a>
       </nav>
       <div class="header-actions">
         <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
@@ -564,7 +566,7 @@
         <p style="font-size:14px;color:var(--muted);margin:0 0 36px;">소포장부터 대량 벌크까지, 필요에 맞는 규격을 선택하세요.</p>
 
         <div style="display:flex;flex-direction:column;gap:28px;">
-          <div style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
+          <div class="bb-pkg-card" style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
             <div style="text-align:center;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
               <img src="assets/img/vol_ruby_bag.png" alt="250g 패키지" style="max-height:180px;object-fit:contain;"/>
               <span style="display:inline-block;margin:14px 0 0;padding:8px 24px;font-family:var(--serif);font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),#d4a054);border-radius:999px;letter-spacing:.06em;box-shadow:0 2px 8px rgba(192,122,61,.25);">250g</span>
@@ -577,7 +579,7 @@
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
+          <div class="bb-pkg-card" style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
             <div style="text-align:center;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
               <img src="assets/img/vol_ruby_bag.png" alt="500g 패키지" style="max-height:180px;object-fit:contain;"/>
               <span style="display:inline-block;margin:14px 0 0;padding:8px 24px;font-family:var(--serif);font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),#d4a054);border-radius:999px;letter-spacing:.06em;box-shadow:0 2px 8px rgba(192,122,61,.25);">500g</span>
@@ -590,7 +592,7 @@
             </div>
           </div>
 
-          <div style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
+          <div class="bb-pkg-card" style="display:grid;grid-template-columns:240px 1fr;gap:0;align-items:stretch;background:#fff;border:1px solid rgba(0,0,0,.07);border-radius:16px;overflow:hidden;">
             <div style="text-align:center;padding:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;">
               <img src="assets/img/vol_ruby_bag.png" alt="1kg 패키지" style="max-height:180px;object-fit:contain;"/>
               <span style="display:inline-block;margin:14px 0 0;padding:8px 24px;font-family:var(--serif);font-size:15px;font-weight:700;color:#fff;background:linear-gradient(135deg,var(--accent),#d4a054);border-radius:999px;letter-spacing:.06em;box-shadow:0 2px 8px rgba(192,122,61,.25);">1kg</span>

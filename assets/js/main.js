@@ -68,9 +68,9 @@ if (heroImage && heroSection) {
 }
 
 /* ── 5. 헤더 스크롤 그림자 ── */
-const header = document.querySelector('.site-header');
-window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 20);
+const siteHeader5 = document.querySelector('.site-header');
+if (siteHeader5) window.addEventListener('scroll', () => {
+  siteHeader5.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
 
 /* ── 6. 네비게이션 활성 섹션 하이라이트 ── */
@@ -461,14 +461,14 @@ function applyLang(lang) {
   sessionStorage.setItem('pns-lang', lang);
 
   /* ── Nav crossfade ── */
-  const navLinks = document.querySelectorAll('.nav a[data-ko]');
+  const navLinks = document.querySelectorAll('.nav a[data-en]');
   navLinks.forEach(a => {
-    if (!a.dataset.en) a.dataset.en = a.textContent.trim();
+    if (!a.dataset.ko) a.dataset.ko = a.textContent.trim();
     a.style.opacity = '0';
   });
   setTimeout(() => {
     navLinks.forEach(a => {
-      a.textContent = lang === 'ko' ? a.dataset.ko : a.dataset.en;
+      a.textContent = lang === 'en' ? a.dataset.en : a.dataset.ko;
       a.style.opacity = '';
     });
   }, 120);
