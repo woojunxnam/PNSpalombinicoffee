@@ -143,13 +143,13 @@
 
     /* ── SAMPLES MASONRY GALLERY ── */
     .masonry-gallery {
-      columns: 6;
-      column-gap: 10px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
       margin-top: 32px;
     }
     .masonry-item {
-      break-inside: avoid;
-      margin-bottom: 10px;
+      margin-bottom: 0;
       border-radius: 10px;
       overflow: hidden;
       cursor: pointer;
@@ -602,6 +602,7 @@
     .qty-card-sub { font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); margin:0 0 6px; }
     .qty-card-title { font-size:17px; font-weight:700; color:var(--accent2); margin:0 0 8px; }
     .qty-card-desc { font-size:14px; color:var(--muted); line-height:1.75; margin:0 0 14px; }
+    .qty-card > div:last-child { border-left:1px solid rgba(0,0,0,.07); padding-left:28px; }
     .qty-card-cta {
       display:inline-block; padding:9px 20px; font-size:13px; font-weight:700;
       color:#fff; background:var(--accent); border-radius:8px; text-decoration:none;
@@ -736,14 +737,14 @@
         <h2 class="section-title is-visible">원하는 수량으로 주문하세요</h2>
         <div class="qty-cards">
 
-          <!-- 1개 -->
+          <!-- 1개 낱개 포장 -->
           <div class="qty-card">
             <div class="qty-card-img">
-              <img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="드립백 1개 맞춤 제작"/>
+              <img src="assets/img/custom/bag-blank.png" alt="드립백 1개 낱개 포장"/>
               <p class="qty-card-label">1개</p>
             </div>
             <div>
-              <p class="qty-card-sub">단품 맞춤 제작</p>
+              <p class="qty-card-sub">낱개 포장</p>
               <h3 class="qty-card-title">세상에 하나뿐인 나만의 드립백</h3>
               <p class="qty-card-desc">특별한 한 사람을 위한 선물이나 개인 소장용으로 제작할 수 있습니다. 원하는 이미지·로고·캐릭터를 드립백 패키지에 담아, 단 1개부터 주문 가능합니다. 최소 주문 수량 제한 없이 소량 제작을 지원합니다.</p>
               <a href="contact.html" class="qty-card-cta">1개 주문 문의하기 →</a>
@@ -753,30 +754,17 @@
           <!-- 10개 -->
           <div class="qty-card">
             <div class="qty-card-img">
-              <img src="assets/img/product-drip-10.png" alt="드립백 10개 세트"/>
+              <img src="assets/img/product-drip-10-gift.jpg" alt="드립백 10개 선물 세트"/>
               <p class="qty-card-label">10개</p>
             </div>
             <div>
-              <p class="qty-card-sub">소량 선물 세트</p>
+              <p class="qty-card-sub">선물 세트 포장</p>
               <h3 class="qty-card-title">결혼 답례품·생일·소규모 행사에 최적</h3>
               <p class="qty-card-desc">결혼 답례품, 생일 선물, 기업 소규모 판촉물 등 가장 인기 있는 수량입니다. 동일 디자인 10개 또는 개별 디자인 혼합 구성도 가능합니다. 예쁜 패키지 박스와 함께 구성하여 선물 세트로 활용하세요.</p>
               <a href="contact.html" class="qty-card-cta">10개 주문 문의하기 →</a>
             </div>
           </div>
 
-          <!-- 30개 -->
-          <div class="qty-card">
-            <div class="qty-card-img">
-              <img src="assets/img/product-drip-30-gift.jpg" alt="드립백 30개 세트"/>
-              <p class="qty-card-label">30개</p>
-            </div>
-            <div>
-              <p class="qty-card-sub">중규모 증정 패키지</p>
-              <h3 class="qty-card-title">돌잔치·회사 홍보·행사 증정에 적합</h3>
-              <p class="qty-card-desc">돌잔치, 기업 홍보 행사, 컨퍼런스 굿즈 등 중규모 증정품으로 가장 많이 선택하는 수량입니다. 30개 이상 주문 시 단가 할인이 적용되며, 맞춤 로스팅 프로파일 선택 및 브랜드 라벨 디자인 지원이 가능합니다.</p>
-              <a href="contact.html" class="qty-card-cta">30개 주문 문의하기 →</a>
-            </div>
-          </div>
 
         </div>
       </div>
@@ -866,16 +854,16 @@
             <span class="sample-cat-title">명함 디자인 샘플</span>
             <span class="sample-cat-count">9개</span>
           </div>
-          <div class="masonry-gallery" style="columns:5;">
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_50.jpg" alt="디자인 샘플 50" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_53.jpg" alt="디자인 샘플 53" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_56.jpg" alt="디자인 샘플 56" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_58.jpg" alt="디자인 샘플 58" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_59.jpg" alt="디자인 샘플 59" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_60.jpg" alt="디자인 샘플 60" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_64.jpg" alt="디자인 샘플 64" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="디자인 샘플 67" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="디자인 샘플 68" loading="lazy"/></div>
+          <div class="masonry-gallery">
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_50.jpg" alt="디자인 샘플 50" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_53.jpg" alt="디자인 샘플 53" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_56.jpg" alt="디자인 샘플 56" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_58.jpg" alt="디자인 샘플 58" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_59.jpg" alt="디자인 샘플 59" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_60.jpg" alt="디자인 샘플 60" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_64.jpg" alt="디자인 샘플 64" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_67.jpg" alt="디자인 샘플 67" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="namecard"><img src="assets/img/custom/samples2/smpl_img_68.jpg" alt="디자인 샘플 68" loading="lazy"/></div>
           </div>
         </div>
 
@@ -887,49 +875,52 @@
             <span class="sample-cat-count">43개</span>
           </div>
           <div class="masonry-gallery">
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_17.jpg" alt="디자인 샘플 17" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_18.jpg" alt="디자인 샘플 18" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_19.jpg" alt="디자인 샘플 19" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_20.jpg" alt="디자인 샘플 20" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_21.jpg" alt="디자인 샘플 21" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_22.jpg" alt="디자인 샘플 22" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_23.jpg" alt="디자인 샘플 23" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_24.jpg" alt="디자인 샘플 24" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_25.jpg" alt="디자인 샘플 25" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_26.jpg" alt="디자인 샘플 26" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_27.jpg" alt="디자인 샘플 27" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_28.jpg" alt="디자인 샘플 28" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_29.jpg" alt="디자인 샘플 29" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_30.jpg" alt="디자인 샘플 30" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_31.jpg" alt="디자인 샘플 31" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_32.jpg" alt="디자인 샘플 32" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_33.jpg" alt="디자인 샘플 33" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_34.jpg" alt="디자인 샘플 34" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_35.jpg" alt="디자인 샘플 35" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_36.jpg" alt="디자인 샘플 36" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_37.jpg" alt="디자인 샘플 37" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_38.jpg" alt="디자인 샘플 38" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_39.jpg" alt="디자인 샘플 39" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_40.jpg" alt="디자인 샘플 40" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_41.jpg" alt="디자인 샘플 41" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_42.jpg" alt="디자인 샘플 42" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_43.jpg" alt="디자인 샘플 43" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_44.jpg" alt="디자인 샘플 44" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_45.jpg" alt="디자인 샘플 45" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_46.jpg" alt="디자인 샘플 46" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_47.jpg" alt="디자인 샘플 47" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_48.jpg" alt="디자인 샘플 48" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_49.jpg" alt="디자인 샘플 49" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_51.jpg" alt="디자인 샘플 51" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_52.jpg" alt="디자인 샘플 52" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_54.jpg" alt="디자인 샘플 54" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_55.jpg" alt="디자인 샘플 55" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_57.jpg" alt="디자인 샘플 57" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_61.jpg" alt="디자인 샘플 61" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_62.jpg" alt="디자인 샘플 62" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_63.jpg" alt="디자인 샘플 63" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_65.jpg" alt="디자인 샘플 65" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_66.jpg" alt="디자인 샘플 66" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_17.jpg" alt="디자인 샘플 17" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_18.jpg" alt="디자인 샘플 18" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_19.jpg" alt="디자인 샘플 19" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_20.jpg" alt="디자인 샘플 20" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_21.jpg" alt="디자인 샘플 21" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_22.jpg" alt="디자인 샘플 22" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_23.jpg" alt="디자인 샘플 23" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_24.jpg" alt="디자인 샘플 24" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_25.jpg" alt="디자인 샘플 25" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_26.jpg" alt="디자인 샘플 26" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_27.jpg" alt="디자인 샘플 27" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo"><img src="assets/img/custom/samples2/smpl_img_28.jpg" alt="디자인 샘플 28" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_29.jpg" alt="디자인 샘플 29" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_30.jpg" alt="디자인 샘플 30" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_31.jpg" alt="디자인 샘플 31" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_32.jpg" alt="디자인 샘플 32" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_33.jpg" alt="디자인 샘플 33" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_34.jpg" alt="디자인 샘플 34" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_35.jpg" alt="디자인 샘플 35" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_36.jpg" alt="디자인 샘플 36" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_37.jpg" alt="디자인 샘플 37" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_38.jpg" alt="디자인 샘플 38" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_39.jpg" alt="디자인 샘플 39" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_40.jpg" alt="디자인 샘플 40" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_41.jpg" alt="디자인 샘플 41" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_42.jpg" alt="디자인 샘플 42" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_43.jpg" alt="디자인 샘플 43" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_44.jpg" alt="디자인 샘플 44" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_45.jpg" alt="디자인 샘플 45" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_46.jpg" alt="디자인 샘플 46" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_47.jpg" alt="디자인 샘플 47" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_48.jpg" alt="디자인 샘플 48" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_49.jpg" alt="디자인 샘플 49" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_51.jpg" alt="디자인 샘플 51" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_52.jpg" alt="디자인 샘플 52" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_54.jpg" alt="디자인 샘플 54" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_55.jpg" alt="디자인 샘플 55" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_57.jpg" alt="디자인 샘플 57" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_61.jpg" alt="디자인 샘플 61" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_62.jpg" alt="디자인 샘플 62" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_63.jpg" alt="디자인 샘플 63" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_65.jpg" alt="디자인 샘플 65" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="logo" style="display:none"><img src="assets/img/custom/samples2/smpl_img_66.jpg" alt="디자인 샘플 66" loading="lazy"/></div>
+          </div>
+          <div class="masonry-btns" data-cat-btns="logo">
+            <button onclick="toggleCat('logo', this)">+31개 더 보기 ↓</button>
           </div>
         </div>
 
@@ -940,23 +931,26 @@
             <span class="sample-cat-title">기존 디자인 샘플</span>
             <span class="sample-cat-count">16개</span>
           </div>
-          <div class="masonry-gallery" style="columns:5;">
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="디자인 샘플 01" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_02.jpg" alt="디자인 샘플 02" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_03.jpg" alt="디자인 샘플 03" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_04.jpg" alt="디자인 샘플 04" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_05.jpg" alt="디자인 샘플 05" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_06.jpg" alt="디자인 샘플 06" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_07.jpg" alt="디자인 샘플 07" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_08.jpg" alt="디자인 샘플 08" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_09.jpg" alt="디자인 샘플 09" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_10.jpg" alt="디자인 샘플 10" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_11.jpg" alt="디자인 샘플 11" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_12.jpg" alt="디자인 샘플 12" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_13.jpg" alt="디자인 샘플 13" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_14.jpg" alt="디자인 샘플 14" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_15.jpg" alt="디자인 샘플 15" loading="lazy"/></div>
-        <div class="masonry-item"><img src="assets/img/custom/samples2/smpl_img_16.jpg" alt="디자인 샘플 16" loading="lazy"/></div>
+          <div class="masonry-gallery">
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_01.jpg" alt="디자인 샘플 01" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_02.jpg" alt="디자인 샘플 02" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_03.jpg" alt="디자인 샘플 03" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_04.jpg" alt="디자인 샘플 04" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_05.jpg" alt="디자인 샘플 05" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_06.jpg" alt="디자인 샘플 06" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_07.jpg" alt="디자인 샘플 07" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_08.jpg" alt="디자인 샘플 08" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_09.jpg" alt="디자인 샘플 09" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_10.jpg" alt="디자인 샘플 10" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_11.jpg" alt="디자인 샘플 11" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy"><img src="assets/img/custom/samples2/smpl_img_12.jpg" alt="디자인 샘플 12" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy" style="display:none"><img src="assets/img/custom/samples2/smpl_img_13.jpg" alt="디자인 샘플 13" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy" style="display:none"><img src="assets/img/custom/samples2/smpl_img_14.jpg" alt="디자인 샘플 14" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy" style="display:none"><img src="assets/img/custom/samples2/smpl_img_15.jpg" alt="디자인 샘플 15" loading="lazy"/></div>
+            <div class="masonry-item" data-cat="legacy" style="display:none"><img src="assets/img/custom/samples2/smpl_img_16.jpg" alt="디자인 샘플 16" loading="lazy"/></div>
+          </div>
+          <div class="masonry-btns" data-cat-btns="legacy">
+            <button onclick="toggleCat('legacy', this)">+4개 더 보기 ↓</button>
           </div>
         </div>
 
@@ -1510,5 +1504,22 @@
     <polyline points="18 15 12 9 6 15"/>
   </svg>
 </button>
+
+<script>
+function toggleCat(catId, btn) {
+  var items = document.querySelectorAll('.masonry-item[data-cat="' + catId + '"]');
+  var expanded = btn.getAttribute('data-expanded') === 'true';
+  items.forEach(function(el, i) {
+    if (i >= 12) el.style.display = expanded ? 'none' : '';
+  });
+  if (expanded) {
+    btn.setAttribute('data-expanded', 'false');
+    btn.textContent = '+' + (items.length - 12) + '개 더 보기 ↓';
+  } else {
+    btn.setAttribute('data-expanded', 'true');
+    btn.textContent = '접기 ↑';
+  }
+}
+</script>
 </body>
 </html>
