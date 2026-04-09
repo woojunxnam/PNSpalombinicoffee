@@ -1,0 +1,624 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>고객·협력사 — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니와 함께하는 고객사와 협력사를 소개합니다. 패키징, 장비, 원두 유통 분야의 신뢰할 수 있는 파트너십."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ── HERO ── */
+    .pt-hero {
+      background: var(--accent2);
+      padding: 80px 0 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .pt-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 50%, rgba(192,122,61,.2) 0%, transparent 70%);
+    }
+    .pt-hero-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .pt-hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 46px);
+      color: #fff;
+      margin: 0 0 14px;
+      position: relative;
+      line-height: 1.2;
+    }
+    .pt-hero-desc {
+      color: rgba(255,255,255,.6);
+      font-size: 15px;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.75;
+      position: relative;
+    }
+
+    /* ── TRUST STATS ── */
+    .pt-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: -40px;
+      position: relative;
+      z-index: 2;
+    }
+    .pt-stat {
+      background: var(--card);
+      text-align: center;
+      padding: 28px 16px;
+    }
+    .pt-stat-num {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3vw, 38px);
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .pt-stat-label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* ── SECTION COMMON ── */
+    .pt-section-eyebrow {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 10px;
+    }
+    .pt-section-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3vw, 32px);
+      font-weight: 600;
+      color: var(--accent2);
+      margin: 0 0 8px;
+    }
+    .pt-section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 56ch;
+      margin: 0 0 36px;
+    }
+
+    /* ── PARTNER CARDS ── */
+    .pt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .pt-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .pt-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,.08);
+    }
+    .pt-card-logo {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--bg2, #f5f0eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--accent);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .pt-card-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+    .pt-card-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(192,122,61,.1);
+      border: 1px solid rgba(192,122,61,.2);
+      border-radius: 6px;
+      padding: 3px 8px;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+    .pt-card-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent2);
+      margin: 0 0 8px;
+    }
+    .pt-card-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0;
+      flex: 1;
+    }
+    .pt-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      margin-top: 16px;
+      transition: gap .2s;
+    }
+    .pt-card-link:hover { gap: 8px; }
+
+    /* ── CLIENT SECTION (beige) ── */
+    .pt-clients-bg {
+      background: #f4ede2;
+    }
+    .pt-client-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .pt-client-card {
+      background: #fff;
+      border: 1px solid rgba(0,0,0,.07);
+      border-radius: 16px;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .pt-client-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+    }
+    .pt-client-logo {
+      width: 80px;
+      height: 100%;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg2, #f5f0eb);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+    .pt-client-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 10px;
+    }
+    .pt-client-body {
+      padding: 22px 24px;
+      border-left: 1px solid rgba(0,0,0,.07);
+    }
+    .pt-client-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent2);
+      margin: 0 0 6px;
+    }
+    .pt-client-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin: 0 0 10px;
+    }
+    .pt-client-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap .2s;
+    }
+    .pt-client-link:hover { gap: 8px; }
+
+    /* ── PARTNERSHIP CTA ── */
+    .pt-cta {
+      background:
+        radial-gradient(600px 300px at 80% 50%, rgba(200,170,110,.16), transparent 60%),
+        linear-gradient(135deg, #1f1208, #2b1a0e);
+      border-radius: 20px;
+      padding: 48px 44px;
+      color: #f5ede1;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+    }
+    .pt-cta-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 2.8vw, 32px);
+      font-weight: 600;
+      margin: 0 0 8px;
+    }
+    .pt-cta-desc {
+      font-size: 14px;
+      color: rgba(245,237,225,.72);
+      line-height: 1.7;
+      margin: 0;
+    }
+    .pt-cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .pt-stats { grid-template-columns: repeat(2, 1fr); }
+      .pt-grid { grid-template-columns: repeat(2, 1fr); }
+      .pt-client-grid { grid-template-columns: 1fr; }
+      .pt-cta { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .pt-stats { grid-template-columns: repeat(2, 1fr); }
+      .pt-grid { grid-template-columns: 1fr; }
+      .pt-client-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav" aria-label="주요 메뉴">
+        <div class="nav-item">
+          <a href="index.html#about" data-ko="브랜드">About</a>
+          <div class="nav-dropdown">
+            <a href="index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> Technology</a>
+            <a href="index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> Heritage</a>
+            <a href="index.html#reviews"><span class="nav-dropdown-icon">&#x2B50;</span> Reviews</a>
+            <a href="index.html#faq"><span class="nav-dropdown-icon">&#x2753;</span> FAQ</a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" data-ko="제품">Products</a>
+          <div class="nav-dropdown">
+            <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+            <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xACC4;&#xC5F4;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+          </div>
+        </div>
+        <a href="products/volcano-ruby.html" class="nav-volcano" data-ko="🌋 볼케이노 루비">🌋 Volcano Ruby</a>
+                <div class="nav-item">
+          <a href="machines/" data-ko="자동화 장비">Machines</a>
+          <div class="nav-dropdown">
+            <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
+          </div>
+        </div>
+<div class="nav-item"><a href="b2b-lineup.html" data-ko="B2B">B2B</a><div class="nav-dropdown">
+            <a href="b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
+            <div class="nav-dropdown-label">드립백 B2B</div>
+            <a href="custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
+            <a href="b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
+            <div class="nav-dropdown-label">원두 생두 B2B</div>
+            <a href="b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 생두 원두 대량 주문</a>
+            <div class="nav-dropdown-label">봉투 필름지 B2B</div>
+            <a href="film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
+            <a href="b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기</a>
+          </div></div>
+        <a href="contact.html" data-ko="문의">Contact</a>
+        <a href="partners.html" data-ko="고객·협력사">Partners</a>
+      </nav>
+      <div class="header-actions">
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>
+        </a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true">
+            <span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── HERO ── -->
+    <section class="pt-hero">
+      <div class="container">
+        <p class="pt-hero-eyebrow">Clients &amp; Partners</p>
+        <h1>함께 성장하는<br/>신뢰의 파트너십</h1>
+        <p class="pt-hero-desc">PNS 팔롬비니는 국내외 우수한 기업들과 협력하여<br/>최상의 커피 경험과 자동화 솔루션을 제공합니다.</p>
+      </div>
+    </section>
+
+    <!-- ── TRUST STATS ── -->
+    <section class="section" style="padding-top:0;padding-bottom:56px;">
+      <div class="container">
+        <div class="pt-stats">
+          <div class="pt-stat">
+            <div class="pt-stat-num">10+</div>
+            <div class="pt-stat-label">파트너 & 고객사</div>
+          </div>
+          <div class="pt-stat">
+            <div class="pt-stat-num">5+</div>
+            <div class="pt-stat-label">국가</div>
+          </div>
+          <div class="pt-stat">
+            <div class="pt-stat-num">80+</div>
+            <div class="pt-stat-label">년 브랜드 헤리티지</div>
+          </div>
+          <div class="pt-stat">
+            <div class="pt-stat-num">50+</div>
+            <div class="pt-stat-label">패키징 머신 특허</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 협력사 (Partners) ── -->
+    <section class="section" style="padding-top:0;padding-bottom:64px;">
+      <div class="container">
+        <p class="pt-section-eyebrow">Partners</p>
+        <h2 class="pt-section-title">협력사</h2>
+        <p class="pt-section-desc">패키징, 장비, 선별 기술, 원두 공급 등 각 분야 최고의 전문 기업들과 협력하고 있습니다.</p>
+
+        <div class="pt-grid">
+          <!-- Palombini -->
+          <div class="pt-card">
+            <div class="pt-card-logo" style="background:#1a1008;color:#c8aa6e;font-size:16px;">P</div>
+            <span class="pt-card-badge">원두 공급</span>
+            <h3 class="pt-card-name">Palombini</h3>
+            <p class="pt-card-desc">1940년대 로마에서 창업한 이탈리아 프리미엄 에스프레소 로스터리. 80년 이상의 전통으로 바리스타와 커피 전문가를 위한 최상급 블렌드를 생산합니다.</p>
+            <a class="pt-card-link" href="https://daroma.it/palombini/" target="_blank" rel="noopener">웹사이트 방문 →</a>
+          </div>
+
+          <!-- RC-PACK -->
+          <div class="pt-card">
+            <div class="pt-card-logo">RC</div>
+            <span class="pt-card-badge">포장재 제조</span>
+            <h3 class="pt-card-name">RC-PACK</h3>
+            <p class="pt-card-desc">연포장 전문 제조업체로, 드립백·커피·식품용 스탠드업 파우치, 평저 파우치, 롤 필름 등 맞춤형 포장재를 생산합니다. 친환경 생분해성 라인업도 보유.</p>
+            <a class="pt-card-link" href="https://rcpackage.com/" target="_blank" rel="noopener">웹사이트 방문 →</a>
+          </div>
+
+          <!-- MDP Intelligence -->
+          <div class="pt-card">
+            <div class="pt-card-logo" style="font-size:14px;">MDP</div>
+            <span class="pt-card-badge">패키징 장비</span>
+            <h3 class="pt-card-name">MDP Intelligence</h3>
+            <p class="pt-card-desc">자동 패키징 장비 전문 제조사. 드립백·티백·캡슐·파우더 등 다양한 포장기계를 25년 이상의 경험과 50여 건의 특허 기술력으로 60개국 이상에 공급.</p>
+            <a class="pt-card-link" href="https://www.mdpacker.com/" target="_blank" rel="noopener">웹사이트 방문 →</a>
+          </div>
+
+          <!-- Anysort -->
+          <div class="pt-card">
+            <div class="pt-card-logo" style="font-size:12px;">ANY</div>
+            <span class="pt-card-badge">품질 선별</span>
+            <h3 class="pt-card-name">Anysort</h3>
+            <p class="pt-card-desc">AI 광학 선별기 및 X-ray 검사 장비 전문 제조사. 곡물·견과류·커피 생두 등 다양한 식품 원료의 품질 선별 솔루션을 제공합니다.</p>
+            <a class="pt-card-link" href="https://www.anysorting.com/" target="_blank" rel="noopener">웹사이트 방문 →</a>
+          </div>
+
+          <!-- MFDP -->
+          <div class="pt-card">
+            <div class="pt-card-logo" style="font-size:12px;">MFDP</div>
+            <span class="pt-card-badge">장비 파트너</span>
+            <h3 class="pt-card-name">MFDP</h3>
+            <p class="pt-card-desc">패키징 자동화 분야의 전문 협력 파트너로, PNS 팔롬비니와 함께 고품질 생산 라인 구축에 기여하고 있습니다.</p>
+          </div>
+
+          <!-- ESPRESSO FINECUT -->
+          <div class="pt-card">
+            <div class="pt-card-logo" style="font-size:10px;">EFC</div>
+            <span class="pt-card-badge">커피 장비</span>
+            <h3 class="pt-card-name">ESPRESSO FINECUT</h3>
+            <p class="pt-card-desc">에스프레소 및 커피 관련 정밀 장비 전문 파트너. 커피 가공 과정의 품질 향상을 위한 솔루션을 제공합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 고객사 (Clients) ── -->
+    <section class="section pt-clients-bg" style="padding-top:64px;padding-bottom:64px;">
+      <div class="container">
+        <p class="pt-section-eyebrow">Clients</p>
+        <h2 class="pt-section-title">고객사</h2>
+        <p class="pt-section-desc">PNS 팔롬비니의 원두, 드립백, 패키징 솔루션을 활용하는 파트너 기업들입니다.</p>
+
+        <div class="pt-client-grid">
+          <!-- 블랙빈스 -->
+          <div class="pt-client-card">
+            <div class="pt-client-logo">BB</div>
+            <div class="pt-client-body">
+              <h3 class="pt-client-name">블랙빈스</h3>
+              <p class="pt-client-desc">당일 로스팅 스페셜티 원두와 드립백을 전문으로 판매하는 온라인 커피 쇼핑몰. 에티오피아·콜롬비아·파나마 등 다양한 산지의 싱글 오리진 및 블렌드 원두를 제공합니다.</p>
+              <a class="pt-client-link" href="https://blackbeans.kr" target="_blank" rel="noopener">blackbeans.kr →</a>
+            </div>
+          </div>
+
+          <!-- 빈스페이스 -->
+          <div class="pt-client-card">
+            <div class="pt-client-logo">BS</div>
+            <div class="pt-client-body">
+              <h3 class="pt-client-name">빈스페이스</h3>
+              <p class="pt-client-desc">디카페인 스페셜티 커피 전문 로스터리. 원두·분쇄 커피·스틱 커피 등 다양한 형태의 디카페인 제품을 제공하며, 자매 브랜드 '디카프코리아'를 통해 디카페인 생두 유통까지 아우릅니다.</p>
+              <a class="pt-client-link" href="https://beanspacecoffee.com" target="_blank" rel="noopener">beanspacecoffee.com →</a>
+            </div>
+          </div>
+
+          <!-- KL인터내셔널 -->
+          <div class="pt-client-card">
+            <div class="pt-client-logo">KL</div>
+            <div class="pt-client-body">
+              <h3 class="pt-client-name">KL인터내셔널</h3>
+              <p class="pt-client-desc">카페 창업 및 운영에 필요한 전문 장비를 수입·유통하는 업체. CINOART 자동 탬퍼, EXIT 그라인더 등 커피 관련 기기를 국내에 공급합니다.</p>
+              <a class="pt-client-link" href="https://klinternational.co.kr" target="_blank" rel="noopener">klinternational.co.kr →</a>
+            </div>
+          </div>
+
+          <!-- 흥국F&B -->
+          <div class="pt-client-card">
+            <div class="pt-client-logo">HK</div>
+            <div class="pt-client-body">
+              <h3 class="pt-client-name">흥국F&amp;B</h3>
+              <p class="pt-client-desc">카페·외식 산업을 위한 Horeca Total Solution 기업. HPP 공법을 활용한 콜드브루·음료 베이스·캡슐커피를 ODM/OEM 방식으로 생산합니다.</p>
+              <a class="pt-client-link" href="https://hyungkuk.com/kor/main/" target="_blank" rel="noopener">hyungkuk.com →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── PARTNERSHIP CTA ── -->
+    <section class="section" style="padding-bottom:64px;">
+      <div class="container">
+        <div class="pt-cta">
+          <div>
+            <h2 class="pt-cta-title">PNS 팔롬비니와<br/>함께하고 싶으신가요?</h2>
+            <p class="pt-cta-desc">원두 공급, 드립백 제작, 패키징 자동화 등<br/>다양한 분야에서 파트너십을 환영합니다.</p>
+          </div>
+          <div class="pt-cta-actions">
+            <a class="btn btn-primary" href="contact.html" style="background:linear-gradient(135deg,#c8823f,#ddb56b);color:#21160f;border-color:transparent;white-space:nowrap;">
+              📩 파트너십 문의하기
+            </a>
+            <a class="btn btn-ghost" href="b2b-lineup.html" style="border-color:rgba(244,236,225,.3);color:#f5ede1;white-space:nowrap;text-align:center;">
+              📋 B2B 라인업 보기
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+      <div class="container">
+        <div class="footer-sitemap">
+          <div class="footer-col">
+            <h4>브랜드</h4>
+            <a href="index.html#about">회사 소개</a>
+            <a href="index.html#tech">기술력</a>
+            <a href="index.html#heritage">헤리티지</a>
+            <a href="index.html#reviews">고객 후기</a>
+            <a href="index.html#faq">FAQ</a>
+          </div>
+          <div class="footer-col">
+            <h4>제품</h4>
+            <a href="products/">팔롬비니 상품 라인업</a>
+            <a href="lineup.html">계열사 상품 라인업</a>
+            <a href="products/volcano-ruby.html">볼케이노 루비</a>
+            <a href="machines/">패키징 머신 라인업</a>
+          </div>
+          <div class="footer-col">
+            <h4>B2B</h4>
+            <a href="b2b-lineup.html">B2B 상품 라인업</a>
+            <a href="custom-edition.html">드립백 맞춤 주문</a>
+            <a href="b2b.html">드립백 생산 현장</a>
+            <a href="b2b-bean.html">생두·원두 대량 주문</a>
+            <a href="film-custom.html">봉투 필름지 맞춤 주문</a>
+          </div>
+          <div class="footer-col">
+            <h4>고객지원</h4>
+            <a href="contact.html">문의하기</a>
+            <a href="partners.html">고객·협력사</a>
+            <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">네이버 스마트스토어</a>
+            <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+        <div class="footer-biz">
+          <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
+          <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+          <p class="footer-sub">원두에서 패키지까지 &middot; Caff&egrave; Palombini Heritage &middot; Volcano Ruby &middot; Custom Drip Bag &middot; Packaging Machines</p>
+        </div>
+      </div>
+    </footer>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const h = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => h.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.addEventListener('scroll', () => { scrollBtn.classList.toggle('visible', window.scrollY > 300); }, {passive:true});
+    scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+  </script>
+
+  <script src="assets/js/main.js"></script>
+
+  <script>
+  window.T = [
+    ['.pt-hero-eyebrow', 'Clients &amp; Partners'],
+    ['.pt-hero h1', 'Growing Together<br/>Through Trusted Partnerships'],
+    ['.pt-hero-desc', 'PNS Palombini collaborates with outstanding domestic and international companies<br/>to deliver the best coffee experience and automation solutions.'],
+    ['.pt-stat-label', 'Partners &amp; Clients', 0],
+    ['.pt-stat-label', 'Countries', 1],
+    ['.pt-stat-label', 'Years of Heritage', 2],
+    ['.pt-stat-label', 'Packaging Patents', 3],
+    ['.pt-section-eyebrow', 'Partners', 0],
+    ['.pt-section-title', 'Partners', 0],
+    ['.pt-section-desc', 'We collaborate with top-tier specialists in packaging, machinery, sorting technology, and coffee supply.', 0],
+    ['.pt-section-eyebrow', 'Clients', 1],
+    ['.pt-section-title', 'Clients', 1],
+    ['.pt-section-desc', 'Partner companies that utilize PNS Palombini\u2019s coffee beans, drip bags, and packaging solutions.', 1],
+    ['.pt-cta-title', 'Want to Partner<br/>with PNS Palombini?'],
+    ['.pt-cta-desc', 'We welcome partnerships in coffee supply, drip bag production,<br/>packaging automation, and more.'],
+    ['.pt-cta-actions .btn-primary', '\uD83D\uDCE9 Partnership Inquiry'],
+    ['.pt-cta-actions .btn-ghost', '\uD83D\uDCCB View B2B Lineup'],
+  ];
+  </script>
+</body>
+</html>
