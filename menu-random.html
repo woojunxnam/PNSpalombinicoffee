@@ -1739,11 +1739,83 @@
   }
 
   /* ══════════════════════════════════════════════════════
-     LOCAL STATS (localStorage)
+     STATS (Firestore global + localStorage fallback)
   ══════════════════════════════════════════════════════ */
+  let globalStats = null;   // { items: {name: count}, categories: {catId: count}, total: N }
+  let globalSurveys = null; // array of survey docs
+
+  const CACHE_TTL = 5 * 60 * 1000; // 5 min
+
+  function getCachedGlobal(key) {
+    try {
+      const raw = sessionStorage.getItem(key);
+      if (!raw) return null;
+      const { data, ts } = JSON.parse(raw);
+      if (Date.now() - ts > CACHE_TTL) { sessionStorage.removeItem(key); return null; }
+      return data;
+    } catch { return null; }
+  }
+  function setCachedGlobal(key, data) {
+    try { sessionStorage.setItem(key, JSON.stringify({ data, ts: Date.now() })); } catch {}
+  }
+
+  async function fetchGlobalStats() {
+    if (!db) return;
+    // Try cache first
+    const cachedStats = getCachedGlobal('pns_global_stats');
+    const cachedSurveys = getCachedGlobal('pns_global_surveys');
+    if (cachedStats && cachedSurveys) {
+      globalStats = cachedStats;
+      globalSurveys = cachedSurveys;
+      refreshAllStats();
+      return;
+    }
+    try {
+      // Fetch picks
+      const picksSnap = await db.collection('picks').get();
+      const stats = { items: {}, categories: {}, total: 0 };
+      picksSnap.forEach(doc => {
+        const d = doc.data();
+        if (d.itemName) {
+          stats.items[d.itemName] = (stats.items[d.itemName] || 0) + 1;
+          stats.total++;
+        }
+        if (d.category) stats.categories[d.category] = (stats.categories[d.category] || 0) + 1;
+      });
+      globalStats = stats;
+      setCachedGlobal('pns_global_stats', stats);
+
+      // Fetch surveys
+      const surveysSnap = await db.collection('surveys').get();
+      const surveys = [];
+      surveysSnap.forEach(doc => surveys.push(doc.data()));
+      globalSurveys = surveys;
+      setCachedGlobal('pns_global_surveys', surveys);
+
+      refreshAllStats();
+      console.log('[Stats] Global stats loaded:', stats.total, 'picks,', surveys.length, 'surveys');
+    } catch(e) {
+      console.warn('[Stats] Failed to fetch global stats:', e.message);
+    }
+  }
+
+  function refreshAllStats() {
+    ['spinStatWrap','recStatWrap','tournamentStatWrap'].forEach(id => {
+      renderStats(id, id.replace('Wrap','Bars'));
+    });
+    ['spinFunFacts','recFunFacts','tournamentFunFacts'].forEach(id => renderFunFacts(id));
+  }
+
   function getStats() {
+    if (globalStats && globalStats.total > 0) return globalStats;
     try { return JSON.parse(localStorage.getItem('pns_pick_stats') || '{}'); }
     catch { return {}; }
+  }
+
+  function getSurveys() {
+    if (globalSurveys && globalSurveys.length > 0) return globalSurveys;
+    try { return JSON.parse(localStorage.getItem('pns_surveys') || '[]'); }
+    catch { return []; }
   }
 
   /* Track picks — only called when user submits survey */
@@ -1773,7 +1845,7 @@
   }
 
   function getItemDemographic(itemName) {
-    const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
+    const surveys = getSurveys();
     const matching = surveys.filter(s => s.picks && s.picks.includes(itemName));
     if (matching.length < 2) return null;
 
@@ -1831,6 +1903,7 @@
 
   function renderStats(wrapId, barsId) {
     const stats = getStats();
+    const isGlobal = globalStats && globalStats.total > 0;
     const items = stats.items || {};
     const total = Object.values(items).reduce((s, v) => s + v, 0) || 1;
     const entries = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 6);
@@ -1838,6 +1911,14 @@
     const wrap = document.getElementById(wrapId);
     const bars = document.getElementById(barsId);
     if (!wrap || !bars) return;
+
+    // Update title to show global/local status
+    const titleEl = wrap.querySelector('.stat-bar-title');
+    if (titleEl) {
+      titleEl.innerHTML = isGlobal
+        ? '📊 ALL USERS PICK STATS <span style="font-size:9px;background:var(--accent);color:#fff;padding:2px 6px;border-radius:4px;margin-left:4px;">GLOBAL</span>'
+        : '📊 LIVE PICK STATS';
+    }
 
     if (entries.length === 0) {
       wrap.style.display = 'none';
@@ -1904,7 +1985,7 @@
     const items = stats.items || {};
     const cats = stats.categories || {};
     const total = stats.total || 0;
-    const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
+    const surveys = getSurveys();
     const allCats = { ...DRINKS, ...DESSERTS };
 
     const facts = [];
@@ -1973,12 +2054,14 @@
 
     // Take up to 4 facts
     const show = facts.slice(0, 4);
+    const container = document.getElementById(containerId);
+    if (!container) return;
     if (show.length === 0) {
-      document.getElementById(containerId).innerHTML = '';
+      container.innerHTML = '';
       return;
     }
 
-    document.getElementById(containerId).innerHTML = `
+    container.innerHTML = `
       <div class="fun-facts-title">\uD83C\uDFB2 FUN STATS</div>
       <div class="fun-fact-cards">
         ${show.map(f => `
@@ -2056,14 +2139,15 @@
     // Track picks only on survey submit
     trackCurrentPicks();
 
+    // Invalidate global cache so next refresh fetches latest
+    sessionStorage.removeItem('pns_global_stats');
+    sessionStorage.removeItem('pns_global_surveys');
+
     section.classList.remove('show');
     showToast('감사합니다! 설문이 저장되었습니다.');
 
     // Refresh stats and fun facts after survey
-    ['spinStatWrap','recStatWrap','tournamentStatWrap'].forEach((id, i) => {
-      renderStats(id, id.replace('Wrap','Bars'));
-    });
-    ['spinFunFacts','recFunFacts','tournamentFunFacts'].forEach(id => renderFunFacts(id));
+    refreshAllStats();
   }
 
   function skipSurvey(sectionId) {
@@ -2626,6 +2710,9 @@
       console.warn('[Firebase] Write failed:', collectionName, err.message);
     });
   }
+
+  /* ── Load global stats on page init ── */
+  fetchGlobalStats();
 
   </script>
 </body>
