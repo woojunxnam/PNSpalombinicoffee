@@ -50,6 +50,21 @@
       margin: 0; line-height: 1.7;
       max-width: 50ch; word-break: keep-all;
     }
+    .lineup-cat-header { display: flex; flex-direction: column; align-items: flex-start; }
+    .lineup-cat-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 18px; padding: 10px 24px;
+      font-size: 13px; font-weight: 700; color: #fff;
+      background: linear-gradient(135deg, var(--accent), #d4a054);
+      border-radius: 999px; text-decoration: none;
+      letter-spacing: .02em;
+      box-shadow: 0 2px 8px rgba(192,122,61,.22);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .lineup-cat-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(192,122,61,.35);
+    }
 
     /* ── Info section (above products) ── */
     .lineup-info-section {
@@ -231,6 +246,7 @@
             <span class="lineup-cat-eyebrow">Drip Bag Coffee</span>
             <h2 class="lineup-cat-title">드립백 커피</h2>
             <p class="lineup-cat-desc">맞춤 디자인과 프리미엄 원두로 만드는 B2B 드립백 커피</p>
+            <a class="lineup-cat-cta" href="contact-drip.html">☕ B2B 드립백 문의하기 →</a>
           </div>
 
           <div class="lineup-info-section">
@@ -288,6 +304,7 @@
             <span class="lineup-cat-eyebrow">Beans &amp; Green Beans</span>
             <h2 class="lineup-cat-title">원두·생두</h2>
             <p class="lineup-cat-desc">산지 직송 생두부터 맞춤 로스팅 원두까지, B2B 대량 공급</p>
+            <a class="lineup-cat-cta" href="contact-bean.html">🫘 B2B 생두 원두 문의하기 →</a>
           </div>
 
           <div class="lineup-info-section">
@@ -355,6 +372,7 @@
             <span class="lineup-cat-eyebrow">Pouch &amp; Film</span>
             <h2 class="lineup-cat-title">봉투·필름지</h2>
             <p class="lineup-cat-desc">브랜드를 완성하는 맞춤형 포장재 솔루션</p>
+            <a class="lineup-cat-cta" href="contact.html">📦 B2B 봉투 필름지 문의하기 →</a>
           </div>
 
           <div class="lineup-info-section">
