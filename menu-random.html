@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Kakao SDK -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Ber76" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -197,7 +199,6 @@
     .spin-center-btn:active { transform: translate(-50%, -50%) scale(.97); }
     .spin-center-btn:disabled { background: var(--muted); cursor: not-allowed; box-shadow: none; }
 
-    /* Slot machine style text spinner */
     .spin-slot {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -225,7 +226,6 @@
       100% { opacity: 1; }
     }
 
-    /* Ring decoration */
     .spin-ring-deco {
       position: absolute;
       top: -6px; left: -6px; right: -6px; bottom: -6px;
@@ -293,7 +293,6 @@
       margin-bottom: 20px;
     }
 
-    /* Fortune & Lucky number */
     .result-divider {
       height: 1px;
       background: var(--line);
@@ -314,9 +313,7 @@
       flex-shrink: 0;
       line-height: 1.4;
     }
-    .fortune-body {
-      flex: 1;
-    }
+    .fortune-body { flex: 1; }
     .fortune-label {
       font-size: 9.5px;
       font-weight: 800;
@@ -388,6 +385,89 @@
       flex-wrap: wrap;
     }
 
+    /* ── SHARE BUTTONS ─────────────────────── */
+    .share-section {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .share-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 12px;
+    }
+    .share-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font-family: var(--sans);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      color: var(--text);
+    }
+    .share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,.08); }
+    .share-btn:active { transform: translateY(0); }
+    .share-btn-kakao { background: #FEE500; border-color: #FEE500; color: #3C1E1E; }
+    .share-btn-kakao:hover { background: #F5DC00; }
+    .share-btn-x { background: #000; border-color: #000; color: #fff; }
+    .share-btn-x:hover { background: #222; }
+    .share-btn-insta { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border-color: transparent; color: #fff; }
+    .share-btn-copy { background: var(--bg2); }
+    .share-btn-icon { font-size: 16px; line-height: 1; }
+
+    /* ── FUN FACTS ──────────────────────────── */
+    .fun-facts {
+      margin-top: 20px;
+    }
+    .fun-facts-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 12px;
+      text-align: center;
+    }
+    .fun-fact-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .fun-fact-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .fun-fact-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+    .fun-fact-value {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+    .fun-fact-label {
+      font-size: 10.5px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
     /* ── RECOMMEND FLOW ────────────────────── */
     .rec-step {
       text-align: center;
@@ -445,7 +525,6 @@
       color: var(--muted);
     }
 
-    /* Mood slider */
     .mood-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -559,9 +638,7 @@
       margin-bottom: 20px;
       line-height: 1.6;
     }
-    .survey-row {
-      margin-bottom: 16px;
-    }
+    .survey-row { margin-bottom: 16px; }
     .survey-label {
       font-size: 11px;
       font-weight: 700;
@@ -590,9 +667,7 @@
     .survey-chip.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
 
     /* ── STATS BAR ──────────────────────────── */
-    .stat-bar-wrap {
-      margin-top: 20px;
-    }
+    .stat-bar-wrap { margin-top: 20px; }
     .stat-bar-title {
       font-size: 10px;
       font-weight: 800;
@@ -613,11 +688,13 @@
       gap: 10px;
     }
     .stat-label {
-      font-size: 11.5px;
+      font-size: 11px;
       font-weight: 600;
-      width: 80px;
+      width: 100px;
       text-align: right;
       flex-shrink: 0;
+      word-break: keep-all;
+      line-height: 1.3;
     }
     .stat-track {
       flex: 1;
@@ -678,6 +755,8 @@
       .spin-wheel-wrap { width: 220px; height: 220px; }
       .spin-wheel { width: 220px; height: 220px; }
       .spin-center-btn { width: 66px; height: 66px; font-size: 12px; }
+      .fun-fact-cards { grid-template-columns: 1fr; }
+      .share-btns { flex-direction: column; align-items: center; }
     }
   </style>
 </head>
@@ -734,26 +813,109 @@
         <div class="result-card">
           <span class="result-emoji" id="resultEmoji">&#x2615;</span>
           <div class="result-label">TODAY'S PICK</div>
-          <div class="result-menu-name" id="resultName">—</div>
-          <div class="result-cat" id="resultCat">—</div>
+          <div class="result-menu-name" id="resultName">&mdash;</div>
+          <div class="result-cat" id="resultCat">&mdash;</div>
           <div class="result-divider"></div>
           <div class="result-fortune-wrap">
             <div class="fortune-row">
               <span class="fortune-icon">&#x1F52E;</span>
               <div class="fortune-body">
                 <div class="fortune-label">TODAY'S FORTUNE</div>
-                <div class="fortune-text" id="fortuneText">—</div>
+                <div class="fortune-text" id="fortuneText">&mdash;</div>
               </div>
             </div>
             <div class="fortune-row">
               <span class="fortune-icon">&#x1F340;</span>
               <div class="fortune-body">
                 <div class="fortune-label">LUCKY NUMBER</div>
-                <div style="margin-top:4px;"><span class="lucky-number" id="luckyNum">—</span></div>
+                <div style="margin-top:4px;"><span class="lucky-number" id="luckyNum">&mdash;</span></div>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- Stats for Random -->
+        <div class="stat-bar-wrap" id="spinStatWrap">
+          <div class="stat-bar-title">&#x1F4CA; LIVE PICK STATS</div>
+          <div class="stat-bars" id="spinStatBars"></div>
+        </div>
+
+        <!-- Fun Facts for Random -->
+        <div class="fun-facts" id="spinFunFacts"></div>
+
+        <!-- Share for Random -->
+        <div class="share-section">
+          <div class="share-title">&#x1F4E2; &#xACF5;&#xC720;&#xD558;&#xAE30;</div>
+          <div class="share-btns">
+            <button class="share-btn share-btn-kakao" onclick="shareKakao('random')">
+              <span class="share-btn-icon">&#x1F4AC;</span> &#xCE74;&#xCE74;&#xC624;&#xD1A1;
+            </button>
+            <button class="share-btn share-btn-x" onclick="shareX('random')">
+              <span class="share-btn-icon">&#x1D54F;</span> &#xD2B8;&#xC704;&#xD130;
+            </button>
+            <button class="share-btn share-btn-copy" onclick="shareCopy('random')">
+              <span class="share-btn-icon">&#x1F4CB;</span> &#xBCF5;&#xC0AC;
+            </button>
+          </div>
+        </div>
+
+        <!-- Survey for Random -->
+        <div class="survey-section" id="spinSurveySection">
+          <div class="survey-card">
+            <div class="survey-title">&#x1F4CB; &#xAC04;&#xB2E8; &#xC124;&#xBB38;</div>
+            <div class="survey-sub">더 나은 추천을 위해 알려주세요!<br/>선택하지 않아도 괜찮아요.</div>
+
+            <div class="survey-row">
+              <span class="survey-label">MBTI</span>
+              <div class="survey-chips mbti-chips">
+                <span class="survey-chip" data-v="E">E</span>
+                <span class="survey-chip" data-v="I">I</span>
+                <span class="survey-chip" data-v="S">S</span>
+                <span class="survey-chip" data-v="N">N</span>
+                <span class="survey-chip" data-v="T">T</span>
+                <span class="survey-chip" data-v="F">F</span>
+                <span class="survey-chip" data-v="J">J</span>
+                <span class="survey-chip" data-v="P">P</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">성별</span>
+              <div class="survey-chips sex-chips">
+                <span class="survey-chip" data-v="M">남성</span>
+                <span class="survey-chip" data-v="F">여성</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">연령대</span>
+              <div class="survey-chips age-chips">
+                <span class="survey-chip" data-v="10">10대</span>
+                <span class="survey-chip" data-v="20">20대</span>
+                <span class="survey-chip" data-v="30">30대</span>
+                <span class="survey-chip" data-v="40">40대</span>
+                <span class="survey-chip" data-v="50">50+</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">방문 이유</span>
+              <div class="survey-chips reason-chips">
+                <span class="survey-chip" data-v="work">작업/공부</span>
+                <span class="survey-chip" data-v="date">데이트</span>
+                <span class="survey-chip" data-v="friends">친구 만남</span>
+                <span class="survey-chip" data-v="alone">혼자 힐링</span>
+                <span class="survey-chip" data-v="takeout">테이크아웃</span>
+              </div>
+            </div>
+
+            <div class="mr-btn-row" style="margin-top:20px;">
+              <button class="mr-btn mr-btn-primary" onclick="submitSurvey('spinSurveySection')">&#x2714; 제출하기</button>
+              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey('spinSurveySection')">건너뛰기</button>
+            </div>
+          </div>
+        </div>
+
         <div class="mr-btn-row">
           <button class="mr-btn mr-btn-primary" onclick="doSpin()">&#x1F504; 다시 뽑기</button>
           <button class="mr-btn mr-btn-secondary" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
@@ -781,20 +943,39 @@
         <div class="rec-results-sub" id="recResultSub">취향 분석 완료!</div>
         <div class="rec-result-list" id="recResultList"></div>
 
-        <div class="stat-bar-wrap" id="statBarWrap">
+        <div class="stat-bar-wrap" id="recStatWrap">
           <div class="stat-bar-title">&#x1F4CA; LIVE PICK STATS</div>
-          <div class="stat-bars" id="statBars"></div>
+          <div class="stat-bars" id="recStatBars"></div>
+        </div>
+
+        <!-- Fun Facts for Recommend -->
+        <div class="fun-facts" id="recFunFacts"></div>
+
+        <!-- Share for Recommend -->
+        <div class="share-section">
+          <div class="share-title">&#x1F4E2; &#xACF5;&#xC720;&#xD558;&#xAE30;</div>
+          <div class="share-btns">
+            <button class="share-btn share-btn-kakao" onclick="shareKakao('rec')">
+              <span class="share-btn-icon">&#x1F4AC;</span> &#xCE74;&#xCE74;&#xC624;&#xD1A1;
+            </button>
+            <button class="share-btn share-btn-x" onclick="shareX('rec')">
+              <span class="share-btn-icon">&#x1D54F;</span> &#xD2B8;&#xC704;&#xD130;
+            </button>
+            <button class="share-btn share-btn-copy" onclick="shareCopy('rec')">
+              <span class="share-btn-icon">&#x1F4CB;</span> &#xBCF5;&#xC0AC;
+            </button>
+          </div>
         </div>
 
         <!-- SURVEY -->
-        <div class="survey-section" id="surveySection">
+        <div class="survey-section" id="recSurveySection">
           <div class="survey-card">
-            <div class="survey-title">&#x1F4CB; 간단 설문</div>
+            <div class="survey-title">&#x1F4CB; &#xAC04;&#xB2E8; &#xC124;&#xBB38;</div>
             <div class="survey-sub">더 나은 추천을 위해 알려주세요!<br/>선택하지 않아도 괜찮아요.</div>
 
             <div class="survey-row">
               <span class="survey-label">MBTI</span>
-              <div class="survey-chips" id="mbtiChips">
+              <div class="survey-chips mbti-chips">
                 <span class="survey-chip" data-v="E">E</span>
                 <span class="survey-chip" data-v="I">I</span>
                 <span class="survey-chip" data-v="S">S</span>
@@ -808,16 +989,15 @@
 
             <div class="survey-row">
               <span class="survey-label">성별</span>
-              <div class="survey-chips" id="sexChips">
+              <div class="survey-chips sex-chips">
                 <span class="survey-chip" data-v="M">남성</span>
                 <span class="survey-chip" data-v="F">여성</span>
-                <span class="survey-chip" data-v="O">기타</span>
               </div>
             </div>
 
             <div class="survey-row">
               <span class="survey-label">연령대</span>
-              <div class="survey-chips" id="ageChips">
+              <div class="survey-chips age-chips">
                 <span class="survey-chip" data-v="10">10대</span>
                 <span class="survey-chip" data-v="20">20대</span>
                 <span class="survey-chip" data-v="30">30대</span>
@@ -828,7 +1008,7 @@
 
             <div class="survey-row">
               <span class="survey-label">방문 이유</span>
-              <div class="survey-chips" id="reasonChips">
+              <div class="survey-chips reason-chips">
                 <span class="survey-chip" data-v="work">작업/공부</span>
                 <span class="survey-chip" data-v="date">데이트</span>
                 <span class="survey-chip" data-v="friends">친구 만남</span>
@@ -838,8 +1018,8 @@
             </div>
 
             <div class="mr-btn-row" style="margin-top:20px;">
-              <button class="mr-btn mr-btn-primary" onclick="submitSurvey()">&#x2714; 제출하기</button>
-              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey()">건너뛰기</button>
+              <button class="mr-btn mr-btn-primary" onclick="submitSurvey('recSurveySection')">&#x2714; 제출하기</button>
+              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey('recSurveySection')">건너뛰기</button>
             </div>
           </div>
         </div>
@@ -988,6 +1168,10 @@
     '맛있는 음료 한 잔이 스트레스를 날려줄 거예요.'
   ];
 
+  /* ── Last pick state (for sharing) ─────── */
+  let lastRandomPick = null;
+  let lastRecPicks = [];
+
   /* ══════════════════════════════════════════════════════
      PANEL NAVIGATION
   ══════════════════════════════════════════════════════ */
@@ -1014,8 +1198,8 @@
     btn.disabled = true;
     resultEl.classList.remove('show');
     backRow.style.display = 'none';
+    document.getElementById('spinSurveySection').classList.remove('show');
 
-    // Spinning animation — rapid shuffle through items
     let shuffleCount = 0;
     const totalShuffles = 30 + Math.floor(Math.random() * 15);
     let delay = 50;
@@ -1028,11 +1212,9 @@
 
       shuffleCount++;
       if (shuffleCount < totalShuffles) {
-        // Gradually slow down
         delay = 50 + Math.pow(shuffleCount / totalShuffles, 2) * 200;
         setTimeout(shuffle, delay);
       } else {
-        // Final pick!
         textEl.classList.remove('spinning');
         const pick = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
         textEl.textContent = pick.icon + ' ' + pick.name;
@@ -1048,26 +1230,31 @@
   }
 
   function showSpinResult(pick) {
+    lastRandomPick = pick;
+
     document.getElementById('resultEmoji').textContent = pick.icon;
     document.getElementById('resultName').textContent = pick.name;
     document.getElementById('resultCat').textContent = pick.cat;
 
-    // Fortune
     const fortune = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
     document.getElementById('fortuneText').textContent = fortune;
 
-    // Lucky number (1-45)
     const lucky = Math.floor(Math.random() * 45) + 1;
     document.getElementById('luckyNum').textContent = lucky;
 
     document.getElementById('spinResult').classList.add('show');
     document.getElementById('spinBackRow').style.display = 'none';
 
-    // Confetti!
-    fireConfetti();
+    // Show fun facts (from previously submitted data)
+    renderFunFacts('spinFunFacts');
+    renderStats('spinStatWrap', 'spinStatBars');
 
-    // Track pick
-    trackPick(pick.catId, pick.name);
+    // Show survey after delay
+    setTimeout(() => {
+      document.getElementById('spinSurveySection').classList.add('show');
+    }, 1200);
+
+    fireConfetti();
   }
 
   /* ══════════════════════════════════════════════════════
@@ -1140,12 +1327,11 @@
   }
 
   function renderRecStep() {
-    // Find next applicable step
     while (recStepIndex < REC_STEPS.length) {
       const step = REC_STEPS[recStepIndex];
       if (step.condition && !step.condition(recAnswers)) {
         recStepIndex++;
-        recAnswers.push(null); // placeholder
+        recAnswers.push(null);
         continue;
       }
       break;
@@ -1222,21 +1408,19 @@
      RECOMMENDATION ENGINE
   ══════════════════════════════════════════════════════ */
   function showRecResults() {
-    const type = recAnswers[0];     // drink | dessert
-    const coffee = recAnswers[1];   // coffee | nocoffee | null
-    const mood = recAnswers[2];     // energy | relax | refresh | sweet
-    const temp = recAnswers[3];     // hot | ice | null
+    const type = recAnswers[0];
+    const coffee = recAnswers[1];
+    const mood = recAnswers[2];
+    const temp = recAnswers[3];
 
     let picks = [];
 
     if (type === 'dessert') {
-      // Pick from desserts
       for (const [catId, cat] of Object.entries(DESSERTS)) {
         cat.items.forEach(name => {
           picks.push({ name, cat: cat.name, icon: cat.icon, catId, score: Math.random() });
         });
       }
-      // Mood-based scoring for desserts
       picks.forEach(p => {
         if (mood === 'sweet') p.score += (p.catId === 'cake' || p.catId === 'gelato') ? 2 : 1;
         if (mood === 'refresh') p.score += (p.catId === 'bingsu' || p.catId === 'gelato') ? 2 : 0;
@@ -1244,7 +1428,6 @@
         if (mood === 'relax') p.score += p.catId === 'cake' ? 2 : 1;
       });
     } else {
-      // Drink recommendations
       const drinkCats = coffee === 'coffee'
         ? { coffee: DRINKS.coffee }
         : coffee === 'nocoffee'
@@ -1257,30 +1440,23 @@
         cat.items.forEach((name, i) => {
           const itemTemp = typeof cat.temp === 'string' ? cat.temp : (cat.temp[i] || 'both');
           const tag = cat.tags ? cat.tags[i] : '';
-
           let score = Math.random();
-
-          // Temperature filter
           if (temp === 'hot' && itemTemp === 'ice') score -= 3;
           if (temp === 'ice' && itemTemp === 'hot') score -= 3;
           if (temp && (itemTemp === temp || itemTemp === 'both')) score += 1;
-
-          // Mood matching
           if (mood === 'energy' && (tag === 'strong' || tag === 'classic')) score += 2;
           if (mood === 'relax' && (tag === 'calm' || tag === 'aromatic' || tag === 'tea')) score += 2;
           if (mood === 'refresh' && (tag === 'refresh' || tag === 'citrus' || tag === 'tropical' || tag === 'fruity')) score += 2;
           if (mood === 'sweet' && (tag === 'sweet' || tag === 'chocolate' || tag === 'dessert')) score += 2;
-
           picks.push({ name, cat: cat.name, icon: cat.icon, catId, idx: i, score });
         });
       }
     }
 
-    // Sort by score and take top 4
     picks.sort((a, b) => b.score - a.score);
     const top = picks.slice(0, 4);
+    lastRecPicks = top;
 
-    // Render results
     showPanel('panelRecResult');
 
     const listEl = document.getElementById('recResultList');
@@ -1295,15 +1471,11 @@
       </div>
     `).join('');
 
-    // Track picks
-    top.forEach(p => trackPick(p.catId, p.name));
+    renderStats('recStatWrap', 'recStatBars');
+    renderFunFacts('recFunFacts');
 
-    // Show stats
-    renderStats();
-
-    // Show survey after delay
     setTimeout(() => {
-      document.getElementById('surveySection').classList.add('show');
+      document.getElementById('recSurveySection').classList.add('show');
     }, 800);
 
     fireConfetti();
@@ -1313,43 +1485,54 @@
      LOCAL STATS (localStorage)
   ══════════════════════════════════════════════════════ */
   function getStats() {
-    try {
-      return JSON.parse(localStorage.getItem('pns_pick_stats') || '{}');
-    } catch { return {}; }
+    try { return JSON.parse(localStorage.getItem('pns_pick_stats') || '{}'); }
+    catch { return {}; }
   }
 
-  function trackPick(catId, name) {
+  /* Track picks — only called when user submits survey */
+  function trackCurrentPicks() {
     const stats = getStats();
-    if (!stats.categories) stats.categories = {};
-    stats.categories[catId] = (stats.categories[catId] || 0) + 1;
     if (!stats.items) stats.items = {};
-    stats.items[name] = (stats.items[name] || 0) + 1;
-    stats.total = (stats.total || 0) + 1;
+    if (!stats.categories) stats.categories = {};
+
+    // Determine which items to track based on current context
+    const itemsToTrack = [];
+    if (lastRandomPick) {
+      itemsToTrack.push(lastRandomPick);
+    }
+    if (lastRecPicks.length > 0) {
+      itemsToTrack.push(...lastRecPicks);
+    }
+
+    itemsToTrack.forEach(p => {
+      stats.items[p.name] = (stats.items[p.name] || 0) + 1;
+      stats.categories[p.catId] = (stats.categories[p.catId] || 0) + 1;
+    });
+    stats.total = (stats.total || 0) + itemsToTrack.length;
     localStorage.setItem('pns_pick_stats', JSON.stringify(stats));
   }
 
-  function renderStats() {
+  function renderStats(wrapId, barsId) {
     const stats = getStats();
-    const cats = stats.categories || {};
-    const total = Object.values(cats).reduce((s, v) => s + v, 0) || 1;
+    const items = stats.items || {};
+    const total = Object.values(items).reduce((s, v) => s + v, 0) || 1;
+    const entries = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 6);
 
-    // Get all category names
-    const allCats = { ...DRINKS, ...DESSERTS };
-    const entries = Object.entries(cats)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 6);
+    const wrap = document.getElementById(wrapId);
+    const bars = document.getElementById(barsId);
+    if (!wrap || !bars) return;
 
     if (entries.length === 0) {
-      document.getElementById('statBarWrap').style.display = 'none';
+      wrap.style.display = 'none';
       return;
     }
+    wrap.style.display = '';
 
-    document.getElementById('statBars').innerHTML = entries.map(([id, count]) => {
-      const cat = allCats[id];
+    bars.innerHTML = entries.map(([name, count]) => {
       const pct = Math.round((count / total) * 100);
       return `
         <div class="stat-row">
-          <span class="stat-label">${cat ? cat.icon + ' ' + cat.name : id}</span>
+          <span class="stat-label">${name}</span>
           <div class="stat-track">
             <div class="stat-fill" style="width:${pct}%"></div>
           </div>
@@ -1359,62 +1542,236 @@
   }
 
   /* ══════════════════════════════════════════════════════
+     FUN FACTS — creative stats cards
+  ══════════════════════════════════════════════════════ */
+  function renderFunFacts(containerId) {
+    const stats = getStats();
+    const items = stats.items || {};
+    const cats = stats.categories || {};
+    const total = stats.total || 0;
+    const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
+    const allCats = { ...DRINKS, ...DESSERTS };
+
+    const facts = [];
+
+    // 1. Total picks
+    if (total > 0) {
+      facts.push({ icon: '\uD83C\uDFAF', value: total + '회', label: '지금까지 총 뽑기 횟수' });
+    }
+
+    // 2. #1 popular item
+    const topItem = Object.entries(items).sort((a,b) => b[1] - a[1])[0];
+    if (topItem) {
+      facts.push({ icon: '\uD83D\uDC51', value: topItem[0], label: '가장 많이 뽑힌 메뉴' });
+    }
+
+    // 3. #1 popular category
+    const topCat = Object.entries(cats).sort((a,b) => b[1] - a[1])[0];
+    if (topCat && allCats[topCat[0]]) {
+      facts.push({ icon: '\uD83D\uDD25', value: allCats[topCat[0]].icon + ' ' + allCats[topCat[0]].name, label: '가장 인기 카테고리' });
+    }
+
+    // 4. Unique items tried
+    const uniqueCount = Object.keys(items).length;
+    if (uniqueCount > 0) {
+      const totalMenu = ALL_ITEMS.length;
+      const pct = Math.round((uniqueCount / totalMenu) * 100);
+      facts.push({ icon: '\uD83C\uDF1F', value: uniqueCount + '/' + totalMenu + ' (' + pct + '%)', label: '메뉴 도장깨기 현황' });
+    }
+
+    // 5. Coffee vs Non-coffee ratio
+    const coffeeCount = cats.coffee || 0;
+    const nonCoffeeCount = (total - coffeeCount);
+    if (total >= 3) {
+      const coffeePct = Math.round((coffeeCount / total) * 100);
+      facts.push({ icon: '\u2615', value: '커피 ' + coffeePct + '% : 기타 ' + (100 - coffeePct) + '%', label: '커피 vs 논커피 비율' });
+    }
+
+    // 6. Survey-based facts
+    if (surveys.length >= 2) {
+      // Most common age group
+      const ageCounts = {};
+      surveys.forEach(s => { if (s.age) ageCounts[s.age] = (ageCounts[s.age] || 0) + 1; });
+      const topAge = Object.entries(ageCounts).sort((a,b) => b[1] - a[1])[0];
+      if (topAge) {
+        const ageLabel = topAge[0] === '50' ? '50+' : topAge[0] + '대';
+        facts.push({ icon: '\uD83D\uDC65', value: ageLabel, label: '가장 많이 참여한 연령대' });
+      }
+
+      // Most common reason
+      const reasonMap = { work: '작업/공부', date: '데이트', friends: '친구 만남', alone: '혼자 힐링', takeout: '테이크아웃' };
+      const reasonCounts = {};
+      surveys.forEach(s => { if (s.reason) reasonCounts[s.reason] = (reasonCounts[s.reason] || 0) + 1; });
+      const topReason = Object.entries(reasonCounts).sort((a,b) => b[1] - a[1])[0];
+      if (topReason) {
+        facts.push({ icon: '\uD83D\uDCA1', value: reasonMap[topReason[0]] || topReason[0], label: '가장 흔한 방문 이유' });
+      }
+
+      // Most popular MBTI type
+      const mbtiCounts = {};
+      surveys.forEach(s => { if (s.mbti && s.mbti.length === 4) mbtiCounts[s.mbti] = (mbtiCounts[s.mbti] || 0) + 1; });
+      const topMbti = Object.entries(mbtiCounts).sort((a,b) => b[1] - a[1])[0];
+      if (topMbti) {
+        facts.push({ icon: '\uD83E\uDDE0', value: topMbti[0], label: '가장 많은 MBTI 유형' });
+      }
+    }
+
+    // Take up to 4 facts
+    const show = facts.slice(0, 4);
+    if (show.length === 0) {
+      document.getElementById(containerId).innerHTML = '';
+      return;
+    }
+
+    document.getElementById(containerId).innerHTML = `
+      <div class="fun-facts-title">\uD83C\uDFB2 FUN STATS</div>
+      <div class="fun-fact-cards">
+        ${show.map(f => `
+          <div class="fun-fact-card">
+            <span class="fun-fact-icon">${f.icon}</span>
+            <div class="fun-fact-value">${f.value}</div>
+            <div class="fun-fact-label">${f.label}</div>
+          </div>
+        `).join('')}
+      </div>`;
+  }
+
+  /* ══════════════════════════════════════════════════════
      SURVEY
   ══════════════════════════════════════════════════════ */
-  // Chip selection logic
-  function initChipGroup(containerId, multi) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.addEventListener('click', e => {
-      const chip = e.target.closest('.survey-chip');
-      if (!chip) return;
-      if (multi) {
+  function initAllSurveyChips() {
+    // MBTI: axis-pair logic
+    document.querySelectorAll('.mbti-chips').forEach(container => {
+      container.addEventListener('click', e => {
+        const chip = e.target.closest('.survey-chip');
+        if (!chip) return;
+        const v = chip.dataset.v;
+        const pairs = { E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J' };
+        container.querySelector(`.survey-chip[data-v="${pairs[v]}"]`)?.classList.remove('selected');
         chip.classList.toggle('selected');
-      } else {
+      });
+    });
+
+    // Single-select groups
+    document.querySelectorAll('.sex-chips, .age-chips, .reason-chips').forEach(container => {
+      container.addEventListener('click', e => {
+        const chip = e.target.closest('.survey-chip');
+        if (!chip) return;
         container.querySelectorAll('.survey-chip').forEach(c => c.classList.remove('selected'));
         chip.classList.add('selected');
-      }
+      });
     });
   }
-  // MBTI: multi-select (one per axis)
-  document.getElementById('mbtiChips').addEventListener('click', e => {
-    const chip = e.target.closest('.survey-chip');
-    if (!chip) return;
-    const v = chip.dataset.v;
-    // Pairs: E/I, S/N, T/F, J/P
-    const pairs = { E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J' };
-    const opposite = pairs[v];
-    const container = document.getElementById('mbtiChips');
-    // Deselect opposite
-    container.querySelector(`.survey-chip[data-v="${opposite}"]`)?.classList.remove('selected');
-    chip.classList.toggle('selected');
-  });
-  initChipGroup('sexChips', false);
-  initChipGroup('ageChips', false);
-  initChipGroup('reasonChips', false);
+  initAllSurveyChips();
 
-  function getSurveyData() {
-    const mbti = Array.from(document.querySelectorAll('#mbtiChips .survey-chip.selected'))
+  function submitSurvey(sectionId) {
+    const section = document.getElementById(sectionId);
+    const mbti = Array.from(section.querySelectorAll('.mbti-chips .survey-chip.selected'))
       .map(c => c.dataset.v).join('');
-    const sex = document.querySelector('#sexChips .survey-chip.selected')?.dataset.v || '';
-    const age = document.querySelector('#ageChips .survey-chip.selected')?.dataset.v || '';
-    const reason = document.querySelector('#reasonChips .survey-chip.selected')?.dataset.v || '';
-    return { mbti, sex, age, reason, timestamp: new Date().toISOString() };
-  }
+    const sex = section.querySelector('.sex-chips .survey-chip.selected')?.dataset.v || '';
+    const age = section.querySelector('.age-chips .survey-chip.selected')?.dataset.v || '';
+    const reason = section.querySelector('.reason-chips .survey-chip.selected')?.dataset.v || '';
+    const data = { mbti, sex, age, reason, timestamp: new Date().toISOString() };
 
-  function submitSurvey() {
-    const data = getSurveyData();
-    // Save to localStorage
+    // Add picked items to survey data
+    if (lastRandomPick) data.picks = [lastRandomPick.name];
+    if (lastRecPicks.length > 0) data.picks = lastRecPicks.map(p => p.name);
+
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
     surveys.push(data);
     localStorage.setItem('pns_surveys', JSON.stringify(surveys));
 
-    document.getElementById('surveySection').classList.remove('show');
+    // Track picks only on survey submit
+    trackCurrentPicks();
+
+    section.classList.remove('show');
     showToast('감사합니다! 설문이 저장되었습니다.');
+
+    // Refresh stats and fun facts after survey
+    renderStats('spinStatWrap', 'spinStatBars');
+    renderStats('recStatWrap', 'recStatBars');
+    renderFunFacts('spinFunFacts');
+    renderFunFacts('recFunFacts');
   }
 
-  function skipSurvey() {
-    document.getElementById('surveySection').classList.remove('show');
+  function skipSurvey(sectionId) {
+    document.getElementById(sectionId).classList.remove('show');
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SHARE
+  ══════════════════════════════════════════════════════ */
+  const SHARE_URL = 'https://www.pnscoffee.com/menu-random.html';
+
+  function getShareText(mode) {
+    if (mode === 'random' && lastRandomPick) {
+      const name = lastRandomPick.name;
+      const fortune = document.getElementById('fortuneText').textContent;
+      const lucky = document.getElementById('luckyNum').textContent;
+      return `${lastRandomPick.icon} 오늘의 메뉴: ${name}\n\n` +
+             `\uD83D\uDD2E 오늘의 운세: ${fortune}\n` +
+             `\uD83C\uDF40 럭키넘버: ${lucky}\n\n` +
+             `PNS 팔롬비니에서 뽑았어요!\n${SHARE_URL}`;
+    }
+    if (mode === 'rec' && lastRecPicks.length > 0) {
+      const list = lastRecPicks.map((p, i) => `${i+1}. ${p.icon} ${p.name}`).join('\n');
+      return `\u2728 나를 위한 추천 메뉴\n\n${list}\n\n` +
+             `PNS 팔롬비니에서 추천받았어요!\n${SHARE_URL}`;
+    }
+    return `PNS 팔롬비니 메뉴 추천받기\n${SHARE_URL}`;
+  }
+
+  function shareKakao(mode) {
+    if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
+      // Fallback: copy to clipboard
+      shareCopy(mode);
+      showToast('카카오톡 SDK가 로드되지 않아 클립보드에 복사했습니다.');
+      return;
+    }
+    const text = getShareText(mode);
+    const title = mode === 'random'
+      ? (lastRandomPick ? `${lastRandomPick.icon} 오늘의 메뉴: ${lastRandomPick.name}` : '오늘 뭐 마시지?')
+      : '\u2728 나를 위한 추천 메뉴';
+    const desc = mode === 'random'
+      ? document.getElementById('fortuneText').textContent
+      : lastRecPicks.map(p => p.name).join(', ');
+
+    Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: title,
+        description: desc,
+        imageUrl: 'https://www.pnscoffee.com/assets/img/pns-logo-upscaled.png',
+        link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL }
+      },
+      buttons: [
+        { title: '나도 뽑아보기', link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL } }
+      ]
+    });
+  }
+
+  function shareX(mode) {
+    const text = getShareText(mode);
+    const url = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+    window.open(url, '_blank', 'noopener,noreferrer,width=550,height=420');
+  }
+
+  function shareCopy(mode) {
+    const text = getShareText(mode);
+    navigator.clipboard.writeText(text).then(() => {
+      showToast('클립보드에 복사되었습니다!');
+    }).catch(() => {
+      // Fallback for older browsers
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('클립보드에 복사되었습니다!');
+    });
   }
 
   /* ══════════════════════════════════════════════════════
@@ -1428,6 +1785,13 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
   }
+
+  /* ── Kakao Init (safe — only if SDK loaded) ── */
+  try {
+    if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+      Kakao.init('YOUR_KAKAO_APP_KEY');
+    }
+  } catch(e) {}
 
   </script>
 </body>
