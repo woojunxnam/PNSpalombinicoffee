@@ -1,0 +1,1434 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="theme-color" content="#C07A3D"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>오늘 뭐 마시지? — PNS 팔롬비니</title>
+  <meta name="description" content="PNS 팔롬비니 메뉴 추천 — 랜덤 메뉴 뽑기 & 맞춤 추천"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f7f3ee;
+      --bg2:       #ede8e0;
+      --card:      #ffffff;
+      --text:      #2b1d14;
+      --muted:     #7a6555;
+      --accent:    #c8aa6e;
+      --accent-dk: #a07840;
+      --line:      rgba(192,160,100,.18);
+      --shadow:    0 2px 12px rgba(43,29,20,.07);
+      --serif:     'Noto Serif KR', Georgia, serif;
+      --sans:      'Noto Sans KR', -apple-system, sans-serif;
+      --brown-dk:  #2b1d14;
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ─────────────────────────────── */
+    .mr-header {
+      background: rgba(247,243,238,.97);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 16px;
+    }
+    .mr-header-inner {
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mr-back {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all .15s;
+      flex-shrink: 0;
+    }
+    .mr-back:hover { border-color: var(--accent); color: var(--accent); }
+    .mr-header-title {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .mr-header-badge {
+      margin-left: auto;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(200,170,110,.12);
+      border: 1px solid rgba(200,170,110,.28);
+      border-radius: 6px;
+      padding: 3px 8px;
+      white-space: nowrap;
+    }
+
+    /* ── CONTAINER ──────────────────────────── */
+    .mr-container {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    /* ── MODE SELECT (INTRO) ───────────────── */
+    .mr-intro {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+    .mr-intro-emoji { font-size: 48px; margin-bottom: 12px; display: block; }
+    .mr-intro h1 {
+      font-family: var(--serif);
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .mr-intro p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .mr-mode-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .mr-mode-card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 18px;
+      padding: 24px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+      text-decoration: none;
+      color: var(--text);
+    }
+    .mr-mode-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(43,29,20,.10);
+    }
+    .mr-mode-card:active { transform: translateY(0); }
+    .mr-mode-icon { font-size: 36px; display: block; margin-bottom: 12px; }
+    .mr-mode-name {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .mr-mode-desc {
+      font-size: 11.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── PANELS ─────────────────────────────── */
+    .mr-panel { display: none; }
+    .mr-panel.active { display: block; animation: fadeUp .35s ease; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RANDOM SPIN ───────────────────────── */
+    .spin-area {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .spin-wheel-wrap {
+      position: relative;
+      width: 260px; height: 260px;
+      margin: 0 auto 24px;
+    }
+    .spin-wheel {
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      border: 4px solid var(--accent);
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(43,29,20,.12);
+    }
+    .spin-center-btn {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      border: 4px solid #fff;
+      cursor: pointer;
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      box-shadow: 0 4px 16px rgba(192,122,61,.35);
+      z-index: 5;
+      transition: transform .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .spin-center-btn:hover { transform: translate(-50%, -50%) scale(1.06); }
+    .spin-center-btn:active { transform: translate(-50%, -50%) scale(.97); }
+    .spin-center-btn:disabled { background: var(--muted); cursor: not-allowed; box-shadow: none; }
+
+    /* Slot machine style text spinner */
+    .spin-slot {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+    .spin-slot-inner {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      transition: none;
+      padding: 0 44px;
+      text-align: center;
+      line-height: 1.4;
+    }
+    .spin-slot-inner.spinning {
+      animation: slotSpin .08s steps(1) infinite;
+    }
+    @keyframes slotSpin {
+      0%   { opacity: 1; }
+      50%  { opacity: .5; }
+      100% { opacity: 1; }
+    }
+
+    /* Ring decoration */
+    .spin-ring-deco {
+      position: absolute;
+      top: -6px; left: -6px; right: -6px; bottom: -6px;
+      border: 2px dashed rgba(200,170,110,.3);
+      border-radius: 50%;
+      animation: ringRotate 20s linear infinite;
+    }
+    @keyframes ringRotate { to { transform: rotate(360deg); } }
+
+    .spin-pointer {
+      position: absolute;
+      top: -8px; left: 50%;
+      transform: translateX(-50%);
+      width: 0; height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 16px solid var(--accent);
+      z-index: 3;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.15));
+    }
+
+    /* ── RESULT CARD ───────────────────────── */
+    .spin-result {
+      display: none;
+      text-align: center;
+      margin-top: 8px;
+      animation: fadeUp .4s ease;
+    }
+    .spin-result.show { display: block; }
+
+    .result-card {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: 20px;
+      padding: 28px 24px;
+      box-shadow: 0 8px 32px rgba(43,29,20,.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--accent), #d4a55a, var(--accent));
+    }
+    .result-emoji { font-size: 42px; margin-bottom: 10px; display: block; }
+    .result-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 8px;
+    }
+    .result-menu-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .result-cat {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    /* Fortune & Lucky number */
+    .result-divider {
+      height: 1px;
+      background: var(--line);
+      margin: 16px 0;
+    }
+    .result-fortune-wrap {
+      text-align: left;
+      padding: 0 4px;
+    }
+    .fortune-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .fortune-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+    .fortune-body {
+      flex: 1;
+    }
+    .fortune-label {
+      font-size: 9.5px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 3px;
+    }
+    .fortune-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .lucky-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), #d4a55a);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 800;
+      box-shadow: 0 2px 8px rgba(192,122,61,.3);
+    }
+
+    /* ── BUTTONS ────────────────────────────── */
+    .mr-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 28px;
+      border-radius: 99px;
+      border: none;
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .15s;
+      text-decoration: none;
+    }
+    .mr-btn:active { transform: scale(.97); }
+    .mr-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(192,122,61,.25);
+    }
+    .mr-btn-primary:hover { box-shadow: 0 6px 24px rgba(192,122,61,.35); transform: translateY(-1px); }
+    .mr-btn-secondary {
+      background: var(--bg2);
+      color: var(--text);
+      border: 1.5px solid var(--line);
+    }
+    .mr-btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .mr-btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+    .mr-btn-ghost:hover { color: var(--accent); }
+
+    .mr-btn-row {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* ── RECOMMEND FLOW ────────────────────── */
+    .rec-step {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+    .rec-step-num {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      color: var(--accent-dk);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+    .rec-question {
+      font-family: var(--serif);
+      font-size: clamp(18px, 4vw, 22px);
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 24px;
+    }
+
+    .rec-choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .rec-choice {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 24px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .rec-choice:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(43,29,20,.08);
+    }
+    .rec-choice:active { transform: translateY(0); }
+    .rec-choice.selected {
+      border-color: var(--accent);
+      background: rgba(200,170,110,.08);
+    }
+    .rec-choice-icon { font-size: 32px; margin-bottom: 8px; display: block; }
+    .rec-choice-label {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .rec-choice-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Mood slider */
+    .mood-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .mood-card {
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .mood-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .mood-card.selected { border-color: var(--accent); background: rgba(200,170,110,.08); }
+    .mood-icon { font-size: 26px; display: block; margin-bottom: 6px; }
+    .mood-label { font-size: 11px; font-weight: 600; }
+
+    /* ── RECOMMEND RESULTS ──────────────────── */
+    .rec-results { text-align: center; }
+    .rec-results-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .rec-results-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .rec-result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .rec-result-item {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: 14px;
+      padding: 16px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+      transition: all .15s;
+    }
+    .rec-result-item:first-child {
+      border-color: var(--accent);
+      box-shadow: 0 4px 16px rgba(192,122,61,.12);
+    }
+    .rec-result-rank {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 1px solid var(--line);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .rec-result-item:first-child .rec-result-rank {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .rec-result-info { flex: 1; }
+    .rec-result-name {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .rec-result-cat {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .rec-result-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    /* ── SURVEY ─────────────────────────────── */
+    .survey-section {
+      display: none;
+      animation: fadeUp .35s ease;
+    }
+    .survey-section.show { display: block; }
+    .survey-card {
+      background: var(--card);
+      border: 1.5px solid var(--line);
+      border-radius: 18px;
+      padding: 24px 20px;
+      margin-top: 20px;
+    }
+    .survey-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .survey-sub {
+      font-size: 11.5px;
+      color: var(--muted);
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    .survey-row {
+      margin-bottom: 16px;
+    }
+    .survey-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-dk);
+      letter-spacing: .05em;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .survey-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .survey-chip {
+      padding: 7px 14px;
+      border-radius: 99px;
+      border: 1.5px solid var(--line);
+      background: var(--card);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .15s;
+      color: var(--text);
+    }
+    .survey-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .survey-chip.selected { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── STATS BAR ──────────────────────────── */
+    .stat-bar-wrap {
+      margin-top: 20px;
+    }
+    .stat-bar-title {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent-dk);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .stat-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .stat-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      width: 80px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .stat-track {
+      flex: 1;
+      height: 22px;
+      background: var(--bg);
+      border-radius: 99px;
+      overflow: hidden;
+      position: relative;
+    }
+    .stat-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), #d4a55a);
+      transition: width .6s ease;
+      min-width: 2px;
+    }
+    .stat-pct {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--muted);
+      width: 36px;
+      flex-shrink: 0;
+    }
+
+    /* ── TOAST ──────────────────────────────── */
+    .toast {
+      position: fixed;
+      bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: rgba(43,29,20,.92);
+      color: #fff; font-size: 13px; font-weight: 500;
+      padding: 10px 20px; border-radius: 999px;
+      opacity: 0; transition: transform .22s, opacity .22s;
+      pointer-events: none; z-index: 999;
+      white-space: nowrap; backdrop-filter: blur(8px);
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── CONFETTI ───────────────────────────── */
+    .confetti-piece {
+      position: fixed;
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      z-index: 1000;
+      pointer-events: none;
+      animation: confettiFall 1.5s ease-out forwards;
+    }
+    @keyframes confettiFall {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translateY(80vh) rotate(720deg) scale(.3); }
+    }
+
+    /* ── RESPONSIVE ─────────────────────────── */
+    @media (max-width: 400px) {
+      .mr-mode-cards { grid-template-columns: 1fr; }
+      .mood-grid { grid-template-columns: repeat(2, 1fr); }
+      .rec-choices { grid-template-columns: 1fr; }
+      .spin-wheel-wrap { width: 220px; height: 220px; }
+      .spin-wheel { width: 220px; height: 220px; }
+      .spin-center-btn { width: 66px; height: 66px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="mr-header">
+    <div class="mr-header-inner">
+      <a href="menu.html" class="mr-back" title="메뉴로 돌아가기">&larr;</a>
+      <span class="mr-header-title">오늘 뭐 마시지?</span>
+      <span class="mr-header-badge">AI PICK</span>
+    </div>
+  </header>
+
+  <div class="mr-container">
+
+    <!-- ═══ PANEL 0: MODE SELECT ═══ -->
+    <div class="mr-panel active" id="panelIntro">
+      <div class="mr-intro">
+        <span class="mr-intro-emoji">&#x2615;</span>
+        <h1>오늘 뭐 마시지?</h1>
+        <p>메뉴 고르기가 어려울 때!<br/>랜덤 뽑기 또는 맞춤 추천을 받아보세요.</p>
+      </div>
+      <div class="mr-mode-cards">
+        <div class="mr-mode-card" onclick="showPanel('panelRandom')">
+          <span class="mr-mode-icon">&#x1F3B0;</span>
+          <div class="mr-mode-name">랜덤 뽑기</div>
+          <div class="mr-mode-desc">운명에 맡기자!<br/>돌려서 랜덤 메뉴 뽑기</div>
+        </div>
+        <div class="mr-mode-card" onclick="startRecommend()">
+          <span class="mr-mode-icon">&#x1F9ED;</span>
+          <div class="mr-mode-name">맞춤 추천</div>
+          <div class="mr-mode-desc">취향에 딱 맞는<br/>메뉴를 찾아드려요</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 1: RANDOM SPIN ═══ -->
+    <div class="mr-panel" id="panelRandom">
+      <div class="spin-area">
+        <div class="spin-wheel-wrap">
+          <div class="spin-ring-deco"></div>
+          <div class="spin-wheel">
+            <div class="spin-slot">
+              <div class="spin-slot-inner" id="spinText">눌러서 시작!</div>
+            </div>
+          </div>
+          <div class="spin-pointer"></div>
+          <button class="spin-center-btn" id="spinBtn" onclick="doSpin()">SPIN</button>
+        </div>
+      </div>
+
+      <div class="spin-result" id="spinResult">
+        <div class="result-card">
+          <span class="result-emoji" id="resultEmoji">&#x2615;</span>
+          <div class="result-label">TODAY'S PICK</div>
+          <div class="result-menu-name" id="resultName">—</div>
+          <div class="result-cat" id="resultCat">—</div>
+          <div class="result-divider"></div>
+          <div class="result-fortune-wrap">
+            <div class="fortune-row">
+              <span class="fortune-icon">&#x1F52E;</span>
+              <div class="fortune-body">
+                <div class="fortune-label">TODAY'S FORTUNE</div>
+                <div class="fortune-text" id="fortuneText">—</div>
+              </div>
+            </div>
+            <div class="fortune-row">
+              <span class="fortune-icon">&#x1F340;</span>
+              <div class="fortune-body">
+                <div class="fortune-label">LUCKY NUMBER</div>
+                <div style="margin-top:4px;"><span class="lucky-number" id="luckyNum">—</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mr-btn-row">
+          <button class="mr-btn mr-btn-primary" onclick="doSpin()">&#x1F504; 다시 뽑기</button>
+          <button class="mr-btn mr-btn-secondary" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+        </div>
+      </div>
+
+      <div class="mr-btn-row" id="spinBackRow">
+        <button class="mr-btn mr-btn-ghost" onclick="showPanel('panelIntro')">&#x2190; 돌아가기</button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 2: RECOMMEND FLOW ═══ -->
+    <div class="mr-panel" id="panelRecommend">
+      <div id="recFlow"></div>
+      <div class="mr-btn-row" id="recBackRow">
+        <button class="mr-btn mr-btn-ghost" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+      </div>
+    </div>
+
+    <!-- ═══ PANEL 3: RECOMMEND RESULT ═══ -->
+    <div class="mr-panel" id="panelRecResult">
+      <div class="rec-results">
+        <div style="font-size:36px; margin-bottom:8px;">&#x2728;</div>
+        <div class="rec-results-title" id="recResultTitle">당신을 위한 메뉴</div>
+        <div class="rec-results-sub" id="recResultSub">취향 분석 완료!</div>
+        <div class="rec-result-list" id="recResultList"></div>
+
+        <div class="stat-bar-wrap" id="statBarWrap">
+          <div class="stat-bar-title">&#x1F4CA; LIVE PICK STATS</div>
+          <div class="stat-bars" id="statBars"></div>
+        </div>
+
+        <!-- SURVEY -->
+        <div class="survey-section" id="surveySection">
+          <div class="survey-card">
+            <div class="survey-title">&#x1F4CB; 간단 설문</div>
+            <div class="survey-sub">더 나은 추천을 위해 알려주세요!<br/>선택하지 않아도 괜찮아요.</div>
+
+            <div class="survey-row">
+              <span class="survey-label">MBTI</span>
+              <div class="survey-chips" id="mbtiChips">
+                <span class="survey-chip" data-v="E">E</span>
+                <span class="survey-chip" data-v="I">I</span>
+                <span class="survey-chip" data-v="S">S</span>
+                <span class="survey-chip" data-v="N">N</span>
+                <span class="survey-chip" data-v="T">T</span>
+                <span class="survey-chip" data-v="F">F</span>
+                <span class="survey-chip" data-v="J">J</span>
+                <span class="survey-chip" data-v="P">P</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">성별</span>
+              <div class="survey-chips" id="sexChips">
+                <span class="survey-chip" data-v="M">남성</span>
+                <span class="survey-chip" data-v="F">여성</span>
+                <span class="survey-chip" data-v="O">기타</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">연령대</span>
+              <div class="survey-chips" id="ageChips">
+                <span class="survey-chip" data-v="10">10대</span>
+                <span class="survey-chip" data-v="20">20대</span>
+                <span class="survey-chip" data-v="30">30대</span>
+                <span class="survey-chip" data-v="40">40대</span>
+                <span class="survey-chip" data-v="50">50+</span>
+              </div>
+            </div>
+
+            <div class="survey-row">
+              <span class="survey-label">방문 이유</span>
+              <div class="survey-chips" id="reasonChips">
+                <span class="survey-chip" data-v="work">작업/공부</span>
+                <span class="survey-chip" data-v="date">데이트</span>
+                <span class="survey-chip" data-v="friends">친구 만남</span>
+                <span class="survey-chip" data-v="alone">혼자 힐링</span>
+                <span class="survey-chip" data-v="takeout">테이크아웃</span>
+              </div>
+            </div>
+
+            <div class="mr-btn-row" style="margin-top:20px;">
+              <button class="mr-btn mr-btn-primary" onclick="submitSurvey()">&#x2714; 제출하기</button>
+              <button class="mr-btn mr-btn-ghost" onclick="skipSurvey()">건너뛰기</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mr-btn-row" style="margin-top:24px;">
+          <button class="mr-btn mr-btn-primary" onclick="startRecommend()">&#x1F504; 다시 추천받기</button>
+          <button class="mr-btn mr-btn-secondary" onclick="showPanel('panelIntro')">&#x2190; 처음으로</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+  /* ══════════════════════════════════════════════════════
+     MENU DATA (beverages only for recommendations)
+  ══════════════════════════════════════════════════════ */
+  const DRINKS = {
+    coffee: {
+      icon: '\u2615', name: '커피',
+      items: ['에스프레소','에스프레소 마키아토','에스프레소 콘파냐','아메리카노',
+              '헤이즐넛 커피','카푸치노','카페라떼','바닐라라떼','카라멜마키아또',
+              '카페모카','민트모카라떼','연유라떼','헤이즐넛 라떼','아인슈페너',
+              '아포카토','이탈리안 커피','사케라또','드림아이스커피','깔루아라떼'],
+      temp: ['hot','hot','hot','both','both','both','both','both','both',
+             'both','both','both','both','both','ice','both','ice','ice','both'],
+      tags: ['strong','strong','strong','classic','nutty','classic','classic','sweet','sweet',
+             'chocolate','mint','sweet','nutty','classic','dessert','strong','refresh','refresh','sweet']
+    },
+    latte: {
+      icon: '\uD83E\uDD5B', name: '라떼 (논커피)',
+      items: ['고구마라떼','블루베리라떼','초콜렛라떼','민트초콜렛라떼','제주말차라떼',
+              '오곡라떼','밀크티','딸기밀크라떼','복숭아라떼','멜론라떼','체리라또',
+              '블랙 펄 밀크티'],
+      temp: ['both','both','both','both','both','both','both','ice','ice','ice','ice','ice'],
+      tags: ['sweet','fruity','chocolate','mint','matcha',
+             'nutty','tea','fruity','fruity','fruity','fruity','tea']
+    },
+    ade: {
+      icon: '\uD83C\uDF4B', name: '에이드',
+      items: ['레몬에이드','블루레몬에이드','오렌지에이드','자몽에이드',
+              '청포도에이드','복숭아에이드','멜론에이드'],
+      temp: 'ice',
+      tags: ['citrus','citrus','citrus','citrus','fruity','fruity','fruity']
+    },
+    smoothie: {
+      icon: '\uD83E\uDD64', name: '스무디',
+      items: ['요거트 스무디','망고 스무디','딸기 스무디','키위 스무디','홍시 스무디',
+              '믹스블루베리 스무디','바닐라 팔로치노','모카 팔로치노','민트초코 팔로치노',
+              '제주말차 팔로치노','쿠앤크 팔로치노'],
+      temp: 'ice',
+      tags: ['refresh','tropical','fruity','refresh','sweet',
+             'fruity','sweet','chocolate','mint','matcha','sweet']
+    },
+    fruittea: {
+      icon: '\uD83C\uDF75', name: '과일차',
+      items: ['히비스커스 트로피칼','자스민 자몽','레몬 홍차','오미자 유자',
+              '오미자 자몽','자몽차','유자차','레몬차','생강차','대추차'],
+      temp: 'both',
+      tags: ['tropical','citrus','citrus','traditional','citrus',
+             'citrus','citrus','citrus','warm','warm']
+    },
+    icedtea: {
+      icon: '\uD83E\uDDCA', name: '아이스티',
+      items: ['복숭아 아이스티','레몬 아이스티','망고 아이스티','석류 아이스티','아샷추'],
+      temp: 'ice',
+      tags: ['fruity','citrus','tropical','fruity','strong']
+    },
+    blacktea: {
+      icon: '\uD83E\uDED6', name: '홍차',
+      items: ['다즐링','얼그레이','잉글리시 브렉퍼스트'],
+      temp: 'both',
+      tags: ['classic','aromatic','classic']
+    },
+    herbtea: {
+      icon: '\uD83C\uDF3F', name: '허브차',
+      items: ['캐모마일','페퍼민트','루이보스','페어엘렌느'],
+      temp: 'both',
+      tags: ['calm','mint','calm','fruity']
+    }
+  };
+
+  const DESSERTS = {
+    bingsu: {
+      icon: '\uD83C\uDF67', name: '팥빙수',
+      items: ['밀크팥빙수','커피빙수','딸기빙수','자몽빙수','오렌지빙수',
+              '망고빙수','블루베리빙수','녹차빙수','초코빙수']
+    },
+    gelato: {
+      icon: '\uD83C\uDF66', name: '젤라또',
+      items: ['젤라또 싱글','젤라또 더블','젤라또 미디움','젤라또 라지']
+    },
+    dessert: {
+      icon: '\uD83E\uDD50', name: '디저트',
+      items: ['갈릭브레드','허니브레드','모카번','초코머핀']
+    },
+    cake: {
+      icon: '\uD83C\uDF82', name: '케이크',
+      items: ['치즈 케이크','티라미수 케이크','아몬드초코 케이크',
+              '두바이악마초콜렛 케이크','레드벨벳 케이크',
+              '깔루아마키아또 케이크','생크림 초코 케이크']
+    }
+  };
+
+  /* ── All items flat for random pick ─────── */
+  function getAllItems() {
+    const all = [];
+    for (const [catId, cat] of Object.entries(DRINKS)) {
+      cat.items.forEach((name, i) => {
+        all.push({ name, cat: cat.name, icon: cat.icon, catId, idx: i });
+      });
+    }
+    for (const [catId, cat] of Object.entries(DESSERTS)) {
+      cat.items.forEach((name, i) => {
+        all.push({ name, cat: cat.name, icon: cat.icon, catId, idx: i });
+      });
+    }
+    return all;
+  }
+  const ALL_ITEMS = getAllItems();
+
+  /* ══════════════════════════════════════════════════════
+     FORTUNES
+  ══════════════════════════════════════════════════════ */
+  const FORTUNES = [
+    '오늘은 새로운 맛에 도전하면 좋은 일이 생겨요!',
+    '따뜻한 음료 한 잔이 마음을 녹여줄 거예요.',
+    '오늘의 선택이 일주일의 기분을 좌우해요!',
+    '커피 한 잔의 여유가 행운을 불러옵니다.',
+    '달콤한 것을 먹으면 좋은 소식이 올 수 있어요.',
+    '오늘은 친구와 함께 카페에 가면 행운이!',
+    '익숙한 메뉴가 최고의 선택일 수 있어요.',
+    '오늘은 과감한 선택이 좋은 결과를 가져와요.',
+    '향기로운 차 한 잔이 집중력을 높여줄 거예요.',
+    '시원한 음료가 오늘의 에너지를 충전해줘요!',
+    '오늘은 디저트와 함께하면 더블 행운!',
+    '첫 모금의 감동이 하루를 바꿔줄 거예요.',
+    '오늘은 평소와 다른 메뉴를 시도해보세요!',
+    '커피 향이 좋은 인연을 불러올 수 있어요.',
+    '달콤쌉쌀한 맛처럼 하루가 풍요로울 거예요.',
+    '오늘의 음료가 내일의 활력이 됩니다.',
+    '따뜻한 음료로 시작하는 아침은 최고예요!',
+    '오늘은 직감을 믿어보세요. 좋은 선택이에요!',
+    '카페에서의 5분이 하루의 터닝포인트!',
+    '맛있는 음료 한 잔이 스트레스를 날려줄 거예요.'
+  ];
+
+  /* ══════════════════════════════════════════════════════
+     PANEL NAVIGATION
+  ══════════════════════════════════════════════════════ */
+  function showPanel(id) {
+    document.querySelectorAll('.mr-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RANDOM SPIN
+  ══════════════════════════════════════════════════════ */
+  let isSpinning = false;
+
+  function doSpin() {
+    if (isSpinning) return;
+    isSpinning = true;
+
+    const btn = document.getElementById('spinBtn');
+    const textEl = document.getElementById('spinText');
+    const resultEl = document.getElementById('spinResult');
+    const backRow = document.getElementById('spinBackRow');
+
+    btn.disabled = true;
+    resultEl.classList.remove('show');
+    backRow.style.display = 'none';
+
+    // Spinning animation — rapid shuffle through items
+    let shuffleCount = 0;
+    const totalShuffles = 30 + Math.floor(Math.random() * 15);
+    let delay = 50;
+
+    textEl.classList.add('spinning');
+
+    function shuffle() {
+      const item = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
+      textEl.textContent = item.icon + ' ' + item.name;
+
+      shuffleCount++;
+      if (shuffleCount < totalShuffles) {
+        // Gradually slow down
+        delay = 50 + Math.pow(shuffleCount / totalShuffles, 2) * 200;
+        setTimeout(shuffle, delay);
+      } else {
+        // Final pick!
+        textEl.classList.remove('spinning');
+        const pick = ALL_ITEMS[Math.floor(Math.random() * ALL_ITEMS.length)];
+        textEl.textContent = pick.icon + ' ' + pick.name;
+
+        setTimeout(() => {
+          showSpinResult(pick);
+          btn.disabled = false;
+          isSpinning = false;
+        }, 400);
+      }
+    }
+    shuffle();
+  }
+
+  function showSpinResult(pick) {
+    document.getElementById('resultEmoji').textContent = pick.icon;
+    document.getElementById('resultName').textContent = pick.name;
+    document.getElementById('resultCat').textContent = pick.cat;
+
+    // Fortune
+    const fortune = FORTUNES[Math.floor(Math.random() * FORTUNES.length)];
+    document.getElementById('fortuneText').textContent = fortune;
+
+    // Lucky number (1-45)
+    const lucky = Math.floor(Math.random() * 45) + 1;
+    document.getElementById('luckyNum').textContent = lucky;
+
+    document.getElementById('spinResult').classList.add('show');
+    document.getElementById('spinBackRow').style.display = 'none';
+
+    // Confetti!
+    fireConfetti();
+
+    // Track pick
+    trackPick(pick.catId, pick.name);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CONFETTI
+  ══════════════════════════════════════════════════════ */
+  function fireConfetti() {
+    const colors = ['#c8aa6e','#d4a55a','#e8c876','#a07840','#8B5E3C','#C07A3D','#f7e5c0','#fff'];
+    for (let i = 0; i < 40; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti-piece';
+      el.style.left = (20 + Math.random() * 60) + 'vw';
+      el.style.top = '-10px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.width = (4 + Math.random() * 8) + 'px';
+      el.style.height = (4 + Math.random() * 8) + 'px';
+      el.style.animationDuration = (1 + Math.random() * 1.5) + 's';
+      el.style.animationDelay = (Math.random() * .3) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 3000);
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RECOMMENDATION FLOW
+  ══════════════════════════════════════════════════════ */
+  const REC_STEPS = [
+    {
+      q: '어떤 종류를 원하세요?',
+      choices: [
+        { icon: '\u2615', label: '음료', sub: '커피, 차, 에이드 등', value: 'drink' },
+        { icon: '\uD83C\uDF70', label: '디저트', sub: '케이크, 빙수, 젤라또', value: 'dessert' }
+      ]
+    },
+    {
+      q: '커피를 좋아하세요?',
+      condition: (ans) => ans[0] === 'drink',
+      choices: [
+        { icon: '\u2615', label: '커피 좋아요', sub: '카페인 충전!', value: 'coffee' },
+        { icon: '\uD83C\uDF3F', label: '논커피가 좋아요', sub: '카페인 없이도 맛있게', value: 'nocoffee' }
+      ]
+    },
+    {
+      q: '어떤 기분이세요?',
+      isMood: true,
+      moods: [
+        { icon: '\u26A1', label: '에너지', value: 'energy' },
+        { icon: '\uD83D\uDE0C', label: '릴렉스', value: 'relax' },
+        { icon: '\uD83C\uDF1E', label: '상쾌함', value: 'refresh' },
+        { icon: '\uD83C\uDF6B', label: '달콤함', value: 'sweet' }
+      ]
+    },
+    {
+      q: '온도는 어떻게?',
+      condition: (ans) => ans[0] === 'drink',
+      choices: [
+        { icon: '\uD83D\uDD25', label: '따뜻하게', sub: 'HOT', value: 'hot' },
+        { icon: '\u2744\uFE0F', label: '시원하게', sub: 'ICE', value: 'ice' }
+      ]
+    }
+  ];
+
+  let recAnswers = [];
+  let recStepIndex = 0;
+
+  function startRecommend() {
+    recAnswers = [];
+    recStepIndex = 0;
+    showPanel('panelRecommend');
+    renderRecStep();
+  }
+
+  function renderRecStep() {
+    // Find next applicable step
+    while (recStepIndex < REC_STEPS.length) {
+      const step = REC_STEPS[recStepIndex];
+      if (step.condition && !step.condition(recAnswers)) {
+        recStepIndex++;
+        recAnswers.push(null); // placeholder
+        continue;
+      }
+      break;
+    }
+
+    if (recStepIndex >= REC_STEPS.length) {
+      showRecResults();
+      return;
+    }
+
+    const step = REC_STEPS[recStepIndex];
+    const el = document.getElementById('recFlow');
+    const stepNum = recAnswers.filter(a => a !== null).length + 1;
+
+    if (step.isMood) {
+      el.innerHTML = `
+        <div class="rec-step">
+          <div class="rec-step-num">STEP ${stepNum} / ${REC_STEPS.length - countSkips()}</div>
+          <div class="rec-question">${step.q}</div>
+          <div class="mood-grid">
+            ${step.moods.map(m => `
+              <div class="mood-card" onclick="pickMood('${m.value}', this)">
+                <span class="mood-icon">${m.icon}</span>
+                <span class="mood-label">${m.label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    } else {
+      el.innerHTML = `
+        <div class="rec-step">
+          <div class="rec-step-num">STEP ${stepNum} / ${REC_STEPS.length - countSkips()}</div>
+          <div class="rec-question">${step.q}</div>
+          <div class="rec-choices">
+            ${step.choices.map(c => `
+              <div class="rec-choice" onclick="pickChoice('${c.value}', this)">
+                <span class="rec-choice-icon">${c.icon}</span>
+                <div class="rec-choice-label">${c.label}</div>
+                <div class="rec-choice-sub">${c.sub}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>`;
+    }
+  }
+
+  function countSkips() {
+    let skips = 0;
+    for (let i = 0; i < REC_STEPS.length; i++) {
+      if (REC_STEPS[i].condition && !REC_STEPS[i].condition(recAnswers)) skips++;
+    }
+    return skips;
+  }
+
+  function pickChoice(value, el) {
+    el.classList.add('selected');
+    setTimeout(() => {
+      recAnswers.push(value);
+      recStepIndex++;
+      renderRecStep();
+    }, 250);
+  }
+
+  function pickMood(value, el) {
+    el.classList.add('selected');
+    setTimeout(() => {
+      recAnswers.push(value);
+      recStepIndex++;
+      renderRecStep();
+    }, 250);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     RECOMMENDATION ENGINE
+  ══════════════════════════════════════════════════════ */
+  function showRecResults() {
+    const type = recAnswers[0];     // drink | dessert
+    const coffee = recAnswers[1];   // coffee | nocoffee | null
+    const mood = recAnswers[2];     // energy | relax | refresh | sweet
+    const temp = recAnswers[3];     // hot | ice | null
+
+    let picks = [];
+
+    if (type === 'dessert') {
+      // Pick from desserts
+      for (const [catId, cat] of Object.entries(DESSERTS)) {
+        cat.items.forEach(name => {
+          picks.push({ name, cat: cat.name, icon: cat.icon, catId, score: Math.random() });
+        });
+      }
+      // Mood-based scoring for desserts
+      picks.forEach(p => {
+        if (mood === 'sweet') p.score += (p.catId === 'cake' || p.catId === 'gelato') ? 2 : 1;
+        if (mood === 'refresh') p.score += (p.catId === 'bingsu' || p.catId === 'gelato') ? 2 : 0;
+        if (mood === 'energy') p.score += p.catId === 'dessert' ? 1.5 : 0.5;
+        if (mood === 'relax') p.score += p.catId === 'cake' ? 2 : 1;
+      });
+    } else {
+      // Drink recommendations
+      const drinkCats = coffee === 'coffee'
+        ? { coffee: DRINKS.coffee }
+        : coffee === 'nocoffee'
+        ? { latte: DRINKS.latte, ade: DRINKS.ade, smoothie: DRINKS.smoothie,
+            fruittea: DRINKS.fruittea, icedtea: DRINKS.icedtea,
+            blacktea: DRINKS.blacktea, herbtea: DRINKS.herbtea }
+        : DRINKS;
+
+      for (const [catId, cat] of Object.entries(drinkCats)) {
+        cat.items.forEach((name, i) => {
+          const itemTemp = typeof cat.temp === 'string' ? cat.temp : (cat.temp[i] || 'both');
+          const tag = cat.tags ? cat.tags[i] : '';
+
+          let score = Math.random();
+
+          // Temperature filter
+          if (temp === 'hot' && itemTemp === 'ice') score -= 3;
+          if (temp === 'ice' && itemTemp === 'hot') score -= 3;
+          if (temp && (itemTemp === temp || itemTemp === 'both')) score += 1;
+
+          // Mood matching
+          if (mood === 'energy' && (tag === 'strong' || tag === 'classic')) score += 2;
+          if (mood === 'relax' && (tag === 'calm' || tag === 'aromatic' || tag === 'tea')) score += 2;
+          if (mood === 'refresh' && (tag === 'refresh' || tag === 'citrus' || tag === 'tropical' || tag === 'fruity')) score += 2;
+          if (mood === 'sweet' && (tag === 'sweet' || tag === 'chocolate' || tag === 'dessert')) score += 2;
+
+          picks.push({ name, cat: cat.name, icon: cat.icon, catId, idx: i, score });
+        });
+      }
+    }
+
+    // Sort by score and take top 4
+    picks.sort((a, b) => b.score - a.score);
+    const top = picks.slice(0, 4);
+
+    // Render results
+    showPanel('panelRecResult');
+
+    const listEl = document.getElementById('recResultList');
+    listEl.innerHTML = top.map((p, i) => `
+      <div class="rec-result-item">
+        <div class="rec-result-rank">${i + 1}</div>
+        <div class="rec-result-info">
+          <div class="rec-result-name">${p.name}</div>
+          <div class="rec-result-cat">${p.cat}</div>
+        </div>
+        <div class="rec-result-icon">${p.icon}</div>
+      </div>
+    `).join('');
+
+    // Track picks
+    top.forEach(p => trackPick(p.catId, p.name));
+
+    // Show stats
+    renderStats();
+
+    // Show survey after delay
+    setTimeout(() => {
+      document.getElementById('surveySection').classList.add('show');
+    }, 800);
+
+    fireConfetti();
+  }
+
+  /* ══════════════════════════════════════════════════════
+     LOCAL STATS (localStorage)
+  ══════════════════════════════════════════════════════ */
+  function getStats() {
+    try {
+      return JSON.parse(localStorage.getItem('pns_pick_stats') || '{}');
+    } catch { return {}; }
+  }
+
+  function trackPick(catId, name) {
+    const stats = getStats();
+    if (!stats.categories) stats.categories = {};
+    stats.categories[catId] = (stats.categories[catId] || 0) + 1;
+    if (!stats.items) stats.items = {};
+    stats.items[name] = (stats.items[name] || 0) + 1;
+    stats.total = (stats.total || 0) + 1;
+    localStorage.setItem('pns_pick_stats', JSON.stringify(stats));
+  }
+
+  function renderStats() {
+    const stats = getStats();
+    const cats = stats.categories || {};
+    const total = Object.values(cats).reduce((s, v) => s + v, 0) || 1;
+
+    // Get all category names
+    const allCats = { ...DRINKS, ...DESSERTS };
+    const entries = Object.entries(cats)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6);
+
+    if (entries.length === 0) {
+      document.getElementById('statBarWrap').style.display = 'none';
+      return;
+    }
+
+    document.getElementById('statBars').innerHTML = entries.map(([id, count]) => {
+      const cat = allCats[id];
+      const pct = Math.round((count / total) * 100);
+      return `
+        <div class="stat-row">
+          <span class="stat-label">${cat ? cat.icon + ' ' + cat.name : id}</span>
+          <div class="stat-track">
+            <div class="stat-fill" style="width:${pct}%"></div>
+          </div>
+          <span class="stat-pct">${pct}%</span>
+        </div>`;
+    }).join('');
+  }
+
+  /* ══════════════════════════════════════════════════════
+     SURVEY
+  ══════════════════════════════════════════════════════ */
+  // Chip selection logic
+  function initChipGroup(containerId, multi) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.addEventListener('click', e => {
+      const chip = e.target.closest('.survey-chip');
+      if (!chip) return;
+      if (multi) {
+        chip.classList.toggle('selected');
+      } else {
+        container.querySelectorAll('.survey-chip').forEach(c => c.classList.remove('selected'));
+        chip.classList.add('selected');
+      }
+    });
+  }
+  // MBTI: multi-select (one per axis)
+  document.getElementById('mbtiChips').addEventListener('click', e => {
+    const chip = e.target.closest('.survey-chip');
+    if (!chip) return;
+    const v = chip.dataset.v;
+    // Pairs: E/I, S/N, T/F, J/P
+    const pairs = { E:'I', I:'E', S:'N', N:'S', T:'F', F:'T', J:'P', P:'J' };
+    const opposite = pairs[v];
+    const container = document.getElementById('mbtiChips');
+    // Deselect opposite
+    container.querySelector(`.survey-chip[data-v="${opposite}"]`)?.classList.remove('selected');
+    chip.classList.toggle('selected');
+  });
+  initChipGroup('sexChips', false);
+  initChipGroup('ageChips', false);
+  initChipGroup('reasonChips', false);
+
+  function getSurveyData() {
+    const mbti = Array.from(document.querySelectorAll('#mbtiChips .survey-chip.selected'))
+      .map(c => c.dataset.v).join('');
+    const sex = document.querySelector('#sexChips .survey-chip.selected')?.dataset.v || '';
+    const age = document.querySelector('#ageChips .survey-chip.selected')?.dataset.v || '';
+    const reason = document.querySelector('#reasonChips .survey-chip.selected')?.dataset.v || '';
+    return { mbti, sex, age, reason, timestamp: new Date().toISOString() };
+  }
+
+  function submitSurvey() {
+    const data = getSurveyData();
+    // Save to localStorage
+    const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
+    surveys.push(data);
+    localStorage.setItem('pns_surveys', JSON.stringify(surveys));
+
+    document.getElementById('surveySection').classList.remove('show');
+    showToast('감사합니다! 설문이 저장되었습니다.');
+  }
+
+  function skipSurvey() {
+    document.getElementById('surveySection').classList.remove('show');
+  }
+
+  /* ══════════════════════════════════════════════════════
+     TOAST
+  ══════════════════════════════════════════════════════ */
+  let toastTimer;
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+  }
+
+  </script>
+</body>
+</html>

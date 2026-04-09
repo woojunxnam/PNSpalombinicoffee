@@ -131,6 +131,7 @@
       color: var(--text);
       box-shadow: 0 1px 4px rgba(43,29,20,.10);
     }
+    .lang-btn .flag { font-size: 12px; line-height: 1; }
     .lang-btn.unavailable {
       opacity: .4;
       cursor: not-allowed;
@@ -342,6 +343,26 @@
     }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+    /* ── TEMP BADGES ───────────────────────── */
+    .temp-tags { margin-left: auto; display: flex; gap: 2px; flex-shrink: 0; }
+    .temp-tag {
+      font-size: 8.5px;
+      font-weight: 800;
+      letter-spacing: .03em;
+      border-radius: 3px;
+      padding: 1px 4px;
+      line-height: 1.4;
+    }
+    .temp-tag.hot  { color: #b8452a; background: rgba(184,69,42,.10); }
+    .temp-tag.ice  { color: #2a7ab8; background: rgba(42,122,184,.10); }
+
+    /* ── KOREAN SUB-NAME ───────────────────── */
+    .ko-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
     /* ── RESPONSIVE ─────────────────────────── */
     @media (max-width: 400px) {
       .menu-title-badge { display: none; }
@@ -360,12 +381,13 @@
         <span class="menu-brand-name" id="headerBrandName">PNS 팔롬비니</span>
       </div>
       <div class="menu-header-controls">
-        <span class="menu-title-badge" id="menuBadge">MENU</span>
+        <a href="menu-random.html" class="menu-title-badge" id="menuBadge" style="text-decoration:none;">&#x1F3B2; PICK</a>
         <div class="lang-switcher" id="langSwitcher">
-          <button class="lang-btn active" data-lang="ko">한국어</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-          <button class="lang-btn" data-lang="zh">中</button>
-          <button class="lang-btn" data-lang="ja">日</button>
+          <button class="lang-btn active" data-lang="ko"><span class="flag">&#x1F1F0;&#x1F1F7;</span> 한국어</button>
+          <button class="lang-btn" data-lang="en"><span class="flag">&#x1F1FA;&#x1F1F8;</span> EN</button>
+          <button class="lang-btn" data-lang="zh"><span class="flag">&#x1F1E8;&#x1F1F3;</span> 中</button>
+          <button class="lang-btn" data-lang="ja"><span class="flag">&#x1F1EF;&#x1F1F5;</span> 日</button>
+          <button class="lang-btn" data-lang="vi"><span class="flag">&#x1F1FB;&#x1F1F3;</span> VI</button>
         </div>
       </div>
     </div>
@@ -519,7 +541,7 @@
         {
           id:'icedtea', icon:'🧊', name:'Iced Tea',
           items:['Peach Iced Tea','Lemon Iced Tea','Mango Iced Tea',
-                 'Pomegranate Iced Tea','Americano Shot Milk Tea']
+                 'Pomegranate Iced Tea','Espresso Shot to Ice Tea']
         },
         {
           id:'blacktea', icon:'🫖', name:'Black Tea',
@@ -596,7 +618,7 @@
         },
         {
           id:'icedtea', icon:'🧊', name:'冰茶',
-          items:['桃子冰茶','柠檬冰茶','芒果冰茶','石榴冰茶','美式奶茶']
+          items:['桃子冰茶','柠檬冰茶','芒果冰茶','石榴冰茶','浓缩冰茶']
         },
         {
           id:'blacktea', icon:'🫖', name:'红茶',
@@ -677,7 +699,7 @@
         {
           id:'icedtea', icon:'🧊', name:'アイスティー',
           items:['桃アイスティー','レモンアイスティー','マンゴーアイスティー',
-                 'ザクロアイスティー','アメリカーノミルクティー']
+                 'ザクロアイスティー','エスプレッソショットアイスティー']
         },
         {
           id:'blacktea', icon:'🫖', name:'紅茶',
@@ -709,8 +731,115 @@
                  'カルーアマキアートケーキ','生クリームチョコケーキ']
         }
       ]
+    },
+
+    /* ─── Tiếng Việt ─────────────────────────── */
+    vi: {
+      brandName: 'PNS Palombini',
+      footerBrand: 'PNS Palombini Café',
+      footerNote: 'Thực đơn có thể thay đổi mà không cần thông báo trước.\nLiên hệ: 010-3454-5837',
+      unavailableMsg: 'Sắp ra mắt',
+      categories: [
+        {
+          id:'coffee', icon:'☕', name:'Cà Phê',
+          items:['Espresso','Espresso Macchiato','Espresso Con Panna','Americano',
+                 'Cà phê hạt dẻ','Cappuccino','Cà phê Latte','Latte vani',
+                 'Caramel Macchiato','Cà phê Mocha','Latte mocha bạc hà',
+                 'Latte sữa đặc','Latte hạt dẻ','Einspänner','Affogato',
+                 'Cà phê Ý','Shakerato','Cà phê đá','Latte Kahlúa']
+        },
+        {
+          id:'latte', icon:'🥛', name:'Latte không cà phê',
+          items:['Latte khoai lang','Latte việt quất','Latte sô cô la',
+                 'Latte sô cô la bạc hà','Latte trà xanh Jeju','Latte ngũ cốc',
+                 'Trà sữa','Latte sữa dâu','Latte đào','Latte dưa lưới',
+                 'Latte cherry','Trà sữa trân châu']
+        },
+        {
+          id:'ade', icon:'🍋', name:'Nước giải khát',
+          items:['Nước chanh','Nước chanh xanh','Nước cam','Nước bưởi',
+                 'Nước nho xanh','Nước đào','Nước dưa lưới']
+        },
+        {
+          id:'smoothie', icon:'🥤', name:'Sinh tố',
+          groups:[
+            { label:'Sinh tố',
+              items:['Sinh tố sữa chua','Sinh tố xoài','Sinh tố dâu',
+                     'Sinh tố kiwi','Sinh tố hồng','Sinh tố việt quất hỗn hợp'] },
+            { label:'Falochino',
+              items:['Falochino vani','Falochino mocha','Falochino bạc hà',
+                     'Falochino trà xanh Jeju','Falochino cookies & cream'] }
+          ]
+        },
+        {
+          id:'fruittea', icon:'🍵', name:'Trà trái cây',
+          items:['Trà dâm bụt nhiệt đới','Trà nhài bưởi','Trà đen chanh',
+                 'Trà ngũ vị yuzu','Trà ngũ vị bưởi','Trà bưởi',
+                 'Trà yuzu','Trà chanh','Trà gừng','Trà táo đỏ']
+        },
+        {
+          id:'icedtea', icon:'🧊', name:'Trà đá',
+          items:['Trà đá đào','Trà đá chanh','Trà đá xoài',
+                 'Trà đá lựu','Trà đá espresso']
+        },
+        {
+          id:'blacktea', icon:'🫖', name:'Trà đen',
+          items:['Darjeeling','Earl Grey','English Breakfast']
+        },
+        {
+          id:'herbtea', icon:'🌿', name:'Trà thảo mộc',
+          items:['Hoa cúc','Bạc hà','Rooibos','Poire Hélène']
+        },
+        {
+          id:'bingsu', icon:'🍧', name:'Bingsu (đá bào)',
+          items:['Bingsu đậu đỏ sữa','Bingsu cà phê','Bingsu dâu',
+                 'Bingsu bưởi','Bingsu cam','Bingsu xoài',
+                 'Bingsu việt quất','Bingsu trà xanh','Bingsu sô cô la']
+        },
+        {
+          id:'gelato', icon:'🍦', name:'Gelato',
+          items:['Gelato đơn','Gelato đôi','Gelato vừa','Gelato lớn'],
+          note:{ label:'Vị', chips:['Sô cô la','Cookies & Cream','Phô mai','Vani','Trà xanh','Xoài','Dâu','Sữa chua'] }
+        },
+        {
+          id:'dessert', icon:'🥐', name:'Bánh ngọt',
+          items:['Bánh mì bơ tỏi','Bánh mì mật ong','Bánh mocha','Muffin sô cô la']
+        },
+        {
+          id:'cake', icon:'🎂', name:'Bánh kem',
+          items:['Bánh phô mai','Bánh tiramisu','Bánh sô cô la hạnh nhân',
+                 'Bánh sô cô la quỷ Dubai','Bánh Red Velvet',
+                 'Bánh Kahlúa Macchiato','Bánh sô cô la kem tươi']
+        }
+      ]
     }
   };
+
+  /* ══════════════════════════════════════════════════════
+     TEMPERATURE MAP  —  hot / ice / both per item
+     String = all items in category share that temp.
+     Array  = per-item temp (same index as items array).
+  ══════════════════════════════════════════════════════ */
+  const TEMP_MAP = {
+    coffee: ['hot','hot','hot','both','both','both','both','both','both',
+             'both','both','both','both','both','ice','both','ice','ice','both'],
+    latte:  ['both','both','both','both','both','both','both','ice','ice','ice','ice','ice'],
+    ade:      'ice',
+    smoothie: 'ice',
+    fruittea: 'both',
+    icedtea:  'ice',
+    blacktea: 'both',
+    herbtea:  'both'
+  };
+
+  function getTempHTML(catId, idx) {
+    const rule = TEMP_MAP[catId];
+    if (!rule) return '';
+    const t = typeof rule === 'string' ? rule : (rule[idx] || 'both');
+    if (t === 'hot')  return '<span class="temp-tags"><span class="temp-tag hot">HOT</span></span>';
+    if (t === 'ice')  return '<span class="temp-tags"><span class="temp-tag ice">ICE</span></span>';
+    return '<span class="temp-tags"><span class="temp-tag hot">H</span><span class="temp-tag ice">I</span></span>';
+  }
 
   /* ══════════════════════════════════════════════════════
      RENDER
@@ -726,7 +855,7 @@
 
     /* Update header brand */
     document.getElementById('headerBrandName').textContent = data.brandName;
-    document.documentElement.lang = { ko:'ko', en:'en', zh:'zh-Hans', ja:'ja' }[lang] || 'ko';
+    document.documentElement.lang = { ko:'ko', en:'en', zh:'zh-Hans', ja:'ja', vi:'vi' }[lang] || 'ko';
 
     /* Update footer */
     document.getElementById('footerBrand').textContent = data.footerBrand;
@@ -741,23 +870,46 @@
     ).join('');
     navEl.querySelector('.cat-nav-btn')?.classList.add('active');
 
+    /* Korean name lookup for non-KO languages */
+    const koData = MENU.ko.categories;
+    function koName(catId, flatIdx) {
+      if (lang === 'ko') return '';
+      const koCat = koData.find(c => c.id === catId);
+      if (!koCat) return '';
+      let name;
+      if (koCat.groups) {
+        let offset = 0;
+        for (const g of koCat.groups) {
+          if (flatIdx < offset + g.items.length) { name = g.items[flatIdx - offset]; break; }
+          offset += g.items.length;
+        }
+      } else {
+        name = koCat.items?.[flatIdx];
+      }
+      return name ? ` <span class="ko-sub">(${name})</span>` : '';
+    }
+
     /* Menu sections */
     document.getElementById('menuBody').innerHTML = cats.map(cat => {
       let contentHTML = '';
       if (cat.groups) {
+        let flatIdx = 0;
         cat.groups.forEach((g, i) => {
-          const isFirst = (i === 0);
           const gridCls = g.items.length <= 5 ? 'col-1' : '';
           contentHTML += `<div class="item-grid ${gridCls}">
             <div class="menu-item group-label">${g.label}</div>
-            ${g.items.map(it => `<div class="menu-item">${it}</div>`).join('')}
+            ${g.items.map(it => {
+              const html = `<div class="menu-item">${it}${koName(cat.id, flatIdx)}${getTempHTML(cat.id, flatIdx)}</div>`;
+              flatIdx++;
+              return html;
+            }).join('')}
           </div>`;
         });
       } else {
         const n = cat.items.length;
         const gridCls = n <= 5 ? 'col-1' : '';
         contentHTML = `<div class="item-grid ${gridCls}">
-          ${cat.items.map(it => `<div class="menu-item">${it}</div>`).join('')}
+          ${cat.items.map((it, idx) => `<div class="menu-item">${it}${koName(cat.id, idx)}${getTempHTML(cat.id, idx)}</div>`).join('')}
         </div>`;
       }
 
