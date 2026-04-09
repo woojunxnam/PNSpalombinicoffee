@@ -94,6 +94,41 @@
     .cd-conditional { display:none; margin-top:12px; }
     .cd-conditional.show { display:block; }
 
+    /* ── FILE UPLOAD ZONE ── */
+    .cd-upload-zone {
+      border:2px dashed var(--line); border-radius:14px; padding:28px 20px;
+      text-align:center; cursor:pointer; transition:all .25s; margin-top:12px;
+      background:var(--bg);
+    }
+    .cd-upload-zone:hover, .cd-upload-zone.dragover { border-color:var(--accent); background:rgba(192,122,61,.04); }
+    .cd-upload-zone-icon { font-size:32px; margin-bottom:8px; }
+    .cd-upload-zone-text { font-size:13px; font-weight:600; color:var(--text); }
+    .cd-upload-zone-hint { font-size:11px; color:var(--muted); margin-top:4px; }
+    .cd-upload-file-list { margin-top:10px; text-align:left; }
+    .cd-upload-file-item {
+      display:flex; align-items:center; gap:8px; padding:8px 12px; margin-top:6px;
+      background:rgba(192,122,61,.06); border-radius:8px; font-size:12px; color:var(--text);
+    }
+    .cd-upload-file-item .cd-file-name { flex:1; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .cd-upload-file-item .cd-file-size { color:var(--muted); font-size:11px; }
+    .cd-upload-file-item .cd-file-remove {
+      width:20px; height:20px; border:none; background:none; color:var(--muted); font-size:16px;
+      cursor:pointer; line-height:1; padding:0; transition:color .2s;
+    }
+    .cd-upload-file-item .cd-file-remove:hover { color:#c62828; }
+
+    /* ── COFFEE BLEND LINE ── */
+    .cd-coffee-blend { font-size:11px; color:var(--muted); margin-top:8px; font-style:italic; }
+
+    /* ── BLEND 12 CHIPS ── */
+    .cd-blend12-grid { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+    .cd-blend12-chip input { display:none; }
+    .cd-blend12-chip label {
+      display:inline-block; padding:8px 16px; border:1.5px solid var(--line); border-radius:10px;
+      font-size:12px; font-weight:600; color:var(--text); cursor:pointer; transition:all .2s;
+    }
+    .cd-blend12-chip input:checked + label { border-color:var(--accent); background:var(--accent); color:#fff; }
+
     /* ── DOWNLOAD BUTTON ── */
     .cd-download {
       display:inline-flex; align-items:center; gap:8px; padding:12px 24px;
@@ -305,11 +340,21 @@
             <!-- 디자인 있음 -->
             <div class="cd-conditional" id="design_yes_panel">
               <div class="cd-group">
+                <label>디자인 파일 업로드</label>
+                <div class="cd-upload-zone" id="d_upload_zone" onclick="document.getElementById('d_design_files').click()">
+                  <div class="cd-upload-zone-icon">📁</div>
+                  <div class="cd-upload-zone-text">클릭하여 파일 선택 또는 여기로 드래그</div>
+                  <div class="cd-upload-zone-hint">AI, PSD, PDF, JPG, PNG (최대 10MB)</div>
+                </div>
+                <input type="file" id="d_design_files" multiple accept=".ai,.psd,.pdf,.jpg,.jpeg,.png" style="display:none" onchange="handleFiles(this.files)"/>
+                <div class="cd-upload-file-list" id="d_file_list"></div>
+              </div>
+              <div class="cd-group">
                 <label>디자인 설명</label>
                 <textarea id="d_design_desc_yes" placeholder="디자인 컨셉이나 특이사항을 간단히 알려주세요."></textarea>
               </div>
               <div class="cd-notice">
-                📎 디자인 파일(AI, PSD, PDF, JPG 등)은 문의 확인 후 담당자 이메일(<strong>skdngus77@naver.com</strong>)로 보내주세요.
+                📎 10MB 초과 파일은 문의 확인 후 담당자 이메일(<strong>skdngus77@naver.com</strong>)로 보내주세요.
               </div>
             </div>
 
@@ -350,56 +395,52 @@
                   <input type="radio" name="d_coffee" id="d_coffee_granbar" value="그란바"/>
                   <label for="d_coffee_granbar">
                     <div class="cd-coffee-name">Gran Bar 그란바</div>
-                    <div class="cd-coffee-sub">미디엄-다크 · Arabica 40% + Robusta 60%</div>
+                    <div class="cd-coffee-sub">미디엄-다크 로스트</div>
                     <div class="cd-coffee-tags">
                       <span class="cd-coffee-tag">다크 코코아</span>
                       <span class="cd-coffee-tag">고소한 견과류</span>
                       <span class="cd-coffee-tag">풍부한 바디</span>
                     </div>
-                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:70%"></div></div></div>
-                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:25%"></div></div></div>
+                    <div class="cd-coffee-blend">블렌드: Arabica 40% · Robusta 60%</div>
                   </label>
                 </div>
                 <div class="cd-coffee-card">
                   <input type="radio" name="d_coffee" id="d_coffee_dolce" value="돌체이탈리아"/>
                   <label for="d_coffee_dolce">
                     <div class="cd-coffee-name">Dolce Italia 돌체이탈리아</div>
-                    <div class="cd-coffee-sub">미디엄 · 아라비카 중심 블렌드</div>
+                    <div class="cd-coffee-sub">미디엄 로스트</div>
                     <div class="cd-coffee-tags">
                       <span class="cd-coffee-tag">바닐라</span>
                       <span class="cd-coffee-tag">아몬드</span>
                       <span class="cd-coffee-tag">부드러운 단맛</span>
                     </div>
-                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:65%"></div></div></div>
-                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:35%"></div></div></div>
+                    <div class="cd-coffee-blend">블렌드: 아라비카 중심 믹스 블렌드</div>
                   </label>
                 </div>
                 <div class="cd-coffee-card">
                   <input type="radio" name="d_coffee" id="d_coffee_roma" value="로마"/>
                   <label for="d_coffee_roma">
                     <div class="cd-coffee-name">Roma 로마</div>
-                    <div class="cd-coffee-sub">미디엄 · 100% Arabica</div>
+                    <div class="cd-coffee-sub">미디엄 로스트</div>
                     <div class="cd-coffee-tags">
                       <span class="cd-coffee-tag">시트러스</span>
                       <span class="cd-coffee-tag">트로피컬</span>
                       <span class="cd-coffee-tag">밝은 산미</span>
                     </div>
-                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:50%"></div></div></div>
-                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:72%"></div></div></div>
+                    <div class="cd-coffee-blend">블렌드: 100% Arabica 싱글 오리진</div>
                   </label>
                 </div>
                 <div class="cd-coffee-card">
                   <input type="radio" name="d_coffee" id="d_coffee_volcano" value="볼케이노 루비"/>
                   <label for="d_coffee_volcano">
                     <div class="cd-coffee-name">Volcano Ruby 볼케이노 루비</div>
-                    <div class="cd-coffee-sub">G1 내추럴 · 프리미엄 로부스타</div>
+                    <div class="cd-coffee-sub">G1 내추럴 프리미엄</div>
                     <div class="cd-coffee-tags">
                       <span class="cd-coffee-tag">다크 초콜릿</span>
                       <span class="cd-coffee-tag">베리</span>
                       <span class="cd-coffee-tag">스모키</span>
                     </div>
-                    <div class="cd-coffee-bar"><span style="width:40px">바디</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:85%"></div></div></div>
-                    <div class="cd-coffee-bar"><span style="width:40px">산미</span><div class="cd-coffee-bar-track"><div class="cd-coffee-bar-fill" style="width:20%"></div></div></div>
+                    <div class="cd-coffee-blend">블렌드: 프리미엄 로부스타 G1</div>
                   </label>
                 </div>
               </div>
@@ -408,13 +449,30 @@
                   <input type="radio" name="d_coffee" id="d_coffee_blend12" value="블렌드 12종 선택"/>
                   <label for="d_coffee_blend12" style="text-align:center;">
                     <div class="cd-coffee-name">팔롬비니 블렌드 12종</div>
-                    <div class="cd-coffee-sub">다양한 블렌드 라인업에서 자유롭게 선택 가능</div>
+                    <div class="cd-coffee-sub">클릭하면 전체 블렌드 목록이 펼쳐집니다</div>
                   </label>
                 </div>
                 <div class="cd-conditional" id="blend12_panel">
                   <div class="cd-group" style="margin-top:12px;">
-                    <label>원하는 블렌드를 알려주세요</label>
-                    <textarea id="d_blend12_detail" placeholder="원하는 블렌드명 또는 선호하는 맛 프로필을 알려주세요. 담당자가 최적의 블렌드를 추천해 드립니다."></textarea>
+                    <label>원하는 블렌드를 선택해 주세요 (복수 선택 가능)</label>
+                    <div class="cd-blend12-grid">
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_birch" value="Birch"/><label for="d_b12_birch">🌿 Birch</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_jujube" value="Jujube"/><label for="d_b12_jujube">🫐 Jujube</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_juniper" value="Juniper"/><label for="d_b12_juniper">🌲 Juniper</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_magnolia" value="Magnolia"/><label for="d_b12_magnolia">🌸 Magnolia</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_miru" value="Miru"/><label for="d_b12_miru">🍃 Miru</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_poplar" value="Poplar"/><label for="d_b12_poplar">🍂 Poplar</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_sequoia" value="Sequoia"/><label for="d_b12_sequoia">🌳 Sequoia</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_silverberry" value="Silverberry"/><label for="d_b12_silverberry">✨ Silverberry</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_spruce" value="Spruce"/><label for="d_b12_spruce">🌲 Spruce</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_tamarind" value="Tamarind"/><label for="d_b12_tamarind">🍋 Tamarind</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_willow" value="Willow"/><label for="d_b12_willow">🍃 Willow</label></div>
+                      <div class="cd-blend12-chip"><input type="checkbox" name="d_blend12" id="d_b12_zelkova" value="Zelkova"/><label for="d_b12_zelkova">🌲 Zelkova</label></div>
+                    </div>
+                  </div>
+                  <div class="cd-group" style="margin-top:12px;">
+                    <label>추가 요청사항</label>
+                    <textarea id="d_blend12_detail" placeholder="선호하는 맛 프로필이나 추가 요청을 알려주세요."></textarea>
                   </div>
                 </div>
               </div>
@@ -577,6 +635,32 @@
       document.getElementById('design_no_panel').classList.toggle('show', val === 'no');
     }
 
+    /* ── File Upload ── */
+    var uploadedFiles = [];
+    var uploadZone = document.getElementById('d_upload_zone');
+    uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); this.classList.add('dragover'); });
+    uploadZone.addEventListener('dragleave', function() { this.classList.remove('dragover'); });
+    uploadZone.addEventListener('drop', function(e) {
+      e.preventDefault(); this.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+    function handleFiles(files) {
+      for (var i = 0; i < files.length; i++) {
+        if (files[i].size > 10 * 1024 * 1024) { alert(files[i].name + ': 10MB 초과 파일은 이메일로 보내주세요.'); continue; }
+        uploadedFiles.push(files[i]);
+      }
+      renderFileList();
+    }
+    function removeFile(idx) { uploadedFiles.splice(idx, 1); renderFileList(); }
+    function renderFileList() {
+      var list = document.getElementById('d_file_list');
+      if (!uploadedFiles.length) { list.innerHTML = ''; return; }
+      list.innerHTML = uploadedFiles.map(function(f, i) {
+        var size = f.size < 1024 ? f.size + 'B' : f.size < 1048576 ? (f.size/1024).toFixed(1) + 'KB' : (f.size/1048576).toFixed(1) + 'MB';
+        return '<div class="cd-upload-file-item"><span>📄</span><span class="cd-file-name">' + f.name + '</span><span class="cd-file-size">' + size + '</span><button type="button" class="cd-file-remove" onclick="removeFile(' + i + ')">×</button></div>';
+      }).join('');
+    }
+
     /* ── Blend 12 Toggle ── */
     document.querySelectorAll('input[name="d_coffee"]').forEach(function(r) {
       r.addEventListener('change', function() {
@@ -622,7 +706,9 @@
         has_design: hasDesign ? hasDesign.value : '',
         design_description: hasDesign && hasDesign.value === 'yes' ? document.getElementById('d_design_desc_yes').value : document.getElementById('d_design_desc_no').value,
         coffee: coffee ? coffee.value : '',
+        blend12_selections: Array.from(document.querySelectorAll('input[name="d_blend12"]:checked')).map(function(c){return c.value}).join(', '),
         blend12_detail: document.getElementById('d_blend12_detail').value,
+        uploaded_files: uploadedFiles.map(function(f){return f.name}).join(', '),
         quantity: qty ? (qty.value === '기타' ? '기타: ' + document.getElementById('d_qty_detail').value : qty.value) : '',
         film_type: film ? film.value : '',
         packaging: pkg ? pkg.value : '',
@@ -636,7 +722,9 @@
         await fetch(GAS_URL, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data) });
         status.className = 'cd-status success';
         status.textContent = '✅ 문의가 성공적으로 전달되었습니다! 영업일 1~2일 내로 담당자가 연락드리겠습니다.';
+        formDirty = false;
         this.reset();
+        uploadedFiles = []; renderFileList();
         goStep(1);
       } catch(err) {
         status.className = 'cd-status error';
@@ -645,6 +733,13 @@
         btn.disabled = false;
         btn.textContent = '📩 견적 요청하기';
       }
+    });
+    /* ── Unsaved Changes Warning ── */
+    var formDirty = false;
+    document.getElementById('dripForm').addEventListener('input', function() { formDirty = true; });
+    document.getElementById('dripForm').addEventListener('change', function() { formDirty = true; });
+    window.addEventListener('beforeunload', function(e) {
+      if (formDirty) { e.preventDefault(); e.returnValue = ''; }
     });
   </script>
   <script src="assets/js/main.js"></script>
