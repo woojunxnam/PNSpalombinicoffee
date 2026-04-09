@@ -97,7 +97,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .btn-large{ padding: 14px 26px; font-size: 16px; }
 .btn-sm{ padding: 7px 14px; font-size: 13px; }
 
-/* HERO - Full Bleed Gradient */
+/* HERO - Video Background */
 .hero{
   position: relative;
   min-height: 85vh;
@@ -105,11 +105,25 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   align-items: center;
   overflow: hidden;
   border-bottom: none;
-  background:
-    radial-gradient(ellipse 900px 600px at 15% 20%, rgba(192,122,61,.18), transparent 60%),
-    radial-gradient(ellipse 700px 500px at 85% 80%, rgba(139,37,0,.10), transparent 55%),
-    radial-gradient(ellipse 500px 400px at 50% 50%, rgba(200,170,110,.06), transparent 50%),
-    linear-gradient(160deg, #0d0a07 0%, #1a120b 40%, #12100c 70%, #0a0806 100%);
+  background: #0a0806;
+}
+.hero-video{
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.38;
+  pointer-events: none;
+}
+.hero-overlay{
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(13,10,7,.6) 0%,
+    rgba(20,14,8,.72) 50%,
+    rgba(10,8,6,.88) 100%
+  );
 }
 .hero-inner{
   position: relative;
