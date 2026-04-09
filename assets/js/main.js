@@ -252,7 +252,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       return `<a href="#" aria-disabled="true">${item.label}${badge}</a>`;
     }
     const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
-    const isCurrent = currentPath === itemPath;
+    const isCurrent = !item.href.includes('#') && currentPath === itemPath;
     const cls = item.volcano ? ' class="mobile-nav-volcano"' : '';
     return `<a href="${item.href}"${cls}${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
   };
