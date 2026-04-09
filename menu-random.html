@@ -1335,6 +1335,8 @@
   let lastRecPicks = [];
   let lastLadderPayer = null;
   let lastTournamentPick = null;
+  let lastRecPath = [];       // rec flow decision path
+  let lastTournamentHistory = []; // tournament match history
 
   /* ══════════════════════════════════════════════════════
      PANEL NAVIGATION
@@ -1624,9 +1626,13 @@
     const ncSubType = recAnswers[2];
     const dsSubType = recAnswers[3];
     const mood = recAnswers[4];
-    const flavor = recAnswers[5];      // NEW: fl-nutty, fl-sweet, fl-citrus, fl-bitter
-    const sweetness = recAnswers[6];   // NEW: sw-very, sw-medium, sw-less
+    const flavor = recAnswers[5];      // fl-nutty, fl-sweet, fl-citrus, fl-bitter
+    const sweetness = recAnswers[6];   // sw-very, sw-medium, sw-less
     const temp = recAnswers[7];
+
+    // Save decision path
+    const stepLabels = ['종류', '커피여부', '논커피상세', '디저트상세', '기분', '향취향', '단맛선호', '온도'];
+    lastRecPath = recAnswers.map((v, i) => v !== null ? { step: stepLabels[i], answer: v } : null).filter(Boolean);
 
     let picks = [];
 
@@ -1765,17 +1771,57 @@
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
     const matching = surveys.filter(s => s.picks && s.picks.includes(itemName));
     if (matching.length < 2) return null;
-    const combos = {};
+
+    const reasonMap = { work: '작업/공부', date: '데이트', friends: '친구 만남', alone: '혼자 힐링', takeout: '테이크아웃' };
+    const taglines = [];
+
+    // 1. Age + Sex combo
+    const ageSex = {};
     matching.forEach(s => {
       if (!s.age && !s.sex) return;
-      const age = s.age ? (s.age === '50' ? '50+' : s.age + '\uB300') : '';
-      const sex = s.sex === 'M' ? '\uB0A8\uC131' : s.sex === 'F' ? '\uC5EC\uC131' : '';
+      const age = s.age ? (s.age === '50' ? '50+' : s.age + '대') : '';
+      const sex = s.sex === 'M' ? '남성' : s.sex === 'F' ? '여성' : '';
       const key = (age + ' ' + sex).trim();
-      if (key) combos[key] = (combos[key] || 0) + 1;
+      if (key) ageSex[key] = (ageSex[key] || 0) + 1;
     });
-    const top = Object.entries(combos).sort((a,b) => b[1] - a[1])[0];
-    if (!top || top[1] < 2) return null;
-    return top[0] + '\uC774 \uC81C\uC77C \uB9CE\uC774 \uBF51\uC740 \uBA54\uB274';
+    const topAS = Object.entries(ageSex).sort((a,b) => b[1] - a[1])[0];
+    if (topAS && topAS[1] >= 2) taglines.push(topAS[0] + '이 제일 많이 뽑은 메뉴');
+
+    // 2. MBTI type
+    const mbtiCounts = {};
+    matching.forEach(s => {
+      if (s.mbti && s.mbti.length === 4 && s.mbti !== '?') mbtiCounts[s.mbti] = (mbtiCounts[s.mbti] || 0) + 1;
+    });
+    const topMbti = Object.entries(mbtiCounts).sort((a,b) => b[1] - a[1])[0];
+    if (topMbti && topMbti[1] >= 2) taglines.push(topMbti[0] + ' 유형이 즐겨 찾는 메뉴');
+
+    // 3. Visit reason
+    const reasonCounts = {};
+    matching.forEach(s => {
+      if (s.reason) reasonCounts[s.reason] = (reasonCounts[s.reason] || 0) + 1;
+    });
+    const topReason = Object.entries(reasonCounts).sort((a,b) => b[1] - a[1])[0];
+    if (topReason && topReason[1] >= 2) taglines.push((reasonMap[topReason[0]] || topReason[0]) + '할 때 인기 메뉴');
+
+    // 4. MBTI axis (E/I, T/F)
+    const axisCounts = { E: 0, I: 0, T: 0, F: 0 };
+    matching.forEach(s => {
+      if (s.mbti && s.mbti.length === 4 && s.mbti !== '?') {
+        s.mbti.split('').forEach(ch => { if (axisCounts[ch] !== undefined) axisCounts[ch]++; });
+      }
+    });
+    const totalMbti = axisCounts.E + axisCounts.I;
+    if (totalMbti >= 3) {
+      if (axisCounts.E > axisCounts.I * 1.5) taglines.push('외향형(E)에게 인기!');
+      else if (axisCounts.I > axisCounts.E * 1.5) taglines.push('내향형(I)의 픽!');
+      if (axisCounts.F > axisCounts.T * 1.5) taglines.push('감성파(F)가 사랑하는 메뉴');
+      else if (axisCounts.T > axisCounts.F * 1.5) taglines.push('논리파(T)의 선택');
+    }
+
+    if (taglines.length === 0) return null;
+    // Rotate based on item name hash so each item shows different tagline
+    const hash = itemName.split('').reduce((h, c) => h + c.charCodeAt(0), 0);
+    return taglines[hash % taglines.length];
   }
 
   function renderStats(wrapId, barsId) {
@@ -1807,7 +1853,10 @@
           <span class="stat-pct">${pct}%</span>
         </div>${demoHtml}`;
     }).join('');
-    bars.innerHTML += '<div class="stats-reset"><button class="stats-reset-btn" onclick="resetAllStats()">통계 초기화</button></div>';
+    bars.innerHTML += `<div class="stats-reset">
+      <button class="stats-reset-btn" onclick="exportData()">📥 데이터 내보내기</button>
+      <button class="stats-reset-btn" onclick="resetAllStats()">통계 초기화</button>
+    </div>`;
   }
 
   function resetAllStats() {
@@ -1821,6 +1870,25 @@
       const el = document.getElementById(id); if (el) el.innerHTML = '';
     });
     showToast('통계가 초기화되었습니다.');
+  }
+
+  function exportData() {
+    const data = {
+      exportDate: new Date().toISOString(),
+      pickStats: JSON.parse(localStorage.getItem('pns_pick_stats') || '{}'),
+      surveys: JSON.parse(localStorage.getItem('pns_surveys') || '[]')
+    };
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pns-menu-data-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('데이터가 다운로드되었습니다!');
   }
 
   /* ══════════════════════════════════════════════════════
@@ -1959,15 +2027,18 @@
     const sex = section.querySelector('.sex-chips .survey-chip.selected')?.dataset.v || '';
     const age = section.querySelector('.age-chips .survey-chip.selected')?.dataset.v || '';
     const reason = section.querySelector('.reason-chips .survey-chip.selected')?.dataset.v || '';
-    const data = { mbti, sex, age, reason, timestamp: new Date().toISOString() };
+    const data = { mbti, sex, age, reason, flow: lastFlowType, timestamp: new Date().toISOString() };
 
-    // Add picked items to survey data
-    if (lastFlowType === 'random' && lastRandomPick) data.picks = [lastRandomPick.name];
-    else if (lastFlowType === 'rec' && lastRecPicks.length > 0) {
+    // Add picked items + decision path to survey data
+    if (lastFlowType === 'random' && lastRandomPick) {
+      data.picks = [lastRandomPick.name];
+    } else if (lastFlowType === 'rec' && lastRecPicks.length > 0) {
       data.picks = [(lastRecPicks[selectedRecIdx] || lastRecPicks[0]).name];
-    }
-    else if (lastFlowType === 'tournament' && lastTournamentPick) {
+      data.recPath = lastRecPath;
+      data.recResults = lastRecPicks.map(p => p.name);
+    } else if (lastFlowType === 'tournament' && lastTournamentPick) {
       data.picks = [lastTournamentPick.name];
+      data.tournamentHistory = lastTournamentHistory;
     }
 
     const surveys = JSON.parse(localStorage.getItem('pns_surveys') || '[]');
@@ -2313,6 +2384,7 @@
     tMatchIdx = 0;
     tTotalMatches = 15; // 8 + 4 + 2 + 1
     tCompletedMatches = 0;
+    lastTournamentHistory = [];
     showPanel('panelTournament');
     document.getElementById('tournamentBackRow').style.display = '';
     renderTournamentMatch();
@@ -2376,6 +2448,15 @@
     const a = tBracket[tMatchIdx * 2];
     const b = tBracket[tMatchIdx * 2 + 1];
     const winner = idx === 0 ? a : b;
+    const loser = idx === 0 ? b : a;
+
+    // Save match history
+    lastTournamentHistory.push({
+      round: getRoundLabel(),
+      matchup: [a.name, b.name],
+      winner: winner.name,
+      loser: loser.name
+    });
 
     // Visual feedback
     const cards = document.querySelectorAll('.vs-card');
