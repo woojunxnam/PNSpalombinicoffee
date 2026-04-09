@@ -236,6 +236,17 @@
       font-weight: 600;
       color: var(--text);
     }
+    .cat-badge {
+      font-size: 9px;
+      font-weight: 600;
+      color: var(--accent-dk);
+      background: rgba(200,170,110,.10);
+      border: 1px solid rgba(200,170,110,.22);
+      border-radius: 6px;
+      padding: 2px 7px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
     .cat-count {
       margin-left: auto;
       font-size: 10px;
@@ -446,7 +457,7 @@
       unavailableMsg: '준비중입니다',
       categories: [
         {
-          id:'coffee', icon:'☕', name:'커피',
+          id:'coffee', icon:'☕', name:'커피', badge:'디카페인 가능',
           items:['에스프레소','에스프레소 마키아토','에스프레소 콘파냐','아메리카노',
                  '헤이즐넛 커피','카푸치노','카페라떼','바닐라라떼','카라멜마키아또',
                  '카페모카','민트모카라떼','연유라떼','헤이즐넛 라떼','아인슈페너',
@@ -522,7 +533,7 @@
       unavailableMsg: 'Coming soon',
       categories: [
         {
-          id:'coffee', icon:'☕', name:'Coffee',
+          id:'coffee', icon:'☕', name:'Coffee', badge:'Decaf Available',
           items:['Espresso','Espresso Macchiato','Espresso Con Panna','Americano',
                  'Hazelnut Coffee','Cappuccino','Caffè Latte','Vanilla Latte',
                  'Caramel Macchiato','Caffè Mocha','Mint Mocha Latte',
@@ -603,7 +614,7 @@
       unavailableMsg: '即将上线',
       categories: [
         {
-          id:'coffee', icon:'☕', name:'咖啡',
+          id:'coffee', icon:'☕', name:'咖啡', badge:'可选低因',
           items:['浓缩咖啡','浓缩玛奇朵','浓缩鲜奶油','美式咖啡','榛果咖啡',
                  '卡布奇诺','拿铁咖啡','香草拿铁','焦糖玛奇朵','摩卡咖啡',
                  '薄荷摩卡拿铁','炼乳拿铁','榛果拿铁','维也纳咖啡','阿芙佳朵',
@@ -679,7 +690,7 @@
       unavailableMsg: '準備中です',
       categories: [
         {
-          id:'coffee', icon:'☕', name:'コーヒー',
+          id:'coffee', icon:'☕', name:'コーヒー', badge:'デカフェ可',
           items:['エスプレッソ','エスプレッソマキアート','エスプレッソコンパナ',
                  'アメリカーノ','ヘーゼルナッツコーヒー','カプチーノ','カフェラテ',
                  'バニララテ','キャラメルマキアート','カフェモカ','ミントモカラテ',
@@ -761,7 +772,7 @@
       unavailableMsg: 'Sắp ra mắt',
       categories: [
         {
-          id:'coffee', icon:'☕', name:'Cà Phê',
+          id:'coffee', icon:'☕', name:'Cà Phê', badge:'Có Decaf',
           items:['Espresso','Espresso Macchiato','Espresso Con Panna','Americano',
                  'Cà phê hạt dẻ','Cappuccino','Cà phê Latte','Latte vani',
                  'Caramel Macchiato','Cà phê Mocha','Latte mocha bạc hà',
@@ -950,6 +961,7 @@
           <div class="cat-head">
             <span class="cat-icon">${cat.icon}</span>
             <span class="cat-name">${cat.name}</span>
+            ${cat.badge ? `<span class="cat-badge">${cat.badge}</span>` : ''}
             <span class="cat-count">${total}</span>
           </div>
           ${contentHTML}${noteHTML}
