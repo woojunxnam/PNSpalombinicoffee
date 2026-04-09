@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
   <!-- Kakao SDK -->
-  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js" integrity="sha384-DKYJZ8NLiK8MN4/C5P2dtSmLQ4KwPaoqAfyA/DfmEc1VDxu4yyC7wy6K1Ber76" crossorigin="anonymous"></script>
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.7/kakao.min.js" integrity="sha384-tJkjbtDbvoxO+diRuDtwRO9JXR7pjWnfjfRn5ePUpl7e7RJCxKCwwnfqUAdXh53p" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -2134,11 +2134,15 @@
         buttons: [
           { title: '나도 뽑아보기', link: { mobileWebUrl: SHARE_URL, webUrl: SHARE_URL } }
         ]
+      }).catch(function(err) {
+        shareCopy(mode);
+        showToast('카카오 공유 실패 — 클립보드에 복사했어요.');
+        console.error('[Kakao] sendDefault rejected:', err);
       });
     } catch(e) {
       shareCopy(mode);
       showToast('카카오 공유 오류 — 클립보드에 복사했어요.');
-      console.error('[Kakao] Share error:', e.message, '\n→ 카카오 개발자 콘솔에서 확인: 1) 플랫폼 > Web 도메인에 www.pnscoffee.com 등록 여부, 2) 카카오톡 공유 제품 활성화 여부');
+      console.error('[Kakao] Share error:', e.message, '\n→ 확인사항: 1) 플랫폼 > Web 도메인 등록, 2) 카카오톡 공유 제품 활성화');
     }
   }
 
