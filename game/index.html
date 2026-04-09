@@ -40,6 +40,11 @@
         <span class="water-label">💧 물</span>
       </div>
       <div class="hud-right">
+        <!-- 로그인 상태: 프로필 사진 or 로그인 버튼 -->
+        <button class="hud-avatar-btn" id="hudAvatarBtn" aria-label="계정">
+          <img class="hud-avatar-img" id="hudAvatarImg" src="" alt="" style="display:none;">
+          <span class="hud-avatar-placeholder" id="hudAvatarPlaceholder">👤</span>
+        </button>
         <button class="hud-btn" id="btnSettings" aria-label="설정">⚙️</button>
       </div>
     </div>
@@ -56,6 +61,8 @@
       <button class="harvest-btn" id="btnHarvest">🍒 수확하기</button>
       <!-- 튜토리얼 힌트 -->
       <div class="tutorial-hint" id="tutorialHint"></div>
+      <!-- 클라우드 저장 상태 표시 -->
+      <div class="cloud-status" id="cloudStatus"></div>
     </div>
 
     <!-- 하단 액션 바 -->
@@ -129,6 +136,17 @@
     </div>
   </div>
 
+  <!-- 계정 패널 (로그인/프로필) -->
+  <div class="overlay" id="accountPanel">
+    <div class="popup">
+      <h3>☁️ 계정</h3>
+      <div class="popup-body" id="accountPanelBody">
+        <!-- JS로 채워짐 -->
+      </div>
+      <button class="popup-btn popup-btn-secondary" id="accountPanelClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
   <!-- 설정 패널 -->
   <div class="overlay" id="settingsPanel">
     <div class="popup">
@@ -141,6 +159,10 @@
     </div>
   </div>
 
+  <!-- Firebase SDKs (v10 compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>
   <script src="game.js"></script>
 </body>

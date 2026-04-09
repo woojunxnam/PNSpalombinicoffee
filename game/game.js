@@ -1,7 +1,200 @@
 /* ============================================
-   PNS Coffee 나무 키우기 — Phase 2
+   PNS Coffee 나무 키우기 — Phase 2 + Firebase
    Phaser 3 + DOM Hybrid
    ============================================ */
+
+// ── Firebase init ────────────────────────────
+let db = null;
+let auth = null;
+let currentUser = null;
+let firestoreSaveTimer = null;
+
+function initFirebase() {
+  try {
+    const app = firebase.initializeApp({
+      apiKey:            'AIzaSyC_m8ez_LbcnfoOVinMQbrPeJ-u5Ym8nUg',
+      authDomain:        'pnspalombini.firebaseapp.com',
+      projectId:         'pnspalombini',
+      storageBucket:     'pnspalombini.firebasestorage.app',
+      messagingSenderId: '273634072112',
+      appId:             '1:273634072112:web:f0129f89f4277f97a07ff5',
+    });
+    db   = firebase.firestore();
+    auth = firebase.auth();
+
+    // 인증 상태 감지: 로그인/로그아웃 시 자동 처리
+    auth.onAuthStateChanged(onAuthStateChanged);
+  } catch (e) {
+    console.warn('[Firebase] init failed:', e.message);
+  }
+}
+
+async function onAuthStateChanged(user) {
+  currentUser = user;
+  if (user) {
+    updateAccountUI(user);
+    showCloudStatus('☁️ 데이터 불러오는 중...');
+    await loadFromFirestore(user.uid);
+    showCloudStatus('☁️ 동기화 완료', true);
+  } else {
+    updateAccountUI(null);
+  }
+}
+
+// ── Google 로그인 / 로그아웃 ─────────────────
+async function signInWithGoogle() {
+  if (!auth) return;
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await auth.signInWithPopup(provider);
+    // onAuthStateChanged 가 자동으로 처리
+  } catch (e) {
+    if (e.code !== 'auth/popup-closed-by-user') {
+      console.warn('[Firebase] signIn failed:', e.message);
+    }
+  }
+}
+
+async function signOutUser() {
+  if (!auth) return;
+  await auth.signOut();
+  currentUser = null;
+  updateAccountUI(null);
+}
+
+// ── Firestore 저장 (디바운스 60초) ───────────
+function scheduleSaveToFirestore() {
+  if (!currentUser || !db) return;
+  if (firestoreSaveTimer) clearTimeout(firestoreSaveTimer);
+  firestoreSaveTimer = setTimeout(() => saveToFirestore(currentUser.uid), 60000);
+}
+
+async function saveToFirestore(uid) {
+  if (!db || !uid) return;
+  try {
+    const payload = {
+      beanPoints:      state.beanPoints,
+      goldenBeans:     state.goldenBeans,
+      water:           state.water,
+      growthXp:        state.growthXp,
+      stage:           state.stage,
+      harvestCount:    state.harvestCount,
+      equippedPotId:   state.equippedPotId,
+      equippedDecorId: state.equippedDecorId,
+      unlocked:        state.unlocked,
+      claimedRewards:  state.claimedRewards,
+      stats:           state.stats,
+      lastSaveTime:    state.lastSaveTime,
+      savedAt:         firebase.firestore.FieldValue.serverTimestamp(),
+    };
+    await db.collection('gameUsers').doc(uid).set(payload);
+    showCloudStatus('☁️ 저장됨', true);
+  } catch (e) {
+    console.warn('[Firebase] save failed:', e.message);
+  }
+}
+
+// ── Firestore 불러오기 ──────────────────────
+async function loadFromFirestore(uid) {
+  if (!db || !uid) return;
+  try {
+    const doc = await db.collection('gameUsers').doc(uid).get();
+    if (!doc.exists) {
+      // 첫 로그인 — 로컬 데이터를 클라우드에 올림
+      await saveToFirestore(uid);
+      return;
+    }
+    const cloud = doc.data();
+    const local = state;
+
+    // 더 진행된 데이터를 선택 (growthXp 기준)
+    // 오프라인 계산은 이미 boot()에서 처리됐으므로 단순 비교
+    if ((cloud.growthXp || 0) >= (local.growthXp || 0)) {
+      // 클라우드 데이터 적용
+      const def = defaultState();
+      state = {
+        ...def,
+        ...cloud,
+        stats: { ...def.stats, ...(cloud.stats || {}) },
+        unlocked: cloud.unlocked || def.unlocked,
+        claimedRewards: cloud.claimedRewards || [],
+      };
+      state.stage = getStage(state.growthXp);
+      saveState(); // localStorage 동기화
+    } else {
+      // 로컬이 더 앞서 있음 — 클라우드에 업로드
+      await saveToFirestore(uid);
+    }
+    updateHUD();
+    const scene = window._phaserGame?.scene?.getScene('TreeScene');
+    if (scene) { scene.currentStage = -1; scene.drawTree(true); }
+  } catch (e) {
+    console.warn('[Firebase] load failed:', e.message);
+  }
+}
+
+// ── 클라우드 저장 즉시 실행 (중요 이벤트 시) ─
+function cloudSaveNow() {
+  if (!currentUser || !db) return;
+  if (firestoreSaveTimer) clearTimeout(firestoreSaveTimer);
+  saveToFirestore(currentUser.uid);
+}
+
+// ── 계정 UI 업데이트 ────────────────────────
+function updateAccountUI(user) {
+  const img         = $('hudAvatarImg');
+  const placeholder = $('hudAvatarPlaceholder');
+  if (user && user.photoURL) {
+    img.src = user.photoURL;
+    img.style.display = 'block';
+    placeholder.style.display = 'none';
+  } else {
+    img.style.display = 'none';
+    placeholder.style.display = 'block';
+    placeholder.textContent = user ? '👤' : '🔑';
+  }
+}
+
+function renderAccountPanel() {
+  const body = $('accountPanelBody');
+  if (currentUser) {
+    body.innerHTML =
+      '<div class="account-profile">' +
+        (currentUser.photoURL ? '<img class="account-avatar" src="' + currentUser.photoURL + '" alt="">' : '<div class="account-avatar-placeholder">👤</div>') +
+        '<div class="account-name">' + (currentUser.displayName || '플레이어') + '</div>' +
+        '<div class="account-email">' + (currentUser.email || '') + '</div>' +
+      '</div>' +
+      '<p class="account-desc">✅ 구글 계정으로 연결됨<br>진행 데이터가 자동으로 클라우드에 저장됩니다.</p>' +
+      '<button class="popup-btn popup-btn-danger" id="btnSignOut" style="margin-top:8px;">로그아웃</button>';
+    $('btnSignOut').addEventListener('click', async () => {
+      await signOutUser();
+      renderAccountPanel();
+    });
+  } else {
+    body.innerHTML =
+      '<p class="account-desc">구글 계정으로 로그인하면<br>어느 기기에서도 이어서 플레이할 수 있어요.</p>' +
+      '<button class="popup-btn google-signin-btn" id="btnGoogleSignIn">' +
+        '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="18" height="18">' +
+        'Google로 로그인' +
+      '</button>';
+    $('btnGoogleSignIn').addEventListener('click', async () => {
+      hideOverlay('accountPanel');
+      await signInWithGoogle();
+    });
+  }
+}
+
+// ── 클라우드 상태 표시 ───────────────────────
+let cloudStatusTimer = null;
+function showCloudStatus(msg, autohide) {
+  const el = $('cloudStatus');
+  el.textContent = msg;
+  el.classList.add('visible');
+  if (cloudStatusTimer) clearTimeout(cloudStatusTimer);
+  if (autohide) {
+    cloudStatusTimer = setTimeout(() => el.classList.remove('visible'), 2000);
+  }
+}
 
 // ── Constants (Source of Truth) ─────────────
 const C = Object.freeze({
@@ -89,6 +282,7 @@ function saveState() {
     state.lastSaveTime = Date.now();
     localStorage.setItem(C.SAVE_KEY, JSON.stringify(state));
   } catch (e) { /* private browsing 등 */ }
+  scheduleSaveToFirestore();
 }
 
 function loadState() {
@@ -121,12 +315,12 @@ function doHarvest() {
   const golden = C.HARVEST_GOLDEN_BEANS + state.harvestCount; // 수확할수록 보너스
   state.goldenBeans += golden;
   state.harvestCount++;
-  // 리셋 (황금 원두/해금/장비/통계는 유지)
   state.growthXp = 0;
   state.stage = 0;
   state.water = C.WATER_START;
   updateHUD();
   saveState();
+  cloudSaveNow();
   return golden;
 }
 
@@ -875,6 +1069,14 @@ function setupDOMEvents() {
   });
   $('rewardResultClose').addEventListener('click', () => hideOverlay('rewardResultPopup'));
 
+  // 계정 (HUD 아바타 버튼)
+  $('hudAvatarBtn').addEventListener('click', (e) => {
+    e.stopPropagation();
+    renderAccountPanel();
+    showOverlay('accountPanel');
+  });
+  $('accountPanelClose').addEventListener('click', () => hideOverlay('accountPanel'));
+
   // 설정
   $('btnSettings').addEventListener('click', () => showOverlay('settingsPanel'));
   $('settingsClose').addEventListener('click', () => hideOverlay('settingsPanel'));
@@ -902,10 +1104,16 @@ function setupDOMEvents() {
     });
   });
 
-  // 페이지 나갈 때 저장
-  window.addEventListener('beforeunload', () => saveState());
+  // 페이지 나갈 때 저장 (로컬 + 클라우드 즉시)
+  window.addEventListener('beforeunload', () => {
+    saveState();
+    cloudSaveNow();
+  });
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) saveState();
+    if (document.hidden) {
+      saveState();
+      cloudSaveNow();
+    }
   });
 }
 
@@ -927,6 +1135,7 @@ function grantReward(code) {
   state.claimedRewards.push(upper);
   updateHUD();
   saveState();
+  cloudSaveNow();
 
   let details = [];
   if (reward.water) details.push('💧 물 +' + reward.water);
@@ -1071,6 +1280,7 @@ function boot() {
 
   setupDOMEvents();
   initPhaser();
+  initFirebase();
 
   // URL 보상 파라미터 처리
   applyRewardFromUrl();
