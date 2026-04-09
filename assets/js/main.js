@@ -266,6 +266,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}index.html#heritage`, label: 'Heritage' },
         { href: `${prefix}index.html#reviews`, label: 'Reviews' },
         { href: `${prefix}index.html#faq`, label: 'FAQ' },
+        { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
       ]
     },
     {
@@ -273,9 +274,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       items: [
         { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
         { href: `${prefix}lineup.html`, label: '협력사 라인업' },
-        { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
+        { href: `${prefix}menu.html`, label: '카페 메뉴' },
+        { href: `${prefix}game/`, label: '커피나무 키우기', badge: 'BETA' },
       ]
     },
+    { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
     {
       type: 'group', label: '자동화 장비',
       items: [

@@ -1003,12 +1003,25 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .mobile-nav-group-inner {
   display: grid;
   gap: 4px;
-  padding: 6px 0 2px 12px;
+  padding: 6px 0 4px 12px;
 }
 .mobile-nav-group-inner a {
   font-size: 14px;
-  min-height: 44px;
+  font-weight: 600;
+  min-height: 42px;
   border-radius: 10px;
+  background: rgba(255,255,255,.38);
+  border-color: rgba(230,222,214,.5);
+  color: var(--muted);
+}
+.mobile-nav-group-inner a:hover {
+  background: rgba(255,255,255,.7);
+  color: var(--text);
+}
+.mobile-nav-group-inner a[aria-current="page"] {
+  background: rgba(192,122,61,.1);
+  border-color: rgba(192,122,61,.2);
+  color: var(--accent);
 }
 .mobile-nav a[aria-current="page"] {
   background: rgba(192,122,61,.12);
