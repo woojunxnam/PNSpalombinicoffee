@@ -114,20 +114,20 @@
           <a class="btn btn-hero-ghost" href="contact.html" data-i18n="hero-btn-b2b">B2B 파트너십 문의</a>
         </div>
         <div class="hero-cards">
-          <a class="hero-card" href="products/">
-            <span class="hero-card-icon">☕</span>
-            <span class="hero-card-title" data-i18n="hcard-1">이탈리아 원두</span>
-            <span class="hero-card-desc" data-i18n="hcard-1d">Caffè Palombini 헤리티지</span>
-          </a>
           <a class="hero-card" href="products/volcano-ruby.html">
             <span class="hero-card-icon">🌋</span>
-            <span class="hero-card-title" data-i18n="hcard-2">볼케이노 루비</span>
-            <span class="hero-card-desc" data-i18n="hcard-2d">베트남 화산토 프리미엄</span>
+            <span class="hero-card-title" data-i18n="hcard-1">볼케이노 루비</span>
+            <span class="hero-card-desc" data-i18n="hcard-1d">베트남 화산토 프리미엄</span>
           </a>
           <a class="hero-card" href="custom-edition.html">
             <span class="hero-card-icon">🎨</span>
-            <span class="hero-card-title" data-i18n="hcard-3">커스텀 드립백</span>
-            <span class="hero-card-desc" data-i18n="hcard-3d">최소 50개 맞춤 제작</span>
+            <span class="hero-card-title" data-i18n="hcard-2">커스텀 드립백</span>
+            <span class="hero-card-desc" data-i18n="hcard-2d">최소 50개 맞춤 제작</span>
+          </a>
+          <a class="hero-card" href="b2b-bean.html">
+            <span class="hero-card-icon">🫘</span>
+            <span class="hero-card-title" data-i18n="hcard-3">생두 원두</span>
+            <span class="hero-card-desc" data-i18n="hcard-3d">B2B 대량 주문·견적</span>
           </a>
           <a class="hero-card" href="film-custom.html">
             <span class="hero-card-icon">📦</span>
@@ -143,29 +143,146 @@
       </div>
     </section>
 
-    <!-- STATS BAR -->
-    <section class="stats-bar">
-      <div class="container stats-inner">
-        <div class="stat">
-          <span class="stat-num" data-target="1946">1946</span>
-          <span class="stat-label" data-i18n="stat-1">Caffè Palombini<br/>이탈리아 로마 창업</span>
+    <!-- PARTNER LOGO STRIP -->
+    <section class="partner-strip">
+      <div class="container partner-strip-inner">
+        <!-- Left: PNS logo + X + label -->
+        <div class="partner-strip-left">
+          <img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니" class="partner-strip-pns"/>
+          <span class="partner-strip-x">×</span>
+          <div class="partner-strip-label">
+            <span class="partner-strip-label-main" data-i18n="partner-strip-label">협력사 · 고객사</span>
+            <span class="partner-strip-label-sub" data-i18n="partner-strip-sub">Partners &amp; Clients</span>
+          </div>
         </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num" data-target="26+">26+</span>
-          <span class="stat-label" data-i18n="stat-2">패키징 장비<br/>라인업</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num" data-target="50개~">50개~</span>
-          <span class="stat-label" data-i18n="stat-3">커스텀 드립백<br/>최소 주문 수량</span>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <span class="stat-num" data-target="원스톱">원스톱</span>
-          <span class="stat-label" data-i18n="stat-4">원두 → 드립백 → 필름지 → 장비<br/>올인원 솔루션</span>
+        <!-- Right: Sliding logo marquee -->
+        <div class="partner-strip-marquee-wrap">
+          <div class="partner-strip-marquee">
+            <div class="partner-strip-track">
+              <img src="assets/img/partners/palombini.png" alt="Palombini"/>
+              <img src="assets/img/partners/mfdp.png" alt="MFDP"/>
+              <img src="assets/img/partners/finecut.png" alt="Finecut"/>
+              <img src="assets/img/partners/blackbeans.png" alt="Blackbeans"/>
+              <img src="assets/img/partners/beanspace.png" alt="Beanspace"/>
+              <img src="assets/img/partners/kl.png" alt="KL"/>
+              <img src="assets/img/partners/hyungkuk.png" alt="형국"/>
+              <img src="assets/img/partners/anysort.png" alt="Anysort"/>
+              <img src="assets/img/partners/rc-pack.png" alt="RC Pack"/>
+              <img src="assets/img/partners/mdp.png" alt="MDP"/>
+              <!-- duplicate set for seamless loop -->
+              <img src="assets/img/partners/palombini.png" alt="Palombini"/>
+              <img src="assets/img/partners/mfdp.png" alt="MFDP"/>
+              <img src="assets/img/partners/finecut.png" alt="Finecut"/>
+              <img src="assets/img/partners/blackbeans.png" alt="Blackbeans"/>
+              <img src="assets/img/partners/beanspace.png" alt="Beanspace"/>
+              <img src="assets/img/partners/kl.png" alt="KL"/>
+              <img src="assets/img/partners/hyungkuk.png" alt="형국"/>
+              <img src="assets/img/partners/anysort.png" alt="Anysort"/>
+              <img src="assets/img/partners/rc-pack.png" alt="RC Pack"/>
+              <img src="assets/img/partners/mdp.png" alt="MDP"/>
+            </div>
+          </div>
         </div>
       </div>
+      <style>
+        .partner-strip {
+          background: #1a1510;
+          padding: 20px 0;
+          overflow: hidden;
+        }
+        .partner-strip-inner {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+        }
+        .partner-strip-left {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          flex-shrink: 0;
+          padding-right: 24px;
+          border-right: 1px solid rgba(255,255,255,0.12);
+        }
+        .partner-strip-pns {
+          height: 42px;
+          width: auto;
+          object-fit: contain;
+          filter: brightness(0) invert(1);
+        }
+        .partner-strip-x {
+          font-size: 24px;
+          font-weight: 300;
+          color: var(--accent);
+          line-height: 1;
+        }
+        .partner-strip-label {
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+        }
+        .partner-strip-label-main {
+          font-family: var(--serif);
+          font-size: 14px;
+          font-weight: 600;
+          color: #fff;
+          white-space: nowrap;
+        }
+        .partner-strip-label-sub {
+          font-size: 10px;
+          color: rgba(255,255,255,0.45);
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .partner-strip-marquee-wrap {
+          flex: 1;
+          overflow: hidden;
+          mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+        }
+        .partner-strip-marquee {
+          overflow: hidden;
+        }
+        .partner-strip-track {
+          display: flex;
+          align-items: center;
+          gap: 40px;
+          width: max-content;
+          animation: marquee-scroll 30s linear infinite;
+        }
+        .partner-strip-track img {
+          height: 36px;
+          width: auto;
+          max-width: 110px;
+          object-fit: contain;
+          filter: brightness(0) invert(1);
+          opacity: 0.85;
+          transition: opacity 0.3s;
+        }
+        .partner-strip-track img:hover {
+          opacity: 1;
+        }
+        @keyframes marquee-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        @media (max-width: 768px) {
+          .partner-strip-inner {
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+          }
+          .partner-strip-left {
+            border-right: none;
+            padding-right: 0;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            justify-content: center;
+          }
+          .partner-strip-pns { height: 32px; }
+          .partner-strip-track img { height: 28px; }
+          .partner-strip-track { gap: 28px; }
+        }
+      </style>
     </section>
 
     <!-- ABOUT -->
@@ -740,7 +857,7 @@
           </div>
         </div>
         <div class="footer-biz">
-          <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-9197-5837</p>
+          <p><strong>상호명</strong> 피엔에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-2604-5567</p>
           <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
         </div>
         <div class="footer-bottom">
@@ -765,22 +882,19 @@
   window.T = [
 
     /* ── Hero cards ── */
-    ['.hero-card:nth-child(1) .hero-card-title', 'Italian Beans'],
-    ['.hero-card:nth-child(1) .hero-card-desc', 'Caffè Palombini Heritage'],
-    ['.hero-card:nth-child(2) .hero-card-title', 'Volcano Ruby'],
-    ['.hero-card:nth-child(2) .hero-card-desc', 'Vietnamese Volcanic Premium'],
-    ['.hero-card:nth-child(3) .hero-card-title', 'Custom Drip Bag'],
-    ['.hero-card:nth-child(3) .hero-card-desc', 'Min. 50 Units Custom'],
+    ['.hero-card:nth-child(1) .hero-card-title', 'Volcano Ruby'],
+    ['.hero-card:nth-child(1) .hero-card-desc', 'Vietnamese Volcanic Premium'],
+    ['.hero-card:nth-child(2) .hero-card-title', 'Custom Drip Bag'],
+    ['.hero-card:nth-child(2) .hero-card-desc', 'Min. 50 Units Custom'],
+    ['.hero-card:nth-child(3) .hero-card-title', 'Green & Roasted Beans'],
+    ['.hero-card:nth-child(3) .hero-card-desc', 'B2B Bulk Order & Quote'],
     ['.hero-card:nth-child(4) .hero-card-title', 'Coffee Film'],
     ['.hero-card:nth-child(4) .hero-card-desc', 'Custom Material & Print'],
     ['.hero-card:nth-child(5) .hero-card-title', 'Machines'],
     ['.hero-card:nth-child(5) .hero-card-desc', '26+ Packaging Machines'],
 
-    /* ── Stats bar ── */
-    ['.stat-label', 'Caff\u00E8 Palombini<br/>Founded in Rome', 0],
-    ['.stat-label', 'Packaging Machine<br/>Lineup', 1],
-    ['.stat-label', 'Custom Drip Bag<br/>Min. Order Qty', 2],
-    ['.stat-label', 'Bean \u2192 Drip Bag \u2192 Film \u2192 Machine<br/>All-in-One Solution', 3],
+    /* ── Partner strip ── */
+    ['.partner-strip-label-main', 'Partners & Clients'],
 
     /* ── About section lead (4 lines) ── */
     ['#about .about-lines p', 'PNS Palombini is more than a coffee brand.', 0],
