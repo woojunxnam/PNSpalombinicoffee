@@ -66,7 +66,7 @@ const PNS_PRODUCTS = [
     badge:     "주문 가능",
     badgeType: "ready",
     priceType: "custom",
-    price:     "최소주문 50개"
+    price:     "상품 문의"
   },
 
   /* ── 볼케이노 루비 드립백 ─────────────────────────────── */
