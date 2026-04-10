@@ -201,7 +201,7 @@
       color: #b0a49c;
     }
 
-    /* Privacy consent */
+    /* Privacy consent — .form-consent .consent-label 명시도(0,2,0) > .form-group label(0,1,1) */
     .form-consent {
       background: rgba(192,122,61,.06);
       border: 1px solid var(--line);
@@ -209,8 +209,8 @@
       padding: 14px 16px;
       margin-top: 4px;
     }
-    .consent-label {
-      display: flex;
+    .form-consent .consent-label {
+      display: flex !important;
       align-items: flex-start;
       gap: 10px;
       cursor: pointer;
@@ -218,17 +218,19 @@
       color: var(--accent2);
       line-height: 1.55;
       margin-bottom: 0 !important;
+      user-select: none;
     }
-    .consent-label input[type="checkbox"] {
+    .form-consent .consent-label input[type="checkbox"] {
       flex-shrink: 0;
       width: 18px;
       height: 18px;
-      margin-top: 1px;
+      min-width: 18px;
+      margin-top: 2px;
       accent-color: var(--accent);
       cursor: pointer;
     }
-    .consent-label strong { color: #b33a3a; font-weight: 700; }
-    .consent-label a {
+    .form-consent .consent-label strong { color: #b33a3a; font-weight: 700; }
+    .form-consent .consent-label a {
       color: var(--accent);
       text-decoration: underline;
       text-underline-offset: 2px;
