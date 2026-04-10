@@ -247,8 +247,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
 
   const renderNavItem = (item) => {
-    if (item.type === 'sublabel') {
-      return `<div class="mobile-nav-sublabel">${item.label}</div>`;
+    if (item.type === 'subgroup') {
+      const chevron = `<svg class="mobile-nav-chevron" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>`;
+      return `<div class="mobile-nav-subgroup">
+        <button class="mobile-nav-subgroup-btn" type="button" aria-expanded="false">
+          ${item.label}${chevron}
+        </button>
+        <div class="mobile-nav-subgroup-items">
+          <div class="mobile-nav-subgroup-inner">
+            ${item.items.map(renderNavItem).join('')}
+          </div>
+        </div>
+      </div>`;
     }
     const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
     if (!item.href || item.href === '#') {
@@ -269,10 +279,11 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}index.html#heritage`, label: '헤리티지' },
         { href: `${prefix}index.html#reviews`, label: '고객 후기' },
         { href: `${prefix}index.html#faq`, label: 'FAQ' },
-        { type: 'sublabel', label: '🧪 PNS Lab' },
-        { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
-        { href: `${prefix}menu.html`, label: '카페 메뉴' },
-        { href: `${prefix}game/`, label: '커피나무 키우기', badge: 'BETA' },
+        { type: 'subgroup', label: '🧪 PNS Lab', items: [
+          { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
+          { href: `${prefix}menu.html`, label: '카페 메뉴' },
+          { href: `${prefix}game/`, label: '커피나무 키우기', badge: 'BETA' },
+        ]},
       ]
     },
     {
@@ -317,13 +328,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     <nav class="mobile-nav-inner" aria-label="모바일 메뉴">
       ${menuGroups.map((item) => {
         if (item.type === 'group') {
-          const hasActive = item.items.some(child => {
-            if (!child.href || child.href === '#') return false;
-            const cp = new URL(child.href, window.location.href).pathname.replace(/\/$/, '/index.html');
-            return currentPath === cp;
-          });
-          return `<div class="mobile-nav-group${hasActive ? ' open' : ''}">
-            <button class="mobile-nav-group-btn" type="button" aria-expanded="${hasActive}">
+          return `<div class="mobile-nav-group">
+            <button class="mobile-nav-group-btn" type="button" aria-expanded="false">
               ${item.label}
               <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="4 6 8 10 12 6"/></svg>
             </button>
@@ -370,6 +376,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         group.classList.add('open');
         btn.setAttribute('aria-expanded', 'true');
       }
+    });
+  });
+
+  panel.querySelectorAll('.mobile-nav-subgroup-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const sg = btn.closest('.mobile-nav-subgroup');
+      const isOpen = sg.classList.contains('open');
+      sg.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', String(!isOpen));
     });
   });
 
