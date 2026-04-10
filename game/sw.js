@@ -2,7 +2,7 @@
 // Network-first for HTML/JS/CSS (always fresh on deploy),
 // cache-first for icons & manifest (static).
 // IMPORTANT: bump CACHE_VERSION whenever the cache strategy or asset list changes.
-const CACHE_VERSION = 'pns-coffee-tree-v3';
+const CACHE_VERSION = 'pns-coffee-tree-v4';
 const STATIC_ASSETS = [
   './',
   './index.html',

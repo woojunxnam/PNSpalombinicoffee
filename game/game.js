@@ -84,6 +84,11 @@ async function saveToFirestore(uid) {
       unlocked:        state.unlocked,
       claimedRewards:  state.claimedRewards,
       stats:           state.stats,
+      harvestRecords:  state.harvestRecords || [],
+      letters:         state.letters || [],
+      receivedLetterIds: state.receivedLetterIds || [],
+      lastLetterDeliveryDate: state.lastLetterDeliveryDate || 0,
+      farmLevel:       state.farmLevel || 1,
       lastSaveTime:    state.lastSaveTime,
       savedAt:         firebase.firestore.FieldValue.serverTimestamp(),
     };
@@ -118,6 +123,11 @@ async function loadFromFirestore(uid) {
         stats: { ...def.stats, ...(cloud.stats || {}) },
         unlocked: cloud.unlocked || def.unlocked,
         claimedRewards: cloud.claimedRewards || [],
+        harvestRecords: cloud.harvestRecords || [],
+        letters: cloud.letters || [],
+        receivedLetterIds: cloud.receivedLetterIds || [],
+        lastLetterDeliveryDate: cloud.lastLetterDeliveryDate || 0,
+        farmLevel: cloud.farmLevel || ((cloud.stats?.totalHarvests || 0) + 1),
       };
       state.stage = getStage(state.growthXp);
       saveState(); // localStorage 동기화
@@ -244,8 +254,18 @@ const C = Object.freeze({
     pot_terracotta_basic: { name: '기본 테라코타 화분', type: 'pot', icon: '🪴', desc: '시작 화분' },
     pot_cafe_brown:       { name: '카페 브라운 화분', type: 'pot', icon: '☕', desc: 'Stage 2 도달 시 해금' },
     pot_drip_pattern:     { name: '드립 패턴 화분', type: 'pot', icon: '💧', desc: 'Stage 3 도달 시 해금' },
+    pot_farm_master:      { name: '농장 마스터 화분', type: 'pot', icon: '🏆', desc: '농장 레벨 10 달성' },
     decor_spoon_small:    { name: '작은 스푼 장식', type: 'decor', icon: '🥄', desc: '물주기 5회 달성' },
     decor_bean_sack_mini: { name: '원두 자루 장식', type: 'decor', icon: '🫘', desc: '탭 30회 달성' },
+    // ── Phase G-2 — 계절 테마 장식 (확정 축적, 가챠 아님) ──
+    decor_cherry_blossom: { name: '벚꽃 가지', type: 'decor', season: 'spring', icon: '🌸', desc: '봄에 수확 1회 달성' },
+    decor_clover:         { name: '네잎 클로버', type: 'decor', season: 'spring', icon: '🍀', desc: '봄에 수확 3회 달성' },
+    decor_sunflower:      { name: '해바라기 화분', type: 'decor', season: 'summer', icon: '🌻', desc: '여름에 수확 1회 달성' },
+    decor_seashell:       { name: '조개 장식',     type: 'decor', season: 'summer', icon: '🐚', desc: '여름에 수확 3회 달성' },
+    decor_maple_leaf:     { name: '단풍 잎',       type: 'decor', season: 'autumn', icon: '🍁', desc: '가을에 수확 1회 달성' },
+    decor_acorn:          { name: '도토리',        type: 'decor', season: 'autumn', icon: '🌰', desc: '가을에 수확 3회 달성' },
+    decor_snowflake:      { name: '눈 결정',       type: 'decor', season: 'winter', icon: '❄️', desc: '겨울에 수확 1회 달성' },
+    decor_pine_cone:      { name: '솔방울',        type: 'decor', season: 'winter', icon: '🌲', desc: '겨울에 수확 3회 달성' },
   },
 
   // 해금 조건
@@ -253,8 +273,18 @@ const C = Object.freeze({
     pot_terracotta_basic: () => true,
     pot_cafe_brown:       (s) => s.stage >= 1,
     pot_drip_pattern:     (s) => s.stage >= 2,
+    pot_farm_master:      (s) => (s.farmLevel || 1) >= 10,
     decor_spoon_small:    (s) => s.stats.totalWaterings >= 5,
     decor_bean_sack_mini: (s) => s.stats.totalTaps >= 30,
+    // Phase G-2 — 계절 수확 횟수 기반 확정 해금
+    decor_cherry_blossom: (s) => (s.stats.seasonHarvests?.spring || 0) >= 1,
+    decor_clover:         (s) => (s.stats.seasonHarvests?.spring || 0) >= 3,
+    decor_sunflower:      (s) => (s.stats.seasonHarvests?.summer || 0) >= 1,
+    decor_seashell:       (s) => (s.stats.seasonHarvests?.summer || 0) >= 3,
+    decor_maple_leaf:     (s) => (s.stats.seasonHarvests?.autumn || 0) >= 1,
+    decor_acorn:          (s) => (s.stats.seasonHarvests?.autumn || 0) >= 3,
+    decor_snowflake:      (s) => (s.stats.seasonHarvests?.winter || 0) >= 1,
+    decor_pine_cone:      (s) => (s.stats.seasonHarvests?.winter || 0) >= 3,
   },
 
   // 보상 코드 정의
@@ -263,6 +293,10 @@ const C = Object.freeze({
     BEAN2025:   { name: '원두 보상', beans: 20, xp: 10 },
     GELATO2025: { name: '젤라또 보상', water: 50, beans: 15, unlock: 'decor_spoon_small' },
     PNSCOFFEE:  { name: 'PNS 웰컴 보상', water: 100, beans: 5 },
+    // Phase G-1 — 펫 편지 동봉 코드
+    MORNING5:   { name: '아침 햇살 선물', water: 50, beans: 8 },
+    LETTER01:   { name: '낮잠 속 종이', beans: 15, xp: 5 },
+    RAINYDAY:   { name: '비 그친 자리', water: 40, beans: 5 },
   },
 
   SAVE_KEY: 'pns_coffee_tree_save',
@@ -311,6 +345,8 @@ function defaultState() {
       totalBeansEarned: 0,
       firstFlowerTime: 0, // 첫 꽃 마일스톤 (Stage 3 도달 시각)
       firstCherryTime: 0, // 첫 체리 마일스톤 (Stage 4 도달 시각)
+      // Phase G-2 — 계절별 수확 누적 (해금 조건용)
+      seasonHarvests: { spring: 0, summer: 0, autumn: 0, winter: 0 },
     },
     // Phase E/F-2 — 펫 시스템 (cozy, 배틀/가챠 금지)
     pets: {
@@ -321,6 +357,18 @@ function defaultState() {
     },
     // Phase F-2 — 비 오는 날 누적 방문 (에스프레소 해금용, 날짜 문자열 배열)
     rainyVisitDates: [],
+    // Phase F-3 — 기록장 (수확 일지)
+    // 각 항목: { ts, gradeKey, stars, label, weather, hr, season, golden, cert, pets:[id], harvestN }
+    // 최신순으로 push, 최대 100개만 유지 (오래된 것부터 폐기)
+    harvestRecords: [],
+    // Phase G-1 — 펫 편지 시스템
+    // letters 항목: { id, ts, petId, theme, title, body, rewardCode?, read, codeRedeemed? }
+    // 최대 30개 보관 (오래된 것부터 폐기)
+    letters: [],
+    lastLetterDeliveryDate: 0,  // YYYYMMDD 정수 — 쿨다운
+    receivedLetterIds: [],      // 이미 받은 템플릿 id (중복 방지)
+    // Phase H — 농장 레벨 (수확마다 +1, 영구 보너스, 가챠 아님)
+    farmLevel: 1,
   };
 }
 
@@ -346,11 +394,16 @@ function loadState() {
           mergedPets[k] = { ...def.pets[k], ...(parsed.pets[k] || {}) };
         }
       }
-      return {
+      const merged = {
         ...def, ...parsed,
         stats: { ...def.stats, ...parsed.stats },
         pets: mergedPets,
       };
+      // Phase H — farmLevel 마이그레이션 (기존 저장에 없으면 누적 수확 + 1로 환산)
+      if (merged.farmLevel == null) {
+        merged.farmLevel = (merged.stats?.totalHarvests || 0) + 1;
+      }
+      return merged;
     }
   } catch (e) { /* corrupt data */ }
   return null;
@@ -463,6 +516,84 @@ function buildHarvestPhrases() {
   return phrases.slice(0, 4);
 }
 
+// Phase G-2 — 계절 헬퍼 (로컬 시각 기준, 시뮬레이션 금지)
+const SEASON_INFO = {
+  spring: { name: '봄',   icon: '🌸', months: '3~5월'  },
+  summer: { name: '여름', icon: '🌻', months: '6~8월'  },
+  autumn: { name: '가을', icon: '🍁', months: '9~11월' },
+  winter: { name: '겨울', icon: '❄️', months: '12~2월' },
+};
+function getCurrentSeason() {
+  const month = new Date().getMonth() + 1; // 1~12
+  if (month >= 3 && month <= 5)  return 'spring';
+  if (month >= 6 && month <= 8)  return 'summer';
+  if (month >= 9 && month <= 11) return 'autumn';
+  return 'winter';
+}
+
+// ── Phase H — 농장 레벨 (영구 보너스, 가챠 아님, 순수 확정 축적) ──
+// 수확 1회 = farmLevel +1 (시작 Lv 1)
+// 보너스는 누적 적용 (Lv 7이면 Lv 2/3/5/7 보너스 모두 활성)
+const FARM_LEVEL_BONUSES = [
+  { level: 2,  key: 'waterRefill', label: '물주기 +5', desc: '물주기로 채우는 양 +5' },
+  { level: 3,  key: 'waterMax',    label: 'Water 최대 +10', desc: 'Water 최대치 +10' },
+  { level: 5,  key: 'autoXp',      label: '자동 성장 +0.2', desc: '자동 성장 XP/분 +0.2' },
+  { level: 7,  key: 'offlineHr',   label: '오프라인 +2시간', desc: '오프라인 성장 상한 +2시간' },
+  { level: 10, key: 'pot',         label: '🏆 농장 마스터 화분', desc: '특별 화분 해금' },
+];
+function getFarmBonuses(level) {
+  const lv = level || 1;
+  return {
+    waterRefillBonus:  lv >= 2  ? 5   : 0,
+    waterMaxBonus:     lv >= 3  ? 10  : 0,
+    autoXpBonus:       lv >= 5  ? 0.2 : 0,
+    offlineHoursBonus: lv >= 7  ? 2   : 0,
+    pot10Unlocked:     lv >= 10,
+  };
+}
+function effectiveWaterMax()      { return C.WATER_MAX     + getFarmBonuses(state?.farmLevel).waterMaxBonus; }
+function effectiveWaterRefill()   { return C.WATER_REFILL  + getFarmBonuses(state?.farmLevel).waterRefillBonus; }
+function effectiveAutoXpPerMin()  { return C.AUTO_XP_PER_MIN + getFarmBonuses(state?.farmLevel).autoXpBonus; }
+function effectiveOfflineHours(savedState) {
+  const americanoBonus = (savedState?.pets?.americano?.unlocked ? 1 : 0);
+  const farmBonus = getFarmBonuses(savedState?.farmLevel).offlineHoursBonus;
+  return C.OFFLINE_MAX_HOURS + americanoBonus + farmBonus;
+}
+
+// Phase F-3 — 기록장 항목 push
+// 작은 객체로 직렬화 (이미지 금지, 짧은 키만)
+const HARVEST_RECORDS_MAX = 100;
+function pushHarvestRecord(grade, score) {
+  if (!state.harvestRecords) state.harvestRecords = [];
+  // 어떤 펫이 그 순간 해금되어 있었는지 (최대 4종)
+  const petsAtMoment = [];
+  if (state.pets) {
+    for (const id of ['crema', 'cappu', 'americano', 'espresso']) {
+      if (state.pets[id]?.unlocked) petsAtMoment.push(id);
+    }
+  }
+  const hr = new Date().getHours();
+  const season = getCurrentSeason();
+  const rec = {
+    ts: Date.now(),
+    gradeKey: grade.key,
+    stars: grade.stars,
+    label: grade.label,
+    weather: state.todayWeather || 'sunny',
+    hr,
+    season,
+    golden: grade.golden,
+    cert: grade.cert,
+    pets: petsAtMoment,
+    harvestN: state.stats.totalHarvests,
+  };
+  state.harvestRecords.push(rec);
+  // 상한 유지 — 오래된 것부터 폐기
+  if (state.harvestRecords.length > HARVEST_RECORDS_MAX) {
+    state.harvestRecords = state.harvestRecords.slice(-HARVEST_RECORDS_MAX);
+  }
+}
+
 function doHarvest() {
   if (!canHarvest()) return null;
 
@@ -479,7 +610,34 @@ function doHarvest() {
   state.stats.totalHarvests++;
   state.lastHarvestQuality = score;
 
+  // Phase G-2 — 계절별 수확 누적 (해금 조건용)
+  if (!state.stats.seasonHarvests) {
+    state.stats.seasonHarvests = { spring: 0, summer: 0, autumn: 0, winter: 0 };
+  }
+  const _curSeason = getCurrentSeason();
+  state.stats.seasonHarvests[_curSeason] = (state.stats.seasonHarvests[_curSeason] || 0) + 1;
+
+  // Phase H — 농장 레벨 +1 + 새 보너스 알림
+  const _prevLevel = state.farmLevel || 1;
+  state.farmLevel = _prevLevel + 1;
+  const _newBonus = FARM_LEVEL_BONUSES.find(b => b.level === state.farmLevel);
+  if (_newBonus) {
+    showNotice({
+      icon: '🌟',
+      title: '농장 레벨 ' + state.farmLevel + ' 달성!',
+      body: '새로운 영구 보너스가 열렸어요.<br><strong>' + _newBonus.label + '</strong><br>' +
+            '<span style="color:var(--text-dim);font-size:0.85em;">' + _newBonus.desc + '</span>',
+    });
+    // Lv 10 — 화분 해금 (UNLOCK_CONDITIONS 통해 처리)
+    if (state.farmLevel >= 10) checkUnlocks();
+  }
+
+  // Phase F-3 — 기록장에 한 줄 추가 (최신순, 100개 상한)
+  pushHarvestRecord(grade, score);
+
   checkPetUnlocks(); // 첫 수확 → 카푸치노(고양이) 해금 체크
+  // Phase G-2 — 계절 장식 신규 해금 체크 (도감만, 자동 장착 X)
+  checkSeasonalUnlocks();
   playSound('harvest');
 
   // Stage 리셋 + Stage 4 시계 초기화
@@ -506,6 +664,34 @@ function checkUnlocks() {
     }
   }
   return newUnlock;
+}
+
+// ── Phase G-2: 계절 장식 해금 체크 (수확 직후 호출) ──
+// 새로 해금된 계절 장식이 있으면 도감에 추가하고 알림 1회 표시
+function checkSeasonalUnlocks() {
+  const newlyUnlocked = [];
+  for (const [id, item] of Object.entries(C.ITEMS)) {
+    if (!item.season) continue;          // 계절 장식만
+    if (state.unlocked.includes(id)) continue;
+    const cond = C.UNLOCK_CONDITIONS[id];
+    if (cond && cond(state)) {
+      state.unlocked.push(id);
+      newlyUnlocked.push({ id, item });
+    }
+  }
+  if (newlyUnlocked.length === 0) return;
+  // 해금 알림 (showNotice 큐로) — 한 번에 최대 1개씩 표시
+  newlyUnlocked.forEach(({ item }) => {
+    const seasonMeta = SEASON_INFO[item.season];
+    showNotice({
+      icon: seasonMeta?.icon || '🎁',
+      title: (seasonMeta?.name || '계절') + ' 장식이 새로 도착했어요',
+      body: '<strong>' + item.icon + ' ' + item.name + '</strong>이(가) 컬렉션에 추가됐어요.<br>' +
+            '<span style="color:var(--text-dim);font-size:0.85em;">컬렉션에서 장착할 수 있어요.</span>',
+    });
+  });
+  saveState();
+  cloudSaveNow();
 }
 
 // ── Stage helpers ───────────────────────────
@@ -608,6 +794,191 @@ const FRIENDSHIP_MESSAGES = {
   ],
 };
 const MAX_FRIENDSHIP = 5;
+
+// ── Phase G-1: 펫 편지 시스템 ──────────────
+// 펫이 가끔 편지를 전달. 브랜드 이야기 / 다음 펫 힌트 / 보상 코드.
+// 이미지 금지, 텍스트만. cozy 톤, 짧고 따뜻하게.
+const LETTER_POOL = {
+  crema: [
+    { id: 'crema_001', theme: 'cozy', title: '오늘의 창가 풍경',
+      body: '창틀에 앉아 있으면 햇살이 어깨로 흘러내려요.\n당신의 커피나무가 가장 잘 보이는 자리예요.\n오늘도 잘 자라고 있어요.\n\n— 크레마' },
+    { id: 'crema_002', theme: 'brand', title: '커피 향이 처음 났을 때',
+      body: '예전에는 사람들 손에서 커피 향이 나는 게 신기했어요.\n지금은 알아요 — 작은 컵 안에 산 하나가 들어있다는 걸요.\n팔롬비니가 들려줬어요.\n\n— 크레마' },
+    { id: 'crema_003', theme: 'hint', title: '창밖에서 본 친구',
+      body: '며칠 전 창문 밖 나뭇가지에 꼬리가 통통한 친구가 앉아 있었어요.\n도토리 같은 걸 굴리고 있던데… 다음에 꼭 만나봐요.\n\n— 크레마' },
+    { id: 'crema_004', theme: 'cozy', title: '아침이 가장 좋아요',
+      body: '아침 6시쯤이 가장 좋아요.\n햇살이 옆으로 길어서 잎사귀 그림자가 길게 나거든요.\n그때 수확한 체리가 가장 향기로워요.\n\n— 크레마' },
+    { id: 'crema_005', theme: 'brand', title: '드립백 이야기',
+      body: '한 번은 누가 작은 종이주머니에 커피를 담아 컵 위에 걸어두는 걸 봤어요.\n물 한 잔으로 향이 우러나는 게 마법 같았어요.\n팔롬비니에서 그걸 만든다고 들었어요.\n\n— 크레마' },
+    { id: 'crema_006', theme: 'reward', title: '작은 선물을 가져왔어요',
+      body: '오늘은 부리에 작은 종이를 물고 왔어요.\n안에 글자가 적혀 있었는데, 당신께 도움이 될 것 같아서요.\n\n암호: MORNING5\n\n— 크레마',
+      rewardCode: 'MORNING5' },
+  ],
+  cappu: [
+    { id: 'cappu_001', theme: 'cozy', title: '오늘은 그냥 잤어요',
+      body: '딱히 할 말은 없어요.\n햇볕이 좋길래 종일 누워 있었어요.\n가끔은 그래도 되잖아요.\n\n— 카푸치노' },
+    { id: 'cappu_002', theme: 'brand', title: '에스프레소 한 잔의 무게',
+      body: '사람들은 작은 잔이라고 무시하지만, 저는 알아요.\n에스프레소 한 잔에는 7g의 원두가 압축돼 있어요.\n작다고 약하지 않다는 뜻이죠. 저처럼.\n\n— 카푸치노' },
+    { id: 'cappu_003', theme: 'hint', title: '비 오는 날을 좋아하는 누군가',
+      body: '저는 비를 싫어하지만, 들리는 소문으로는 비를 좋아하는 친구가 있대요.\n화분 옆을 좋아한다던가…\n만나보면 재밌을 거예요.\n\n— 카푸치노' },
+    { id: 'cappu_004', theme: 'cozy', title: '당신 손이 따뜻해요',
+      body: '오늘 쓰다듬어 주신 손이 유난히 따뜻했어요.\n아무한테나 이런 말 안 해요.\n그냥 알아두세요.\n\n— 카푸치노' },
+    { id: 'cappu_005', theme: 'brand', title: '카푸치노라는 이름',
+      body: '제 이름이 왜 카푸치노인지 아세요?\n카푸치노 위 우유 거품이 제 등 무늬랑 닮았대요.\n팔롬비니 사장님이 지어줬어요.\n\n— 카푸치노' },
+    { id: 'cappu_006', theme: 'reward', title: '낮잠 중에 발견한 것',
+      body: '테이블 위에서 자다가 발 밑에 종이가 끼어 있는 걸 발견했어요.\n글씨가 있길래 가져왔어요.\n\n암호: LETTER01\n\n— 카푸치노',
+      rewardCode: 'LETTER01' },
+  ],
+  americano: [
+    { id: 'americano_001', theme: 'cozy', title: '도토리 일곱 개를 모았어요!',
+      body: '오늘 도토리 일곱 개를 모았어요. 일곱 개요!\n너무 많아서 어디 둘지 모르겠어요.\n창틀 구석에 숨겨놨으니 비밀이에요.\n\n— 아메리카노' },
+    { id: 'americano_002', theme: 'brand', title: '아메리카노가 뭐예요?',
+      body: '제 이름이 아메리카노라길래 사람들이 마시는 그 까만 물을 봤어요.\n에스프레소에 뜨거운 물을 넣은 거래요.\n단순한데 깊대요. 저랑 닮았다는 거 같은데, 진짠가요?\n\n— 아메리카노' },
+    { id: 'americano_003', theme: 'hint', title: '창가의 작은 새',
+      body: '창문 안쪽에 작은 새가 있더라고요!\n너무 예뻐서 인사하고 싶었는데 부끄러워서 그냥 도토리만 굴렸어요.\n다음엔 꼭 인사할게요.\n\n— 아메리카노' },
+    { id: 'americano_004', theme: 'cozy', title: '당신이 안 보일 때',
+      body: '당신이 안 보일 때는 제가 나무 옆에서 망보고 있어요.\n나무는 잘 자라고 있으니 걱정 마세요.\n가끔 잎을 만져보긴 했지만 한 입도 안 먹었어요. 진짜예요.\n\n— 아메리카노' },
+    { id: 'americano_005', theme: 'brand', title: '커피나무가 처음 자랄 때',
+      body: '당신 나무가 처음 새싹이었을 때 기억나세요?\n저도 새싹 시절이 있었어요. 그땐 도토리도 못 까먹었어요.\n팔롬비니는 한 알 한 알이 얼마나 오래 걸리는지 안다고 하더라고요.\n\n— 아메리카노' },
+    { id: 'americano_006', theme: 'reward', title: '도토리 사이에 끼어 있던 종이',
+      body: '도토리 무더기에서 이상한 종이를 발견했어요!\n글씨가 적혀 있는데 저는 못 읽으니까 당신께 드릴게요.\n\n암호: BEAN2025\n\n— 아메리카노',
+      rewardCode: 'BEAN2025' },
+  ],
+  espresso: [
+    { id: 'espresso_001', theme: 'cozy', title: '...',
+      body: '말은 잘 못 하지만, 오늘도 화분 옆에서 당신을 기다렸어요.\n\n그게 다예요.\n그게 좋아요.\n\n— 에스프레소' },
+    { id: 'espresso_002', theme: 'brand', title: '진한 한 모금',
+      body: '에스프레소는 30ml밖에 안 돼요.\n짧지만 그 안에 모든 게 있어요. 향, 산미, 단맛, 쓴맛 — 모두 한 번에.\n저는 그게 좋아요. 짧은 게 더 진할 수 있다는 것이.\n\n— 에스프레소' },
+    { id: 'espresso_003', theme: 'hint', title: '아직 못 만난 친구들',
+      body: '저는 처음에 비를 기다리며 누군가를 만났어요.\n당신도 누군가를 기다리고 있나요?\n시간을 들이면 만나게 될 거예요. 저처럼.\n\n— 에스프레소' },
+    { id: 'espresso_004', theme: 'cozy', title: '비 오는 날',
+      body: '오늘 비가 왔어요.\n빗방울 소리가 화분을 두드리는 소리랑 닮아있었어요.\n좋은 날이었어요.\n\n— 에스프레소' },
+    { id: 'espresso_005', theme: 'brand', title: '느리게 내리는 것들',
+      body: '드립 커피는 몇 분이나 걸려요.\n빨리 우려내려고 하면 향이 도망가요.\n어떤 건 느려야만 깊어져요. 커피도, 친구도, 나무도.\n\n— 에스프레소' },
+    { id: 'espresso_006', theme: 'reward', title: '비 그친 자리에 남은 것',
+      body: '비가 그친 자리에 작은 종이가 떠있었어요.\n글씨가 번지지 않아서 가져왔어요.\n\n암호: RAINYDAY\n\n— 에스프레소',
+      rewardCode: 'RAINYDAY' },
+  ],
+};
+const LETTERS_MAX = 30;
+const LETTER_COOLDOWN_DAYS = 2;
+
+function unreadLetterCount() {
+  if (!state.letters) return 0;
+  return state.letters.filter(l => !l.read).length;
+}
+
+function _ymdToInt(d) {
+  const y = d.getFullYear();
+  const m = d.getMonth() + 1;
+  const day = d.getDate();
+  return y * 10000 + m * 100 + day;
+}
+function _daysBetweenYmd(a, b) {
+  // 정확한 일수 계산을 위해 Date로 변환
+  const ay = Math.floor(a / 10000), am = Math.floor((a % 10000) / 100), ad = a % 100;
+  const by = Math.floor(b / 10000), bm = Math.floor((b % 10000) / 100), bd = b % 100;
+  const da = new Date(ay, am - 1, ad);
+  const db = new Date(by, bm - 1, bd);
+  return Math.round((db - da) / 86400000);
+}
+
+// 부팅 시 1회 호출. 쿨다운 + 해금된 펫이 있으면 편지 1통 전달.
+function tryDeliverLetter() {
+  if (!state.letters) state.letters = [];
+  if (!state.receivedLetterIds) state.receivedLetterIds = [];
+
+  const today = _ymdToInt(new Date());
+  const last = state.lastLetterDeliveryDate || 0;
+  if (last > 0) {
+    const days = _daysBetweenYmd(last, today);
+    if (days < LETTER_COOLDOWN_DAYS) return null;
+  }
+
+  // 해금된 펫 목록
+  const unlockedPets = Object.keys(state.pets || {}).filter(id => state.pets[id]?.unlocked);
+  if (unlockedPets.length === 0) return null;
+
+  // 후보: 받지 않은 템플릿
+  const candidates = [];
+  unlockedPets.forEach(petId => {
+    const pool = LETTER_POOL[petId] || [];
+    pool.forEach(tpl => {
+      if (!state.receivedLetterIds.includes(tpl.id)) {
+        candidates.push({ petId, tpl });
+      }
+    });
+  });
+  if (candidates.length === 0) return null; // 받을 게 없음
+
+  // 랜덤 선택
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  const newLetter = {
+    id: pick.tpl.id,
+    ts: Date.now(),
+    petId: pick.petId,
+    theme: pick.tpl.theme,
+    title: pick.tpl.title,
+    body: pick.tpl.body,
+    rewardCode: pick.tpl.rewardCode || null,
+    read: false,
+    codeRedeemed: false,
+  };
+  state.letters.push(newLetter);
+  state.receivedLetterIds.push(pick.tpl.id);
+  state.lastLetterDeliveryDate = today;
+  // 상한 유지
+  if (state.letters.length > LETTERS_MAX) {
+    state.letters = state.letters.slice(-LETTERS_MAX);
+  }
+  saveState();
+  cloudSaveNow();
+
+  // 도착 알림 (showNotice 큐로)
+  const petMeta = PETS[pick.petId];
+  showNotice({
+    icon: '✉️',
+    title: (petMeta?.name || '친구') + '에게서 편지가 왔어요',
+    body: '<strong>' + newLetter.title + '</strong><br><span style="color:var(--text-dim);font-size:0.8em;">설정 → 편지함에서 읽어보세요.</span>',
+  });
+  updateLetterBadge();
+  return newLetter;
+}
+
+function markLetterRead(letterId) {
+  const l = (state.letters || []).find(x => x.id === letterId);
+  if (l && !l.read) {
+    l.read = true;
+    saveState();
+    updateLetterBadge();
+  }
+}
+
+function updateLetterBadge() {
+  const count = unreadLetterCount();
+  // 설정 버튼 ⚙️ 위 빨간 점
+  const settingsBtn = $('btnSettings');
+  if (settingsBtn) {
+    let badge = settingsBtn.querySelector('.unread-badge');
+    if (count > 0) {
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'unread-badge';
+        settingsBtn.appendChild(badge);
+      }
+      badge.textContent = count > 9 ? '9+' : String(count);
+    } else if (badge) {
+      badge.remove();
+    }
+  }
+  // 설정 메뉴 안 편지함 버튼 라벨
+  const lettersBtn = $('btnLetters');
+  if (lettersBtn) {
+    lettersBtn.textContent = count > 0
+      ? '📬 편지함 (' + count + '통 안 읽음)'
+      : '📭 편지함';
+  }
+}
 
 function checkPetUnlocks() {
   let changed = false;
@@ -712,9 +1083,8 @@ function processOffline(savedState) {
 
   const elapsedSec = elapsed / 1000;
   const elapsedMin = elapsed / 60000;
-  // Phase F-2: 아메리카노(다람쥐) 능력 — 오프라인 상한 +1시간
-  const americanoBonus = (savedState.pets?.americano?.unlocked ? 1 : 0);
-  const maxOfflineSec = (C.OFFLINE_MAX_HOURS + americanoBonus) * 3600;
+  // Phase F-2: 아메리카노 +1h, Phase H: 농장 레벨 7+ +2h (effectiveOfflineHours가 모두 합산)
+  const maxOfflineSec = effectiveOfflineHours(savedState) * 3600;
 
   // Water 감소: 20초당 -1, 상한 -35
   const waterDrainRaw = Math.floor(elapsedSec / C.WATER_DRAIN_SEC);
@@ -728,7 +1098,9 @@ function processOffline(savedState) {
   const cappedElapsedSec = Math.min(elapsedSec, maxOfflineSec);
   const growthSec = Math.min(cappedElapsedSec, secUntilDry);
   const growthMin = growthSec / 60;
-  const xpGained = Math.floor(growthMin * C.AUTO_XP_PER_MIN * 10) / 10;
+  // Phase H: savedState 기준 effective auto XP (보너스 포함)
+  const autoXpRate = C.AUTO_XP_PER_MIN + getFarmBonuses(savedState.farmLevel).autoXpBonus;
+  const xpGained = Math.floor(growthMin * autoXpRate * 10) / 10;
 
   // 적용
   savedState.water = newWater;
@@ -910,6 +1282,32 @@ function renderStatsPanel() {
     '<div class="stats-row-wide"><span class="stats-card-label">⏱ 총 플레이 기간</span><span class="stats-card-value">' + playedStr + '</span></div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">🔥 연속 출석</span><span class="stats-card-value">' + (state.dailyStreak || 0) + '일</span></div>';
 
+  // Phase H — 농장 레벨 카드 (영구 보너스 가시화)
+  const lv = state.farmLevel || 1;
+  const nextBonus = FARM_LEVEL_BONUSES.find(b => b.level > lv);
+  let farmHtml = '<div class="stats-farm">';
+  farmHtml += '<div class="stats-farm-header">';
+  farmHtml += '<span class="stats-farm-icon">🏡</span>';
+  farmHtml += '<div class="stats-farm-info">';
+  farmHtml += '<div class="stats-farm-title">농장 레벨 <span class="stats-farm-lv">Lv ' + lv + '</span></div>';
+  if (nextBonus) {
+    const remain = nextBonus.level - lv;
+    farmHtml += '<div class="stats-farm-next">다음: Lv ' + nextBonus.level + ' — ' + nextBonus.label + ' (수확 ' + remain + '회)</div>';
+  } else {
+    farmHtml += '<div class="stats-farm-next">모든 영구 보너스를 획득했어요 ✨</div>';
+  }
+  farmHtml += '</div></div>';
+  farmHtml += '<div class="stats-farm-bonus-list">';
+  FARM_LEVEL_BONUSES.forEach(b => {
+    const earned = lv >= b.level;
+    farmHtml += '<div class="stats-farm-bonus' + (earned ? ' earned' : '') + '">';
+    farmHtml += '<span class="stats-farm-bonus-lv">Lv ' + b.level + '</span>';
+    farmHtml += '<span class="stats-farm-bonus-label">' + (earned ? '✓ ' : '🔒 ') + b.label + '</span>';
+    farmHtml += '</div>';
+  });
+  farmHtml += '</div></div>';
+  body.innerHTML += farmHtml;
+
   // Phase F-1: 원두 증서 카드 (특별 수확에서만 드롭, 카페 쿠폰 전환은 Phase I)
   const certs = state.coffeeCerts || 0;
   const certsEarned = state.coffeeCertsEarned || 0;
@@ -959,6 +1357,212 @@ function renderStatsPanel() {
   }
 }
 
+// ── Phase F-3: 수확 기록장 ────────────────────
+const WEATHER_EMOJI = { sunny: '☀️', cloudy: '☁️', rainy: '🌧' };
+const SEASON_EMOJI = { spring: '🌸', summer: '☀️', autumn: '🍁', winter: '❄️' };
+const PET_EMOJI = { crema: '🐦', cappu: '🐱', americano: '🐿', espresso: '🐸' };
+
+function _formatRecordDate(ts) {
+  const d = new Date(ts);
+  const M = d.getMonth() + 1;
+  const D = d.getDate();
+  return M + '월 ' + D + '일';
+}
+function _formatRecordTime(ts) {
+  const d = new Date(ts);
+  const h = d.getHours();
+  const m = d.getMinutes();
+  const ap = h < 12 ? '오전' : '오후';
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return ap + ' ' + h12 + ':' + (m < 10 ? '0' + m : m);
+}
+function _dateKey(ts) {
+  const d = new Date(ts);
+  return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+}
+function _dateLabel(ts) {
+  const d = new Date(ts);
+  const today = new Date();
+  const yest = new Date(); yest.setDate(today.getDate() - 1);
+  if (_dateKey(ts) === _dateKey(today.getTime())) return '오늘';
+  if (_dateKey(ts) === _dateKey(yest.getTime())) return '어제';
+  return _formatRecordDate(ts);
+}
+
+function renderRecordPanel() {
+  const body = $('recordBody');
+  const records = (state.harvestRecords || []).slice().reverse(); // 최신순
+  if (records.length === 0) {
+    body.innerHTML =
+      '<div class="record-empty">' +
+        '<div class="record-empty-icon">📔</div>' +
+        '<div class="record-empty-title">아직 기록이 없어요</div>' +
+        '<div class="record-empty-sub">첫 수확을 끝내면 이곳에 한 줄씩 쌓여요.</div>' +
+      '</div>';
+    return;
+  }
+  // 날짜로 묶기
+  let html = '';
+  let lastDateKey = null;
+  records.forEach((r) => {
+    const dk = _dateKey(r.ts);
+    if (dk !== lastDateKey) {
+      lastDateKey = dk;
+      html += '<div class="record-date-header">' + _dateLabel(r.ts) + '</div>';
+    }
+    const isSpecial = r.gradeKey === 'special';
+    const stars = '★'.repeat(r.stars || 0) + '☆'.repeat(4 - (r.stars || 0));
+    const weather = WEATHER_EMOJI[r.weather] || '☀️';
+    const season = SEASON_EMOJI[r.season] || '';
+    const petIcons = (r.pets || []).map(id => PET_EMOJI[id] || '').join('');
+    html +=
+      '<div class="record-item record-' + (r.gradeKey || 'plain') + '">' +
+        '<div class="record-row-top">' +
+          '<span class="record-stars">' + stars + '</span>' +
+          '<span class="record-label">' + (r.label || '수확') + '</span>' +
+          (isSpecial ? '<span class="record-badge">🏅 증서</span>' : '') +
+        '</div>' +
+        '<div class="record-row-mid">' +
+          '<span class="record-time">' + _formatRecordTime(r.ts) + '</span>' +
+          '<span class="record-meta">' + weather + ' ' + season + '</span>' +
+          (petIcons ? '<span class="record-pets">' + petIcons + '</span>' : '') +
+        '</div>' +
+        '<div class="record-row-bot">' +
+          '<span class="record-reward">✨ ×' + (r.golden || 1) + '</span>' +
+          '<span class="record-num">#' + (r.harvestN || '') + '번째 수확</span>' +
+        '</div>' +
+      '</div>';
+  });
+  // 푸터 — 기록 상한 안내
+  if (records.length >= HARVEST_RECORDS_MAX) {
+    html += '<div class="record-footer">최근 ' + HARVEST_RECORDS_MAX + '개의 기록만 보관해요.</div>';
+  } else {
+    html += '<div class="record-footer">' + records.length + '개의 수확이 기록됐어요.</div>';
+  }
+  body.innerHTML = html;
+}
+
+// ── Phase G-1: 편지함 렌더 ────────────────────
+function renderLetterPanel() {
+  const body = $('letterBody');
+  const letters = (state.letters || []).slice().reverse(); // 최신순
+  if (letters.length === 0) {
+    body.innerHTML =
+      '<div class="letter-empty">' +
+        '<div class="letter-empty-icon">📭</div>' +
+        '<div class="letter-empty-title">아직 편지가 없어요</div>' +
+        '<div class="letter-empty-sub">해금된 친구가 가끔씩 편지를 가져다 줘요.<br>며칠에 한 번씩 들러보세요.</div>' +
+      '</div>';
+    return;
+  }
+  let html = '';
+  letters.forEach((l) => {
+    const petMeta = PETS[l.petId];
+    const petIcon = petMeta?.icon || '✉️';
+    const petName = petMeta?.name || '친구';
+    const dateLabel = _dateLabel(l.ts);
+    const time = _formatRecordTime(l.ts);
+    const isReward = !!l.rewardCode;
+    const isUnread = !l.read;
+    html +=
+      '<div class="letter-card' + (isUnread ? ' letter-unread' : '') + (isReward ? ' letter-reward' : '') +
+      '" data-letter-id="' + l.id + '">' +
+        '<div class="letter-icon-col">' +
+          '<div class="letter-pet-icon">' + petIcon + '</div>' +
+          (isUnread ? '<div class="letter-new-dot">●</div>' : '') +
+        '</div>' +
+        '<div class="letter-content-col">' +
+          '<div class="letter-title">' + l.title + '</div>' +
+          '<div class="letter-meta">' + petName + ' · ' + dateLabel + ' ' + time + '</div>' +
+          (isReward ? '<div class="letter-badge-row"><span class="letter-gift-badge">🎁 선물 동봉</span></div>' : '') +
+        '</div>' +
+      '</div>';
+  });
+  body.innerHTML = html;
+
+  // 카드 클릭 → 상세
+  body.querySelectorAll('.letter-card').forEach((card) => {
+    card.addEventListener('click', () => {
+      const lid = card.dataset.letterId;
+      showLetterDetail(lid);
+    });
+  });
+}
+
+function showLetterDetail(letterId) {
+  const l = (state.letters || []).find(x => x.id === letterId);
+  if (!l) return;
+  // 읽음 처리
+  markLetterRead(letterId);
+
+  const petMeta = PETS[l.petId];
+  const petIcon = petMeta?.icon || '✉️';
+  const petName = petMeta?.name || '친구';
+  const dateLabel = _dateLabel(l.ts);
+  const time = _formatRecordTime(l.ts);
+
+  const body = $('letterDetailBody');
+  let html = '';
+  html += '<div class="letter-detail-header">';
+  html += '<div class="letter-detail-icon">' + petIcon + '</div>';
+  html += '<div class="letter-detail-from">' + petName + '에게서</div>';
+  html += '<div class="letter-detail-date">' + dateLabel + ' ' + time + '</div>';
+  html += '</div>';
+  html += '<div class="letter-detail-title">' + l.title + '</div>';
+  // 본문 — \n\n 단락 구분, \n 줄바꿈
+  const paragraphs = l.body.split('\n\n');
+  html += '<div class="letter-detail-body">';
+  paragraphs.forEach(p => {
+    const lines = p.split('\n').map(line => line.trim()).filter(x => x).join('<br>');
+    html += '<p>' + lines + '</p>';
+  });
+  html += '</div>';
+
+  // 보상 코드 동봉?
+  if (l.rewardCode) {
+    const alreadyRedeemed = state.claimedRewards?.includes(l.rewardCode.toUpperCase());
+    html += '<div class="letter-reward-box">';
+    html += '<div class="letter-reward-label">🎁 동봉된 보상 코드</div>';
+    html += '<div class="letter-reward-code">' + l.rewardCode + '</div>';
+    if (alreadyRedeemed) {
+      html += '<div class="letter-reward-redeemed">✓ 이미 사용한 코드예요</div>';
+    } else {
+      html += '<button class="popup-btn letter-reward-btn" id="letterRedeemBtn" data-code="' + l.rewardCode + '">바로 사용하기</button>';
+    }
+    html += '</div>';
+  }
+
+  body.innerHTML = html;
+  showOverlay('letterDetailPopup');
+
+  // 바로 사용하기 핸들러
+  const redeemBtn = $('letterRedeemBtn');
+  if (redeemBtn) {
+    redeemBtn.addEventListener('click', () => {
+      const code = redeemBtn.dataset.code;
+      const result = grantReward(code);
+      if (result.success) {
+        l.codeRedeemed = true;
+        saveState();
+        // 결과 팝업 (기존 reward result 시스템 재사용)
+        const detailsHtml = (result.details || []).map(d => '<div>' + d + '</div>').join('');
+        $('rewardResultBody').innerHTML =
+          '<div style="text-align:center;font-weight:700;margin-bottom:8px;">' + result.msg + '</div>' +
+          detailsHtml;
+        showOverlay('rewardResultPopup');
+        // 편지 카드 다시 렌더
+        renderLetterPanel();
+        // 디테일 다시 렌더 (이미 사용함 표시)
+        showLetterDetail(letterId);
+      } else {
+        $('rewardResultBody').innerHTML =
+          '<div style="text-align:center;color:#e88;">' + result.msg + '</div>';
+        showOverlay('rewardResultPopup');
+      }
+    });
+  }
+}
+
 // ── Loading screen ──────────────────────────
 function setLoadingProgress(pct, tip) {
   const fill = $('loadingBarFill');
@@ -990,7 +1594,7 @@ function renderInventoryPanel() {
   html += '<div class="inv-resources">';
   html += '<div class="inv-resource"><span class="inv-resource-icon">☕</span><div class="inv-resource-info"><div class="inv-resource-value">' + state.beanPoints + '</div><div class="inv-resource-label">원두</div></div></div>';
   html += '<div class="inv-resource"><span class="inv-resource-icon">✨</span><div class="inv-resource-info"><div class="inv-resource-value">' + state.goldenBeans + '</div><div class="inv-resource-label">황금 원두</div></div></div>';
-  html += '<div class="inv-resource"><span class="inv-resource-icon">💧</span><div class="inv-resource-info"><div class="inv-resource-value">' + Math.floor(state.water) + ' / ' + C.WATER_MAX + '</div><div class="inv-resource-label">물</div></div></div>';
+  html += '<div class="inv-resource"><span class="inv-resource-icon">💧</span><div class="inv-resource-info"><div class="inv-resource-value">' + Math.floor(state.water) + ' / ' + effectiveWaterMax() + '</div><div class="inv-resource-label">물</div></div></div>';
   html += '<div class="inv-resource"><span class="inv-resource-icon">🍒</span><div class="inv-resource-info"><div class="inv-resource-value">' + (state.harvestCount || 0) + '</div><div class="inv-resource-label">총 수확</div></div></div>';
   html += '</div></div>';
 
@@ -1144,8 +1748,9 @@ function updateHUD() {
   $('hudBeans').textContent = state.beanPoints;
   $('hudGoldenBeans').textContent = state.goldenBeans;
 
-  // Water bar
-  const pct = Math.max(0, Math.min(100, state.water));
+  // Water bar (Phase H: effective max 반영 — Lv3+ 이면 110)
+  const wMax = effectiveWaterMax();
+  const pct = Math.max(0, Math.min(100, (state.water / wMax) * 100));
   $('waterBarFill').style.width = pct + '%';
   $('waterBarText').textContent = Math.floor(state.water);
 
@@ -1227,28 +1832,13 @@ function _processNoticeQueue() {
     // 다음 큐 처리 (트랜지션 여유)
     setTimeout(_processNoticeQueue, 260);
   };
-  // 1회용 핸들러 — 버튼/카드/오버레이 아무 곳이나 탭하면 닫힘
+  // 확인 버튼으로만 닫힘 (실수로 닫히는 것 방지)
   const btn = $('noticeCta');
-  const card = document.querySelector('#noticePopup .popup-notice');
-  const overlay = $('noticePopup');
-
   const onTap = (e) => {
     e.stopPropagation();
-    btn.removeEventListener('click', onTap);
-    card.removeEventListener('click', onCardTap);
-    overlay.removeEventListener('click', onOverlayTap);
     closeNotice();
   };
-  const onCardTap = (e) => {
-    // 카드 내부 다른 인터랙션 없음 → 아무 탭이나 닫힘
-    onTap(e);
-  };
-  const onOverlayTap = (e) => {
-    if (e.target === overlay) onTap(e);
-  };
   btn.addEventListener('click', onTap, { once: true });
-  card.addEventListener('click', onCardTap, { once: true });
-  overlay.addEventListener('click', onOverlayTap, { once: true });
 }
 
 function showOfflinePopup(report) {
@@ -1305,7 +1895,7 @@ function doWater() {
   const now = Date.now();
   if (now - state.lastWaterTime < C.WATER_COOLDOWN) return;
 
-  state.water = Math.min(C.WATER_MAX, state.water + C.WATER_REFILL);
+  state.water = Math.min(effectiveWaterMax(), state.water + effectiveWaterRefill());
   state.lastWaterTime = now;
   state.stats.totalWaterings++;
   playSound('water');
@@ -1389,7 +1979,7 @@ function rollWeatherIfNeeded() {
 function applyRainyBonusIfNeeded() {
   if (state.todayWeather !== 'rainy') return false;
   if (state.rainyBonusClaimedDate === state.todayWeatherDate) return false;
-  state.water = Math.min(C.WATER_MAX, state.water + 10);
+  state.water = Math.min(effectiveWaterMax(), state.water + 10);
   state.rainyBonusClaimedDate = state.todayWeatherDate;
   // Phase F-2: 비 오는 날 방문 기록 (에스프레소 해금용, 하루 1회만)
   if (!state.rainyVisitDates) state.rainyVisitDates = [];
@@ -1532,7 +2122,7 @@ class TreeScene extends Phaser.Scene {
       this.autoGrowTimer += dt;
       if (this.autoGrowTimer >= 60) {
         this.autoGrowTimer -= 60;
-        state.growthXp += C.AUTO_XP_PER_MIN;
+        state.growthXp += effectiveAutoXpPerMin();
         const newStage = getStage(state.growthXp);
         if (updateStage(newStage)) {
           this.drawTree(true);
@@ -2712,10 +3302,12 @@ function renderCollectionPanel() {
   });
   html += '</div>';
 
+  // 일반 장식 + 화분 (계절 장식은 별도 그룹으로 분리)
   for (const type of ['pot', 'decor']) {
     html += '<div class="collection-group"><div class="collection-group-title">' + types[type] + '</div>';
     for (const [id, item] of Object.entries(C.ITEMS)) {
       if (item.type !== type) continue;
+      if (item.season) continue; // 계절 장식은 아래에서 별도 렌더
       const unlocked = state.unlocked.includes(id);
       const equipped = (type === 'pot' && state.equippedPotId === id) ||
                        (type === 'decor' && state.equippedDecorId === id);
@@ -2738,6 +3330,45 @@ function renderCollectionPanel() {
     }
     html += '</div>';
   }
+
+  // Phase G-2 — 계절 장식 (별도 그룹, 4계절 서브헤더)
+  const curSeason = getCurrentSeason();
+  const curMeta = SEASON_INFO[curSeason];
+  html += '<div class="collection-group">';
+  html += '<div class="collection-group-title">🍀 계절 장식</div>';
+  html += '<div class="season-current-hint">지금은 ' + curMeta.icon + ' <strong>' + curMeta.name + '</strong>이에요. ' +
+          '이번 계절에 수확할수록 새로운 장식이 도착해요.</div>';
+  for (const seasonKey of ['spring', 'summer', 'autumn', 'winter']) {
+    const meta = SEASON_INFO[seasonKey];
+    const harvestsThisSeason = (state.stats?.seasonHarvests?.[seasonKey] || 0);
+    const isCurrent = (seasonKey === curSeason);
+    html += '<div class="season-sub' + (isCurrent ? ' season-sub-current' : '') + '">';
+    html += '<div class="season-sub-title">' + meta.icon + ' ' + meta.name +
+            ' <span class="season-sub-meta">(' + meta.months + ' · 이 계절 수확 ' + harvestsThisSeason + '회)</span></div>';
+    for (const [id, item] of Object.entries(C.ITEMS)) {
+      if (item.season !== seasonKey) continue;
+      const unlocked = state.unlocked.includes(id);
+      const equipped = state.equippedDecorId === id;
+      html += '<div class="collection-item ' + (unlocked ? 'unlocked' : 'locked') + (equipped ? ' equipped' : '') + '" data-id="' + id + '">';
+      const iconHtml = unlocked ? item.icon : '<span class="locked-silhouette">?</span>';
+      html += '<span class="collection-icon">' + iconHtml + '</span>';
+      html += '<span class="collection-name">' + (unlocked ? item.name : '???') + '</span>';
+      if (unlocked) {
+        html += '<span class="collection-desc">' + item.desc + '</span>';
+        if (equipped) {
+          html += '<span class="collection-badge">장착중</span>';
+        } else {
+          html += '<button class="collection-equip-btn" data-id="' + id + '" data-type="decor">장착</button>';
+        }
+      } else {
+        html += '<span class="collection-desc">🔒 ' + item.desc + '</span>';
+      }
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+
   body.innerHTML = html;
 
   // 장착 버튼 이벤트
@@ -2903,6 +3534,23 @@ function setupDOMEvents() {
   });
   $('statsClose').addEventListener('click', () => hideOverlay('statsPanel'));
 
+  // Phase F-3: 수확 기록장
+  $('btnRecords').addEventListener('click', () => {
+    renderRecordPanel();
+    hideOverlay('settingsPanel');
+    showOverlay('recordPanel');
+  });
+  $('recordClose').addEventListener('click', () => hideOverlay('recordPanel'));
+
+  // Phase G-1: 편지함
+  $('btnLetters').addEventListener('click', () => {
+    renderLetterPanel();
+    hideOverlay('settingsPanel');
+    showOverlay('letterPanel');
+  });
+  $('letterClose').addEventListener('click', () => hideOverlay('letterPanel'));
+  $('letterDetailClose').addEventListener('click', () => hideOverlay('letterDetailPopup'));
+
   // 일일 보너스 받기
   $('dailyBonusClose').addEventListener('click', claimDailyBonus);
 
@@ -2918,8 +3566,9 @@ function setupDOMEvents() {
   // 오프라인 팝업 닫기
   $('offlinePopupClose').addEventListener('click', () => hideOverlay('offlinePopup'));
 
-  // 오버레이 바깥 클릭으로 닫기
+  // 오버레이 바깥 클릭으로 닫기 (단, noticePopup은 제외 — 확인 버튼으로만 닫힘)
   document.querySelectorAll('.overlay').forEach((overlay) => {
+    if (overlay.id === 'noticePopup') return;
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.classList.remove('active');
@@ -2948,7 +3597,7 @@ function grantReward(code) {
   if (state.claimedRewards.includes(upper)) return { success: false, msg: '이미 사용한 코드입니다.' };
 
   // 보상 적용
-  if (reward.water) state.water = Math.min(C.WATER_MAX, state.water + reward.water);
+  if (reward.water) state.water = Math.min(effectiveWaterMax(), state.water + reward.water);
   if (reward.beans) {
     state.beanPoints += reward.beans;
     state.stats.totalBeansEarned = (state.stats.totalBeansEarned || 0) + reward.beans;
@@ -3123,6 +3772,9 @@ function boot() {
     }
     // 저장된 상태에서 이미 조건을 만족하면 펫 해금 (마이그레이션)
     checkPetUnlocks();
+    // Phase G-1: 편지 배달 시도 (쿨다운 + 해금된 펫 있을 때만)
+    updateLetterBadge();
+    setTimeout(() => { tryDeliverLetter(); }, 800);
   }, 1200);
 
   // 첫 방문 튜토리얼

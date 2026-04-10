@@ -174,6 +174,8 @@
       <div class="popup-body" style="display:flex;flex-direction:column;gap:10px;">
         <button class="popup-btn" id="btnSoundToggle">🔊 사운드 켜짐</button>
         <button class="popup-btn" id="btnStats">📊 통계 보기</button>
+        <button class="popup-btn" id="btnRecords">📔 수확 기록장</button>
+        <button class="popup-btn" id="btnLetters">📭 편지함</button>
         <button class="popup-btn" id="btnShare">📤 친구에게 자랑하기</button>
         <button class="popup-btn" id="btnNotifyToggle">🔔 출석 알림</button>
         <button class="popup-btn" id="btnRewardCode">🎁 보상 코드 입력</button>
@@ -219,6 +221,32 @@
     </div>
   </div>
 
+  <!-- 기록장 패널 (Phase F-3) -->
+  <div class="overlay" id="recordPanel">
+    <div class="popup popup-tall">
+      <h3>📔 수확 기록장</h3>
+      <div class="popup-body popup-body-scroll" id="recordBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="recordClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 편지함 패널 (Phase G-1) -->
+  <div class="overlay" id="letterPanel">
+    <div class="popup popup-tall">
+      <h3>📬 편지함</h3>
+      <div class="popup-body popup-body-scroll" id="letterBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="letterClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 편지 상세 팝업 (Phase G-1) -->
+  <div class="overlay" id="letterDetailPopup">
+    <div class="popup popup-tall">
+      <div class="popup-body popup-body-scroll" id="letterDetailBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="letterDetailClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
   <!-- 일일 보너스 팝업 -->
   <div class="overlay" id="dailyBonusPopup">
     <div class="popup">
@@ -235,7 +263,6 @@
       <h3 class="notice-title" id="noticeTitle">알림</h3>
       <div class="popup-body notice-body" id="noticeBody"></div>
       <button class="popup-btn" id="noticeCta">확인</button>
-      <div class="notice-tap-hint">화면을 탭해 닫기</div>
     </div>
   </div>
 

@@ -1189,16 +1189,6 @@ canvas {
 .notice-body strong {
   color: var(--accent);
 }
-.notice-tap-hint {
-  margin-top: 10px;
-  font-size: 0.72rem;
-  color: var(--text-dim);
-  opacity: 0.7;
-  letter-spacing: 0.02em;
-}
-#noticePopup.active .popup-notice {
-  cursor: pointer;
-}
 
 /* ── Phase F-1: Harvest grade popup ──────── */
 .harvest-grade {
@@ -1326,6 +1316,106 @@ canvas {
   font-size: 0.78rem;
 }
 
+/* ── Phase F-3: 수확 기록장 ──────────────── */
+.record-empty {
+  text-align: center;
+  padding: 32px 12px;
+  color: var(--text-dim);
+}
+.record-empty-icon {
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+}
+.record-empty-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.record-empty-sub {
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.record-date-header {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  margin: 14px 2px 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.10);
+}
+.record-date-header:first-child { margin-top: 4px; }
+.record-item {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.record-item.record-good   { border-color: rgba(140, 200, 130, 0.25); }
+.record-item.record-fine   { border-color: rgba(160, 200, 240, 0.30); }
+.record-item.record-special {
+  background: linear-gradient(135deg, rgba(220, 170, 80, 0.12), rgba(255, 220, 130, 0.06));
+  border-color: rgba(240, 200, 100, 0.55);
+  box-shadow: 0 0 12px rgba(240, 200, 100, 0.12);
+}
+.record-row-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.record-stars {
+  color: #ffd567;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+.record-label {
+  flex: 1;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.record-special .record-label { color: #ffd87a; }
+.record-badge {
+  background: linear-gradient(135deg, #f0c060, #d19a3a);
+  color: #2a1810;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.record-row-mid {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+.record-time { min-width: 72px; }
+.record-meta { letter-spacing: 1px; }
+.record-pets { margin-left: auto; letter-spacing: 1px; }
+.record-row-bot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.record-reward { color: #ffd567; font-weight: 700; }
+.record-num { font-style: italic; opacity: 0.75; }
+.record-footer {
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  padding: 12px 0 6px;
+  font-style: italic;
+}
+
 /* ── Responsive adjustments ──────────────── */
 @media (min-width: 481px) {
   .game-container {
@@ -1339,4 +1429,311 @@ canvas {
   .stage-bar { padding: 4px 12px; font-size: 0.75rem; }
   .action-bar { padding: 8px 12px 10px; gap: 8px; }
   .action-btn { padding: 8px 14px; min-height: 48px; }
+}
+
+/* ── Phase H: 농장 레벨 카드 ──────────────── */
+.stats-farm {
+  margin-top: 14px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(80, 56, 28, 0.6), rgba(40, 28, 18, 0.6));
+  border: 1px solid rgba(200, 170, 110, 0.35);
+  border-radius: 12px;
+}
+.stats-farm-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.stats-farm-icon {
+  font-size: 1.8rem;
+}
+.stats-farm-info { flex: 1; min-width: 0; }
+.stats-farm-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.stats-farm-lv {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-dk));
+  color: #2b1d14;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border-radius: 10px;
+}
+.stats-farm-next {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.stats-farm-bonus-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stats-farm-bonus {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  font-size: 0.78rem;
+  opacity: 0.6;
+}
+.stats-farm-bonus.earned {
+  opacity: 1;
+  background: rgba(200, 170, 110, 0.12);
+}
+.stats-farm-bonus-lv {
+  flex-shrink: 0;
+  width: 38px;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.72rem;
+}
+.stats-farm-bonus-label {
+  flex: 1;
+  color: var(--text);
+}
+.stats-farm-bonus:not(.earned) .stats-farm-bonus-label {
+  color: var(--text-dim);
+}
+
+/* ── Phase G-2: 계절 장식 ──────────────────── */
+.season-current-hint {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: center;
+  padding: 8px 10px;
+  margin: 4px 0 12px;
+  background: rgba(60, 42, 22, 0.5);
+  border: 1px dashed rgba(200, 170, 110, 0.25);
+  border-radius: 8px;
+  line-height: 1.5;
+}
+.season-current-hint strong {
+  color: var(--accent);
+}
+.season-sub {
+  margin-bottom: 14px;
+  padding: 10px;
+  background: rgba(40, 28, 18, 0.35);
+  border: 1px solid rgba(200, 170, 110, 0.12);
+  border-radius: 10px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.season-sub.season-sub-current {
+  opacity: 1;
+  border-color: rgba(200, 170, 110, 0.4);
+  background: rgba(60, 42, 22, 0.5);
+}
+.season-sub-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(200, 170, 110, 0.18);
+}
+.season-sub-meta {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+.season-sub .collection-item {
+  margin-bottom: 6px;
+}
+.season-sub .collection-item:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Phase G-1: 편지함 ──────────────────────── */
+.letter-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-dim);
+}
+.letter-empty-icon {
+  font-size: 2.4rem;
+  margin-bottom: 8px;
+}
+.letter-empty-title {
+  font-size: 1rem;
+  color: var(--text);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.letter-empty-sub {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.letter-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px;
+  margin-bottom: 8px;
+  background: rgba(40, 28, 18, 0.6);
+  border: 1px solid rgba(200, 170, 110, 0.18);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+}
+.letter-card:active {
+  transform: scale(0.98);
+}
+.letter-card.letter-unread {
+  background: rgba(60, 42, 22, 0.75);
+  border-color: rgba(200, 170, 110, 0.45);
+}
+.letter-card.letter-reward {
+  border-color: rgba(230, 200, 110, 0.5);
+}
+.letter-icon-col {
+  position: relative;
+  width: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.letter-pet-icon {
+  font-size: 1.7rem;
+}
+.letter-new-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  color: #ff6464;
+  font-size: 0.7rem;
+  text-shadow: 0 0 4px rgba(255, 100, 100, 0.6);
+}
+.letter-content-col {
+  flex: 1;
+  min-width: 0;
+}
+.letter-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.letter-card.letter-unread .letter-title {
+  color: var(--accent);
+}
+.letter-meta {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.letter-badge-row {
+  margin-top: 6px;
+}
+.letter-gift-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  padding: 2px 8px;
+  background: linear-gradient(90deg, rgba(230, 200, 110, 0.25), rgba(200, 170, 110, 0.15));
+  border: 1px solid rgba(230, 200, 110, 0.4);
+  border-radius: 10px;
+  color: #e6c86e;
+}
+/* 편지 상세 */
+.letter-detail-header {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.letter-detail-icon {
+  font-size: 2.2rem;
+  margin-bottom: 4px;
+}
+.letter-detail-from {
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+.letter-detail-date {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.letter-detail-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  padding: 10px 0 12px;
+  border-top: 1px dashed rgba(200, 170, 110, 0.25);
+  border-bottom: 1px dashed rgba(200, 170, 110, 0.25);
+  margin-bottom: 14px;
+}
+.letter-detail-body {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text);
+  padding: 0 4px;
+}
+.letter-detail-body p {
+  margin: 0 0 12px;
+}
+.letter-detail-body p:last-child {
+  margin-bottom: 0;
+}
+.letter-reward-box {
+  margin-top: 16px;
+  padding: 14px;
+  background: linear-gradient(135deg, rgba(230, 200, 110, 0.12), rgba(200, 170, 110, 0.06));
+  border: 1px solid rgba(230, 200, 110, 0.4);
+  border-radius: 10px;
+  text-align: center;
+}
+.letter-reward-label {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.letter-reward-code {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #e6c86e;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 10px;
+}
+.letter-reward-redeemed {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.letter-reward-btn {
+  margin: 0 auto;
+  display: inline-block;
+}
+/* 안 읽음 배지 (설정 톱니바퀴 + 편지함 버튼) */
+.unread-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  background: #ff5050;
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 6px rgba(255, 80, 80, 0.6);
+  pointer-events: none;
+}
+.hud-btn {
+  position: relative;
 }
