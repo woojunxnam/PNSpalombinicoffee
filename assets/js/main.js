@@ -247,6 +247,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const currentPath = pathname.endsWith('/') ? `${pathname}index.html` : pathname;
 
   const renderNavItem = (item) => {
+    if (item.type === 'sublabel') {
+      return `<div class="mobile-nav-sublabel">${item.label}</div>`;
+    }
     const badge = item.badge ? `<span class="mobile-nav-badge">${item.badge}</span>` : '';
     if (!item.href || item.href === '#') {
       return `<a href="#" aria-disabled="true">${item.label}${badge}</a>`;
@@ -266,6 +269,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}index.html#heritage`, label: '헤리티지' },
         { href: `${prefix}index.html#reviews`, label: '고객 후기' },
         { href: `${prefix}index.html#faq`, label: 'FAQ' },
+        { type: 'sublabel', label: '🧪 PNS Lab' },
         { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
         { href: `${prefix}menu.html`, label: '카페 메뉴' },
         { href: `${prefix}game/`, label: '커피나무 키우기', badge: 'BETA' },

@@ -788,6 +788,50 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 }
 .nav-dropdown a:hover { background: var(--accent-light); color: var(--accent); }
 .nav-dropdown-icon { font-size: 16px; }
+/* PNS Lab 서브 그룹 (hover flyout) */
+.nav-sub-group {
+  position: relative;
+}
+.nav-sub-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background .12s ease, color .12s ease;
+  width: 100%;
+}
+.nav-sub-trigger::after { display: none; } /* ↗ 숨김 */
+.nav-sub-group:hover .nav-sub-trigger {
+  background: var(--accent-light);
+  color: var(--accent);
+}
+.nav-sub-arrow {
+  flex-shrink: 0;
+  opacity: 0.45;
+  transition: opacity .12s;
+}
+.nav-sub-group:hover .nav-sub-arrow { opacity: 0.9; }
+.nav-sub-menu {
+  display: none;
+  position: absolute;
+  left: calc(100% + 4px);
+  top: 0;
+  min-width: 190px;
+  background: rgba(247,243,238,.98);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+  padding: 6px;
+  z-index: 210;
+}
+.nav-sub-group:hover .nav-sub-menu { display: block; }
+.nav-sub-menu a { border-radius: 8px; }
 .nav-badge-small {
   display: inline-block;
   font-size: 9px;
@@ -1017,6 +1061,15 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   display: grid;
   gap: 4px;
   padding: 6px 0 4px 12px;
+}
+.mobile-nav-sublabel {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding: 10px 14px 2px;
+  opacity: 0.75;
 }
 .mobile-nav-group-inner a {
   font-size: 14px;
