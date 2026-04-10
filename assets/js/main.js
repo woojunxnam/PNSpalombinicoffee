@@ -274,8 +274,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     {
       type: 'group', label: '제품',
       items: [
-        { href: `${prefix}products/`, label: 'PNS 상품 라인업' },
-        { href: `${prefix}lineup.html`, label: '협력사 라인업' },
+        { href: `${prefix}products/`, label: 'PNS 팔롬비니 상품 라인업' },
+        { href: `${prefix}lineup.html`, label: '협력사 상품 라인업' },
       ]
     },
     { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
@@ -302,7 +302,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}contact.html`, label: '일반 문의' },
         { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
         { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
-        { href: '#', label: 'B2B 봉투 필름지 문의' },
+        { href: '#', label: 'B2B 봉투 필름지 문의', badge: '준비중' },
       ]
     },
     { href: `${prefix}partners.html`, label: '고객·협력사' },
