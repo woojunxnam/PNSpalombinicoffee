@@ -176,7 +176,9 @@ function renderAccountPanel() {
       '<button class="popup-btn google-signin-btn" id="btnGoogleSignIn">' +
         '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="18" height="18">' +
         'Google로 로그인' +
-      '</button>';
+      '</button>' +
+      '<p class="account-privacy-note">로그인 시 이메일·프로필 사진·게임 진행 데이터가 클라우드에 저장됩니다. ' +
+      '<a href="../privacy.html" target="_blank" rel="noopener">개인정보처리방침</a></p>';
     $('btnGoogleSignIn').addEventListener('click', async () => {
       hideOverlay('accountPanel');
       await signInWithGoogle();

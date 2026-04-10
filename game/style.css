@@ -691,6 +691,20 @@ canvas {
   background: #f1f3f4;
 }
 
+.account-privacy-note {
+  margin-top: 12px;
+  font-size: 0.7rem;
+  line-height: 1.55;
+  color: var(--text-dim);
+  text-align: center;
+  opacity: 0.85;
+}
+.account-privacy-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 /* ── Tutorial hint ────────────────────────── */
 .tutorial-hint {
   position: absolute;
