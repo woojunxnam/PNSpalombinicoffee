@@ -262,9 +262,9 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     {
       type: 'group', label: '브랜드',
       items: [
-        { href: `${prefix}index.html#tech`, label: 'Technology' },
-        { href: `${prefix}index.html#heritage`, label: 'Heritage' },
-        { href: `${prefix}index.html#reviews`, label: 'Reviews' },
+        { href: `${prefix}index.html#tech`, label: '기술력' },
+        { href: `${prefix}index.html#heritage`, label: '헤리티지' },
+        { href: `${prefix}index.html#reviews`, label: '고객 후기' },
         { href: `${prefix}index.html#faq`, label: 'FAQ' },
         { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
         { href: `${prefix}menu.html`, label: '카페 메뉴' },
