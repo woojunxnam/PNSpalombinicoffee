@@ -228,6 +228,17 @@
     </div>
   </div>
 
+  <!-- 공용 알림 팝업 (showNotice) — 튜토리얼/단계 전환/이벤트 -->
+  <div class="overlay" id="noticePopup">
+    <div class="popup popup-notice">
+      <div class="notice-icon" id="noticeIcon">🌱</div>
+      <h3 class="notice-title" id="noticeTitle">알림</h3>
+      <div class="popup-body notice-body" id="noticeBody"></div>
+      <button class="popup-btn" id="noticeCta">확인</button>
+      <div class="notice-tap-hint">화면을 탭해 닫기</div>
+    </div>
+  </div>
+
   <!-- Firebase SDKs (v10 compat) -->
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>

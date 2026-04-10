@@ -288,6 +288,9 @@ function defaultState() {
     lastDailyClaim: 0,        // 마지막 일일 보너스 받은 날 (날짜 키, YYYYMMDD 숫자)
     dailyStreak: 0,           // 연속 출석 일수
     lastVisitTime: Date.now(),
+    todayWeather: null,       // 'sunny' | 'cloudy' | 'rainy'
+    todayWeatherDate: 0,      // YYYYMMDD — 자정 리셋 기준
+    rainyBonusClaimedDate: 0, // 비 오는 날 첫 방문 보너스 1일 1회
     equippedPotId: 'pot_terracotta_basic',
     equippedDecorId: null,
     unlocked: ['pot_terracotta_basic'],
@@ -298,6 +301,8 @@ function defaultState() {
       totalWaterings: 0,
       totalHarvests: 0,
       totalBeansEarned: 0,
+      firstFlowerTime: 0, // 첫 꽃 마일스톤 (Stage 3 도달 시각)
+      firstCherryTime: 0, // 첫 체리 마일스톤 (Stage 4 도달 시각)
     },
   };
 }
@@ -344,7 +349,7 @@ function doHarvest() {
   state.stats.totalHarvests++;
   playSound('harvest');
   state.growthXp = 0;
-  state.stage = 0;
+  updateStage(0, { silent: true }); // 리셋은 팝업 없이
   state.water = C.WATER_START;
   updateHUD();
   saveState();
@@ -376,6 +381,44 @@ function getStage(xp) {
 function getNextStageXp(stage) {
   if (stage + 1 < C.STAGES.length) return C.STAGES[stage + 1].minXp;
   return null; // max stage
+}
+
+// ── Stage transition detector (centralized) ─
+// 어디서든 growthXp가 바뀐 뒤 호출. 단계가 올라갔으면 팝업을 띄우고
+// 첫 꽃/첫 체리 같은 1회성 마일스톤은 저장 후 기념 연출.
+const STAGE_TRANSITION_MESSAGES = [
+  null, // 0 — 튜토리얼이 담당, 전환 팝업 없음
+  { icon: '🌿', title: '어린 묘목으로 자랐어요',
+    body: '떡잎이 본잎으로 바뀌었어요.<br>이 시기엔 반그늘과 따뜻한 온도가 좋답니다.' },
+  { icon: '🌳', title: '작은 커피나무가 됐어요',
+    body: '잎이 넓어지고 줄기가 단단해졌어요.<br>꽃이 피기까지 조금만 더 기다려요.' },
+  { icon: '🌸', title: '첫 꽃이 폈어요!',
+    body: '커피꽃은 자스민 향이 나요.<br>보통 <strong>2~3일만 피었다 지는데</strong>, 그 사이를 놓치지 마세요.',
+    milestone: 'firstFlowerTime' },
+  { icon: '🍒', title: '커피 체리가 맺혔어요!',
+    body: '빨간 체리 안에 <strong>두 알의 원두</strong>가 들어 있어요.<br>이제 <strong>수확</strong>이 가능해요 — 하단 버튼을 눌러보세요.',
+    milestone: 'firstCherryTime' },
+];
+function updateStage(newStage, opts) {
+  // opts: { silent: true }  // 쿨다운 수확/로드에서는 팝업 억제
+  const old = state.stage;
+  if (newStage === old) { state.stage = newStage; return false; }
+  state.stage = newStage;
+  if (opts && opts.silent) return true;
+  // 오른쪽으로 올라간 전환만 팝업 (리셋 수확은 silent로 호출)
+  if (newStage > old) {
+    const msg = STAGE_TRANSITION_MESSAGES[newStage];
+    if (msg) {
+      // 1회성 마일스톤은 저장 후 다시 띄우지 않음
+      if (msg.milestone) {
+        if (state.stats[msg.milestone]) return true;
+        state.stats[msg.milestone] = Date.now();
+      }
+      playSound('levelup');
+      showNotice({ icon: msg.icon, title: msg.title, body: msg.body });
+    }
+  }
+  return true;
 }
 
 // ── Offline calculation ─────────────────────
@@ -827,6 +870,66 @@ function hideOverlay(id) {
   $(id).classList.remove('active');
 }
 
+// ── Notice popup (공용 알림) ────────────────
+// 튜토리얼, 단계 전환, 첫 꽃/첫 체리 같은 중요한 순간을 사용자가
+// 읽고 직접 탭해서 닫는 팝업. 여러 개가 몰리면 순차 큐잉.
+const _noticeQueue = [];
+let _noticeShowing = false;
+function showNotice(opts) {
+  // opts: { icon, title, body, cta, onClose }
+  _noticeQueue.push(opts || {});
+  _processNoticeQueue();
+}
+function _processNoticeQueue() {
+  if (_noticeShowing) return;
+  const next = _noticeQueue.shift();
+  if (!next) return;
+  _noticeShowing = true;
+
+  $('noticeIcon').textContent = next.icon || '🌱';
+  $('noticeTitle').textContent = next.title || '알림';
+  $('noticeBody').innerHTML = next.body || '';
+  $('noticeCta').textContent = next.cta || '확인';
+
+  // 사운드
+  try { playSound('reward'); } catch (e) {}
+
+  showOverlay('noticePopup');
+
+  const closeNotice = () => {
+    if (!_noticeShowing) return;
+    hideOverlay('noticePopup');
+    _noticeShowing = false;
+    if (typeof next.onClose === 'function') {
+      try { next.onClose(); } catch (e) {}
+    }
+    // 다음 큐 처리 (트랜지션 여유)
+    setTimeout(_processNoticeQueue, 260);
+  };
+  // 1회용 핸들러 — 버튼/카드/오버레이 아무 곳이나 탭하면 닫힘
+  const btn = $('noticeCta');
+  const card = document.querySelector('#noticePopup .popup-notice');
+  const overlay = $('noticePopup');
+
+  const onTap = (e) => {
+    e.stopPropagation();
+    btn.removeEventListener('click', onTap);
+    card.removeEventListener('click', onCardTap);
+    overlay.removeEventListener('click', onOverlayTap);
+    closeNotice();
+  };
+  const onCardTap = (e) => {
+    // 카드 내부 다른 인터랙션 없음 → 아무 탭이나 닫힘
+    onTap(e);
+  };
+  const onOverlayTap = (e) => {
+    if (e.target === overlay) onTap(e);
+  };
+  btn.addEventListener('click', onTap, { once: true });
+  card.addEventListener('click', onCardTap, { once: true });
+  overlay.addEventListener('click', onOverlayTap, { once: true });
+}
+
 function showOfflinePopup(report) {
   if (!report) return;
   const body = $('offlinePopupBody');
@@ -904,6 +1007,73 @@ function doWater() {
   }
 }
 
+// ── Sky / Weather helpers (Phase D) ─────────
+// 실시각 기반 하늘 색 그라디언트 (시뮬레이션 없음)
+function lerpHex(c1, c2, t) {
+  const r1 = (c1 >> 16) & 0xff, g1 = (c1 >> 8) & 0xff, bl1 = c1 & 0xff;
+  const r2 = (c2 >> 16) & 0xff, g2 = (c2 >> 8) & 0xff, bl2 = c2 & 0xff;
+  const r = Math.round(r1 + (r2 - r1) * t);
+  const g = Math.round(g1 + (g2 - g1) * t);
+  const b = Math.round(bl1 + (bl2 - bl1) * t);
+  return (r << 16) | (g << 8) | b;
+}
+// 시간대별 하늘 [상단, 하단] 색상 스톱
+const SKY_STOPS = [
+  { h: 0,  top: 0x0a1224, bot: 0x1a2545 }, // 심야
+  { h: 5,  top: 0x1a1b3a, bot: 0x3a2540 }, // 새벽 전
+  { h: 6,  top: 0x4a3560, bot: 0xf5a085 }, // 새벽
+  { h: 8,  top: 0x7ebae0, bot: 0xb8dcef }, // 아침
+  { h: 12, top: 0x5fa3d8, bot: 0xa5d3ee }, // 정오
+  { h: 16, top: 0x6fa8d8, bot: 0xc8dcea }, // 오후
+  { h: 18, top: 0xe0874a, bot: 0xf5b580 }, // 노을
+  { h: 19, top: 0x52356b, bot: 0xb06a5a }, // 해질녘
+  { h: 21, top: 0x1a2048, bot: 0x2c2545 }, // 초저녁
+  { h: 24, top: 0x0a1224, bot: 0x1a2545 }, // 심야 (루프)
+];
+function getSkyColors(hour) {
+  const H = ((hour % 24) + 24) % 24;
+  let a = SKY_STOPS[0], b = SKY_STOPS[SKY_STOPS.length - 1];
+  for (let i = 0; i < SKY_STOPS.length - 1; i++) {
+    if (H >= SKY_STOPS[i].h && H <= SKY_STOPS[i + 1].h) {
+      a = SKY_STOPS[i]; b = SKY_STOPS[i + 1]; break;
+    }
+  }
+  const span = b.h - a.h || 1;
+  const t = (H - a.h) / span;
+  return [lerpHex(a.top, b.top, t), lerpHex(a.bot, b.bot, t)];
+}
+function isNightHour(hour) {
+  const H = ((hour % 24) + 24) % 24;
+  return H >= 20 || H < 5;
+}
+function isDayHour(hour) {
+  const H = ((hour % 24) + 24) % 24;
+  return H >= 7 && H < 18;
+}
+
+// 날씨 — 하루 1회 결정, 자정 리셋
+function rollWeatherIfNeeded() {
+  const today = todayKey();
+  if (state.todayWeatherDate === today && state.todayWeather) return state.todayWeather;
+  const r = Math.random();
+  let w = 'sunny';
+  if (r < 0.15) w = 'rainy';
+  else if (r < 0.40) w = 'cloudy';
+  state.todayWeather = w;
+  state.todayWeatherDate = today;
+  saveState();
+  return w;
+}
+// 비 오는 날 첫 방문 → Water +10 보너스 (1일 1회)
+function applyRainyBonusIfNeeded() {
+  if (state.todayWeather !== 'rainy') return false;
+  if (state.rainyBonusClaimedDate === state.todayWeatherDate) return false;
+  state.water = Math.min(C.WATER_MAX, state.water + 10);
+  state.rainyBonusClaimedDate = state.todayWeatherDate;
+  saveState();
+  return true;
+}
+
 // ── Phaser Scene ────────────────────────────
 class TreeScene extends Phaser.Scene {
   constructor() {
@@ -919,9 +1089,27 @@ class TreeScene extends Phaser.Scene {
   }
 
   create() {
-    // 배경 레이어 (나무 뒤)
+    // ── 배경 레이어 구조 (bottom → top) ──
+    // 1. skyGraphics: 창문 안쪽 하늘 색 (시간대별 그라디언트)
+    // 2. skyObjects:  구름/해/달/빗방울 (창문 주변 벽이 자연스럽게 클립)
+    // 3. bgGraphics:  벽/창틀/선반/테이블 (창문 주변만 그림)
+    this.skyGraphics = this.add.graphics();
+    this.skyObjects = this.add.container(0, 0);
     this.bgGraphics = this.add.graphics();
+
+    // 오늘의 날씨 결정
+    rollWeatherIfNeeded();
+
+    this.drawSky();
     this.drawBackground();
+    this.spawnClouds();
+    if (state.todayWeather === 'rainy') this.startRain();
+
+    // 하늘 색 주기적 업데이트 (30초마다 — 실시각 반영)
+    this.time.addEvent({
+      delay: 30000, loop: true,
+      callback: () => this.drawSky(),
+    });
 
     this.treeGroup = this.add.container(0, 0);
 
@@ -938,6 +1126,18 @@ class TreeScene extends Phaser.Scene {
     this.input.on('pointerdown', (pointer) => {
       this.handleTap(pointer);
     });
+  }
+
+  // 창문 영역 (하늘이 보이는 사각형)
+  getWindowBounds() {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    return {
+      x: w * 0.08,
+      y: h * 0.08,
+      w: w * 0.84,
+      h: h * 0.47,
+    };
   }
 
   update(time, delta) {
@@ -960,8 +1160,7 @@ class TreeScene extends Phaser.Scene {
         this.autoGrowTimer -= 60;
         state.growthXp += C.AUTO_XP_PER_MIN;
         const newStage = getStage(state.growthXp);
-        if (newStage !== state.stage) {
-          state.stage = newStage;
+        if (updateStage(newStage)) {
           this.drawTree(true);
         }
         updateHUD();
@@ -994,10 +1193,7 @@ class TreeScene extends Phaser.Scene {
     if (state.water > 0) {
       state.growthXp += C.TAP_XP;
       const newStage = getStage(state.growthXp);
-      if (newStage !== state.stage) {
-        state.stage = newStage;
-        playSound('levelup');
-      }
+      updateStage(newStage); // 전환 시 팝업 + 사운드 담당
     }
 
     checkUnlocks();
@@ -1060,45 +1256,80 @@ class TreeScene extends Phaser.Scene {
     const g = this.bgGraphics;
     const w = this.scale.width;
     const h = this.scale.height;
+    const win = this.getWindowBounds();
     g.clear();
 
-    // 벽 배경 (따뜻한 카페 벽)
-    g.fillStyle(0x2a1f16);
-    g.fillRect(0, 0, w, h);
+    // 벽은 창문을 "ㅁ자"로 둘러싸는 4개 스트립으로 그림
+    // → 창문 바깥으로 나간 구름/빗방울이 자연스럽게 가려짐
+    const wallColor = 0x2a1f16;
+    const shelfY = h * 0.62;
+    g.fillStyle(wallColor);
+    g.fillRect(0, 0, win.x, h);                                     // 좌측 벽
+    g.fillRect(win.x + win.w, 0, w - (win.x + win.w), h);           // 우측 벽
+    g.fillRect(win.x, 0, win.w, win.y);                              // 창문 위 벽
+    g.fillRect(win.x, win.y + win.h, win.w, shelfY - (win.y + win.h)); // 창문 아래 벽
 
-    // 벽 질감 — 수평 나무 패널 선
+    // 벽 질감 — 가로 패널 선 (창문 바깥 영역에만)
     g.lineStyle(1, 0x352a20, 0.3);
-    for (let y = 0; y < h * 0.6; y += 24) {
-      g.lineBetween(0, y, w, y);
+    for (let y = 0; y < shelfY; y += 24) {
+      // 좌측
+      g.lineBetween(0, y, win.x, y);
+      // 우측
+      g.lineBetween(win.x + win.w, y, w, y);
+      // 창문 위
+      if (y < win.y) g.lineBetween(win.x, y, win.x + win.w, y);
+      // 창문 아래
+      if (y > win.y + win.h && y < shelfY) g.lineBetween(win.x, y, win.x + win.w, y);
     }
 
-    // 선반 (나무 위 공간)
-    const shelfY = h * 0.12;
+    // 창틀 (나무 프레임)
+    const frameColor = 0x3d2a1c;
+    const frameLight = 0x5a4030;
+    const ft = 5; // 프레임 두께
+    g.fillStyle(frameColor);
+    g.fillRect(win.x - ft, win.y - ft, win.w + ft * 2, ft);          // 상단
+    g.fillRect(win.x - ft, win.y + win.h, win.w + ft * 2, ft);       // 하단
+    g.fillRect(win.x - ft, win.y - ft, ft, win.h + ft * 2);          // 좌측
+    g.fillRect(win.x + win.w, win.y - ft, ft, win.h + ft * 2);       // 우측
+    // 상단 하이라이트 (빛 들어오는 방향)
+    g.fillStyle(frameLight, 0.4);
+    g.fillRect(win.x - ft, win.y - ft, win.w + ft * 2, 2);
+    // 십자 창살
+    g.fillStyle(frameColor);
+    g.fillRect(win.x, win.y + win.h / 2 - 2, win.w, 4);
+    g.fillRect(win.x + win.w / 2 - 2, win.y, 4, win.h);
+    // 프레임 외곽 어두운 선
+    g.lineStyle(1, 0x1a120a, 0.7);
+    g.strokeRect(win.x - ft, win.y - ft, win.w + ft * 2, win.h + ft * 2);
+
+    // 창문턱 (선반 위 좁은 턱)
+    g.fillStyle(0x5a4030);
+    g.fillRect(win.x - ft - 4, win.y + win.h + ft, win.w + ft * 2 + 8, 3);
+
+    // 선반 (창문 아래 카페 선반)
     g.fillStyle(0x5a4030);
     g.fillRect(0, shelfY, w, 6);
     g.fillStyle(0x4a3525);
     g.fillRect(0, shelfY + 6, w, 3);
 
-    // 선반 위 소품 — 작은 커피잔
-    const cupX = w * 0.15;
+    // 선반 위 소품 — 커피잔
+    const cupX = w * 0.18;
     g.fillStyle(0xd4c4a8);
     g.fillRect(cupX, shelfY - 12, 10, 12);
     g.fillStyle(0xc0a880);
     g.fillRect(cupX - 1, shelfY - 13, 12, 3);
-    // 커피 색
     g.fillStyle(0x5a3a20);
     g.fillRect(cupX + 1, shelfY - 11, 8, 4);
 
-    // 선반 위 소품 — 작은 책
-    const bookX = w * 0.75;
+    // 선반 위 소품 — 책
+    const bookX = w * 0.78;
     g.fillStyle(0x8b4513);
     g.fillRect(bookX, shelfY - 16, 8, 16);
     g.fillStyle(0xa05520);
     g.fillRect(bookX + 10, shelfY - 14, 7, 14);
 
-    // 하단 테이블/바닥 영역
+    // 테이블
     const floorY = h * 0.72;
-    // 테이블 상판
     g.fillStyle(0x5a4535);
     g.fillRect(0, floorY, w, 8);
     g.fillStyle(0x4a3828);
@@ -1110,11 +1341,157 @@ class TreeScene extends Phaser.Scene {
       g.lineBetween(0, y, w, y);
     }
 
-    // 은은한 빛 (상단 중앙)
-    g.fillStyle(0xffeedd, 0.03);
-    g.fillCircle(w / 2, 0, w * 0.5);
-    g.fillStyle(0xffeedd, 0.02);
-    g.fillCircle(w / 2, h * 0.3, w * 0.4);
+    // 창문에서 흘러드는 은은한 빛 (테이블에 반사)
+    g.fillStyle(0xffeedd, 0.04);
+    g.fillCircle(w / 2, floorY, w * 0.45);
+  }
+
+  // ── Sky (창문 안쪽 하늘) ─────────────────
+  drawSky() {
+    const g = this.skyGraphics;
+    const win = this.getWindowBounds();
+    g.clear();
+
+    const now = new Date();
+    const hour = now.getHours() + now.getMinutes() / 60;
+    const [topColor, bottomColor] = getSkyColors(hour);
+
+    // 그라디언트 — 20개 가로 스트라이프로 흉내 (Graphics에는 gradient fill이 없음)
+    const steps = 20;
+    const stripH = Math.ceil(win.h / steps) + 1;
+    for (let i = 0; i < steps; i++) {
+      const t = i / (steps - 1);
+      const color = lerpHex(topColor, bottomColor, t);
+      g.fillStyle(color);
+      g.fillRect(win.x, win.y + (win.h * i) / steps, win.w, stripH);
+    }
+
+    // 별 (밤 시간만)
+    if (isNightHour(hour)) {
+      if (!this._stars) {
+        this._stars = [];
+        for (let i = 0; i < 14; i++) {
+          this._stars.push({
+            x: win.x + Phaser.Math.Between(10, win.w - 10),
+            y: win.y + Phaser.Math.Between(8, win.h * 0.55),
+            r: Phaser.Math.FloatBetween(0.8, 1.6),
+          });
+        }
+      }
+      g.fillStyle(0xffffff, 0.9);
+      this._stars.forEach(s => g.fillCircle(s.x, s.y, s.r));
+    }
+
+    // 해 (낮) / 달 (밤)
+    const sunX = win.x + win.w * 0.78;
+    const sunY = win.y + win.h * 0.22;
+    if (isDayHour(hour)) {
+      // 햇무리 + 본체
+      g.fillStyle(0xffe58a, 0.35);
+      g.fillCircle(sunX, sunY, 26);
+      g.fillStyle(0xfff0a0, 0.9);
+      g.fillCircle(sunX, sunY, 16);
+    } else if (hour >= 18 && hour < 20) {
+      // 해질녘 — 지평선 근처 해
+      g.fillStyle(0xffb070, 0.5);
+      g.fillCircle(sunX, win.y + win.h * 0.55, 28);
+      g.fillStyle(0xffd080, 0.85);
+      g.fillCircle(sunX, win.y + win.h * 0.55, 18);
+    } else {
+      // 달
+      g.fillStyle(0xffffff, 0.12);
+      g.fillCircle(sunX, sunY, 22);
+      g.fillStyle(0xfff8e0, 0.88);
+      g.fillCircle(sunX, sunY, 13);
+      // 초승달 느낌 — 반쪽 어둡게
+      const [topC] = getSkyColors(hour);
+      g.fillStyle(topC, 0.9);
+      g.fillCircle(sunX + 5, sunY - 1, 12);
+    }
+  }
+
+  // ── Clouds (구름) ───────────────────────
+  _createCloudSprite(weather) {
+    const c = this.add.container(0, 0);
+    const alpha = weather === 'rainy' ? 0.55 : 0.85;
+    const color = weather === 'rainy' ? 0xb8b8c0 : 0xffffff;
+    const s = Phaser.Math.FloatBetween(0.75, 1.25);
+    c.add(this.add.ellipse(-18 * s, 0, 38 * s, 20 * s, color, alpha));
+    c.add(this.add.ellipse(0, -7 * s, 34 * s, 21 * s, color, alpha));
+    c.add(this.add.ellipse(17 * s, 3 * s, 32 * s, 18 * s, color, alpha));
+    return c;
+  }
+
+  spawnClouds() {
+    // 기존 구름 정리
+    if (this._clouds) this._clouds.forEach(c => { try { c.destroy(); } catch (e) {} });
+    this._clouds = [];
+
+    const win = this.getWindowBounds();
+    const weather = state.todayWeather || 'sunny';
+    const cloudCount = weather === 'sunny' ? 2 : (weather === 'cloudy' ? 5 : 4);
+
+    for (let i = 0; i < cloudCount; i++) {
+      const cloud = this._createCloudSprite(weather);
+      const y = win.y + win.h * Phaser.Math.FloatBetween(0.08, 0.5);
+      const startX = win.x - 70;
+      const endX = win.x + win.w + 70;
+      const duration = Phaser.Math.Between(45000, 75000);
+      // 초기 위치는 경로 어딘가에서 시작
+      const initialX = Phaser.Math.FloatBetween(startX, endX);
+      cloud.setPosition(initialX, y);
+      this.skyObjects.add(cloud);
+      this._clouds.push(cloud);
+
+      // 남은 거리만큼 첫 트윈, 끝나면 startX로 돌아가서 반복 루프
+      const progress = (initialX - startX) / (endX - startX);
+      const firstDur = Math.max(500, duration * (1 - progress));
+      this.tweens.add({
+        targets: cloud,
+        x: endX,
+        duration: firstDur,
+        ease: 'Linear',
+        onComplete: () => {
+          cloud.x = startX;
+          this.tweens.add({
+            targets: cloud,
+            x: endX,
+            duration,
+            ease: 'Linear',
+            loop: -1,
+          });
+        },
+      });
+    }
+  }
+
+  // ── Rain (비) ───────────────────────────
+  startRain() {
+    if (this._rainTimer) return;
+    const win = this.getWindowBounds();
+    this._rainTimer = this.time.addEvent({
+      delay: 70,
+      loop: true,
+      callback: () => {
+        const x = Phaser.Math.Between(win.x, win.x + win.w);
+        const drop = this.add.rectangle(x, win.y, 1, 9, 0x9ec0d8, 0.7);
+        this.skyObjects.add(drop);
+        this.tweens.add({
+          targets: drop,
+          y: win.y + win.h + 10,
+          duration: 700,
+          ease: 'Linear',
+          onComplete: () => { try { drop.destroy(); } catch (e) {} },
+        });
+      },
+    });
+  }
+
+  stopRain() {
+    if (this._rainTimer) {
+      this._rainTimer.remove();
+      this._rainTimer = null;
+    }
   }
 
   drawTree(force) {
@@ -1300,7 +1677,16 @@ class TreeScene extends Phaser.Scene {
 
   resize(gameSize) {
     this.currentStage = -1;
+    // 별 좌표는 화면 크기에 따라 다시 계산
+    this._stars = null;
+    this.drawSky();
     this.drawBackground();
+    // 구름/비 재생성 (크기 변화 시 위치가 어긋나지 않게)
+    this.spawnClouds();
+    if (state.todayWeather === 'rainy') {
+      this.stopRain();
+      this.startRain();
+    }
     this.drawTree(true);
   }
 }
@@ -1632,48 +2018,38 @@ function renderRewardPanel() {
   if (resultArea) resultArea.textContent = '';
 }
 
-// ── Tutorial system ─────────────────────────
-const TUTORIAL_STEPS = [
-  '나무를 톡 눌러보세요 👆',
-  '원두 포인트를 얻었어요 ☕',
-  '물이 있어야 더 잘 자라요 💧',
-  '자라면 새로운 컬렉션이 열려요 📖',
+// ── Tutorial system (popup-based) ───────────
+// 이전의 자동 사라지는 토스트 → 사용자가 읽고 탭해서 닫는 팝업으로 교체.
+// 4장 카드로 순차 진행, 큐잉 시스템을 재활용.
+const TUTORIAL_CARDS = [
+  { icon: '🌱', title: '어서오세요!',
+    body: '<strong>PNS 커피나무</strong>를 함께 키워봐요.<br>천천히, 그리고 편안하게.' },
+  { icon: '👆', title: '나무를 톡 눌러보세요',
+    body: '나무를 탭하면 <strong>원두 포인트</strong>를 얻어요.<br>탭할 때마다 조금씩 자라기도 해요.' },
+  { icon: '💧', title: '물을 잊지 마세요',
+    body: '물이 있어야 나무가 잘 자라요.<br>하단 <strong>물주기</strong> 버튼으로 Water를 채워주세요.' },
+  { icon: '📖', title: '자라면 열려요',
+    body: '단계가 오를수록 새로운 <strong>컬렉션</strong>이 해금돼요.<br>꽃이 피고, 체리가 맺히고, 수확까지 — 천천히 즐겨주세요.' },
 ];
 
 function startTutorial() {
   if (state.tutorialDone) return;
-  showTutorialStep(0);
+  TUTORIAL_CARDS.forEach((card, idx) => {
+    const isLast = idx === TUTORIAL_CARDS.length - 1;
+    showNotice({
+      icon: card.icon,
+      title: card.title,
+      body: card.body,
+      cta: isLast ? '시작하기' : '다음',
+      onClose: isLast ? () => { state.tutorialDone = true; saveState(); } : null,
+    });
+  });
 }
 
-function showTutorialStep(step) {
-  if (step >= TUTORIAL_STEPS.length) {
-    state.tutorialDone = true;
-    saveState();
-    const hint = $('tutorialHint');
-    if (hint) {
-      hint.classList.remove('visible');
-      setTimeout(() => hint.remove(), 300);
-    }
-    return;
-  }
-
+// (레거시) 이전 토스트 힌트 DOM이 남아있으면 안전하게 숨김
+function showTutorialStep(_step) {
   const hint = $('tutorialHint');
-  hint.textContent = TUTORIAL_STEPS[step];
-  hint.classList.add('visible');
-
-  // Step 0: 첫 탭 대기
-  if (step === 0) {
-    const handler = () => {
-      document.removeEventListener('pointerdown', handler);
-      setTimeout(() => showTutorialStep(1), 300);
-    };
-    // 캔버스 탭 시 다음
-    setTimeout(() => document.addEventListener('pointerdown', handler, { once: true }), 800);
-  }
-  // Step 1~3: 자동 진행
-  else {
-    setTimeout(() => showTutorialStep(step + 1), 2500);
-  }
+  if (hint) hint.classList.remove('visible');
 }
 
 // ── Particle effects (Phaser 씬 내) ─────────
@@ -1744,6 +2120,15 @@ function boot() {
   setTimeout(() => {
     checkRevisit();
     checkDailyBonus();
+    // 비 오는 날 첫 방문 보너스
+    if (applyRainyBonusIfNeeded()) {
+      updateHUD();
+      showNotice({
+        icon: '☔',
+        title: '오늘은 비가 와요',
+        body: '창밖에 비가 내리네요.<br>나무가 <strong>Water +10</strong>을 머금었어요.',
+      });
+    }
   }, 1200);
 
   // 첫 방문 튜토리얼
