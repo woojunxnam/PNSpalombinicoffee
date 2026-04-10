@@ -805,7 +805,6 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .nav-sub-trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
   padding: 10px 14px;
   font-size: 14px;
@@ -822,6 +821,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   color: var(--accent);
 }
 .nav-sub-arrow {
+  margin-left: auto; /* 화살표만 우측으로 */
   flex-shrink: 0;
   opacity: 0.45;
   transition: opacity .12s;
