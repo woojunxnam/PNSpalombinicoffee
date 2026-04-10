@@ -304,6 +304,11 @@ function defaultState() {
       firstFlowerTime: 0, // 첫 꽃 마일스톤 (Stage 3 도달 시각)
       firstCherryTime: 0, // 첫 체리 마일스톤 (Stage 4 도달 시각)
     },
+    // Phase E — 펫 시스템 (cozy, 배틀/가챠 금지)
+    pets: {
+      crema: { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+      cappu: { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+    },
   };
 }
 
@@ -323,7 +328,17 @@ function loadState() {
       const parsed = JSON.parse(raw);
       // 누락 필드 보완
       const def = defaultState();
-      return { ...def, ...parsed, stats: { ...def.stats, ...parsed.stats } };
+      const mergedPets = { ...def.pets };
+      if (parsed.pets) {
+        for (const k of Object.keys(def.pets)) {
+          mergedPets[k] = { ...def.pets[k], ...(parsed.pets[k] || {}) };
+        }
+      }
+      return {
+        ...def, ...parsed,
+        stats: { ...def.stats, ...parsed.stats },
+        pets: mergedPets,
+      };
     }
   } catch (e) { /* corrupt data */ }
   return null;
@@ -347,6 +362,7 @@ function doHarvest() {
   state.goldenBeans += golden;
   state.harvestCount++;
   state.stats.totalHarvests++;
+  checkPetUnlocks(); // 첫 수확 → 카푸치노(고양이) 해금 체크
   playSound('harvest');
   state.growthXp = 0;
   updateStage(0, { silent: true }); // 리셋은 팝업 없이
@@ -383,6 +399,89 @@ function getNextStageXp(stage) {
   return null; // max stage
 }
 
+// ── Pet system (Phase E) ───────────────────
+// 철학: 배틀/경쟁/가챠 금지. 해금은 플레이 흔적(첫 꽃, 첫 수확) 기반.
+// 친밀도 0~5. 탭 한 번당 하루 1회만 +1. 숙제화 금지.
+const PETS = {
+  crema: {
+    name: '크레마',
+    species: '참새',
+    icon: '🐦',
+    description: '창가에 앉아 가끔 지저귀는 작은 참새.',
+    unlockNotice: {
+      icon: '🐦',
+      title: '창가에 친구가 왔어요',
+      body: '<strong>크레마</strong>라는 참새가 창문에 앉았어요.<br>가끔 쓰다듬어 주세요.',
+    },
+  },
+  cappu: {
+    name: '카푸치노',
+    species: '고양이',
+    icon: '🐱',
+    description: '테이블 위에서 나른하게 낮잠 자는 고양이.',
+    unlockNotice: {
+      icon: '🐱',
+      title: '고양이가 가게에 들렀어요',
+      body: '<strong>카푸치노</strong>라는 고양이가 테이블에 올라왔어요.<br>조용히 곁에 있어요.',
+    },
+  },
+};
+const FRIENDSHIP_MESSAGES = {
+  crema: [
+    null,
+    { icon: '🐦', title: '크레마가 당신을 알아봐요', body: '작은 참새가 이제 무서워하지 않아요.' },
+    { icon: '🐦', title: '크레마가 가까이 와요', body: '창틀 가장 앞자리에 앉기 시작했어요.' },
+    { icon: '🐦', title: '크레마가 지저귀어요', body: '작은 노랫소리가 창가에 번져요.' },
+    { icon: '🐦', title: '크레마가 편안해 보여요', body: '깃털을 고르며 오래 머무르네요.' },
+    { icon: '💕', title: '크레마는 당신의 친구예요', body: '어느새 가장 친한 친구가 됐어요.' },
+  ],
+  cappu: [
+    null,
+    { icon: '🐱', title: '카푸치노가 곁눈질을 해요', body: '모른 척하지만 사실 신경쓰고 있어요.' },
+    { icon: '🐱', title: '카푸치노가 기지개를 켜요', body: '한결 편해진 모양이에요.' },
+    { icon: '🐱', title: '카푸치노가 가르릉거려요', body: '가까이 다가오면 느낄 수 있어요.' },
+    { icon: '🐱', title: '카푸치노가 배를 보여요', body: '이건 신뢰한다는 뜻이에요.' },
+    { icon: '💕', title: '카푸치노는 당신을 신뢰해요', body: '가장 편한 자리는 당신 옆이에요.' },
+  ],
+};
+const MAX_FRIENDSHIP = 5;
+
+function checkPetUnlocks() {
+  let changed = false;
+  if (!state.pets.crema.unlocked && state.stats.firstFlowerTime) {
+    state.pets.crema.unlocked = true;
+    state.pets.crema.unlockTime = Date.now();
+    showNotice(PETS.crema.unlockNotice);
+    changed = true;
+  }
+  if (!state.pets.cappu.unlocked && (state.stats.totalHarvests || 0) >= 1) {
+    state.pets.cappu.unlocked = true;
+    state.pets.cappu.unlockTime = Date.now();
+    showNotice(PETS.cappu.unlockNotice);
+    changed = true;
+  }
+  if (changed) {
+    saveState();
+    // Phaser 씬에 펫 다시 그리기 요청
+    const scene = window._phaserGame?.scene?.getScene('TreeScene');
+    if (scene && typeof scene.refreshPets === 'function') scene.refreshPets();
+  }
+  return changed;
+}
+
+// 펫 쓰다듬기 — 탭 1회당 하루 1번만 친밀도 +1
+function petPet(petId) {
+  const pet = state.pets[petId];
+  if (!pet || !pet.unlocked) return { fed: false, leveled: false };
+  const today = todayKey();
+  if (pet.lastPetDate === today) return { fed: false, leveled: false };
+  pet.lastPetDate = today;
+  const leveled = pet.friendship < MAX_FRIENDSHIP;
+  if (leveled) pet.friendship++;
+  saveState();
+  return { fed: true, leveled };
+}
+
 // ── Stage transition detector (centralized) ─
 // 어디서든 growthXp가 바뀐 뒤 호출. 단계가 올라갔으면 팝업을 띄우고
 // 첫 꽃/첫 체리 같은 1회성 마일스톤은 저장 후 기념 연출.
@@ -416,6 +515,8 @@ function updateStage(newStage, opts) {
       }
       playSound('levelup');
       showNotice({ icon: msg.icon, title: msg.title, body: msg.body });
+      // 꽃 마일스톤 → 크레마(참새) 해금 체크
+      if (msg.milestone) checkPetUnlocks();
     }
   }
   return true;
@@ -624,6 +725,27 @@ function renderStatsPanel() {
     '</div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">⏱ 총 플레이 기간</span><span class="stats-card-value">' + playedStr + '</span></div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">🔥 연속 출석</span><span class="stats-card-value">' + (state.dailyStreak || 0) + '일</span></div>';
+
+  // 친구들 (해금된 펫만 표시)
+  const unlockedPets = Object.entries(state.pets || {}).filter(([_, p]) => p.unlocked);
+  if (unlockedPets.length > 0) {
+    let petHtml = '<div class="stats-pets"><div class="stats-pets-title">🐾 카페 친구들</div>';
+    unlockedPets.forEach(([id, p]) => {
+      const meta = PETS[id];
+      if (!meta) return;
+      const hearts = '💕'.repeat(p.friendship) + '🤍'.repeat(MAX_FRIENDSHIP - p.friendship);
+      petHtml +=
+        '<div class="stats-pet-row">' +
+          '<span class="stats-pet-icon">' + meta.icon + '</span>' +
+          '<div class="stats-pet-info">' +
+            '<div class="stats-pet-name">' + meta.name + ' <span class="stats-pet-species">(' + meta.species + ')</span></div>' +
+            '<div class="stats-pet-hearts">' + hearts + '</div>' +
+          '</div>' +
+        '</div>';
+    });
+    petHtml += '</div>';
+    body.innerHTML += petHtml;
+  }
 
   // 전 세계 누적 (Firestore 집계, 캐시가 있을 때만)
   if (globalStatsCache) {
@@ -1122,8 +1244,17 @@ class TreeScene extends Phaser.Scene {
 
     this.drawTree(true);
 
-    // 탭 이벤트
+    // 펫 (Phase E) — 나무보다 위 레이어
+    this.petContainers = {};
+    this.refreshPets();
+
+    // 탭 이벤트 — 펫이 먼저 처리되면 나무 탭 억제
+    this._petTapConsumed = false;
     this.input.on('pointerdown', (pointer) => {
+      if (this._petTapConsumed) {
+        this._petTapConsumed = false;
+        return;
+      }
       this.handleTap(pointer);
     });
   }
@@ -1675,6 +1806,221 @@ class TreeScene extends Phaser.Scene {
     }
   }
 
+  // ── Pets (Phase E) ──────────────────────
+  // 해금된 펫을 씬에 그리거나 제거. 해금 시 / 리사이즈 시 호출.
+  refreshPets() {
+    if (!this.petContainers) this.petContainers = {};
+    // 기존 펫 제거
+    Object.values(this.petContainers).forEach(c => { try { c.destroy(); } catch (e) {} });
+    this.petContainers = {};
+
+    if (state.pets?.crema?.unlocked) {
+      this.petContainers.crema = this._createSparrow();
+      this._startBirdIdle(this.petContainers.crema);
+    }
+    if (state.pets?.cappu?.unlocked) {
+      this.petContainers.cappu = this._createCat();
+      this._startCatIdle(this.petContainers.cappu);
+    }
+  }
+
+  // 참새(크레마) — 창문턱 오른쪽에 앉음
+  _createSparrow() {
+    const win = this.getWindowBounds();
+    const x = win.x + win.w * 0.82;
+    const y = win.y + win.h + 3; // 창문턱 바로 위
+    const c = this.add.container(x, y);
+
+    const body = this.add.graphics();
+    // 몸 (갈색 타원)
+    body.fillStyle(0x8b5a2b);
+    body.fillEllipse(0, -4, 12, 8);
+    // 머리
+    body.fillStyle(0x6b3f1d);
+    body.fillCircle(-5, -7, 4);
+    // 배 (밝은 베이지)
+    body.fillStyle(0xe8c99a);
+    body.fillEllipse(1, -2, 7, 5);
+    // 부리 (노랑)
+    body.fillStyle(0xf5b02e);
+    body.fillTriangle(-9, -7, -11, -6, -9, -5);
+    // 눈
+    body.fillStyle(0x000000);
+    body.fillCircle(-6, -8, 0.8);
+    // 꼬리
+    body.fillStyle(0x5a331a);
+    body.fillTriangle(4, -5, 8, -7, 8, -3);
+    // 다리 (가는 선)
+    body.lineStyle(1, 0x3a2210, 1);
+    body.lineBetween(-3, 0, -3, 3);
+    body.lineBetween(1, 0, 1, 3);
+
+    c.add(body);
+    c.setSize(22, 16);
+    c.setInteractive(
+      new Phaser.Geom.Rectangle(-11, -12, 22, 18),
+      Phaser.Geom.Rectangle.Contains
+    );
+    c.on('pointerdown', () => {
+      this._petTapConsumed = true;
+      this.onPetTap('crema', c);
+    });
+    return c;
+  }
+
+  // 고양이(카푸치노) — 테이블 위 왼쪽에 앉음
+  _createCat() {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const floorY = h * 0.72;
+    const x = w * 0.2;
+    const y = floorY - 4; // 테이블 위
+    const c = this.add.container(x, y);
+
+    const body = this.add.graphics();
+    // 몸 (회갈색 타원, 앉은 자세)
+    body.fillStyle(0xaa8866);
+    body.fillEllipse(0, -6, 22, 14);
+    // 머리
+    body.fillStyle(0xaa8866);
+    body.fillCircle(-9, -13, 6);
+    // 귀 (삼각형 2개)
+    body.fillTriangle(-13, -19, -10, -14, -14, -13);
+    body.fillTriangle(-8, -19, -5, -14, -9, -13);
+    // 귀 안쪽 (분홍)
+    body.fillStyle(0xe8a998);
+    body.fillTriangle(-12, -17, -10, -14, -13, -14);
+    // 얼굴 줄무늬
+    body.fillStyle(0x7a5a3a);
+    body.fillRect(-11, -17, 1, 3);
+    body.fillRect(-8, -17, 1, 3);
+    // 눈 (감은 — 반달)
+    body.lineStyle(1, 0x000000, 1);
+    body.lineBetween(-11, -13, -9, -13);
+    body.lineBetween(-8, -13, -6, -13);
+    // 코
+    body.fillStyle(0xe8a998);
+    body.fillTriangle(-9, -11, -10, -10, -8, -10);
+    // 앞발
+    body.fillStyle(0xc0a080);
+    body.fillRect(-5, -2, 3, 3);
+    body.fillRect(0, -2, 3, 3);
+    // 꼬리 (container 밖에서 sway 애니메이션하려고 별도)
+    const tail = this.add.graphics();
+    tail.fillStyle(0xaa8866);
+    tail.fillEllipse(12, -5, 10, 3);
+    tail.fillEllipse(16, -7, 6, 3);
+    // 꼬리 끝 밝게
+    tail.fillStyle(0xc0a080);
+    tail.fillCircle(17, -7, 1.8);
+
+    c.add(body);
+    c.add(tail);
+    c._tail = tail;
+    c.setSize(30, 22);
+    c.setInteractive(
+      new Phaser.Geom.Rectangle(-15, -20, 30, 22),
+      Phaser.Geom.Rectangle.Contains
+    );
+    c.on('pointerdown', () => {
+      this._petTapConsumed = true;
+      this.onPetTap('cappu', c);
+    });
+    return c;
+  }
+
+  _startBirdIdle(container) {
+    // 작은 호흡 — 위아래 1px
+    const baseY = container.y;
+    this.tweens.add({
+      targets: container,
+      y: baseY - 1.5,
+      duration: 1400,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
+    // 가끔 살짝 깡충 뛰기
+    const hop = () => {
+      if (!container.active) return;
+      this.tweens.add({
+        targets: container,
+        y: baseY - 5,
+        duration: 150,
+        ease: 'Quad.easeOut',
+        yoyo: true,
+        onComplete: () => {
+          this.time.delayedCall(Phaser.Math.Between(6000, 12000), hop);
+        },
+      });
+    };
+    this.time.delayedCall(Phaser.Math.Between(4000, 8000), hop);
+  }
+
+  _startCatIdle(container) {
+    // 호흡 (몸 미세하게 부풀기)
+    this.tweens.add({
+      targets: container,
+      scaleY: { from: 1, to: 1.03 },
+      duration: 2500,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
+    // 꼬리 살랑 — angle이 아니라 x 위치 살짝 흔들기
+    if (container._tail) {
+      this.tweens.add({
+        targets: container._tail,
+        x: { from: -1, to: 2 },
+        duration: 1800,
+        ease: 'Sine.easeInOut',
+        yoyo: true,
+        repeat: -1,
+      });
+    }
+  }
+
+  onPetTap(petId, container) {
+    playSound('tap');
+    // 탭 반응 — 작은 바운스
+    this.tweens.add({
+      targets: container,
+      scaleX: { from: 1, to: 1.15 },
+      scaleY: { from: 1, to: 1.15 },
+      duration: 120,
+      yoyo: true,
+      ease: 'Quad.easeOut',
+    });
+
+    // 친밀도 증가 (하루 1회)
+    const result = petPet(petId);
+    const pet = state.pets[petId];
+
+    // 하트 파티클
+    const heartColor = 0xff6688;
+    spawnParticles(this, container.x, container.y - 10, heartColor, 4, 12);
+
+    // 플로팅 텍스트
+    const canvasRect = $('gameCanvasArea').getBoundingClientRect();
+    const fx = container.x * (canvasRect.width / this.scale.width);
+    const fy = container.y * (canvasRect.height / this.scale.height) - 20;
+    if (result.fed && result.leveled) {
+      showFloatingText('+1 💕', fx, fy);
+      // 친밀도 레벨 업 팝업 (큐로 들어감)
+      const msg = FRIENDSHIP_MESSAGES[petId]?.[pet.friendship];
+      if (msg) {
+        playSound('levelup');
+        showNotice(msg);
+      }
+    } else if (result.fed) {
+      // 이미 만렙
+      showFloatingText('💕', fx, fy);
+    } else {
+      // 오늘은 이미 쓰다듬음
+      showFloatingText('🤍', fx, fy);
+    }
+  }
+
   resize(gameSize) {
     this.currentStage = -1;
     // 별 좌표는 화면 크기에 따라 다시 계산
@@ -1688,6 +2034,8 @@ class TreeScene extends Phaser.Scene {
       this.startRain();
     }
     this.drawTree(true);
+    // 펫은 좌표가 화면 비율 기반이므로 재생성
+    this.refreshPets();
   }
 }
 
@@ -2129,6 +2477,8 @@ function boot() {
         body: '창밖에 비가 내리네요.<br>나무가 <strong>Water +10</strong>을 머금었어요.',
       });
     }
+    // 저장된 상태에서 이미 조건을 만족하면 펫 해금 (마이그레이션)
+    checkPetUnlocks();
   }, 1200);
 
   // 첫 방문 튜토리얼

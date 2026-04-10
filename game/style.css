@@ -992,6 +992,55 @@ canvas {
   color: var(--accent);
 }
 
+/* ── Pet friendship (Phase E) ─────────────── */
+.stats-pets {
+  background: linear-gradient(135deg, rgba(255, 192, 203, 0.1), rgba(200, 170, 110, 0.08));
+  border: 1px solid rgba(255, 192, 203, 0.25);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+.stats-pets-title {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.stats-pet-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 4px;
+}
+.stats-pet-row + .stats-pet-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.stats-pet-icon {
+  font-size: 1.6rem;
+  width: 30px;
+  text-align: center;
+}
+.stats-pet-info {
+  flex: 1;
+  min-width: 0;
+}
+.stats-pet-name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.stats-pet-species {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  font-weight: 400;
+}
+.stats-pet-hearts {
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
 /* ── Revisit popup ───────────────────────── */
 .revisit-text {
   font-size: 0.88rem;
