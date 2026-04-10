@@ -3131,9 +3131,32 @@ function boot() {
   }
 
   // 서비스 워커 등록 (PWA 오프라인 지원)
+  // 새 sw.js 가 발견되면 자동으로 SKIP_WAITING → 한 번 새로고침해서 최신 자산 적용
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('sw.js').catch(() => { /* fail silently */ });
+      navigator.serviceWorker.register('sw.js').then((reg) => {
+        // 새 SW 설치 감지
+        reg.addEventListener('updatefound', () => {
+          const nw = reg.installing;
+          if (!nw) return;
+          nw.addEventListener('statechange', () => {
+            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+              // 기존 컨트롤러가 있는 상태에서 새 SW가 대기 중 → 즉시 활성화 요청
+              nw.postMessage('SKIP_WAITING');
+            }
+          });
+        });
+        // 페이지 로드마다 업데이트 체크 강제
+        try { reg.update(); } catch (e) {}
+      }).catch(() => { /* fail silently */ });
+
+      // controller 가 바뀌면 (= 새 SW가 활성화됨) 한 번만 새로고침
+      let reloaded = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (reloaded) return;
+        reloaded = true;
+        window.location.reload();
+      });
     });
   }
 
