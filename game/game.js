@@ -215,6 +215,17 @@ const C = Object.freeze({
 
   HARVEST_GOLDEN_BEANS: 3, // 수확 시 황금 원두 지급량
 
+  // 일일 출석 보상 (1일차부터 7일차 순환)
+  DAILY_REWARDS: [
+    { beans: 10, golden: 0, label: '☕ 원두 +10' },
+    { beans: 15, golden: 0, label: '☕ 원두 +15' },
+    { beans: 20, golden: 0, label: '☕ 원두 +20' },
+    { beans: 25, golden: 0, label: '☕ 원두 +25' },
+    { beans: 30, golden: 0, label: '☕ 원두 +30' },
+    { beans: 40, golden: 0, label: '☕ 원두 +40' },
+    { beans: 50, golden: 1, label: '☕ 원두 +50, ✨ 황금 원두 +1' },
+  ],
+
   STAGES: [
     { name: '새싹',        emoji: '🌱', minXp: 0   },
     { name: '어린 묘목',    emoji: '🌿', minXp: 15  },
@@ -266,6 +277,10 @@ function defaultState() {
     harvestCount: 0,
     lastSaveTime: Date.now(),
     lastWaterTime: 0,
+    firstPlayTime: Date.now(),
+    soundEnabled: true,
+    lastDailyClaim: 0,        // 마지막 일일 보너스 받은 날 (날짜 키, YYYYMMDD 숫자)
+    dailyStreak: 0,           // 연속 출석 일수
     equippedPotId: 'pot_terracotta_basic',
     equippedDecorId: null,
     unlocked: ['pot_terracotta_basic'],
@@ -274,6 +289,8 @@ function defaultState() {
     stats: {
       totalTaps: 0,
       totalWaterings: 0,
+      totalHarvests: 0,
+      totalBeansEarned: 0,
     },
   };
 }
@@ -317,6 +334,8 @@ function doHarvest() {
   const golden = C.HARVEST_GOLDEN_BEANS + state.harvestCount; // 수확할수록 보너스
   state.goldenBeans += golden;
   state.harvestCount++;
+  state.stats.totalHarvests++;
+  playSound('harvest');
   state.growthXp = 0;
   state.stage = 0;
   state.water = C.WATER_START;
@@ -390,6 +409,188 @@ function processOffline(savedState) {
     waterDrain,
     stoppedDueToWater,
   };
+}
+
+// ── Sound system (Web Audio, no asset files) ─
+let audioCtx = null;
+function ensureAudio() {
+  if (audioCtx) return audioCtx;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (Ctx) audioCtx = new Ctx();
+  } catch (e) { /* unsupported */ }
+  return audioCtx;
+}
+function playSound(type) {
+  if (!state || !state.soundEnabled) return;
+  const ctx = ensureAudio();
+  if (!ctx) return;
+  if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
+  const now = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  if (type === 'tap') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, now);
+    osc.frequency.exponentialRampToValueAtTime(660, now + 0.08);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    osc.start(now);
+    osc.stop(now + 0.12);
+  } else if (type === 'water') {
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(220, now);
+    osc.frequency.exponentialRampToValueAtTime(440, now + 0.18);
+    gain.gain.setValueAtTime(0.1, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+    osc.start(now);
+    osc.stop(now + 0.25);
+  } else if (type === 'levelup') {
+    // 3-note arpeggio
+    [523.25, 659.25, 783.99].forEach((f, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.value = f;
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, now + i * 0.08);
+      g.gain.exponentialRampToValueAtTime(0.12, now + i * 0.08 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.18);
+      o.start(now + i * 0.08);
+      o.stop(now + i * 0.08 + 0.2);
+    });
+    osc.disconnect();
+    return;
+  } else if (type === 'harvest') {
+    // Cheerful 4-note jingle
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = 'triangle';
+      o.frequency.value = f;
+      o.connect(g); g.connect(ctx.destination);
+      g.gain.setValueAtTime(0.0001, now + i * 0.1);
+      g.gain.exponentialRampToValueAtTime(0.14, now + i * 0.1 + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.22);
+      o.start(now + i * 0.1);
+      o.stop(now + i * 0.1 + 0.25);
+    });
+    osc.disconnect();
+    return;
+  } else if (type === 'reward') {
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(587.33, now);
+    osc.frequency.setValueAtTime(880, now + 0.1);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+    osc.start(now);
+    osc.stop(now + 0.32);
+  }
+}
+
+function toggleSound() {
+  state.soundEnabled = !state.soundEnabled;
+  saveState();
+  updateSoundButton();
+  if (state.soundEnabled) playSound('tap');
+}
+function updateSoundButton() {
+  const btn = $('btnSoundToggle');
+  if (!btn) return;
+  btn.textContent = state.soundEnabled ? '🔊 사운드 켜짐' : '🔇 사운드 꺼짐';
+}
+
+// ── Daily bonus ─────────────────────────────
+function todayKey() {
+  const d = new Date();
+  return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+}
+function daysBetween(a, b) {
+  // a, b are YYYYMMDD numbers — return integer day diff
+  const pa = new Date(Math.floor(a / 10000), Math.floor((a % 10000) / 100) - 1, a % 100);
+  const pb = new Date(Math.floor(b / 10000), Math.floor((b % 10000) / 100) - 1, b % 100);
+  return Math.round((pb - pa) / 86400000);
+}
+function checkDailyBonus() {
+  const today = todayKey();
+  if (state.lastDailyClaim === today) return; // 이미 받음
+  const diff = state.lastDailyClaim ? daysBetween(state.lastDailyClaim, today) : 999;
+  if (diff === 1) {
+    state.dailyStreak = Math.min(7, (state.dailyStreak || 0) + 1);
+  } else {
+    state.dailyStreak = 1; // 연속이 끊김 → 1일차부터 다시
+  }
+  showDailyBonusPopup();
+}
+function showDailyBonusPopup() {
+  const day = state.dailyStreak || 1;
+  const reward = C.DAILY_REWARDS[day - 1];
+  const body = $('dailyBonusBody');
+  body.innerHTML =
+    '<div class="daily-bonus-day">' + day + '일차 출석</div>' +
+    '<div class="daily-bonus-reward">' +
+      '<span class="daily-bonus-reward-icon">🎁</span>' +
+      '<div class="daily-bonus-reward-text">' + reward.label + '</div>' +
+    '</div>' +
+    '<div class="daily-bonus-streak">7일 연속 출석 시 황금 원두를 드려요!</div>';
+  showOverlay('dailyBonusPopup');
+}
+function claimDailyBonus() {
+  const day = state.dailyStreak || 1;
+  const reward = C.DAILY_REWARDS[day - 1];
+  state.beanPoints += reward.beans;
+  state.goldenBeans += reward.golden;
+  state.stats.totalBeansEarned += reward.beans;
+  state.lastDailyClaim = todayKey();
+  playSound('reward');
+  updateHUD();
+  saveState();
+  cloudSaveNow();
+  hideOverlay('dailyBonusPopup');
+}
+
+// ── Stats panel ─────────────────────────────
+function renderStatsPanel() {
+  const playedMs = Date.now() - (state.firstPlayTime || Date.now());
+  const playedDays = Math.floor(playedMs / 86400000);
+  const playedHours = Math.floor((playedMs % 86400000) / 3600000);
+  let playedStr;
+  if (playedDays > 0) playedStr = playedDays + '일 ' + playedHours + '시간';
+  else if (playedHours > 0) playedStr = playedHours + '시간';
+  else playedStr = Math.max(1, Math.floor(playedMs / 60000)) + '분';
+
+  const body = $('statsBody');
+  body.innerHTML =
+    '<div class="stats-grid">' +
+      '<div class="stats-card"><div class="stats-card-icon">👆</div><div class="stats-card-value">' + (state.stats.totalTaps || 0) + '</div><div class="stats-card-label">총 탭 수</div></div>' +
+      '<div class="stats-card"><div class="stats-card-icon">💧</div><div class="stats-card-value">' + (state.stats.totalWaterings || 0) + '</div><div class="stats-card-label">물주기 횟수</div></div>' +
+      '<div class="stats-card"><div class="stats-card-icon">☕</div><div class="stats-card-value">' + (state.stats.totalBeansEarned || state.beanPoints) + '</div><div class="stats-card-label">획득 원두</div></div>' +
+      '<div class="stats-card"><div class="stats-card-icon">🍒</div><div class="stats-card-value">' + (state.stats.totalHarvests || state.harvestCount || 0) + '</div><div class="stats-card-label">수확 횟수</div></div>' +
+      '<div class="stats-card"><div class="stats-card-icon">✨</div><div class="stats-card-value">' + (state.goldenBeans || 0) + '</div><div class="stats-card-label">보유 황금 원두</div></div>' +
+      '<div class="stats-card"><div class="stats-card-icon">📖</div><div class="stats-card-value">' + (state.unlocked.length || 0) + '</div><div class="stats-card-label">컬렉션 해금</div></div>' +
+    '</div>' +
+    '<div class="stats-row-wide"><span class="stats-card-label">⏱ 총 플레이 기간</span><span class="stats-card-value">' + playedStr + '</span></div>' +
+    '<div class="stats-row-wide"><span class="stats-card-label">🔥 연속 출석</span><span class="stats-card-value">' + (state.dailyStreak || 0) + '일</span></div>';
+}
+
+// ── Loading screen ──────────────────────────
+function setLoadingProgress(pct, tip) {
+  const fill = $('loadingBarFill');
+  if (fill) fill.style.width = pct + '%';
+  if (tip) {
+    const tipEl = $('loadingTip');
+    if (tipEl) tipEl.textContent = tip;
+  }
+}
+function hideLoadingScreen() {
+  const ls = $('loadingScreen');
+  if (!ls) return;
+  setLoadingProgress(100);
+  setTimeout(() => ls.classList.add('hidden'), 200);
+  setTimeout(() => { try { ls.remove(); } catch(e){} }, 1000);
 }
 
 // ── DOM helpers ─────────────────────────────
@@ -503,6 +704,7 @@ function doWater() {
   state.water = Math.min(C.WATER_MAX, state.water + C.WATER_REFILL);
   state.lastWaterTime = now;
   state.stats.totalWaterings++;
+  playSound('water');
   checkUnlocks();
   updateHUD();
   saveState();
@@ -605,6 +807,8 @@ class TreeScene extends Phaser.Scene {
     // 원두 포인트 (항상)
     state.beanPoints += C.TAP_BEANS;
     state.stats.totalTaps++;
+    state.stats.totalBeansEarned += C.TAP_BEANS;
+    playSound('tap');
 
     // 성장 XP (Water > 0일 때만)
     if (state.water > 0) {
@@ -612,6 +816,7 @@ class TreeScene extends Phaser.Scene {
       const newStage = getStage(state.growthXp);
       if (newStage !== state.stage) {
         state.stage = newStage;
+        playSound('levelup');
       }
     }
 
@@ -1080,10 +1285,27 @@ function setupDOMEvents() {
   $('accountPanelClose').addEventListener('click', () => hideOverlay('accountPanel'));
 
   // 설정
-  $('btnSettings').addEventListener('click', () => showOverlay('settingsPanel'));
+  $('btnSettings').addEventListener('click', () => {
+    updateSoundButton();
+    showOverlay('settingsPanel');
+  });
   $('settingsClose').addEventListener('click', () => hideOverlay('settingsPanel'));
   $('collectionClose').addEventListener('click', () => hideOverlay('collectionPanel'));
   $('harvestPopupClose').addEventListener('click', () => hideOverlay('harvestPopup'));
+
+  // 사운드 토글
+  $('btnSoundToggle').addEventListener('click', toggleSound);
+
+  // 통계 패널
+  $('btnStats').addEventListener('click', () => {
+    renderStatsPanel();
+    hideOverlay('settingsPanel');
+    showOverlay('statsPanel');
+  });
+  $('statsClose').addEventListener('click', () => hideOverlay('statsPanel'));
+
+  // 일일 보너스 받기
+  $('dailyBonusClose').addEventListener('click', claimDailyBonus);
 
   // 데이터 초기화
   $('btnResetData').addEventListener('click', () => {
@@ -1128,7 +1350,10 @@ function grantReward(code) {
 
   // 보상 적용
   if (reward.water) state.water = Math.min(C.WATER_MAX, state.water + reward.water);
-  if (reward.beans) state.beanPoints += reward.beans;
+  if (reward.beans) {
+    state.beanPoints += reward.beans;
+    state.stats.totalBeansEarned = (state.stats.totalBeansEarned || 0) + reward.beans;
+  }
   if (reward.xp && state.water > 0) state.growthXp += reward.xp;
   if (reward.unlock && !state.unlocked.includes(reward.unlock)) {
     state.unlocked.push(reward.unlock);
@@ -1255,6 +1480,8 @@ function spawnParticles(scene, x, y, color, count, spread) {
 
 // ── Boot ────────────────────────────────────
 function boot() {
+  setLoadingProgress(20, '데이터를 불러오는 중...');
+
   // 저장 데이터 불러오기
   const saved = loadState();
 
@@ -1280,16 +1507,26 @@ function boot() {
     startWaterCooldownTimer();
   }
 
+  setLoadingProgress(50, '게임 준비 중...');
   setupDOMEvents();
   initPhaser();
+  setLoadingProgress(80, '클라우드 연결 중...');
   initFirebase();
 
   // URL 보상 파라미터 처리
   applyRewardFromUrl();
 
+  // 로딩 화면 숨김 (Phaser 첫 프레임 렌더링 대기)
+  setTimeout(hideLoadingScreen, 500);
+
+  // 일일 출석 확인 (로딩 화면 숨긴 후 약간 늦게)
+  setTimeout(() => {
+    checkDailyBonus();
+  }, 1200);
+
   // 첫 방문 튜토리얼
   if (!state.tutorialDone) {
-    setTimeout(startTutorial, 1000);
+    setTimeout(startTutorial, 1800);
   }
 }
 

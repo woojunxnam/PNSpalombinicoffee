@@ -15,6 +15,17 @@
 </head>
 <body>
 
+  <!-- 로딩 화면 -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-inner">
+      <div class="loading-logo">🌱</div>
+      <h1 class="loading-title">커피나무 키우기</h1>
+      <p class="loading-subtitle">PNS 팔롬비니</p>
+      <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div>
+      <p class="loading-tip" id="loadingTip">탭하면 원두가 자라요</p>
+    </div>
+  </div>
+
   <!-- 가로 회전 안내 -->
   <div class="rotate-notice" id="rotateNotice">
     <div class="rotate-notice-inner">
@@ -152,10 +163,30 @@
     <div class="popup">
       <h3>설정</h3>
       <div class="popup-body" style="display:flex;flex-direction:column;gap:10px;">
+        <button class="popup-btn" id="btnSoundToggle">🔊 사운드 켜짐</button>
+        <button class="popup-btn" id="btnStats">📊 통계 보기</button>
         <button class="popup-btn" id="btnRewardCode">🎁 보상 코드 입력</button>
         <button class="popup-btn popup-btn-danger" id="btnResetData">데이터 초기화</button>
       </div>
       <button class="popup-btn popup-btn-secondary" id="settingsClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 통계 패널 -->
+  <div class="overlay" id="statsPanel">
+    <div class="popup">
+      <h3>📊 통계</h3>
+      <div class="popup-body" id="statsBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="statsClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 일일 보너스 팝업 -->
+  <div class="overlay" id="dailyBonusPopup">
+    <div class="popup">
+      <h3>🎁 일일 출석 보너스</h3>
+      <div class="popup-body" id="dailyBonusBody"></div>
+      <button class="popup-btn" id="dailyBonusClose">받기</button>
     </div>
   </div>
 
