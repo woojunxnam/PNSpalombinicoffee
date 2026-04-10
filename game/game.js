@@ -296,6 +296,14 @@ function defaultState() {
     unlocked: ['pot_terracotta_basic'],
     claimedRewards: [],
     tutorialDone: false,
+    // Phase F-1 — 수확 품질 시스템 (내부 변수, 외부에 숫자 노출 없음)
+    stage4EnterTime: 0,      // 현재 사이클에서 Stage 4(체리) 진입 시각
+    stage4WaterOkSec: 0,     // Stage 4 진입 후 Water>0이었던 누적 초
+    totalWaterOkSec: 0,      // 전체 플레이 Water>0 누적 초
+    totalPlaySec: 0,         // 전체 플레이 누적 초 (online tick)
+    coffeeCerts: 0,          // 원두 증서 (실제 카페 쿠폰 전환용 — UI는 Phase I)
+    coffeeCertsEarned: 0,    // 누적 획득 증서
+    lastHarvestQuality: null,// 마지막 수확 품질 (디버그/통계용 0~100)
     stats: {
       totalTaps: 0,
       totalWaterings: 0,
@@ -304,11 +312,15 @@ function defaultState() {
       firstFlowerTime: 0, // 첫 꽃 마일스톤 (Stage 3 도달 시각)
       firstCherryTime: 0, // 첫 체리 마일스톤 (Stage 4 도달 시각)
     },
-    // Phase E — 펫 시스템 (cozy, 배틀/가챠 금지)
+    // Phase E/F-2 — 펫 시스템 (cozy, 배틀/가챠 금지)
     pets: {
-      crema: { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
-      cappu: { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+      crema:     { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+      cappu:     { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+      americano: { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
+      espresso:  { unlocked: false, friendship: 0, lastPetDate: 0, unlockTime: 0 },
     },
+    // Phase F-2 — 비 오는 날 누적 방문 (에스프레소 해금용, 날짜 문자열 배열)
+    rainyVisitDates: [],
   };
 }
 
@@ -356,21 +368,132 @@ function canHarvest() {
   return state.stage >= 4; // Stage 5 (커피 체리)
 }
 
+// 0~1 범위로 클램프
+function _clamp01(v) { return Math.max(0, Math.min(1, v)); }
+
+// Stage 4에서의 숙성도 (0~1) — Water가 충분히 유지된 시간 / 2시간
+function getRipeness() {
+  if (state.stage < 4) return 0;
+  const okSec = state.stage4WaterOkSec || 0;
+  return _clamp01(okSec / (2 * 3600)); // 2시간이면 만숙
+}
+
+// 내부 품질 공식 — 7변수, 총 100점 만점
+// UI에는 노출되지 않음. 등급/감성 문장으로만 외부화.
+function computeHarvestQuality() {
+  // 1) Ripeness 0~30
+  const ripe = Math.round(getRipeness() * 30);
+  // 2) Care 0~25 — 전체 플레이 중 Water>0이었던 비율
+  const totalSec = Math.max(1, state.totalPlaySec || 0);
+  const careRatio = (state.totalWaterOkSec || 0) / totalSec;
+  const care = Math.round(_clamp01(careRatio) * 25);
+  // 3) Weather 0~15
+  let weather = 5;
+  if (state.todayWeather === 'cloudy') weather = 10;
+  else if (state.todayWeather === 'rainy') weather = 15;
+  // 4) Pet 0~10 — 친밀도 합계
+  let petSum = 0;
+  if (state.pets) {
+    for (const p of Object.values(state.pets)) {
+      if (p && p.unlocked) petSum += (p.friendship || 0);
+    }
+  }
+  const pet = Math.min(10, petSum);
+  // 5) Time of day 0~5 — 오전 6~9시 수확 보너스
+  const hr = new Date().getHours();
+  const time = (hr >= 6 && hr < 9) ? 5 : 0;
+  // 6) Streak 0~10 — 연속 출석일
+  const streak = Math.min(10, state.dailyStreak || 0);
+  // 7) Rarity Roll 0~5 — 진짜 랜덤
+  const rarity = Math.floor(Math.random() * 6);
+
+  const total = ripe + care + weather + pet + time + streak + rarity;
+  return Math.max(0, Math.min(100, total));
+}
+
+// 등급 결정 — 점수 → 등급 라벨/별/지급량
+const HARVEST_GRADES = [
+  { min: 0,  max: 34,  key: 'plain',    label: '평범한 수확',  stars: 1, golden: 1, cert: 0 },
+  { min: 35, max: 59,  key: 'good',     label: '양호한 수확',  stars: 2, golden: 2, cert: 0 },
+  { min: 60, max: 84,  key: 'fine',     label: '훌륭한 수확',  stars: 3, golden: 3, cert: 0 },
+  { min: 85, max: 100, key: 'special',  label: '특별 수확',    stars: 4, golden: 4, cert: 1 },
+];
+function getHarvestGrade(score) {
+  for (const g of HARVEST_GRADES) {
+    if (score >= g.min && score <= g.max) return g;
+  }
+  return HARVEST_GRADES[0];
+}
+
+// 감성 문장 빌더 — 어떤 변수가 두드러졌는지에 따라 짧은 문장 모음 반환.
+// 절대 숫자 노출 금지.
+function buildHarvestPhrases() {
+  const phrases = [];
+  // 날씨
+  if (state.todayWeather === 'rainy') phrases.push('비 내린 날의 맛이 배어있어요');
+  else if (state.todayWeather === 'cloudy') phrases.push('흐린 하늘 아래 차분히 익었어요');
+  // 시간대
+  const hr = new Date().getHours();
+  if (hr >= 6 && hr < 9) phrases.push('아침 햇살을 머금은 향이 나요');
+  else if (hr >= 18 && hr < 20) phrases.push('노을빛이 깃든 체리예요');
+  else if (hr >= 20 || hr < 5) phrases.push('고요한 밤에 수확됐어요');
+  // 펫
+  if (state.pets?.crema?.unlocked && state.pets?.cappu?.unlocked) {
+    phrases.push('크레마와 카푸치노가 지켜봤어요');
+  } else if (state.pets?.crema?.unlocked) {
+    phrases.push('크레마가 창가에서 지켜봤어요');
+  } else if (state.pets?.cappu?.unlocked) {
+    phrases.push('카푸치노가 곁에서 졸고 있었어요');
+  }
+  // Ripeness
+  const ripe = getRipeness();
+  if (ripe >= 0.95) phrases.push('완벽하게 무르익었어요');
+  else if (ripe >= 0.6) phrases.push('잘 익은 향이 풍겨요');
+  else if (ripe < 0.3) phrases.push('아직 풋내가 살짝 남아있어요');
+  // Care
+  const careRatio = (state.totalWaterOkSec || 0) / Math.max(1, state.totalPlaySec || 0);
+  if (careRatio >= 0.8) phrases.push('한결같이 보살펴진 흔적이 보여요');
+  else if (careRatio < 0.4) phrases.push('목마른 시간이 많았던 것 같아요');
+  // Streak
+  if ((state.dailyStreak || 0) >= 6) phrases.push('매일같이 들러주셔서 고마워요');
+
+  // 너무 짧으면 기본 한 줄 보강
+  if (phrases.length === 0) phrases.push('오늘도 한 알 한 알 정성껏 자랐어요');
+  // 최대 4줄
+  return phrases.slice(0, 4);
+}
+
 function doHarvest() {
-  if (!canHarvest()) return;
-  const golden = C.HARVEST_GOLDEN_BEANS + state.harvestCount; // 수확할수록 보너스
-  state.goldenBeans += golden;
+  if (!canHarvest()) return null;
+
+  const score = computeHarvestQuality();
+  const grade = getHarvestGrade(score);
+  const phrases = buildHarvestPhrases();
+
+  state.goldenBeans += grade.golden;
+  if (grade.cert > 0) {
+    state.coffeeCerts = (state.coffeeCerts || 0) + grade.cert;
+    state.coffeeCertsEarned = (state.coffeeCertsEarned || 0) + grade.cert;
+  }
   state.harvestCount++;
   state.stats.totalHarvests++;
+  state.lastHarvestQuality = score;
+
   checkPetUnlocks(); // 첫 수확 → 카푸치노(고양이) 해금 체크
   playSound('harvest');
+
+  // Stage 리셋 + Stage 4 시계 초기화
   state.growthXp = 0;
-  updateStage(0, { silent: true }); // 리셋은 팝업 없이
+  state.stage4EnterTime = 0;
+  state.stage4WaterOkSec = 0;
+  updateStage(0, { silent: true });
   state.water = C.WATER_START;
+
   updateHUD();
   saveState();
   cloudSaveNow();
-  return golden;
+
+  return { golden: grade.golden, cert: grade.cert, grade, phrases, score };
 }
 
 // ── Collection unlock check ─────────────────
@@ -425,6 +548,30 @@ const PETS = {
       body: '<strong>카푸치노</strong>라는 고양이가 테이블에 올라왔어요.<br>조용히 곁에 있어요.',
     },
   },
+  americano: {
+    name: '아메리카노',
+    species: '다람쥐',
+    icon: '🐿',
+    description: '창문턱 구석에서 도토리를 굴리는 다람쥐.',
+    ability: '오프라인 성장 상한 +1시간',
+    unlockNotice: {
+      icon: '🐿',
+      title: '창틀에 다람쥐가 나타났어요',
+      body: '<strong>아메리카노</strong>라는 다람쥐가 찾아왔어요.<br>당신이 자리를 비운 사이에도 나무를 지켜봐줘요.<br><span style="color:var(--accent);font-size:0.8em;">✨ 오프라인 성장 상한 +1시간</span>',
+    },
+  },
+  espresso: {
+    name: '에스프레소',
+    species: '개구리',
+    icon: '🐸',
+    description: '화분 옆에서 느긋하게 앉아있는 작은 개구리.',
+    ability: '맑은 날 Water 감소 -5%',
+    unlockNotice: {
+      icon: '🐸',
+      title: '비 온 뒤 친구가 찾아왔어요',
+      body: '<strong>에스프레소</strong>라는 개구리가 화분 옆에 앉았어요.<br>비를 부르지는 못하지만, 나무를 시원하게 지켜줘요.<br><span style="color:var(--accent);font-size:0.8em;">✨ 맑은 날에도 Water 감소가 느려져요</span>',
+    },
+  },
 };
 const FRIENDSHIP_MESSAGES = {
   crema: [
@@ -443,6 +590,22 @@ const FRIENDSHIP_MESSAGES = {
     { icon: '🐱', title: '카푸치노가 배를 보여요', body: '이건 신뢰한다는 뜻이에요.' },
     { icon: '💕', title: '카푸치노는 당신을 신뢰해요', body: '가장 편한 자리는 당신 옆이에요.' },
   ],
+  americano: [
+    null,
+    { icon: '🐿', title: '아메리카노가 빼꼼 내다봐요', body: '도토리를 손에 꼭 쥔 채 인사를 건네요.' },
+    { icon: '🐿', title: '아메리카노가 자리를 잡았어요', body: '창틀 한 켠을 자기 자리로 정한 것 같아요.' },
+    { icon: '🐿', title: '아메리카노가 도토리를 굴려요', body: '소리 없이 작은 놀이를 하고 있어요.' },
+    { icon: '🐿', title: '아메리카노가 꼬리를 흔들어요', body: '당신을 보면 꼬리부터 인사를 해요.' },
+    { icon: '💕', title: '아메리카노는 당신의 친구예요', body: '오래 자리를 비워도 나무를 지켜준대요.' },
+  ],
+  espresso: [
+    null,
+    { icon: '🐸', title: '에스프레소가 눈을 끔뻑여요', body: '말은 없지만 가만히 곁을 지켜요.' },
+    { icon: '🐸', title: '에스프레소가 화분에 올라왔어요', body: '제일 좋아하는 자리를 찾았어요.' },
+    { icon: '🐸', title: '에스프레소가 작게 운대요', body: '비 오는 날을 기억하는 노래래요.' },
+    { icon: '🐸', title: '에스프레소가 폴짝 뛰어요', body: '기분이 좋을 때 보여주는 인사예요.' },
+    { icon: '💕', title: '에스프레소는 당신의 친구예요', body: '맑은 날에도 나무가 시원하길 빌어줘요.' },
+  ],
 };
 const MAX_FRIENDSHIP = 5;
 
@@ -458,6 +621,20 @@ function checkPetUnlocks() {
     state.pets.cappu.unlocked = true;
     state.pets.cappu.unlockTime = Date.now();
     showNotice(PETS.cappu.unlockNotice);
+    changed = true;
+  }
+  // Phase F-2: 아메리카노 — 누적 수확 10회
+  if (!state.pets.americano.unlocked && (state.stats.totalHarvests || 0) >= 10) {
+    state.pets.americano.unlocked = true;
+    state.pets.americano.unlockTime = Date.now();
+    showNotice(PETS.americano.unlockNotice);
+    changed = true;
+  }
+  // Phase F-2: 에스프레소 — 비 오는 날 3회 접속
+  if (!state.pets.espresso.unlocked && (state.rainyVisitDates || []).length >= 3) {
+    state.pets.espresso.unlocked = true;
+    state.pets.espresso.unlockTime = Date.now();
+    showNotice(PETS.espresso.unlockNotice);
     changed = true;
   }
   if (changed) {
@@ -503,6 +680,11 @@ function updateStage(newStage, opts) {
   const old = state.stage;
   if (newStage === old) { state.stage = newStage; return false; }
   state.stage = newStage;
+  // Stage 4 진입 시점 기록 (Ripeness 계산 기준)
+  if (newStage >= 4 && (!state.stage4EnterTime || state.stage4EnterTime === 0)) {
+    state.stage4EnterTime = Date.now();
+    state.stage4WaterOkSec = 0;
+  }
   if (opts && opts.silent) return true;
   // 오른쪽으로 올라간 전환만 팝업 (리셋 수확은 silent로 호출)
   if (newStage > old) {
@@ -530,7 +712,9 @@ function processOffline(savedState) {
 
   const elapsedSec = elapsed / 1000;
   const elapsedMin = elapsed / 60000;
-  const maxOfflineSec = C.OFFLINE_MAX_HOURS * 3600;
+  // Phase F-2: 아메리카노(다람쥐) 능력 — 오프라인 상한 +1시간
+  const americanoBonus = (savedState.pets?.americano?.unlocked ? 1 : 0);
+  const maxOfflineSec = (C.OFFLINE_MAX_HOURS + americanoBonus) * 3600;
 
   // Water 감소: 20초당 -1, 상한 -35
   const waterDrainRaw = Math.floor(elapsedSec / C.WATER_DRAIN_SEC);
@@ -725,6 +909,21 @@ function renderStatsPanel() {
     '</div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">⏱ 총 플레이 기간</span><span class="stats-card-value">' + playedStr + '</span></div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">🔥 연속 출석</span><span class="stats-card-value">' + (state.dailyStreak || 0) + '일</span></div>';
+
+  // Phase F-1: 원두 증서 카드 (특별 수확에서만 드롭, 카페 쿠폰 전환은 Phase I)
+  const certs = state.coffeeCerts || 0;
+  const certsEarned = state.coffeeCertsEarned || 0;
+  if (certsEarned > 0 || certs > 0) {
+    body.innerHTML +=
+      '<div class="stats-cert">' +
+        '<div class="stats-cert-icon">🏅</div>' +
+        '<div class="stats-cert-info">' +
+          '<div class="stats-cert-title">원두 증서</div>' +
+          '<div class="stats-cert-sub">보유 ' + certs + ' · 누적 ' + certsEarned + '</div>' +
+          '<div class="stats-cert-note">특별 수확에서만 받을 수 있는 귀한 증서예요.</div>' +
+        '</div>' +
+      '</div>';
+  }
 
   // 친구들 (해금된 펫만 표시)
   const unlockedPets = Object.entries(state.pets || {}).filter(([_, p]) => p.unlocked);
@@ -1192,6 +1391,16 @@ function applyRainyBonusIfNeeded() {
   if (state.rainyBonusClaimedDate === state.todayWeatherDate) return false;
   state.water = Math.min(C.WATER_MAX, state.water + 10);
   state.rainyBonusClaimedDate = state.todayWeatherDate;
+  // Phase F-2: 비 오는 날 방문 기록 (에스프레소 해금용, 하루 1회만)
+  if (!state.rainyVisitDates) state.rainyVisitDates = [];
+  const todayW = state.todayWeatherDate;
+  if (todayW && !state.rainyVisitDates.includes(todayW)) {
+    state.rainyVisitDates.push(todayW);
+    // 최근 30개만 유지 (저장 용량 절약)
+    if (state.rainyVisitDates.length > 30) {
+      state.rainyVisitDates = state.rainyVisitDates.slice(-30);
+    }
+  }
   saveState();
   return true;
 }
@@ -1234,13 +1443,24 @@ class TreeScene extends Phaser.Scene {
     });
 
     this.treeGroup = this.add.container(0, 0);
+    // Phase F-1: 나무 1.4× 스케일업 (존재감 강화)
+    this.treeGroup.setScale(1.4, 1.4);
 
     this.potGraphics = this.add.graphics();
     this.trunkGraphics = this.add.graphics();
+    this.leavesShadowGraphics = this.add.graphics(); // Phase F-1 음영
     this.leavesGraphics = this.add.graphics();
+    this.leavesHighlightGraphics = this.add.graphics(); // Phase F-1 하이라이트
     this.detailGraphics = this.add.graphics(); // 꽃/체리용
 
-    this.treeGroup.add([this.potGraphics, this.trunkGraphics, this.leavesGraphics, this.detailGraphics]);
+    this.treeGroup.add([
+      this.potGraphics,
+      this.trunkGraphics,
+      this.leavesShadowGraphics,
+      this.leavesGraphics,
+      this.leavesHighlightGraphics,
+      this.detailGraphics,
+    ]);
 
     this.drawTree(true);
 
@@ -1274,11 +1494,34 @@ class TreeScene extends Phaser.Scene {
   update(time, delta) {
     const dt = delta / 1000;
 
+    // 전체 플레이 누적 (Phase F-1)
+    state.totalPlaySec = (state.totalPlaySec || 0) + dt;
+    if (state.water > 0) {
+      state.totalWaterOkSec = (state.totalWaterOkSec || 0) + dt;
+      if (state.stage >= 4) {
+        state.stage4WaterOkSec = (state.stage4WaterOkSec || 0) + dt;
+      }
+    }
+
+    // 체리 색 갱신 (Stage 4에서 Ripeness가 천천히 오르므로 가끔만 다시 그림)
+    if (state.stage >= 4) {
+      this._cherryRedrawTimer = (this._cherryRedrawTimer || 0) + dt;
+      if (this._cherryRedrawTimer >= 4) {
+        this._cherryRedrawTimer = 0;
+        this.drawTree(true);
+      }
+    }
+
     // Water 감소 (온라인)
+    // Phase F-2: 에스프레소(개구리) 능력 — 맑은 날 Water 감소 -5% (드레인 주기 +5%)
     if (state.water > 0) {
       this.drainTimer += dt;
-      if (this.drainTimer >= C.WATER_DRAIN_SEC) {
-        this.drainTimer -= C.WATER_DRAIN_SEC;
+      let drainInterval = C.WATER_DRAIN_SEC;
+      if (state.todayWeather === 'sunny' && state.pets?.espresso?.unlocked) {
+        drainInterval = C.WATER_DRAIN_SEC * 1.05;
+      }
+      if (this.drainTimer >= drainInterval) {
+        this.drainTimer -= drainInterval;
         state.water = Math.max(0, state.water - 1);
         updateHUD();
       }
@@ -1639,12 +1882,17 @@ class TreeScene extends Phaser.Scene {
     this.potGraphics.clear();
     this.trunkGraphics.clear();
     this.leavesGraphics.clear();
+    if (this.leavesShadowGraphics) this.leavesShadowGraphics.clear();
+    if (this.leavesHighlightGraphics) this.leavesHighlightGraphics.clear();
     this.detailGraphics.clear();
 
     const isDry = state.water <= 0;
     const leafColor = isDry ? 0x7a8a60 : 0x5da35a;
     const leafColorLight = isDry ? 0x8a9a70 : 0x7bc478;
+    const leafShadow = isDry ? 0x4a5a30 : 0x3d6b3a; // Phase F-1 음영
+    const leafHi = isDry ? 0xa0b078 : 0x9bd88c;     // Phase F-1 하이라이트
     const trunkColor = isDry ? 0x6a5040 : 0x7a5c3a;
+    const trunkShadow = isDry ? 0x4a3520 : 0x553a20;
 
     // 화분 색상 (장착 화분에 따라)
     let potColor = 0xb07040;
@@ -1666,12 +1914,23 @@ class TreeScene extends Phaser.Scene {
 
     this.potGraphics.fillStyle(potColor);
     this.potGraphics.fillRect(-potW / 2, -potH, potW, potH);
+    // Phase F-1: 좌측 음영 + 우측 하이라이트
+    this.potGraphics.fillStyle(potDark, 0.55);
+    this.potGraphics.fillRect(-potW / 2, -potH, 4, potH);
+    this.potGraphics.fillStyle(0xffffff, 0.10);
+    this.potGraphics.fillRect(potW / 2 - 4, -potH + 2, 3, potH - 4);
     this.potGraphics.fillStyle(potDark);
     this.potGraphics.fillRect(-potTopW / 2, -potH - potRim, potTopW, potRim);
+    // 림 윗면 하이라이트
+    this.potGraphics.fillStyle(0xffffff, 0.18);
+    this.potGraphics.fillRect(-potTopW / 2 + 1, -potH - potRim, potTopW - 2, 1);
     this.potGraphics.fillStyle(potDark);
     this.potGraphics.fillRect(-potW / 2 + 6, -2, potW - 12, 4);
     this.potGraphics.fillStyle(soilColor);
     this.potGraphics.fillRect(-potW / 2 + 3, -potH + 2, potW - 6, 10);
+    // 흙 어두운 음영
+    this.potGraphics.fillStyle(0x000000, 0.25);
+    this.potGraphics.fillRect(-potW / 2 + 3, -potH + 2, potW - 6, 2);
 
     // 드립 패턴 화분 장식
     if (state.equippedPotId === 'pot_drip_pattern') {
@@ -1695,25 +1954,54 @@ class TreeScene extends Phaser.Scene {
 
     // ── Stage별 나무 ──
     const drawBigTree = (stemH) => {
+      // 줄기 음영 (왼쪽)
+      this.trunkGraphics.fillStyle(trunkShadow);
+      this.trunkGraphics.fillRect(-4, -potH - stemH, 3, stemH);
       this.trunkGraphics.fillStyle(trunkColor);
-      this.trunkGraphics.fillRect(-4, -potH - stemH, 8, stemH);
+      this.trunkGraphics.fillRect(-1, -potH - stemH, 5, stemH);
+      // 가지
       this.trunkGraphics.fillRect(-26, -potH - stemH + 14, 24, 4);
       this.trunkGraphics.fillRect(4, -potH - stemH + 24, 26, 4);
       this.trunkGraphics.fillRect(-20, -potH - stemH + 38, 18, 3);
       this.trunkGraphics.fillRect(4, -potH - stemH + 46, 16, 3);
+      // 가지 음영
+      this.trunkGraphics.fillStyle(trunkShadow, 0.6);
+      this.trunkGraphics.fillRect(-26, -potH - stemH + 14, 24, 1);
+      this.trunkGraphics.fillRect(4, -potH - stemH + 24, 26, 1);
 
-      this.leavesGraphics.fillStyle(leafColor);
-      this.leavesGraphics.fillEllipse(0, -potH - stemH - 6, 50, 30);
-      this.leavesGraphics.fillEllipse(-16, -potH - stemH + 6, 36, 24);
-      this.leavesGraphics.fillEllipse(16, -potH - stemH + 4, 36, 24);
-      this.leavesGraphics.fillStyle(leafColorLight);
-      this.leavesGraphics.fillEllipse(-6, -potH - stemH - 12, 32, 20);
-      this.leavesGraphics.fillEllipse(10, -potH - stemH - 2, 28, 18);
-      this.leavesGraphics.fillStyle(leafColor);
-      this.leavesGraphics.fillEllipse(-30, -potH - stemH + 12, 20, 12);
-      this.leavesGraphics.fillEllipse(32, -potH - stemH + 22, 20, 12);
-      this.leavesGraphics.fillEllipse(-22, -potH - stemH + 36, 16, 10);
-      this.leavesGraphics.fillEllipse(22, -potH - stemH + 44, 14, 10);
+      // 잎 — 음영(아래) → 본체 → 하이라이트(위)
+      const sg = this.leavesShadowGraphics;
+      const lg = this.leavesGraphics;
+      const hg = this.leavesHighlightGraphics;
+
+      // Shadow layer (아래쪽으로 살짝 오프셋)
+      sg.fillStyle(leafShadow, 0.55);
+      sg.fillEllipse(2, -potH - stemH - 4, 52, 30);
+      sg.fillEllipse(-14, -potH - stemH + 8, 36, 24);
+      sg.fillEllipse(18, -potH - stemH + 6, 36, 24);
+      sg.fillEllipse(-30, -potH - stemH + 14, 20, 12);
+      sg.fillEllipse(32, -potH - stemH + 24, 20, 12);
+
+      // Main leaves
+      lg.fillStyle(leafColor);
+      lg.fillEllipse(0, -potH - stemH - 6, 50, 30);
+      lg.fillEllipse(-16, -potH - stemH + 6, 36, 24);
+      lg.fillEllipse(16, -potH - stemH + 4, 36, 24);
+      lg.fillStyle(leafColorLight);
+      lg.fillEllipse(-6, -potH - stemH - 12, 32, 20);
+      lg.fillEllipse(10, -potH - stemH - 2, 28, 18);
+      lg.fillStyle(leafColor);
+      lg.fillEllipse(-30, -potH - stemH + 12, 20, 12);
+      lg.fillEllipse(32, -potH - stemH + 22, 20, 12);
+      lg.fillEllipse(-22, -potH - stemH + 36, 16, 10);
+      lg.fillEllipse(22, -potH - stemH + 44, 14, 10);
+
+      // Highlight (위쪽 + 작은 광택)
+      hg.fillStyle(leafHi, 0.55);
+      hg.fillEllipse(-4, -potH - stemH - 14, 22, 10);
+      hg.fillEllipse(8, -potH - stemH - 6, 18, 8);
+      hg.fillEllipse(-12, -potH - stemH + 2, 12, 6);
+      hg.fillEllipse(14, -potH - stemH + 1, 12, 6);
     };
 
     if (state.stage === 0) {
@@ -1779,13 +2067,31 @@ class TreeScene extends Phaser.Scene {
       else this.leavesGraphics.setAngle(0);
 
     } else if (state.stage >= 4) {
-      // Stage 5: 커피 체리 — 나무 + 빨간 열매
+      // Stage 5: 커피 체리 — 나무 + 열매 (Ripeness에 따라 녹→노→빨강)
       const stemH = 80;
       drawBigTree(stemH);
 
-      // 커피 체리 (빨간 타원)
-      const cherryRed = 0xcc3333;
-      const cherryDark = 0x992222;
+      // Phase F-1: Ripeness에 따른 색상 lerp
+      // 0    → 녹색 (덜 익음)
+      // 0.5  → 노랑/주황
+      // 1.0  → 빨강 (완숙)
+      const ripe = getRipeness();
+      const greenC = 0x4d8a3a;
+      const yellowC = 0xd9b042;
+      const redC = 0xcc3333;
+      let cherryMain;
+      if (ripe < 0.5) {
+        cherryMain = lerpHex(greenC, yellowC, ripe / 0.5);
+      } else {
+        cherryMain = lerpHex(yellowC, redC, (ripe - 0.5) / 0.5);
+      }
+      // 어두운 음영 — 메인보다 약 30% 어둡게
+      const r0 = (cherryMain >> 16) & 0xff;
+      const g0 = (cherryMain >> 8) & 0xff;
+      const b0 = cherryMain & 0xff;
+      const cherryDark = (Math.floor(r0 * 0.7) << 16) | (Math.floor(g0 * 0.7) << 8) | Math.floor(b0 * 0.7);
+      const cherryHi = lerpHex(cherryMain, 0xffffff, 0.4);
+
       const cherries = [
         [-12, -potH - stemH + 4],  [16, -potH - stemH + 8],
         [-22, -potH - stemH + 16], [26, -potH - stemH + 20],
@@ -1794,11 +2100,15 @@ class TreeScene extends Phaser.Scene {
         [0, -potH - stemH - 4],    [-16, -potH - stemH + 42],
       ];
       cherries.forEach(([cx, cy], i) => {
-        this.detailGraphics.fillStyle(i % 3 === 0 ? cherryDark : cherryRed);
+        // 음영 (살짝 아래/우측)
+        this.detailGraphics.fillStyle(cherryDark, 0.85);
+        this.detailGraphics.fillEllipse(cx + 0.5, cy + 1, 6, 7);
+        // 본체
+        this.detailGraphics.fillStyle(cherryMain);
         this.detailGraphics.fillEllipse(cx, cy, 6, 7);
         // 하이라이트
-        this.detailGraphics.fillStyle(0xff6666, 0.5);
-        this.detailGraphics.fillCircle(cx - 1, cy - 2, 2);
+        this.detailGraphics.fillStyle(cherryHi, 0.7);
+        this.detailGraphics.fillCircle(cx - 1, cy - 2, 1.6);
       });
 
       if (isDry) this.leavesGraphics.setAngle(3);
@@ -1822,6 +2132,14 @@ class TreeScene extends Phaser.Scene {
       this.petContainers.cappu = this._createCat();
       this._startCatIdle(this.petContainers.cappu);
     }
+    if (state.pets?.americano?.unlocked) {
+      this.petContainers.americano = this._createSquirrel();
+      this._startSquirrelIdle(this.petContainers.americano);
+    }
+    if (state.pets?.espresso?.unlocked) {
+      this.petContainers.espresso = this._createFrog();
+      this._startFrogIdle(this.petContainers.espresso);
+    }
   }
 
   // 참새(크레마) — 창문턱 오른쪽에 앉음
@@ -1832,15 +2150,24 @@ class TreeScene extends Phaser.Scene {
     const c = this.add.container(x, y);
 
     const body = this.add.graphics();
+    // 몸 음영 (Phase F-1)
+    body.fillStyle(0x4a2a10, 0.55);
+    body.fillEllipse(1, -3, 12, 8);
     // 몸 (갈색 타원)
     body.fillStyle(0x8b5a2b);
     body.fillEllipse(0, -4, 12, 8);
     // 머리
     body.fillStyle(0x6b3f1d);
     body.fillCircle(-5, -7, 4);
+    // 머리 하이라이트
+    body.fillStyle(0xa57040, 0.5);
+    body.fillCircle(-5, -8, 2);
     // 배 (밝은 베이지)
     body.fillStyle(0xe8c99a);
     body.fillEllipse(1, -2, 7, 5);
+    // 배 하이라이트
+    body.fillStyle(0xfff0d0, 0.6);
+    body.fillEllipse(1, -3, 4, 2);
     // 부리 (노랑)
     body.fillStyle(0xf5b02e);
     body.fillTriangle(-9, -7, -11, -6, -9, -5);
@@ -1856,7 +2183,9 @@ class TreeScene extends Phaser.Scene {
     body.lineBetween(1, 0, 1, 3);
 
     c.add(body);
-    c.setSize(22, 16);
+    // Phase F-1: 1.7× 스케일업
+    c.setScale(1.7);
+    c.setSize(22 * 1.7, 16 * 1.7);
     c.setInteractive(
       new Phaser.Geom.Rectangle(-11, -12, 22, 18),
       Phaser.Geom.Rectangle.Contains
@@ -1878,12 +2207,21 @@ class TreeScene extends Phaser.Scene {
     const c = this.add.container(x, y);
 
     const body = this.add.graphics();
+    // 몸 음영 (Phase F-1)
+    body.fillStyle(0x6b4f30, 0.5);
+    body.fillEllipse(1, -5, 22, 14);
     // 몸 (회갈색 타원, 앉은 자세)
     body.fillStyle(0xaa8866);
     body.fillEllipse(0, -6, 22, 14);
+    // 등 하이라이트
+    body.fillStyle(0xc8a382, 0.6);
+    body.fillEllipse(0, -10, 16, 4);
     // 머리
     body.fillStyle(0xaa8866);
     body.fillCircle(-9, -13, 6);
+    // 머리 하이라이트
+    body.fillStyle(0xc8a382, 0.55);
+    body.fillCircle(-10, -15, 3);
     // 귀 (삼각형 2개)
     body.fillTriangle(-13, -19, -10, -14, -14, -13);
     body.fillTriangle(-8, -19, -5, -14, -9, -13);
@@ -1917,7 +2255,9 @@ class TreeScene extends Phaser.Scene {
     c.add(body);
     c.add(tail);
     c._tail = tail;
-    c.setSize(30, 22);
+    // Phase F-1: 1.7× 스케일업
+    c.setScale(1.7);
+    c.setSize(30 * 1.7, 22 * 1.7);
     c.setInteractive(
       new Phaser.Geom.Rectangle(-15, -20, 30, 22),
       Phaser.Geom.Rectangle.Contains
@@ -1927,6 +2267,228 @@ class TreeScene extends Phaser.Scene {
       this.onPetTap('cappu', c);
     });
     return c;
+  }
+
+  // Phase F-2: 다람쥐(아메리카노) — 창문턱 왼쪽에 앉음 (크레마는 오른쪽)
+  _createSquirrel() {
+    const win = this.getWindowBounds();
+    const x = win.x + win.w * 0.18;
+    const y = win.y + win.h + 3; // 창문턱 바로 위
+    const c = this.add.container(x, y);
+
+    const body = this.add.graphics();
+    // 몸 음영
+    body.fillStyle(0x5a3010, 0.55);
+    body.fillEllipse(1, -3, 14, 10);
+    // 몸 (적갈색 타원)
+    body.fillStyle(0xa9622a);
+    body.fillEllipse(0, -4, 14, 10);
+    // 등 하이라이트
+    body.fillStyle(0xd08b48, 0.55);
+    body.fillEllipse(0, -7, 9, 3);
+    // 머리
+    body.fillStyle(0x8c4a1c);
+    body.fillCircle(-6, -8, 4.5);
+    // 머리 하이라이트
+    body.fillStyle(0xc28049, 0.6);
+    body.fillCircle(-7, -9, 2);
+    // 배 (밝은 베이지)
+    body.fillStyle(0xf0d4a0);
+    body.fillEllipse(2, -2, 8, 5);
+    // 배 하이라이트
+    body.fillStyle(0xfff0d0, 0.6);
+    body.fillEllipse(2, -3, 4, 2);
+    // 귀 (작은 둥근 귀)
+    body.fillStyle(0x6b3914);
+    body.fillCircle(-8, -12, 1.6);
+    body.fillCircle(-4, -12, 1.6);
+    // 귀 안쪽
+    body.fillStyle(0xe8a998);
+    body.fillCircle(-8, -12, 0.8);
+    body.fillCircle(-4, -12, 0.8);
+    // 눈
+    body.fillStyle(0x000000);
+    body.fillCircle(-7, -8, 0.9);
+    // 코
+    body.fillStyle(0x2a1810);
+    body.fillCircle(-9, -7, 0.6);
+    // 앞발 (작은 손) — 도토리를 쥔 자세
+    body.fillStyle(0x8c4a1c);
+    body.fillCircle(-3, -1, 1.4);
+    // 도토리
+    body.fillStyle(0x7a4a1a);
+    body.fillCircle(-3, -3, 1.6);
+    body.fillStyle(0x4a2a10);
+    body.fillRect(-4, -5, 2, 1.2);
+    // 다리
+    body.lineStyle(1, 0x3a2008, 1);
+    body.lineBetween(-3, 1, -3, 3);
+    body.lineBetween(2, 1, 2, 3);
+    // 꼬리 (별도 — 살랑살랑)
+    const tail = this.add.graphics();
+    tail.fillStyle(0xa9622a);
+    tail.fillEllipse(8, -8, 8, 12);
+    tail.fillStyle(0xd08b48, 0.6);
+    tail.fillEllipse(8, -10, 5, 6);
+    tail.fillStyle(0x6b3914);
+    tail.fillEllipse(8, -4, 6, 4);
+
+    c.add(tail);
+    c.add(body);
+    c._tail = tail;
+    // Phase F-2: 1.7× 스케일업
+    c.setScale(1.7);
+    c.setSize(24 * 1.7, 22 * 1.7);
+    c.setInteractive(
+      new Phaser.Geom.Rectangle(-12, -16, 24, 22),
+      Phaser.Geom.Rectangle.Contains
+    );
+    c.on('pointerdown', () => {
+      this._petTapConsumed = true;
+      this.onPetTap('americano', c);
+    });
+    return c;
+  }
+
+  // Phase F-2: 개구리(에스프레소) — 화분 오른쪽에 앉음
+  _createFrog() {
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const floorY = h * 0.72;
+    const x = w * 0.78;
+    const y = floorY + 4; // 화분 옆 바닥
+    const c = this.add.container(x, y);
+
+    const body = this.add.graphics();
+    // 몸 음영
+    body.fillStyle(0x2a4a20, 0.55);
+    body.fillEllipse(0, 0, 18, 10);
+    // 몸 (녹색 타원)
+    body.fillStyle(0x5aa040);
+    body.fillEllipse(0, -1, 18, 10);
+    // 등 하이라이트
+    body.fillStyle(0x8fd060, 0.6);
+    body.fillEllipse(0, -3, 12, 4);
+    // 배 (옅은 노랑)
+    body.fillStyle(0xe0e89a);
+    body.fillEllipse(0, 1, 12, 4);
+    // 머리 (몸 위에 살짝 솟은 둥근 형태)
+    body.fillStyle(0x5aa040);
+    body.fillEllipse(0, -6, 14, 8);
+    // 머리 하이라이트
+    body.fillStyle(0x8fd060, 0.6);
+    body.fillEllipse(0, -8, 9, 3);
+    // 눈 (튀어나온 두 개)
+    body.fillStyle(0x5aa040);
+    body.fillCircle(-4, -10, 2.8);
+    body.fillCircle(4, -10, 2.8);
+    // 눈 흰자
+    body.fillStyle(0xfafff0);
+    body.fillCircle(-4, -10, 2);
+    body.fillCircle(4, -10, 2);
+    // 눈동자
+    body.fillStyle(0x000000);
+    body.fillCircle(-4, -10, 1);
+    body.fillCircle(4, -10, 1);
+    // 입 (살짝 미소)
+    body.lineStyle(1, 0x2a1810, 1);
+    body.beginPath();
+    body.arc(0, -5, 4, 0.2, Math.PI - 0.2, false);
+    body.strokePath();
+    // 앞다리
+    body.fillStyle(0x4a8830);
+    body.fillEllipse(-7, 2, 5, 3);
+    body.fillEllipse(7, 2, 5, 3);
+    // 발가락 (작은 점 3개씩)
+    body.fillStyle(0x3a6820);
+    body.fillCircle(-9, 3, 0.6);
+    body.fillCircle(-7, 3.5, 0.6);
+    body.fillCircle(-5, 3, 0.6);
+    body.fillCircle(9, 3, 0.6);
+    body.fillCircle(7, 3.5, 0.6);
+    body.fillCircle(5, 3, 0.6);
+
+    c.add(body);
+    // Phase F-2: 1.7× 스케일업
+    c.setScale(1.7);
+    c.setSize(20 * 1.7, 18 * 1.7);
+    c.setInteractive(
+      new Phaser.Geom.Rectangle(-10, -14, 20, 18),
+      Phaser.Geom.Rectangle.Contains
+    );
+    c.on('pointerdown', () => {
+      this._petTapConsumed = true;
+      this.onPetTap('espresso', c);
+    });
+    return c;
+  }
+
+  _startSquirrelIdle(container) {
+    // 작은 호흡
+    const baseY = container.y;
+    this.tweens.add({
+      targets: container,
+      y: baseY - 1.2,
+      duration: 1600,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
+    // 꼬리 살랑 — y 위치
+    if (container._tail) {
+      this.tweens.add({
+        targets: container._tail,
+        y: { from: 0, to: -1.5 },
+        duration: 1500,
+        ease: 'Sine.easeInOut',
+        yoyo: true,
+        repeat: -1,
+      });
+    }
+    // 가끔 깡충
+    const hop = () => {
+      if (!container.active) return;
+      this.tweens.add({
+        targets: container,
+        y: baseY - 4,
+        duration: 180,
+        ease: 'Quad.easeOut',
+        yoyo: true,
+        onComplete: () => {
+          this.time.delayedCall(Phaser.Math.Between(7000, 14000), hop);
+        },
+      });
+    };
+    this.time.delayedCall(Phaser.Math.Between(5000, 9000), hop);
+  }
+
+  _startFrogIdle(container) {
+    // 호흡 — 배가 부풀어 오르는 느낌 (scaleY)
+    const baseScaleY = container.scaleY;
+    this.tweens.add({
+      targets: container,
+      scaleY: baseScaleY * 1.04,
+      duration: 1800,
+      ease: 'Sine.easeInOut',
+      yoyo: true,
+      repeat: -1,
+    });
+    // 가끔 폴짝 (작은 점프)
+    const baseY = container.y;
+    const jump = () => {
+      if (!container.active) return;
+      this.tweens.add({
+        targets: container,
+        y: baseY - 6,
+        duration: 220,
+        ease: 'Quad.easeOut',
+        yoyo: true,
+        onComplete: () => {
+          this.time.delayedCall(Phaser.Math.Between(8000, 16000), jump);
+        },
+      });
+    };
+    this.time.delayedCall(Phaser.Math.Between(6000, 10000), jump);
   }
 
   _startBirdIdle(container) {
@@ -1958,10 +2520,11 @@ class TreeScene extends Phaser.Scene {
   }
 
   _startCatIdle(container) {
-    // 호흡 (몸 미세하게 부풀기)
+    // 호흡 (몸 미세하게 부풀기) — 베이스 스케일 기준으로 yoyo
+    const baseScaleY = container.scaleY;
     this.tweens.add({
       targets: container,
-      scaleY: { from: 1, to: 1.03 },
+      scaleY: baseScaleY * 1.03,
       duration: 2500,
       ease: 'Sine.easeInOut',
       yoyo: true,
@@ -1982,14 +2545,17 @@ class TreeScene extends Phaser.Scene {
 
   onPetTap(petId, container) {
     playSound('tap');
-    // 탭 반응 — 작은 바운스
+    // 탭 반응 — 베이스 스케일 기준으로 작은 바운스
+    const baseSx = container.scaleX;
+    const baseSy = container.scaleY;
     this.tweens.add({
       targets: container,
-      scaleX: { from: 1, to: 1.15 },
-      scaleY: { from: 1, to: 1.15 },
+      scaleX: baseSx * 1.15,
+      scaleY: baseSy * 1.15,
       duration: 120,
       yoyo: true,
       ease: 'Quad.easeOut',
+      onComplete: () => { container.setScale(baseSx, baseSy); },
     });
 
     // 친밀도 증가 (하루 1회)
@@ -2082,10 +2648,69 @@ function initPhaser() {
 }
 
 // ── Collection panel ────────────────────────
+// Phase F-1: 펫 도감 그룹 + 잠긴 항목은 실루엣/수수께끼 힌트
+const PET_CATALOG = [
+  {
+    id: 'crema',
+    icon: '🐦',
+    silhouette: '👤',
+    name: '크레마',
+    species: '참새',
+    desc: '창가에 앉아 가끔 지저귀는 작은 참새.',
+    hint: '첫 꽃이 피는 날에 찾아올 거예요.',
+  },
+  {
+    id: 'cappu',
+    icon: '🐱',
+    silhouette: '👤',
+    name: '카푸치노',
+    species: '고양이',
+    desc: '테이블 위에서 나른하게 낮잠 자는 고양이.',
+    hint: '첫 수확의 향기를 따라 올 거예요.',
+  },
+  {
+    id: 'americano',
+    icon: '🐿',
+    silhouette: '👤',
+    name: '아메리카노',
+    species: '다람쥐',
+    desc: '창문턱 구석에서 도토리를 굴리는 다람쥐.',
+    hint: '나무를 여러 번 수확하면 찾아올 거예요.',
+  },
+  {
+    id: 'espresso',
+    icon: '🐸',
+    silhouette: '👤',
+    name: '에스프레소',
+    species: '개구리',
+    desc: '화분 옆에서 느긋하게 앉아있는 작은 개구리.',
+    hint: '비 오는 날을 좋아한다고 들었어요.',
+  },
+];
+
 function renderCollectionPanel() {
   const body = $('collectionBody');
   let html = '';
   const types = { pot: '화분', decor: '장식' };
+
+  // Phase F-1: 펫 친구들 (도감) — 가장 위에 표시
+  html += '<div class="collection-group"><div class="collection-group-title">🐾 카페 친구들</div>';
+  PET_CATALOG.forEach((pet) => {
+    const petState = state.pets?.[pet.id];
+    const unlocked = !pet.future && petState && petState.unlocked;
+    html += '<div class="collection-item ' + (unlocked ? 'unlocked pet-item' : 'locked pet-item') + '" data-pet-id="' + pet.id + '">';
+    html += '<span class="collection-icon">' + (unlocked ? pet.icon : pet.silhouette) + '</span>';
+    html += '<span class="collection-name">' + (unlocked ? pet.name + ' <small style="font-weight:400;color:var(--text-dim);">(' + pet.species + ')</small>' : '???') + '</span>';
+    if (unlocked) {
+      const friendship = petState.friendship || 0;
+      const hearts = '💕'.repeat(friendship) + '🤍'.repeat(MAX_FRIENDSHIP - friendship);
+      html += '<span class="collection-desc">' + pet.desc + '<br><span class="pet-hearts-mini">' + hearts + '</span></span>';
+    } else {
+      html += '<span class="collection-desc">🔒 ' + pet.hint + '</span>';
+    }
+    html += '</div>';
+  });
+  html += '</div>';
 
   for (const type of ['pot', 'decor']) {
     html += '<div class="collection-group"><div class="collection-group-title">' + types[type] + '</div>';
@@ -2095,7 +2720,9 @@ function renderCollectionPanel() {
       const equipped = (type === 'pot' && state.equippedPotId === id) ||
                        (type === 'decor' && state.equippedDecorId === id);
       html += '<div class="collection-item ' + (unlocked ? 'unlocked' : 'locked') + (equipped ? ' equipped' : '') + '" data-id="' + id + '">';
-      html += '<span class="collection-icon">' + (unlocked ? item.icon : '🔒') + '</span>';
+      // Phase F-1: 잠금 시 실루엣 느낌 (회색 사각형 + ?)
+      const iconHtml = unlocked ? item.icon : '<span class="locked-silhouette">?</span>';
+      html += '<span class="collection-icon">' + iconHtml + '</span>';
       html += '<span class="collection-name">' + (unlocked ? item.name : '???') + '</span>';
       if (unlocked) {
         html += '<span class="collection-desc">' + item.desc + '</span>';
@@ -2105,7 +2732,7 @@ function renderCollectionPanel() {
           html += '<button class="collection-equip-btn" data-id="' + id + '" data-type="' + type + '">장착</button>';
         }
       } else {
-        html += '<span class="collection-desc">' + item.desc + '</span>';
+        html += '<span class="collection-desc">🔒 ' + item.desc + '</span>';
       }
       html += '</div>';
     }
@@ -2130,13 +2757,28 @@ function renderCollectionPanel() {
 }
 
 // ── Harvest popup ───────────────────────────
-function showHarvestPopup(goldenEarned) {
+// Phase F-1: 감성 문장 + 별 등급. 숫자 점수/공식은 노출 금지.
+function showHarvestPopup(result) {
   const body = $('harvestPopupBody');
-  body.innerHTML =
-    '<div class="harvest-celebration">🍒 → ✨</div>' +
-    '<div class="stat-row"><span class="stat-label">획득 황금 원두</span><span class="stat-value golden">+' + goldenEarned + '</span></div>' +
-    '<div class="stat-row"><span class="stat-label">총 수확 횟수</span><span class="stat-value">' + state.harvestCount + '회</span></div>' +
-    '<p style="margin-top:12px;font-size:0.8rem;">나무가 새싹으로 돌아갑니다.<br>황금 원두와 컬렉션은 유지됩니다.</p>';
+  if (!result) { hideOverlay('harvestPopup'); return; }
+  const { grade, phrases, golden, cert } = result;
+  const stars = '★'.repeat(grade.stars) + '☆'.repeat(4 - grade.stars);
+  let html = '<div class="harvest-celebration">🍒 → ✨</div>';
+  html += '<div class="harvest-grade harvest-grade-' + grade.key + '">' +
+            '<div class="harvest-grade-stars">' + stars + '</div>' +
+            '<div class="harvest-grade-label">' + grade.label + '</div>' +
+          '</div>';
+  html += '<ul class="harvest-phrases">';
+  phrases.forEach(p => { html += '<li>' + p + '</li>'; });
+  html += '</ul>';
+  html += '<div class="harvest-rewards">';
+  html += '<div class="harvest-reward-line">✨ 황금 원두를 얻었어요</div>';
+  if (cert > 0) {
+    html += '<div class="harvest-reward-line cert">🏅 원두 증서를 받았어요!</div>';
+  }
+  html += '</div>';
+  html += '<p class="harvest-footer">나무는 다시 새싹으로 돌아가요.<br>다음 수확도 천천히 즐겨주세요.</p>';
+  body.innerHTML = html;
   showOverlay('harvestPopup');
 }
 
@@ -2173,10 +2815,12 @@ function setupDOMEvents() {
       // 카메라 흔들림
       try { scene.cameras.main.shake(200, 0.006); } catch (err) {}
     }
-    const golden = doHarvest();
-    incrementGlobalStat('totalHarvests', 1);
-    incrementGlobalStat('totalGoldenBeans', golden);
-    showHarvestPopup(golden);
+    const result = doHarvest();
+    if (result) {
+      incrementGlobalStat('totalHarvests', 1);
+      incrementGlobalStat('totalGoldenBeans', result.golden);
+    }
+    showHarvestPopup(result);
     if (scene) { scene.currentStage = -1; scene.drawTree(true); }
   });
 

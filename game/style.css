@@ -1200,6 +1200,132 @@ canvas {
   cursor: pointer;
 }
 
+/* ── Phase F-1: Harvest grade popup ──────── */
+.harvest-grade {
+  margin: 8px 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+.harvest-grade-stars {
+  font-size: 1.4rem;
+  letter-spacing: 4px;
+  color: #ffd700;
+  margin-bottom: 4px;
+}
+.harvest-grade-label {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.harvest-grade-plain   { background: rgba(160, 160, 160, 0.08); border-color: rgba(180, 180, 180, 0.18); }
+.harvest-grade-good    { background: rgba(140, 200, 140, 0.08); border-color: rgba(140, 200, 140, 0.22); }
+.harvest-grade-fine    { background: rgba(200, 170, 110, 0.10); border-color: rgba(200, 170, 110, 0.28); }
+.harvest-grade-special {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.14), rgba(255, 110, 110, 0.10));
+  border-color: rgba(255, 215, 0, 0.45);
+  box-shadow: 0 0 18px rgba(255, 215, 0, 0.18);
+}
+.harvest-phrases {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 14px;
+  text-align: center;
+}
+.harvest-phrases li {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--text);
+  padding: 4px 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+.harvest-phrases li:last-child { border-bottom: none; }
+.harvest-rewards {
+  margin: 10px 0 8px;
+  padding: 10px;
+  border-radius: 8px;
+  background: rgba(200, 170, 110, 0.08);
+  text-align: center;
+}
+.harvest-reward-line {
+  font-size: 0.88rem;
+  color: var(--text);
+  padding: 2px 0;
+}
+.harvest-reward-line.cert {
+  color: #ffd700;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.harvest-footer {
+  font-size: 0.74rem;
+  color: var(--text-dim);
+  text-align: center;
+  margin-top: 8px;
+  line-height: 1.6;
+}
+
+/* ── Phase F-1: Coffee certificate stat card ─ */
+.stats-cert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.10), rgba(200, 170, 110, 0.06));
+  border: 1px solid rgba(255, 215, 0, 0.28);
+}
+.stats-cert-icon {
+  font-size: 1.8rem;
+  width: 36px;
+  text-align: center;
+}
+.stats-cert-info { flex: 1; min-width: 0; }
+.stats-cert-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffd700;
+}
+.stats-cert-sub {
+  font-size: 0.78rem;
+  color: var(--text);
+  margin-top: 2px;
+}
+.stats-cert-note {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* ── Phase F-1: Locked silhouette + pet catalog ─ */
+.locked-silhouette {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px dashed rgba(255, 255, 255, 0.20);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 700;
+}
+.collection-item.pet-item.locked .collection-icon {
+  filter: grayscale(1) brightness(0.6);
+  opacity: 0.55;
+}
+.pet-hearts-mini {
+  display: inline-block;
+  margin-top: 4px;
+  letter-spacing: 1px;
+  font-size: 0.78rem;
+}
+
 /* ── Responsive adjustments ──────────────── */
 @media (min-width: 481px) {
   .game-container {
