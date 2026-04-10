@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="38" fill="#2b1d14"/>
+  <circle cx="96" cy="96" r="68" fill="#3d2a1a"/>
+  <!-- pot -->
+  <path d="M 60 128 L 132 128 L 124 156 L 68 156 Z" fill="#a0623a"/>
+  <rect x="58" y="124" width="76" height="6" rx="2" fill="#8b5230"/>
+  <!-- stem -->
+  <rect x="93" y="80" width="6" height="48" fill="#4a7c3a"/>
+  <!-- leaves -->
+  <ellipse cx="76" cy="84" rx="20" ry="12" transform="rotate(-25 76 84)" fill="#6abf69"/>
+  <ellipse cx="116" cy="84" rx="20" ry="12" transform="rotate(25 116 84)" fill="#6abf69"/>
+  <ellipse cx="96" cy="58" rx="22" ry="14" fill="#7dd17a"/>
+  <!-- coffee cherry -->
+  <circle cx="96" cy="58" r="6" fill="#c8aa6e"/>
+</svg>

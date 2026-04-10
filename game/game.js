@@ -227,11 +227,16 @@ const C = Object.freeze({
   ],
 
   STAGES: [
-    { name: '새싹',        emoji: '🌱', minXp: 0   },
-    { name: '어린 묘목',    emoji: '🌿', minXp: 15  },
-    { name: '작은 커피나무', emoji: '🌳', minXp: 50  },
-    { name: '꽃 단계',      emoji: '🌸', minXp: 120 },
-    { name: '커피 체리',    emoji: '🍒', minXp: 220 },
+    { name: '새싹',        emoji: '🌱', minXp: 0,
+      fact: '커피나무는 발아 후 약 8주가 지나면 떡잎이 펼쳐져요. 적정 온도는 22–28°C, 습도는 70% 이상이 좋습니다.' },
+    { name: '어린 묘목',    emoji: '🌿', minXp: 15,
+      fact: '묘목 단계에서는 직사광선보다 반그늘이 좋아요. 야생 커피는 본래 큰 나무 아래에서 자라는 그늘 식물이거든요.' },
+    { name: '작은 커피나무', emoji: '🌳', minXp: 50,
+      fact: '커피나무는 적도 부근의 "커피 벨트"에서 자라요. 고도 800m 이상에서 자란 원두는 산미가 풍부해진답니다.' },
+    { name: '꽃 단계',      emoji: '🌸', minXp: 120,
+      fact: '커피꽃은 자스민 향이 나는 흰 꽃이에요. 보통 우기 후 2–3일만 피었다 지는데, 한 번에 수천 송이가 동시에 핀답니다.' },
+    { name: '커피 체리',    emoji: '🍒', minXp: 220,
+      fact: '커피 체리는 꽃이 진 후 6–9개월에 걸쳐 익어요. 빨갛게 익은 체리 안에 두 알의 원두가 들어 있답니다. 손으로 따는 핸드피킹이 최고 품질로 꼽혀요.' },
   ],
 
   // 컬렉션 아이템 정의
@@ -279,8 +284,10 @@ function defaultState() {
     lastWaterTime: 0,
     firstPlayTime: Date.now(),
     soundEnabled: true,
+    notifyEnabled: false,     // 출석 알림 사용 여부
     lastDailyClaim: 0,        // 마지막 일일 보너스 받은 날 (날짜 키, YYYYMMDD 숫자)
     dailyStreak: 0,           // 연속 출석 일수
+    lastVisitTime: Date.now(),
     equippedPotId: 'pot_terracotta_basic',
     equippedDecorId: null,
     unlocked: ['pot_terracotta_basic'],
@@ -574,6 +581,18 @@ function renderStatsPanel() {
     '</div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">⏱ 총 플레이 기간</span><span class="stats-card-value">' + playedStr + '</span></div>' +
     '<div class="stats-row-wide"><span class="stats-card-label">🔥 연속 출석</span><span class="stats-card-value">' + (state.dailyStreak || 0) + '일</span></div>';
+
+  // 전 세계 누적 (Firestore 집계, 캐시가 있을 때만)
+  if (globalStatsCache) {
+    const gh = globalStatsCache.totalHarvests || 0;
+    const gg = globalStatsCache.totalGoldenBeans || 0;
+    body.innerHTML +=
+      '<div class="stats-global">' +
+        '<div class="stats-global-title">🌍 전 세계 PNS 농부들</div>' +
+        '<div class="stats-row-wide"><span class="stats-card-label">🍒 누적 수확</span><span class="stats-card-value">' + gh.toLocaleString() + '</span></div>' +
+        '<div class="stats-row-wide"><span class="stats-card-label">✨ 누적 황금 원두</span><span class="stats-card-value">' + gg.toLocaleString() + '</span></div>' +
+      '</div>';
+  }
 }
 
 // ── Loading screen ──────────────────────────
@@ -591,6 +610,167 @@ function hideLoadingScreen() {
   setLoadingProgress(100);
   setTimeout(() => ls.classList.add('hidden'), 200);
   setTimeout(() => { try { ls.remove(); } catch(e){} }, 1000);
+}
+
+// ── Inventory (가방) ────────────────────────
+function renderInventoryPanel() {
+  const body = $('inventoryBody');
+  const pot = C.ITEMS[state.equippedPotId];
+  const decor = state.equippedDecorId ? C.ITEMS[state.equippedDecorId] : null;
+
+  let html = '';
+
+  // 보유 자원
+  html += '<div class="inv-section">';
+  html += '<div class="inv-section-title">보유 자원</div>';
+  html += '<div class="inv-resources">';
+  html += '<div class="inv-resource"><span class="inv-resource-icon">☕</span><div class="inv-resource-info"><div class="inv-resource-value">' + state.beanPoints + '</div><div class="inv-resource-label">원두</div></div></div>';
+  html += '<div class="inv-resource"><span class="inv-resource-icon">✨</span><div class="inv-resource-info"><div class="inv-resource-value">' + state.goldenBeans + '</div><div class="inv-resource-label">황금 원두</div></div></div>';
+  html += '<div class="inv-resource"><span class="inv-resource-icon">💧</span><div class="inv-resource-info"><div class="inv-resource-value">' + Math.floor(state.water) + ' / ' + C.WATER_MAX + '</div><div class="inv-resource-label">물</div></div></div>';
+  html += '<div class="inv-resource"><span class="inv-resource-icon">🍒</span><div class="inv-resource-info"><div class="inv-resource-value">' + (state.harvestCount || 0) + '</div><div class="inv-resource-label">총 수확</div></div></div>';
+  html += '</div></div>';
+
+  // 장착 중
+  html += '<div class="inv-section">';
+  html += '<div class="inv-section-title">장착 중</div>';
+  if (pot) {
+    html += '<div class="inv-equipped"><span class="inv-equipped-icon">' + pot.icon + '</span><div class="inv-equipped-text"><div class="inv-equipped-name">' + pot.name + '</div><div class="inv-equipped-sub">화분</div></div></div>';
+  }
+  if (decor) {
+    html += '<div class="inv-equipped" style="margin-top:6px;"><span class="inv-equipped-icon">' + decor.icon + '</span><div class="inv-equipped-text"><div class="inv-equipped-name">' + decor.name + '</div><div class="inv-equipped-sub">장식</div></div></div>';
+  } else {
+    html += '<div class="inv-empty" style="margin-top:6px;">장식 미장착 — 컬렉션에서 장착하세요</div>';
+  }
+  html += '</div>';
+
+  // 사용한 보상 코드
+  html += '<div class="inv-section">';
+  html += '<div class="inv-section-title">사용한 보상 코드 (' + state.claimedRewards.length + ')</div>';
+  if (state.claimedRewards.length === 0) {
+    html += '<div class="inv-empty">아직 사용한 코드가 없어요</div>';
+  } else {
+    state.claimedRewards.forEach((code) => {
+      const r = C.REWARDS[code];
+      html += '<div class="inv-history-row"><span>' + (r ? r.name : code) + '</span><span class="inv-history-label">' + code + '</span></div>';
+    });
+  }
+  html += '</div>';
+
+  body.innerHTML = html;
+}
+
+// ── Stage info popup ────────────────────────
+function showStageInfo() {
+  const stg = C.STAGES[state.stage];
+  const nextXp = getNextStageXp(state.stage);
+  $('stageInfoTitle').textContent = stg.emoji + ' ' + stg.name;
+  let html = '<div class="stage-info-fact"><strong>알고 계셨나요?</strong><br>' + stg.fact + '</div>';
+  html += '<div class="stage-info-stats">';
+  html += '<span>현재 XP: <strong>' + Math.floor(state.growthXp) + '</strong></span>';
+  if (nextXp !== null) {
+    html += '<span>다음 단계까지: <strong>' + (nextXp - Math.floor(state.growthXp)) + ' XP</strong></span>';
+  } else {
+    html += '<span><strong>최종 단계 도달!</strong> 수확이 가능합니다.</span>';
+  }
+  html += '</div>';
+  $('stageInfoBody').innerHTML = html;
+  showOverlay('stageInfoPanel');
+}
+
+// ── Share (Web Share API + clipboard fallback) ─
+async function shareGame() {
+  const text = '🌱 PNS 커피나무 ' + (state.dailyStreak || 1) + '일차 키우는 중! ' +
+    '☕ ' + state.beanPoints + '원두 · ✨ ' + state.goldenBeans + '황금 원두 · 🍒 ' + (state.harvestCount || 0) + '회 수확';
+  const url = 'https://www.pnscoffee.com/game/';
+  try {
+    if (navigator.share) {
+      await navigator.share({ title: 'PNS 커피나무 키우기', text: text, url: url });
+      return;
+    }
+    await navigator.clipboard.writeText(text + '\n' + url);
+    alert('자랑할 내용이 클립보드에 복사되었어요!\n\n' + text);
+  } catch (e) {
+    // 사용자가 취소하면 무시
+  }
+}
+
+// ── Notification permission ──────────────────
+async function toggleNotification() {
+  if (!('Notification' in window)) {
+    alert('이 브라우저는 알림을 지원하지 않아요.');
+    return;
+  }
+  if (state.notifyEnabled) {
+    state.notifyEnabled = false;
+    saveState();
+    updateNotifyButton();
+    return;
+  }
+  let perm = Notification.permission;
+  if (perm === 'default') {
+    perm = await Notification.requestPermission();
+  }
+  if (perm === 'granted') {
+    state.notifyEnabled = true;
+    saveState();
+    updateNotifyButton();
+    // 환영 알림
+    try {
+      new Notification('🌱 PNS 커피나무', {
+        body: '내일 잊지 않고 출석 도장 찍어 주세요!',
+        icon: 'icon-192.svg',
+        tag: 'pns-welcome',
+      });
+    } catch (e) {}
+  } else {
+    alert('브라우저에서 알림을 허용해 주세요.');
+  }
+}
+function updateNotifyButton() {
+  const btn = $('btnNotifyToggle');
+  if (!btn) return;
+  btn.textContent = state.notifyEnabled ? '🔔 출석 알림 켜짐' : '🔕 출석 알림 꺼짐';
+}
+
+// ── Re-visit reminder (연속 끊김) ────────────
+function checkRevisit() {
+  if (!state.lastDailyClaim) return; // 첫 방문이면 무시
+  const today = todayKey();
+  if (state.lastDailyClaim === today) return;
+  const diff = daysBetween(state.lastDailyClaim, today);
+  if (diff >= 2) {
+    // 1일 이상 빠짐
+    const body = $('revisitBody');
+    body.innerHTML =
+      '<p class="revisit-text">' + diff + '일 동안 못 보셨네요.<br>' +
+      '연속 출석이 <strong>' + (state.dailyStreak || 0) + '일</strong>에서 끊겼어요.</p>' +
+      '<p class="revisit-text" style="font-size:0.78rem;color:var(--text-dim);margin-top:8px;">' +
+      '오늘부터 다시 1일차로 시작해요. 7일 연속 채우면 황금 원두를 드려요!</p>';
+    showOverlay('revisitPopup');
+  }
+}
+
+// ── Global stats (Firestore aggregate) ──────
+let globalStatsCache = null;
+async function loadGlobalStats() {
+  if (!db) return null;
+  try {
+    const doc = await db.collection('gameGlobalStats').doc('summary').get();
+    if (doc.exists) {
+      globalStatsCache = doc.data();
+      return globalStatsCache;
+    }
+  } catch (e) { /* offline or rules */ }
+  return null;
+}
+async function incrementGlobalStat(field, amount) {
+  if (!db) return;
+  try {
+    await db.collection('gameGlobalStats').doc('summary').set({
+      [field]: firebase.firestore.FieldValue.increment(amount || 1),
+      lastUpdated: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: true });
+  } catch (e) { /* fail silently */ }
 }
 
 // ── DOM helpers ─────────────────────────────
@@ -1238,15 +1418,30 @@ function setupDOMEvents() {
   $('btnHarvest').addEventListener('click', (e) => {
     e.stopPropagation();
     if (!canHarvest()) return;
-    // 수확 파티클 (수확 전에)
+    // 강화된 수확 파티클 (다층 색상 + 화면 플래시)
     const scene = window._phaserGame?.scene?.getScene('TreeScene');
     if (scene) {
       const cx = scene.scale.width / 2;
       const groundY = scene.scale.height * 0.72;
-      spawnParticles(scene, cx, groundY - 100, 0xffd700, 15, 40);
-      spawnParticles(scene, cx, groundY - 80, 0xcc3333, 10, 35);
+      // 1차: 황금 폭발
+      spawnParticles(scene, cx, groundY - 110, 0xffd700, 28, 70);
+      spawnParticles(scene, cx, groundY - 110, 0xfff3a8, 18, 55);
+      // 2차: 빨간 체리
+      spawnParticles(scene, cx, groundY - 90, 0xcc3333, 18, 60);
+      spawnParticles(scene, cx, groundY - 80, 0xff6b6b, 12, 45);
+      // 3차: 잔잔한 잎
+      setTimeout(() => spawnParticles(scene, cx, groundY - 130, 0x6abf69, 14, 80), 200);
+      setTimeout(() => spawnParticles(scene, cx, groundY - 100, 0xffd700, 16, 90), 350);
+      // 화면 플래시 오버레이
+      const flash = scene.add.rectangle(scene.scale.width / 2, scene.scale.height / 2, scene.scale.width, scene.scale.height, 0xffffff, 0.55);
+      flash.setDepth(9999);
+      scene.tweens.add({ targets: flash, alpha: 0, duration: 450, ease: 'Quad.easeOut', onComplete: () => flash.destroy() });
+      // 카메라 흔들림
+      try { scene.cameras.main.shake(200, 0.006); } catch (err) {}
     }
     const golden = doHarvest();
+    incrementGlobalStat('totalHarvests', 1);
+    incrementGlobalStat('totalGoldenBeans', golden);
     showHarvestPopup(golden);
     if (scene) { scene.currentStage = -1; scene.drawTree(true); }
   });
@@ -1287,6 +1482,7 @@ function setupDOMEvents() {
   // 설정
   $('btnSettings').addEventListener('click', () => {
     updateSoundButton();
+    updateNotifyButton();
     showOverlay('settingsPanel');
   });
   $('settingsClose').addEventListener('click', () => hideOverlay('settingsPanel'));
@@ -1296,9 +1492,34 @@ function setupDOMEvents() {
   // 사운드 토글
   $('btnSoundToggle').addEventListener('click', toggleSound);
 
+  // 가방 (인벤토리)
+  $('btnInventory').addEventListener('click', (e) => {
+    e.stopPropagation();
+    renderInventoryPanel();
+    showOverlay('inventoryPanel');
+  });
+  $('inventoryClose').addEventListener('click', () => hideOverlay('inventoryPanel'));
+
+  // 단계 정보 (ⓘ)
+  $('btnStageInfo').addEventListener('click', (e) => {
+    e.stopPropagation();
+    showStageInfo();
+  });
+  $('stageInfoClose').addEventListener('click', () => hideOverlay('stageInfoPanel'));
+
+  // 공유
+  $('btnShare').addEventListener('click', shareGame);
+
+  // 출석 알림 토글
+  $('btnNotifyToggle').addEventListener('click', toggleNotification);
+
+  // 재방문 팝업 닫기
+  $('revisitClose').addEventListener('click', () => hideOverlay('revisitPopup'));
+
   // 통계 패널
   $('btnStats').addEventListener('click', () => {
     renderStatsPanel();
+    loadGlobalStats().then(() => renderStatsPanel());
     hideOverlay('settingsPanel');
     showOverlay('statsPanel');
   });
@@ -1521,6 +1742,7 @@ function boot() {
 
   // 일일 출석 확인 (로딩 화면 숨긴 후 약간 늦게)
   setTimeout(() => {
+    checkRevisit();
     checkDailyBonus();
   }, 1200);
 
@@ -1528,6 +1750,20 @@ function boot() {
   if (!state.tutorialDone) {
     setTimeout(startTutorial, 1800);
   }
+
+  // 서비스 워커 등록 (PWA 오프라인 지원)
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('sw.js').catch(() => { /* fail silently */ });
+    });
+  }
+
+  // 글로벌 통계 미리 로드 (백그라운드)
+  setTimeout(() => { loadGlobalStats(); }, 2000);
+
+  // 마지막 방문 시각 업데이트
+  state.lastVisitTime = Date.now();
+  saveState();
 }
 
 // DOM Ready

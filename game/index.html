@@ -12,6 +12,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.svg">
+  <link rel="icon" type="image/svg+xml" href="icon-192.svg">
 </head>
 <body>
 
@@ -62,6 +65,7 @@
 
     <!-- 성장 단계 표시 -->
     <div class="stage-bar">
+      <button class="stage-info-btn" id="btnStageInfo" aria-label="단계 정보">ⓘ</button>
       <span id="stageName">🌱 새싹</span>
       <span class="stage-xp" id="stageXp">0 / 15 XP</span>
     </div>
@@ -83,7 +87,7 @@
         <span class="action-btn-label">물주기</span>
         <span class="action-btn-cooldown" id="waterCooldown"></span>
       </button>
-      <button class="action-btn" id="btnInventory" disabled>
+      <button class="action-btn" id="btnInventory">
         <span class="action-btn-icon">🎒</span>
         <span class="action-btn-label">가방</span>
       </button>
@@ -165,10 +169,39 @@
       <div class="popup-body" style="display:flex;flex-direction:column;gap:10px;">
         <button class="popup-btn" id="btnSoundToggle">🔊 사운드 켜짐</button>
         <button class="popup-btn" id="btnStats">📊 통계 보기</button>
+        <button class="popup-btn" id="btnShare">📤 친구에게 자랑하기</button>
+        <button class="popup-btn" id="btnNotifyToggle">🔔 출석 알림</button>
         <button class="popup-btn" id="btnRewardCode">🎁 보상 코드 입력</button>
         <button class="popup-btn popup-btn-danger" id="btnResetData">데이터 초기화</button>
       </div>
       <button class="popup-btn popup-btn-secondary" id="settingsClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 인벤토리(가방) 패널 -->
+  <div class="overlay" id="inventoryPanel">
+    <div class="popup popup-tall">
+      <h3>🎒 가방</h3>
+      <div class="popup-body popup-body-scroll" id="inventoryBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="inventoryClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 단계 정보 팝업 -->
+  <div class="overlay" id="stageInfoPanel">
+    <div class="popup">
+      <h3 id="stageInfoTitle">🌱 새싹</h3>
+      <div class="popup-body" id="stageInfoBody"></div>
+      <button class="popup-btn popup-btn-secondary" id="stageInfoClose" style="margin-top:12px;">닫기</button>
+    </div>
+  </div>
+
+  <!-- 재방문(연속 끊김) 알림 팝업 -->
+  <div class="overlay" id="revisitPopup">
+    <div class="popup">
+      <h3>😢 아쉬워요!</h3>
+      <div class="popup-body" id="revisitBody"></div>
+      <button class="popup-btn" id="revisitClose">다시 시작하기</button>
     </div>
   </div>
 

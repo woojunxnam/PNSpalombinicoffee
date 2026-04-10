@@ -277,11 +277,32 @@ canvas {
   background: var(--bg-warm);
   font-size: 0.8rem;
   flex-shrink: 0;
+  gap: 8px;
 }
+
+.stage-info-btn {
+  background: rgba(200, 170, 110, 0.15);
+  color: var(--accent);
+  border: 1px solid rgba(200, 170, 110, 0.3);
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  font-family: serif;
+}
+.stage-info-btn:active { background: rgba(200, 170, 110, 0.3); }
 
 #stageName {
   color: var(--green);
   font-weight: 700;
+  flex: 1;
 }
 
 .stage-xp {
@@ -853,6 +874,165 @@ canvas {
   font-size: 0.74rem;
   color: var(--text-dim);
   margin-top: 8px;
+}
+
+/* ── Inventory panel ──────────────────────── */
+.inv-section {
+  margin-bottom: 16px;
+}
+.inv-section-title {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(200, 170, 110, 0.2);
+  letter-spacing: 0.5px;
+}
+.inv-resources {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.inv-resource {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(200, 170, 110, 0.18);
+  border-radius: 10px;
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.inv-resource-icon { font-size: 22px; }
+.inv-resource-info { flex: 1; min-width: 0; }
+.inv-resource-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.2;
+}
+.inv-resource-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.inv-equipped {
+  background: rgba(200, 170, 110, 0.08);
+  border: 1px solid rgba(200, 170, 110, 0.25);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.inv-equipped-icon { font-size: 24px; }
+.inv-equipped-text { flex: 1; }
+.inv-equipped-name { font-weight: 700; }
+.inv-equipped-sub { font-size: 0.7rem; color: var(--text-dim); margin-top: 2px; }
+.inv-empty {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  padding: 12px;
+}
+.inv-history-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  font-size: 0.78rem;
+  color: var(--text);
+  border-bottom: 1px dashed rgba(200, 170, 110, 0.12);
+}
+.inv-history-row:last-child { border-bottom: none; }
+.inv-history-label { color: var(--text-dim); font-size: 0.74rem; }
+
+/* ── Stage info panel ─────────────────────── */
+.stage-info-fact {
+  background: rgba(106, 191, 105, 0.08);
+  border-left: 3px solid var(--green);
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+.stage-info-fact strong { color: var(--green); }
+.stage-info-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+.stage-info-stats span strong { color: var(--accent); }
+
+/* ── Global stats row in stats panel ──────── */
+.stats-global {
+  background: linear-gradient(135deg, rgba(200, 170, 110, 0.12), rgba(106, 191, 105, 0.08));
+  border: 1px solid rgba(200, 170, 110, 0.3);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+.stats-global-title {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.stats-global-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* ── Revisit popup ───────────────────────── */
+.revisit-text {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 6px;
+}
+.revisit-text strong { color: var(--accent); }
+
+/* ── PWA install hint ─────────────────────── */
+.pwa-install-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(43, 34, 24, 0.95);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 0.78rem;
+  color: var(--text);
+  z-index: 200;
+  display: none;
+  animation: floatY 0.4s ease;
+}
+.pwa-install-toast.visible { display: block; }
+.pwa-install-toast button {
+  background: var(--accent);
+  color: #1a1410;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 8px;
+  cursor: pointer;
+}
+@keyframes floatY {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
 }
 
 /* ── Tutorial hint ────────────────────────── */
