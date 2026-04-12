@@ -72,9 +72,33 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
 .nav a{
   padding: 8px 7px;
   border-radius: 12px;
-  transition: background .12s ease, color .12s ease, opacity .18s ease;
+  transition: background .12s ease, color .12s ease;
 }
 .nav a:hover{ background: rgba(255,255,255,.8); color: var(--text); }
+
+/* ── 네비 호버 KO→EN 크로스페이드 ── */
+.nav-hover-wrap { position: relative; display: inline-flex; overflow: hidden; }
+.nav-hover-ko, .nav-hover-en {
+  display: block;
+  transition: transform .28s cubic-bezier(.4,0,.2,1), opacity .28s ease;
+  white-space: nowrap;
+}
+.nav-hover-en {
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(20%);
+  opacity: 0;
+}
+a:hover > .nav-hover-wrap .nav-hover-ko,
+a:hover .nav-hover-wrap .nav-hover-ko {
+  opacity: 0;
+  transform: translateY(-40%);
+}
+a:hover > .nav-hover-wrap .nav-hover-en,
+a:hover .nav-hover-wrap .nav-hover-en {
+  opacity: 1;
+  transform: translateY(-50%);
+}
 
 /* ?? BUTTONS ?? */
 .btn{
@@ -784,7 +808,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   color: var(--text);
   font-weight: 600;
   white-space: nowrap;
-  transition: background .12s ease, color .12s ease, opacity .18s ease;
+  transition: background .12s ease, color .12s ease;
 }
 .nav-dropdown a:hover { background: var(--accent-light); color: var(--accent); }
 .nav-dropdown-icon { font-size: 16px; }

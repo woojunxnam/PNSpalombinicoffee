@@ -687,14 +687,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const koText = textNode.textContent.trim();
     const enText = ALL_NAV_EN[koText];
     if (!enText) return;
-    el.addEventListener('mouseenter', () => {
-      el.style.opacity = '0';
-      setTimeout(() => { textNode.textContent = enText; el.style.opacity = ''; }, 180);
-    });
-    el.addEventListener('mouseleave', () => {
-      el.style.opacity = '0';
-      setTimeout(() => { textNode.textContent = koText; el.style.opacity = ''; }, 180);
-    });
+    /* KO/EN 텍스트를 동시에 배치 → CSS crossfade (setTimeout 없음) */
+    const wrap = document.createElement('span');
+    wrap.className = 'nav-hover-wrap';
+    const ko = document.createElement('span');
+    ko.className = 'nav-hover-ko';
+    ko.textContent = koText;
+    const en = document.createElement('span');
+    en.className = 'nav-hover-en';
+    en.textContent = enText;
+    wrap.append(ko, en);
+    textNode.replaceWith(wrap);
   }
 
   document.querySelectorAll('.nav > a, .nav-item > a, .nav-dropdown a').forEach(a => addHoverSwap(a));
