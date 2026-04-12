@@ -130,6 +130,8 @@ async function loadFromFirestore(uid) {
         farmLevel: cloud.farmLevel || ((cloud.stats?.totalHarvests || 0) + 1),
       };
       state.stage = getStage(state.growthXp);
+      // Phase K — 클라우드에서 받은 데이터에도 화분 ID 마이그레이션 적용
+      migrateLegacyPotIds(state);
       saveState(); // localStorage 동기화
     } else {
       // 로컬이 더 앞서 있음 — 클라우드에 업로드
@@ -250,11 +252,15 @@ const C = Object.freeze({
   ],
 
   // 컬렉션 아이템 정의
+  // Phase K — 화분 1차 6종 (game_pot_system.md 기준)
+  // 순서가 곧 도감 진열 순서. 색만이 아니라 형태/패턴/포인트로 차별화.
   ITEMS: {
-    pot_terracotta_basic: { name: '기본 테라코타 화분', type: 'pot', icon: '🪴', desc: '시작 화분' },
-    pot_cafe_brown:       { name: '카페 브라운 화분', type: 'pot', icon: '☕', desc: 'Stage 2 도달 시 해금' },
-    pot_drip_pattern:     { name: '드립 패턴 화분', type: 'pot', icon: '💧', desc: 'Stage 3 도달 시 해금' },
-    pot_farm_master:      { name: '농장 마스터 화분', type: 'pot', icon: '🏆', desc: '농장 레벨 10 달성' },
+    pot_terracotta_basic:  { name: '기본 테라코타 화분', type: 'pot', icon: '🪴', desc: '매일 돌보는 첫 집' },
+    pot_flower_terracotta: { name: '꽃무늬 테라코타 화분', type: 'pot', icon: '🌸', desc: '첫 꽃을 본 날의 기억' },
+    pot_cream_ceramic:     { name: '크림 세라믹 화분',   type: 'pot', icon: '🍶', desc: '카페 코너의 정돈된 온기' },
+    pot_rainy_ceramic:     { name: '비 온 뒤 세라믹 화분', type: 'pot', icon: '💧', desc: '비를 듣는 시간' },
+    pot_cat_paw:           { name: '고양이 발자국 화분', type: 'pot', icon: '🐾', desc: '함께 머문 흔적' },
+    pot_farm_master:       { name: '농장 마스터 화분',   type: 'pot', icon: '🏆', desc: '시간과 정성의 증명' },
     decor_spoon_small:    { name: '작은 스푼 장식', type: 'decor', icon: '🥄', desc: '물주기 5회 달성' },
     decor_bean_sack_mini: { name: '원두 자루 장식', type: 'decor', icon: '🫘', desc: '탭 30회 달성' },
     // ── Phase G-2 — 계절 테마 장식 (확정 축적, 가챠 아님) ──
@@ -270,10 +276,16 @@ const C = Object.freeze({
 
   // 해금 조건
   UNLOCK_CONDITIONS: {
-    pot_terracotta_basic: () => true,
-    pot_cafe_brown:       (s) => s.stage >= 1,
-    pot_drip_pattern:     (s) => s.stage >= 2,
-    pot_farm_master:      (s) => (s.farmLevel || 1) >= 10,
+    pot_terracotta_basic:  () => true,
+    // Phase K — 첫 꽃(Stage 3 첫 도달)은 stats.firstFlowerTime > 0 으로 판정
+    pot_flower_terracotta: (s) => (s.stats?.firstFlowerTime || 0) > 0,
+    // Phase K — 첫 수확
+    pot_cream_ceramic:     (s) => (s.stats?.totalHarvests || 0) >= 1,
+    // Phase K — 비 오는 날 접속 5회
+    pot_rainy_ceramic:     (s) => (s.rainyVisitDates || []).length >= 5,
+    // Phase K — 고양이(카푸치노) 친밀도 5
+    pot_cat_paw:           (s) => (s.pets?.cappu?.friendship || 0) >= 5,
+    pot_farm_master:       (s) => (s.farmLevel || 1) >= 10,
     decor_spoon_small:    (s) => s.stats.totalWaterings >= 5,
     decor_bean_sack_mini: (s) => s.stats.totalTaps >= 30,
     // Phase G-2 — 계절 수확 횟수 기반 확정 해금
@@ -289,7 +301,7 @@ const C = Object.freeze({
 
   // 보상 코드 정의
   REWARDS: {
-    DRIP2025:   { name: '드립백 보상', water: 30, beans: 10, unlock: 'pot_drip_pattern' },
+    DRIP2025:   { name: '드립백 보상', water: 30, beans: 10, unlock: 'pot_rainy_ceramic' },
     BEAN2025:   { name: '원두 보상', beans: 20, xp: 10 },
     GELATO2025: { name: '젤라또 보상', water: 50, beans: 15, unlock: 'decor_spoon_small' },
     PNSCOFFEE:  { name: 'PNS 웰컴 보상', water: 100, beans: 5 },
@@ -369,6 +381,11 @@ function defaultState() {
     receivedLetterIds: [],      // 이미 받은 템플릿 id (중복 방지)
     // Phase H — 농장 레벨 (수확마다 +1, 영구 보너스, 가챠 아님)
     farmLevel: 1,
+    // Phase J — 클릭 팝업 시스템 쿨다운 (kind → lastSpawnTimeMs)
+    // 화면에 보이는 팝업 자체는 저장하지 않음. 조건 충족 시 자동 재생성.
+    popupCooldowns: {},
+    // Phase J — 1회성 팝업 소비 기록 (예: 'flower' 첫 꽃 1회성 팝업 클릭 완료)
+    popupConsumedOnce: {},
   };
 }
 
@@ -379,6 +396,25 @@ function saveState() {
     localStorage.setItem(C.SAVE_KEY, JSON.stringify(state));
   } catch (e) { /* private browsing 등 */ }
   scheduleSaveToFirestore();
+}
+
+// Phase K — 화분 ID 마이그레이션 (구버전 저장 호환)
+// 구 ID: pot_cafe_brown / pot_drip_pattern → 새 화분으로 자동 환산
+const POT_LEGACY_MIGRATION = {
+  pot_cafe_brown:   'pot_cream_ceramic',
+  pot_drip_pattern: 'pot_rainy_ceramic',
+};
+function migrateLegacyPotIds(s) {
+  if (!s) return s;
+  if (s.equippedPotId && POT_LEGACY_MIGRATION[s.equippedPotId]) {
+    s.equippedPotId = POT_LEGACY_MIGRATION[s.equippedPotId];
+  }
+  if (Array.isArray(s.unlocked)) {
+    s.unlocked = s.unlocked.map(id => POT_LEGACY_MIGRATION[id] || id);
+    // 중복 제거
+    s.unlocked = Array.from(new Set(s.unlocked));
+  }
+  return s;
 }
 
 function loadState() {
@@ -403,6 +439,8 @@ function loadState() {
       if (merged.farmLevel == null) {
         merged.farmLevel = (merged.stats?.totalHarvests || 0) + 1;
       }
+      // Phase K — 구 화분 ID 마이그레이션
+      migrateLegacyPotIds(merged);
       return merged;
     }
   } catch (e) { /* corrupt data */ }
@@ -636,6 +674,8 @@ function doHarvest() {
   pushHarvestRecord(grade, score);
 
   checkPetUnlocks(); // 첫 수확 → 카푸치노(고양이) 해금 체크
+  // Phase K — 첫 수확 시 크림 세라믹 화분 해금 체크
+  checkUnlocks();
   // Phase G-2 — 계절 장식 신규 해금 체크 (도감만, 자동 장착 X)
   checkSeasonalUnlocks();
   playSound('harvest');
@@ -647,6 +687,14 @@ function doHarvest() {
   updateStage(0, { silent: true });
   state.water = C.WATER_START;
 
+  // Phase J — 수확 직후 cherry 팝업이 남아있으면 정리
+  if (typeof removeClickPopup === 'function') removeClickPopup('cherry');
+  // Phase M — 수확 시 아바타가 나무에 다가옴 (가장 강한 등장)
+  {
+    const _scene = window._phaserGame?.scene?.getScene('TreeScene');
+    if (_scene && _scene.showAvatar) _scene.showAvatar('harvest', 2400);
+  }
+
   updateHUD();
   saveState();
   cloudSaveNow();
@@ -657,12 +705,25 @@ function doHarvest() {
 // ── Collection unlock check ─────────────────
 function checkUnlocks() {
   let newUnlock = false;
+  const newlyUnlockedItems = [];
   for (const [id, condFn] of Object.entries(C.UNLOCK_CONDITIONS)) {
     if (!state.unlocked.includes(id) && condFn(state)) {
       state.unlocked.push(id);
       newUnlock = true;
+      const item = C.ITEMS[id];
+      // Phase K — 새 화분 해금 시 조용한 알림 (다른 아이템은 기존 동선 유지)
+      if (item && item.type === 'pot') newlyUnlockedItems.push({ id, item });
     }
   }
+  newlyUnlockedItems.forEach(({ item }) => {
+    showNotice({
+      icon: item.icon,
+      title: '새 화분이 도착했어요',
+      body: '<strong>' + item.name + '</strong><br>' +
+            '<span style="color:var(--text-dim);font-size:0.9em;">' + item.desc + '</span><br><br>' +
+            '<span style="color:var(--text-dim);font-size:0.85em;">컬렉션에서 장착할 수 있어요.</span>',
+    });
+  });
   return newUnlock;
 }
 
@@ -1026,6 +1087,20 @@ function petPet(petId) {
   pet.lastPetDate = today;
   const leveled = pet.friendship < MAX_FRIENDSHIP;
   if (leveled) pet.friendship++;
+  // Phase K — 친밀도 변화 시 화분 해금 체크 (특히 cappu 5 → 고양이 발자국 화분)
+  if (leveled) checkUnlocks();
+  // Phase M — 펫 상호작용 시 아바타가 펫 근처로 다가옴
+  {
+    const _scene = window._phaserGame?.scene?.getScene('TreeScene');
+    if (_scene && _scene.showAvatar) {
+      const c = _scene.petContainers?.[petId];
+      if (c) {
+        _scene.showAvatar('petting', 2200, { x: c.x - 22, y: c.y + 14 });
+      } else {
+        _scene.showAvatar('petting', 2200);
+      }
+    }
+  }
   saveState();
   return { fed: true, leveled };
 }
@@ -1070,6 +1145,8 @@ function updateStage(newStage, opts) {
       showNotice({ icon: msg.icon, title: msg.title, body: msg.body });
       // 꽃 마일스톤 → 크레마(참새) 해금 체크
       if (msg.milestone) checkPetUnlocks();
+      // Phase K — 첫 꽃/첫 체리 시 화분 해금 체크 (꽃무늬 테라코타)
+      if (msg.milestone) checkUnlocks();
     }
   }
   return true;
@@ -1903,6 +1980,13 @@ function doWater() {
   updateHUD();
   saveState();
   startWaterCooldownTimer();
+  // Phase J — 물 회복 후 water 팝업이 떠 있으면 제거 (다음 tick까지 기다리지 않음)
+  if (state.water >= 60 && typeof removeClickPopup === 'function') removeClickPopup('water');
+  // Phase M — 물주기 시 아바타가 잠시 다가옴 (caretaker presence)
+  {
+    const _scene = window._phaserGame?.scene?.getScene('TreeScene');
+    if (_scene && _scene.showAvatar) _scene.showAvatar('watering', 1700);
+  }
 
   // 시각 피드백: 버튼 반짝
   const btn = $('btnWater');
@@ -1991,9 +2075,387 @@ function applyRainyBonusIfNeeded() {
       state.rainyVisitDates = state.rainyVisitDates.slice(-30);
     }
   }
+  // Phase K — 비 오는 날 5회 누적 시 pot_rainy_ceramic 해금 체크
+  checkUnlocks();
   saveState();
   return true;
 }
+
+// ── Phase J — 머리 위 클릭 팝업 시스템 ──────
+// "Clash of Clans 스타일" 머리 위 팝업의 시각 인터랙션만 차용.
+// 새 재화 추가 X — 모든 보상은 기존 황금원두/친밀도/Water/원두증서로 분배.
+//
+// cozy 가드레일 (절대 원칙):
+//  1. 동시 표시 최대 2개
+//  2. 분 단위 생성 간격 (초 단위 X)
+//  3. 자동 만료 X (FOMO 없음, 다음 접속에도 그대로 보임)
+//  4. 펫 보상 < 수확 보상 (펫만 클릭 방지)
+//  5. 부드러운 부유 애니메이션, 느낌표/숫자 X
+const POPUP_KINDS = {
+  // 나무 위 팝업
+  cherry: { icon: '🍒', anchor: 'tree-top',       priority: 1, cooldownMs: 0, persistWhileTrue: true },
+  water:  { icon: '💧', anchor: 'tree-top',       priority: 2, cooldownMs: 0, persistWhileTrue: true },
+  flower: { icon: '🌸', anchor: 'tree-top-left',  priority: 1, cooldownMs: 0, oneShot: true },
+  star:   { icon: '✨', anchor: 'tree-top-right', priority: 4, cooldownMs: 8 * 60 * 1000 },
+  // 펫 위 팝업 (각 펫별)
+  heart:  { icon: '💗', anchor: 'pet:cappu',     priority: 3, cooldownMs: 6 * 60 * 1000 },
+  leaf:   { icon: '🍃', anchor: 'pet:crema',     priority: 3, cooldownMs: 6 * 60 * 1000 },
+  acorn:  { icon: '🌰', anchor: 'pet:americano', priority: 3, cooldownMs: 6 * 60 * 1000 },
+  dew:    { icon: '💦', anchor: 'pet:espresso',  priority: 3, cooldownMs: 6 * 60 * 1000 },
+};
+
+const POPUP_MAX_VISIBLE = 2;
+const POPUP_TICK_INTERVAL_SEC = 20; // 20초마다 조건 체크 (분 단위로 느끼게)
+
+// 활성 팝업 저장 — { kind → { kind, el, anchor, anchorMeta } }
+let _activePopups = {};
+let _popupCheckTimer = 0;
+let _popupLayer = null;
+
+// 부팅 시 1회: 팝업 레이어 DOM 생성
+function initPopupLayer() {
+  if (_popupLayer) return;
+  const canvasArea = document.getElementById('gameCanvasArea');
+  if (!canvasArea) return;
+  _popupLayer = document.createElement('div');
+  _popupLayer.id = 'popupLayer';
+  _popupLayer.className = 'popup-layer';
+  // canvas 다음 / harvest-btn 이전에 삽입 (z-index로 처리하지만 안전하게 앞에)
+  canvasArea.appendChild(_popupLayer);
+}
+
+// 팝업 조건 체크 — 어떤 종류가 지금 자격이 있는지 (true/false)
+function _popupConditionMet(kind) {
+  switch (kind) {
+    case 'cherry':
+      // Stage 4 + 충분히 익음 (95%+)
+      return canHarvest() && getRipeness() >= 0.95;
+    case 'water':
+      // Water 25 미만 (그리고 60 이상이면 자동으로 사라짐 — cleanupStale에서)
+      return state.water < 25;
+    case 'flower':
+      // Stage 3 첫 도달 1회성, 아직 클릭 안 한 경우만
+      return (state.stats?.firstFlowerTime || 0) > 0
+          && !state.popupConsumedOnce?.flower
+          && state.stage >= 3;
+    case 'star':
+      // Stage 1+ (튜토리얼 후) 일반 idle 보상
+      return state.stage >= 1;
+    case 'heart':
+      return !!state.pets?.cappu?.unlocked;
+    case 'leaf':
+      return !!state.pets?.crema?.unlocked;
+    case 'acorn':
+      return !!state.pets?.americano?.unlocked;
+    case 'dew':
+      return !!state.pets?.espresso?.unlocked;
+  }
+  return false;
+}
+
+// 팝업 사라지는 조건 — 이미 떠 있는 팝업 중 더 이상 의미 없어진 것 제거
+// 예: water 팝업이 떠있는데 사용자가 물을 부어서 water가 60 이상으로 회복됨
+function _popupShouldClear(kind) {
+  switch (kind) {
+    case 'water': return state.water >= 60;
+    case 'cherry': return !canHarvest();
+    case 'flower': return !!state.popupConsumedOnce?.flower;
+  }
+  return false;
+}
+
+// 팝업 anchor → 화면 좌표 (Phaser 픽셀)
+// 반환: { x, y } (Phaser 내부 픽셀)
+function _resolvePopupAnchor(anchor, scene) {
+  if (!scene) return null;
+  const w = scene.scale.width;
+  const h = scene.scale.height;
+  const groundY = h * 0.72;
+  const cx = w / 2;
+  // 나무 머리 위는 groundY 기준으로 1.4× 스케일 적용된 잎 꼭대기 위
+  // drawTree에서 leaf 최상단은 대략 groundY - 90 ~ -120, 1.4× 스케일이라 더 위
+  const treeTopY = groundY - 165;
+  if (anchor === 'tree-top')        return { x: cx, y: treeTopY };
+  if (anchor === 'tree-top-left')   return { x: cx - 56, y: treeTopY + 20 };
+  if (anchor === 'tree-top-right')  return { x: cx + 56, y: treeTopY + 20 };
+  if (anchor.startsWith('pet:')) {
+    const petId = anchor.slice(4);
+    const c = scene.petContainers?.[petId];
+    if (!c) return null;
+    return { x: c.x, y: c.y - 32 };
+  }
+  return null;
+}
+
+// Phaser 픽셀 좌표 → DOM 퍼센트 (canvas-area 기준)
+function _phaserPctToDom(scene, x, y) {
+  return {
+    leftPct: (x / scene.scale.width) * 100,
+    topPct: (y / scene.scale.height) * 100,
+  };
+}
+
+// 팝업 1개 스폰 — DOM 요소 생성 후 _activePopups에 등록
+function spawnClickPopup(kind) {
+  if (_activePopups[kind]) return false;
+  if (Object.keys(_activePopups).length >= POPUP_MAX_VISIBLE) return false;
+  const meta = POPUP_KINDS[kind];
+  if (!meta) return false;
+  if (!_popupLayer) initPopupLayer();
+  if (!_popupLayer) return false;
+
+  const scene = window._phaserGame?.scene?.getScene('TreeScene');
+  const pos = _resolvePopupAnchor(meta.anchor, scene);
+  if (!pos) return false;
+  const pct = _phaserPctToDom(scene, pos.x, pos.y);
+
+  const anchorEl = document.createElement('div');
+  anchorEl.className = 'click-popup-anchor';
+  anchorEl.style.left = pct.leftPct + '%';
+  anchorEl.style.top  = pct.topPct  + '%';
+
+  const popupEl = document.createElement('div');
+  popupEl.className = 'click-popup kind-' + kind;
+  popupEl.textContent = meta.icon;
+  popupEl.setAttribute('role', 'button');
+  popupEl.setAttribute('aria-label', '보상 받기');
+  popupEl.addEventListener('click', (e) => {
+    e.stopPropagation();
+    handlePopupClick(kind);
+  });
+  // 터치 이벤트도 캔버스로 전파되지 않도록
+  popupEl.addEventListener('pointerdown', (e) => { e.stopPropagation(); });
+  popupEl.addEventListener('touchstart', (e) => { e.stopPropagation(); }, { passive: true });
+
+  anchorEl.appendChild(popupEl);
+  _popupLayer.appendChild(anchorEl);
+
+  // 한 프레임 뒤에 visible 클래스 추가 (페이드 인)
+  requestAnimationFrame(() => { anchorEl.classList.add('visible'); });
+
+  _activePopups[kind] = { kind, anchorEl, popupEl };
+  // 쿨다운 타임스탬프 기록
+  if (!state.popupCooldowns) state.popupCooldowns = {};
+  state.popupCooldowns[kind] = Date.now();
+  return true;
+}
+
+// 팝업 1개 제거 (페이드 아웃 후 DOM에서 제거)
+function removeClickPopup(kind) {
+  const p = _activePopups[kind];
+  if (!p) return;
+  p.anchorEl.classList.add('leaving');
+  p.anchorEl.classList.remove('visible');
+  setTimeout(() => {
+    try { p.anchorEl.remove(); } catch (e) {}
+  }, 320);
+  delete _activePopups[kind];
+}
+
+// 팝업 클릭 시 동작 — 보상 지급 + 제거
+function handlePopupClick(kind) {
+  // 클릭 burst 효과
+  const p = _activePopups[kind];
+  if (p && _popupLayer) {
+    const burst = document.createElement('div');
+    burst.className = 'click-popup-burst';
+    burst.style.left = p.anchorEl.style.left;
+    burst.style.top = p.anchorEl.style.top;
+    _popupLayer.appendChild(burst);
+    setTimeout(() => { try { burst.remove(); } catch (e) {} }, 500);
+  }
+  try { playSound('reward'); } catch (e) {}
+
+  switch (kind) {
+    case 'cherry': {
+      // 수확 트리거 — 기존 수확 버튼 동일 플로우 호출
+      removeClickPopup(kind);
+      const btn = document.getElementById('btnHarvest');
+      if (btn) btn.click();
+      return;
+    }
+    case 'water': {
+      // 물주기 트리거 — 기존 doWater
+      doWater();
+      // doWater 후 water가 회복돼서 cleanupStale에서 제거되지만, 즉시 제거도 OK
+      removeClickPopup(kind);
+      return;
+    }
+    case 'flower': {
+      // 1회성 첫 꽃 기념 — 황금원두 +5 + 1회성 소비 표시
+      state.goldenBeans += 5;
+      if (!state.popupConsumedOnce) state.popupConsumedOnce = {};
+      state.popupConsumedOnce.flower = true;
+      _popupFloatingText('+5 ✨', kind);
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+    case 'star': {
+      // idle 보상 — 황금원두 +1 (cozy 작은 보상)
+      state.goldenBeans += 1;
+      _popupFloatingText('+1 ✨', kind);
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+    case 'heart': {
+      // 카푸치노 — 항상 황금원두 +1, 추가로 하루 1회 친밀도 +1 시도
+      state.goldenBeans += 1;
+      const r = petPet('cappu');
+      _popupFloatingText(r.fed ? '+1 ✨ 💕' : '+1 ✨', kind);
+      if (r.fed && r.leveled) {
+        const pet = state.pets.cappu;
+        const msg = FRIENDSHIP_MESSAGES.cappu?.[pet.friendship];
+        if (msg) showNotice(msg);
+      }
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+    case 'leaf': {
+      // 크레마 — 항상 황금원두 +2, 추가로 하루 1회 친밀도 +1 시도
+      state.goldenBeans += 2;
+      const r = petPet('crema');
+      _popupFloatingText(r.fed ? '+2 ✨ 💕' : '+2 ✨', kind);
+      if (r.fed && r.leveled) {
+        const pet = state.pets.crema;
+        const msg = FRIENDSHIP_MESSAGES.crema?.[pet.friendship];
+        if (msg) showNotice(msg);
+      }
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+    case 'acorn': {
+      // 아메리카노 — 황금원두 +3
+      state.goldenBeans += 3;
+      _popupFloatingText('+3 ✨', kind);
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+    case 'dew': {
+      // 에스프레소 — Water +5
+      state.water = Math.min(effectiveWaterMax(), state.water + 5);
+      _popupFloatingText('+5 💧', kind);
+      removeClickPopup(kind);
+      updateHUD();
+      saveState();
+      return;
+    }
+  }
+}
+
+// 팝업 클릭 시 위치 부근 작은 플로팅 텍스트 (showFloatingText 재사용)
+function _popupFloatingText(text, kind) {
+  const p = _activePopups[kind];
+  if (!p) return;
+  const rect = p.popupEl.getBoundingClientRect();
+  const containerRect = document.getElementById('gameCanvasArea').getBoundingClientRect();
+  const fx = rect.left + rect.width / 2 - containerRect.left;
+  const fy = rect.top + rect.height / 2 - containerRect.top;
+  showFloatingText(text, fx, fy - 10);
+}
+
+// 매 프레임 호출되는 위치 동기화 (캔버스 리사이즈, 펫 위치 변화 등)
+function repositionClickPopups() {
+  const scene = window._phaserGame?.scene?.getScene('TreeScene');
+  if (!scene) return;
+  for (const kind of Object.keys(_activePopups)) {
+    const p = _activePopups[kind];
+    const meta = POPUP_KINDS[kind];
+    const pos = _resolvePopupAnchor(meta.anchor, scene);
+    if (!pos) continue;
+    const pct = _phaserPctToDom(scene, pos.x, pos.y);
+    p.anchorEl.style.left = pct.leftPct + '%';
+    p.anchorEl.style.top  = pct.topPct  + '%';
+  }
+}
+
+// 펫 해금 변화 등으로 더 이상 anchor를 못 찾는 경우 정리
+function _cleanupStalePopups() {
+  for (const kind of Object.keys(_activePopups)) {
+    const meta = POPUP_KINDS[kind];
+    // anchor가 펫인데 펫이 더 이상 없으면 제거
+    if (meta.anchor.startsWith('pet:')) {
+      const petId = meta.anchor.slice(4);
+      const scene = window._phaserGame?.scene?.getScene('TreeScene');
+      if (!scene?.petContainers?.[petId]) {
+        removeClickPopup(kind);
+        continue;
+      }
+    }
+    // 자연 회복 조건
+    if (_popupShouldClear(kind)) removeClickPopup(kind);
+  }
+}
+
+// 팝업 스폰 시도 — 우선순위 순서, 동시 최대 2개
+function _trySpawnPopups() {
+  const candidates = Object.entries(POPUP_KINDS)
+    .map(([kind, meta]) => ({ kind, meta }))
+    .sort((a, b) => a.meta.priority - b.meta.priority);
+
+  const now = Date.now();
+  for (const { kind, meta } of candidates) {
+    if (Object.keys(_activePopups).length >= POPUP_MAX_VISIBLE) break;
+    if (_activePopups[kind]) continue;
+    // 1회성 이미 소비됨
+    if (meta.oneShot && state.popupConsumedOnce?.[kind]) continue;
+    // 조건 미충족
+    if (!_popupConditionMet(kind)) continue;
+    // 쿨다운
+    const lastSpawn = state.popupCooldowns?.[kind] || 0;
+    if (meta.cooldownMs > 0 && now - lastSpawn < meta.cooldownMs) continue;
+    // 스폰
+    spawnClickPopup(kind);
+  }
+}
+
+// 매 프레임 호출 (TreeScene.update에서)
+function tickClickPopups(dt) {
+  _popupCheckTimer += dt;
+  // 위치는 매 틱 (펫 idle 약간 흔들리므로 자주 갱신해도 OK 하지만 부담이라 1초마다)
+  if (!tickClickPopups._reposTimer) tickClickPopups._reposTimer = 0;
+  tickClickPopups._reposTimer += dt;
+  if (tickClickPopups._reposTimer >= 1) {
+    tickClickPopups._reposTimer = 0;
+    repositionClickPopups();
+  }
+  if (_popupCheckTimer < POPUP_TICK_INTERVAL_SEC) return;
+  _popupCheckTimer = 0;
+  _cleanupStalePopups();
+  _trySpawnPopups();
+}
+
+// 펫 새로 그릴 때 호출 (refreshPets 후)
+function refreshClickPopupsForPets() {
+  _cleanupStalePopups();
+  // 곧바로 스폰 시도하지 않음 — 다음 tick에서 자연 발생
+}
+
+// Phase K — 화분 비주얼 팔레트 (drawTree에서 참조)
+// color/dark는 메인 톤. accent는 드로잉 함수가 분기에 사용.
+//   none      — 테라코타 그대로
+//   flowers   — 꽃무늬 점점 (꽃무늬 테라코타)
+//   gold-line — 림 아래 얇은 금줄 (크림 세라믹)
+//   raindrop  — 작은 빗방울 점점 (비 온 뒤 세라믹)
+//   paws      — 작은 발자국 (고양이 발자국)
+//   gold-stars— 작은 금별 점점 (농장 마스터)
+const POT_VISUAL = {
+  pot_terracotta_basic:  { color: 0xb07040, dark: 0x8a5530, accent: 'none' },
+  pot_flower_terracotta: { color: 0xb87a4e, dark: 0x8a5530, accent: 'flowers',  accentColor: 0xfff2e6 },
+  pot_cream_ceramic:     { color: 0xece2cf, dark: 0xc4b8a0, accent: 'gold-line', accentColor: 0xc8a25a },
+  pot_rainy_ceramic:     { color: 0x8b9eb0, dark: 0x67788a, accent: 'raindrop',  accentColor: 0xcfdde9 },
+  pot_cat_paw:           { color: 0xd6c2a8, dark: 0xa58c70, accent: 'paws',      accentColor: 0x6b4226 },
+  pot_farm_master:       { color: 0x6b4226, dark: 0x4a2e1a, accent: 'gold-stars', accentColor: 0xe8c870 },
+};
 
 // ── Phaser Scene ────────────────────────────
 class TreeScene extends Phaser.Scene {
@@ -2057,6 +2519,15 @@ class TreeScene extends Phaser.Scene {
     // 펫 (Phase E) — 나무보다 위 레이어
     this.petContainers = {};
     this.refreshPets();
+
+    // Phase M — 아바타 (caretaker presence)
+    this.avatarContainer = this.add.container(0, 0);
+    this.avatarContainer.setAlpha(0);
+    this.avatarGraphics = this.add.graphics();
+    this.avatarContainer.add(this.avatarGraphics);
+    this.avatarSituation = null;
+    this.avatarHideTimer = null;
+    this._avatarNightCheckTimer = 0;
 
     // 탭 이벤트 — 펫이 먼저 처리되면 나무 탭 억제
     this._petTapConsumed = false;
@@ -2143,6 +2614,27 @@ class TreeScene extends Phaser.Scene {
     if (this._autoSaveTimer >= 30) {
       this._autoSaveTimer = 0;
       saveState();
+    }
+
+    // Phase J — 머리 위 클릭 팝업 tick (조건 체크 + 위치 동기화)
+    tickClickPopups(dt);
+
+    // Phase M — 아바타 야간/idle 등장 체크 (60초마다)
+    this._avatarNightCheckTimer += dt;
+    if (this._avatarNightCheckTimer >= 60) {
+      this._avatarNightCheckTimer = 0;
+      // 다른 상황 진행 중이면 건너뜀
+      if (!this.avatarSituation) {
+        const hr = new Date().getHours();
+        const isNight = (hr >= 19 || hr < 5);
+        if (isNight) {
+          // 밤: 5분 중 1번 정도, 길게 머무름
+          if (Math.random() < 0.2) this.showAvatar('night');
+        } else {
+          // 낮: 매우 드물게 (10분 중 1번 정도) idle 등장
+          if (Math.random() < 0.1) this.showAvatar('idle', 3500);
+        }
+      }
     }
   }
 
@@ -2308,6 +2800,78 @@ class TreeScene extends Phaser.Scene {
     // 창문에서 흘러드는 은은한 빛 (테이블에 반사)
     g.fillStyle(0xffeedd, 0.04);
     g.fillCircle(w / 2, floorY, w * 0.45);
+
+    // ── Phase L — 5구역 폴리시 ──
+    // game_background_layout.md 매핑:
+    //   B(아바타 대기)/D(카페 연결)는 기존 벽/창문/Phase M이 담당
+    //   여기선 C(펫·포인트 소품)와 E(시선 흐름) 보강
+    // 절대 원칙: 메인 화분(중앙)보다 먼저 보이지 말 것 → 알파/색을 낮춤
+
+    // 1. 좌·우 벽 소프트 비네트 (시선을 중앙으로 모음)
+    g.fillStyle(0x000000, 0.18);
+    g.fillRect(0, 0, w * 0.06, shelfY);
+    g.fillRect(w - w * 0.06, 0, w * 0.06, shelfY);
+
+    // 2. 좌측 보조 화분 — 작은 허브 (메인보다 작음)
+    const auxL_x = w / 2 - 96;
+    const auxL_y = floorY - 18;
+    g.fillStyle(0x9c6840);                              // 화분
+    g.fillRect(auxL_x - 9, auxL_y, 18, 14);
+    g.fillStyle(0x7a4d28);
+    g.fillRect(auxL_x - 11, auxL_y - 2, 22, 3);          // 림
+    g.fillStyle(0x4a3520);                               // 흙
+    g.fillRect(auxL_x - 7, auxL_y, 14, 2);
+    // 잎(작은 허브)
+    g.fillStyle(0x6da95a);
+    g.fillRect(auxL_x - 4, auxL_y - 8, 2, 8);
+    g.fillRect(auxL_x,     auxL_y - 10, 2, 10);
+    g.fillRect(auxL_x + 4, auxL_y - 7,  2, 7);
+    g.fillStyle(0x8bc476);
+    g.fillRect(auxL_x - 4, auxL_y - 9, 2, 1);
+    g.fillRect(auxL_x,     auxL_y - 11, 2, 1);
+    g.fillRect(auxL_x + 4, auxL_y - 8,  2, 1);
+
+    // 3. 우측 물뿌리개 (캐러텍어 — 아바타 부재 시에도 "돌봄"의 흔적)
+    const canX = w / 2 + 92;
+    const canY = floorY - 16;
+    g.fillStyle(0x9aaab8);                               // 본체
+    g.fillRect(canX - 10, canY, 18, 14);
+    g.fillStyle(0x6a7a88);
+    g.fillRect(canX - 10, canY, 2, 14);                  // 좌측 음영
+    // 손잡이
+    g.fillStyle(0x6a7a88);
+    g.fillRect(canX + 8, canY + 2, 2, 8);
+    g.fillRect(canX + 8, canY + 2, 4, 2);
+    // 노즐
+    g.fillStyle(0x9aaab8);
+    g.fillRect(canX - 16, canY - 2, 8, 3);
+    g.fillRect(canX - 18, canY - 4, 4, 3);
+    g.fillStyle(0x6a7a88);
+    g.fillRect(canX - 18, canY - 4, 1, 3);
+
+    // 4. 테이블 위 작은 풀잎 클러스터 (전경 폴리시) — 좌·우 가장자리
+    g.fillStyle(0x5a8a48, 0.6);
+    [w * 0.12, w * 0.88].forEach((gx) => {
+      g.fillRect(gx,     floorY - 4, 1, 4);
+      g.fillRect(gx + 2, floorY - 6, 1, 6);
+      g.fillRect(gx + 4, floorY - 3, 1, 3);
+      g.fillRect(gx + 6, floorY - 5, 1, 5);
+    });
+
+    // 5. 선반 위 작은 액자 (왼쪽 컵과 오른쪽 책 사이 균형)
+    const frameX = w * 0.42;
+    g.fillStyle(0x8b6244);
+    g.fillRect(frameX, shelfY - 14, 14, 12);
+    g.fillStyle(0xece2cf);
+    g.fillRect(frameX + 2, shelfY - 12, 10, 8);
+    // 액자 안 작은 잎 실루엣
+    g.fillStyle(0x6da95a);
+    g.fillRect(frameX + 6, shelfY - 9, 2, 4);
+    g.fillRect(frameX + 5, shelfY - 7, 4, 1);
+
+    // 6. 메인 화분 자리 소프트 스폿라이트 강화 (중앙 인지 강화)
+    g.fillStyle(0xffeedd, 0.05);
+    g.fillCircle(w / 2, floorY - 6, 60);
   }
 
   // ── Sky (창문 안쪽 하늘) ─────────────────
@@ -2458,6 +3022,196 @@ class TreeScene extends Phaser.Scene {
     }
   }
 
+  // ── Phase M — 아바타 (caretaker presence) ──
+  // 아바타는 "필요한 순간에만 다가오는 존재". 5상황만 1차 구현:
+  //   idle / watering / harvest / night / petting
+  // 매 호출은 avatarSituation 갱신 + 위치 + 짧은 페이드인.
+  // showAvatar(situation, durationMs, opts) — opts.x/opts.y로 위치 오버라이드 가능
+  showAvatar(situation, durationMs, opts) {
+    if (!this.avatarContainer) return;
+    const w = this.scale.width;
+    const h = this.scale.height;
+    const floorY = h * 0.72;
+
+    // 기본 위치 (상황별)
+    let ax, ay;
+    if (opts && typeof opts.x === 'number' && typeof opts.y === 'number') {
+      ax = opts.x; ay = opts.y;
+    } else if (situation === 'watering') {
+      ax = w / 2 - 80; ay = floorY - 6;
+    } else if (situation === 'harvest') {
+      ax = w / 2 + 70; ay = floorY - 6;
+    } else if (situation === 'night') {
+      ax = w * 0.18; ay = floorY - 6;
+    } else if (situation === 'petting') {
+      ax = w / 2 - 110; ay = floorY - 6;
+    } else { // idle
+      ax = w * 0.16; ay = floorY - 6;
+    }
+
+    this.avatarSituation = situation;
+    this.avatarContainer.setPosition(ax, ay);
+    this._drawAvatar(situation);
+
+    // 페이드 인
+    if (this.avatarHideTimer) {
+      clearTimeout(this.avatarHideTimer);
+      this.avatarHideTimer = null;
+    }
+    this.tweens.killTweensOf(this.avatarContainer);
+    this.tweens.add({
+      targets: this.avatarContainer,
+      alpha: { from: this.avatarContainer.alpha, to: situation === 'night' ? 0.75 : 0.92 },
+      duration: 320,
+      ease: 'Sine.easeOut',
+    });
+
+    // 자동 페이드 아웃 (durationMs 후) — night는 길게 유지
+    const dur = durationMs || (situation === 'night' ? 6000 : 1800);
+    this.avatarHideTimer = setTimeout(() => this.hideAvatar(), dur);
+  }
+
+  hideAvatar() {
+    if (!this.avatarContainer) return;
+    if (this.avatarHideTimer) {
+      clearTimeout(this.avatarHideTimer);
+      this.avatarHideTimer = null;
+    }
+    this.tweens.killTweensOf(this.avatarContainer);
+    this.tweens.add({
+      targets: this.avatarContainer,
+      alpha: 0,
+      duration: 420,
+      ease: 'Sine.easeIn',
+      onComplete: () => { this.avatarSituation = null; },
+    });
+  }
+
+  // 픽셀 실루엣 — 살짝 다른 포즈만 표현 (정면 단순화)
+  // 좌표: 컨테이너 기준, 발끝 = (0, 0)
+  _drawAvatar(situation) {
+    const g = this.avatarGraphics;
+    g.clear();
+    // 색 (어두운 카페 톤 실루엣)
+    const skin    = 0xe6c8a0;
+    const hair    = 0x3a2418;
+    const apron   = 0x6b4226;
+    const apronHi = 0x8a5530;
+    const accent  = 0xc8a25a;
+
+    // 다리
+    g.fillStyle(0x2a1a10);
+    g.fillRect(-3, -10, 2, 10);
+    g.fillRect( 1, -10, 2, 10);
+    // 몸 (앞치마)
+    g.fillStyle(apron);
+    g.fillRect(-5, -22, 10, 12);
+    g.fillStyle(apronHi);
+    g.fillRect(-5, -22, 10, 1);
+    // 앞치마 끈
+    g.fillStyle(accent);
+    g.fillRect(-5, -19, 10, 1);
+    // 머리
+    g.fillStyle(skin);
+    g.fillRect(-3, -28, 6, 5);
+    // 머리카락 (단발)
+    g.fillStyle(hair);
+    g.fillRect(-3, -29, 6, 2);
+    g.fillRect(-4, -27, 1, 3);
+    g.fillRect( 3, -27, 1, 3);
+
+    // 상황별 액세서리
+    if (situation === 'watering') {
+      // 오른손에 작은 물뿌리개
+      g.fillStyle(0x9aaab8);
+      g.fillRect(5, -18, 5, 4);
+      g.fillStyle(0x6a7a88);
+      g.fillRect(10, -19, 2, 1);   // 노즐
+      g.fillRect(5, -14, 5, 1);    // 음영
+      // 손
+      g.fillStyle(skin);
+      g.fillRect(4, -16, 1, 2);
+    } else if (situation === 'harvest') {
+      // 양손 모은 자세 — 작은 바구니
+      g.fillStyle(0x8b6244);
+      g.fillRect(-4, -14, 8, 4);
+      g.fillStyle(0xc89060);
+      g.fillRect(-4, -14, 8, 1);
+      // 빨간 체리 점
+      g.fillStyle(0xc44030);
+      g.fillRect(-2, -13, 1, 1);
+      g.fillRect( 0, -13, 1, 1);
+      g.fillRect( 2, -13, 1, 1);
+    } else if (situation === 'night') {
+      // 벤치에 살짝 앉은 듯 — 더 낮은 자세 + 따뜻한 조명 점
+      g.fillStyle(0xffeedd, 0.25);
+      g.fillCircle(0, -18, 12);
+    } else if (situation === 'petting') {
+      // 한쪽으로 몸 살짝 기운 — 손 내민 자세 (오른팔 길게)
+      g.fillStyle(skin);
+      g.fillRect(5, -18, 4, 1);
+      g.fillRect(8, -18, 2, 2);
+    } else if (situation === 'idle') {
+      // 가만히 서 있기 — 추가 액세서리 없음
+    }
+  }
+
+  // Phase K — 화분 액센트 패턴 (꽃무늬/금줄/빗방울/발자국/금별)
+  // potW/potH/potRim 좌표계는 drawTree와 동일 (potGraphics local — 화분 바닥 = 0)
+  _drawPotAccent(palette, potW, potH, potRim) {
+    if (!palette || palette.accent === 'none') return;
+    const g = this.potGraphics;
+    const ac = palette.accentColor;
+    const accent = palette.accent;
+    if (accent === 'flowers') {
+      // 작은 4잎 꽃 3송이 — 림 바로 아래
+      const flowerY = -potH + 14;
+      const cxs = [-16, 0, 16];
+      cxs.forEach((fx) => {
+        g.fillStyle(ac);
+        g.fillRect(fx - 1, flowerY - 2, 2, 2);
+        g.fillRect(fx - 3, flowerY,     2, 2);
+        g.fillRect(fx + 1, flowerY,     2, 2);
+        g.fillRect(fx - 1, flowerY + 2, 2, 2);
+        g.fillStyle(0xffd96e);
+        g.fillRect(fx, flowerY, 1, 1); // 꽃 중심
+      });
+    } else if (accent === 'gold-line') {
+      // 림 아래 얇은 금줄 한 줄
+      g.fillStyle(ac);
+      g.fillRect(-potW / 2 + 4, -potH + 4, potW - 8, 1);
+    } else if (accent === 'raindrop') {
+      // 빗방울 5개 — 옆으로 살짝 흩뿌림
+      const drops = [[-18, -12], [-6, -16], [4, -10], [14, -18], [-12, -22]];
+      g.fillStyle(ac);
+      drops.forEach(([dx, dy]) => {
+        g.fillRect(dx, dy, 1, 2);
+        g.fillRect(dx, dy + 2, 1, 1);
+      });
+    } else if (accent === 'paws') {
+      // 작은 고양이 발자국 2세트
+      const paws = [[-14, -16], [10, -12]];
+      g.fillStyle(ac);
+      paws.forEach(([px, py]) => {
+        g.fillRect(px,     py + 2, 3, 2); // 패드
+        g.fillRect(px - 1, py,     1, 1); // 발가락 좌
+        g.fillRect(px + 1, py,     1, 1); // 발가락 중
+        g.fillRect(px + 3, py,     1, 1); // 발가락 우
+      });
+    } else if (accent === 'gold-stars') {
+      // 작은 금별 4점
+      const stars = [[-18, -22], [-4, -14], [10, -22], [16, -10]];
+      g.fillStyle(ac);
+      stars.forEach(([sx, sy]) => {
+        g.fillRect(sx,     sy,     1, 1);
+        g.fillRect(sx - 1, sy,     1, 1);
+        g.fillRect(sx + 1, sy,     1, 1);
+        g.fillRect(sx,     sy - 1, 1, 1);
+        g.fillRect(sx,     sy + 1, 1, 1);
+      });
+    }
+  }
+
   drawTree(force) {
     if (!force && this.currentStage === state.stage) return;
     this.currentStage = state.stage;
@@ -2484,16 +3238,10 @@ class TreeScene extends Phaser.Scene {
     const trunkColor = isDry ? 0x6a5040 : 0x7a5c3a;
     const trunkShadow = isDry ? 0x4a3520 : 0x553a20;
 
-    // 화분 색상 (장착 화분에 따라)
-    let potColor = 0xb07040;
-    let potDark = 0x8a5530;
-    if (state.equippedPotId === 'pot_cafe_brown') {
-      potColor = 0x6b4226;
-      potDark = 0x4a2e1a;
-    } else if (state.equippedPotId === 'pot_drip_pattern') {
-      potColor = 0x8899aa;
-      potDark = 0x667788;
-    }
+    // Phase K — 화분 팔레트 (6종) — 색만이 아니라 림/패턴/포인트로 차별화
+    const potPalette = POT_VISUAL[state.equippedPotId] || POT_VISUAL.pot_terracotta_basic;
+    const potColor = potPalette.color;
+    const potDark  = potPalette.dark;
     const soilColor = 0x4a3520;
 
     // ── 화분 ──
@@ -2522,13 +3270,8 @@ class TreeScene extends Phaser.Scene {
     this.potGraphics.fillStyle(0x000000, 0.25);
     this.potGraphics.fillRect(-potW / 2 + 3, -potH + 2, potW - 6, 2);
 
-    // 드립 패턴 화분 장식
-    if (state.equippedPotId === 'pot_drip_pattern') {
-      this.potGraphics.lineStyle(1, 0xaabbcc, 0.5);
-      for (let i = -20; i <= 20; i += 10) {
-        this.potGraphics.lineBetween(i, -potH + 14, i, -8);
-      }
-    }
+    // Phase K — 화분 액센트 패턴 (꽃무늬/빗방울/발자국/금줄)
+    this._drawPotAccent(potPalette, potW, potH, potRim);
 
     // 장착 장식 (화분 옆)
     if (state.equippedDecorId === 'decor_spoon_small') {
@@ -2730,6 +3473,8 @@ class TreeScene extends Phaser.Scene {
       this.petContainers.espresso = this._createFrog();
       this._startFrogIdle(this.petContainers.espresso);
     }
+    // Phase J — 펫 변경 시 펫 anchor 팝업 정리
+    refreshClickPopupsForPets();
   }
 
   // 참새(크레마) — 창문턱 오른쪽에 앉음
@@ -3192,6 +3937,8 @@ class TreeScene extends Phaser.Scene {
     this.drawTree(true);
     // 펫은 좌표가 화면 비율 기반이므로 재생성
     this.refreshPets();
+    // Phase J — 리사이즈 시 팝업 위치 즉시 갱신
+    repositionClickPopups();
   }
 }
 
@@ -3748,6 +4495,8 @@ function boot() {
   setLoadingProgress(50, '게임 준비 중...');
   setupDOMEvents();
   initPhaser();
+  // Phase J — 클릭 팝업 레이어 DOM 생성 (Phaser canvas 위에 얹힘)
+  initPopupLayer();
   setLoadingProgress(80, '클라우드 연결 중...');
   initFirebase();
 

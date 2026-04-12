@@ -49,6 +49,55 @@ PWA, 가방, 단계 정보, Web Share, Firestore 글로벌 통계, 재방문 알
 - 레벨업 팝업 각 5단계 메시지
 - 통계 패널에 친밀도 하트 5개 표시
 
+### Phase F-1/F-2 — 수확 품질 + 펫 4종 (완료, 커밋 `71183a4`)
+- 7변수 수확 품질 시스템 (Ripeness/Care/Weather/Pet/Time/Streak/Rarity)
+- 펫 4종 (크레마/카푸치노/아메리카노/에스프레소) + 친밀도/편지
+
+### Phase J — 머리 위 클릭 팝업 시스템 (완료)
+- ChatGPT 브레인스토밍에서 가져온 "Clash of Clans 스타일 팝업 클릭" 시각 레이어만 차용
+  → 시스템 자체는 기존 A 컨셉(7변수 품질/펫 4종/2재화) 그대로 유지
+- DOM 오버레이 레이어(`.popup-layer`) Phaser canvas 위에 얹음, 퍼센트 좌표 → 리사이즈 안전
+- 8종 팝업 (모양 / 트리거 / 보상):
+  - 🍒 cherry — Stage 4 + 숙성 → 수확 트리거
+  - 💧 water — water<25 → 물주기 액션 트리거
+  - 🌸 flower — 첫 Stage 3 도달, 1회성
+  - ✨ star — 8분 idle → 황금원두 +1
+  - 💗 heart — 카푸치노 idle → 친밀도 +1
+  - 🍃 leaf — 크레마 idle → 황금원두 +2 + 친밀도 +1
+  - 🌰 acorn — 아메리카노 idle → 황금원두 +3
+  - 💦 dew — 에스프레소 idle → Water +5
+- Cozy 가드레일: 동시 최대 2개, 분 단위 쿨다운, FOMO 없음(만료 X), 새 영구 재화 X
+- 새 재화 추가하지 않고 기존 4가지(황금원두/원두증서/친밀도/Water)로만 보상
+
+### Phase K — 화분 시스템 6종 + 해금 조건 (완료)
+- 1차 화분 6종 (memory `game_pot_system.md` 기준):
+  1. 기본 테라코타 (시작 보유)
+  2. 꽃무늬 테라코타 (첫 꽃 Stage 3)
+  3. 크림 세라믹 (첫 수확)
+  4. 비 온 뒤 세라믹 (비 오는 날 5회)
+  5. 고양이 발자국 (카푸치노 친밀도 5)
+  6. 농장 마스터 (농장 레벨 10)
+- `POT_VISUAL` 팔레트 테이블 + `_drawPotAccent` 헬퍼 분기 (꽃무늬/금줄/빗방울/발자국/금별)
+- 구 ID 마이그레이션: `pot_cafe_brown` → `pot_cream_ceramic`, `pot_drip_pattern` → `pot_rainy_ceramic`
+- 마이그레이션은 `loadState()`(localStorage) + `loadFromFirestore()`(클라우드) 양쪽
+- 새 화분 해금 시 조용한 알림 1회, 컬렉션 패널에서 장착
+
+### Phase L — 카페 뒤뜰 5구역 폴리시 (완료)
+- memory `game_background_layout.md`의 5구역 매핑(현 indoor 카페 뷰 유지, world 방향 뒤집지 않음)
+- 추가 props: 좌측 보조 허브 화분, 우측 물뿌리개, 테이블 풀잎 클러스터, 선반 위 액자, 메인 화분 중앙 스폿라이트 강화
+- 좌·우 벽 소프트 비네트로 시선을 중앙 나무로 모음
+- 모두 알파/색을 낮춰 메인 화분보다 먼저 보이지 않게
+
+### Phase M — 아바타 5상황 등장 (완료)
+- "조작 X / caretaker presence" 원칙. 5상황만 1차 구현:
+  - `idle` (대기) — 낮 idle 매우 드물게 (10분 중 ~1회)
+  - `watering` — `doWater()` 시 1.7초 페이드 인/아웃
+  - `harvest` — `doHarvest()` 시 2.4초 페이드 인/아웃
+  - `night` — 밤(19~5시) idle 5분 중 ~1회, 길게 머무름
+  - `petting` — `petPet(petId)` 시 해당 펫 근처로 페이드 인
+- `showAvatar(situation, dur, opts)` / `hideAvatar()` API
+- 단순 픽셀 실루엣 — 머리/머리카락/앞치마/다리, 상황별 액세서리(물뿌리개/바구니/조명점)
+
 ---
 
 ## 진행 중 / 계획

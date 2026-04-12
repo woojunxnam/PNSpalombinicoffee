@@ -1737,3 +1737,111 @@ canvas {
 .hud-btn {
   position: relative;
 }
+
+/* ── Phase J: 머리 위 클릭 팝업 시스템 ─────────
+   나무/펫 위에 떠있는 부드러운 보상 팝업.
+   cozy 톤: 동시 최대 2개, 분 단위 생성, 자동 만료 X.
+*/
+.popup-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.click-popup-anchor {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.5s ease-out, left 0.4s ease-out, top 0.4s ease-out;
+  will-change: opacity;
+}
+
+.click-popup-anchor.visible {
+  opacity: 1;
+}
+
+.click-popup-anchor.leaving {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.click-popup {
+  pointer-events: auto;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.7rem;
+  background: radial-gradient(circle, rgba(255, 240, 200, 0.85) 0%, rgba(255, 220, 150, 0.32) 55%, transparent 100%);
+  border-radius: 50%;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+  animation: popupFloat 2.8s ease-in-out infinite;
+  transition: transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.click-popup:active {
+  transform: scale(0.85);
+}
+
+@keyframes popupFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+/* 종류별 색조 — 보상 종류 시각적 구분 */
+.click-popup.kind-cherry {
+  background: radial-gradient(circle, rgba(255, 130, 110, 0.75) 0%, rgba(220, 60, 50, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(220, 60, 40, 0.5));
+}
+.click-popup.kind-water {
+  background: radial-gradient(circle, rgba(140, 200, 240, 0.75) 0%, rgba(80, 150, 220, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(60, 120, 200, 0.5));
+}
+.click-popup.kind-flower {
+  background: radial-gradient(circle, rgba(255, 180, 220, 0.75) 0%, rgba(230, 130, 200, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(220, 100, 180, 0.5));
+}
+.click-popup.kind-heart {
+  background: radial-gradient(circle, rgba(255, 150, 180, 0.75) 0%, rgba(220, 80, 130, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(220, 80, 130, 0.5));
+}
+.click-popup.kind-leaf {
+  background: radial-gradient(circle, rgba(170, 220, 130, 0.75) 0%, rgba(110, 180, 80, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(110, 180, 80, 0.5));
+}
+.click-popup.kind-acorn {
+  background: radial-gradient(circle, rgba(220, 170, 110, 0.75) 0%, rgba(170, 110, 60, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(170, 110, 60, 0.5));
+}
+.click-popup.kind-dew {
+  background: radial-gradient(circle, rgba(180, 230, 220, 0.75) 0%, rgba(110, 190, 180, 0.28) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(110, 190, 180, 0.5));
+}
+.click-popup.kind-star {
+  background: radial-gradient(circle, rgba(255, 230, 140, 0.85) 0%, rgba(220, 180, 60, 0.32) 55%, transparent 100%);
+  filter: drop-shadow(0 2px 6px rgba(220, 180, 60, 0.6));
+}
+
+/* 클릭 시 사라지는 작은 puff */
+.click-popup-burst {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0.5);
+  background: radial-gradient(circle, rgba(255, 240, 200, 0.6) 0%, transparent 70%);
+  animation: popupBurst 0.5s ease-out forwards;
+}
+@keyframes popupBurst {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(1.8); opacity: 0; }
+}

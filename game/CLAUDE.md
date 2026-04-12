@@ -144,15 +144,45 @@ PWA(manifest+sw), 가방(인벤토리), 단계 정보 ⓘ, Web Share 공유, Fir
 - [ ] **날씨 시스템**: 맑음/흐림/비. 비 오는 날 첫 접속 시 Water +10 보너스
 - [ ] **첫 꽃/첫 체리 기념 팝업**: `state.stats.firstFlowerTime` / `firstCherryTime` 기록
 
-### Phase E (계획) — 애착 시스템
+### Phase E (완료) — 애착 시스템
 - 펫 2종(크레마=참새, 카푸치노=고양이) + 친밀도 0~5
-- 펫이 수확 시 나무 주변에 모여 같이 기뻐함 (기존 연출 강화)
-- 펫이 가끔 물어다 주는 "편지" (= 경량화된 손님 시스템, 브랜드 코드/문장 삽입 가능)
+- 펫이 수확 시 나무 주변에 모여 같이 기뻐함
 
-### Phase F (계획) — 기록/확장
+### Phase F-1/F-2 (완료) — 수확 품질 + 펫 4종
+- 7변수 수확 품질 (UI에는 숫자 X / 감성 문장 + 별 등급)
+- 펫 4종 + 편지 시스템
+
+### Phase J (완료) — 머리 위 클릭 팝업 시스템
+- DOM 오버레이 레이어(`.popup-layer`)가 Phaser canvas 위에 얹힘
+- 8종 팝업: 🍒/💧/🌸/✨ (나무 anchor) + 💗/🍃/🌰/💦 (펫 anchor)
+- 새 영구 재화 추가 X — 기존 4가지(황금원두/원두증서/친밀도/Water)로만 보상
+- 동시 최대 2개, 분 단위 쿨다운, 자동 만료/FOMO 없음
+- 상태: `state.popupCooldowns`, `state.popupConsumedOnce`
+- 핵심 함수: `initPopupLayer`, `tickClickPopups`, `spawnClickPopup`, `removeClickPopup`, `handlePopupClick`
+
+### Phase K (완료) — 화분 1차 6종
+- `POT_VISUAL` 팔레트 테이블 + TreeScene._drawPotAccent
+- 6종: 기본 테라코타 / 꽃무늬 테라코타 / 크림 세라믹 / 비 온 뒤 세라믹 / 고양이 발자국 / 농장 마스터
+- 해금 조건: 시작 / 첫 꽃 / 첫 수확 / 비 오는 날 5회 / 카푸치노 친밀도 5 / 농장 레벨 10
+- 구 ID 마이그레이션: `migrateLegacyPotIds()` (loadState + loadFromFirestore 양쪽)
+- 새 화분 해금 시 `showNotice` 1회
+
+### Phase L (완료) — 5구역 폴리시
+- 현 카페 indoor 뷰 유지 (world 방향 뒤집기 금지 — `next_session_direction.md` 원칙)
+- `drawBackground()`에 추가: 좌측 허브 화분, 우측 물뿌리개, 테이블 풀잎, 선반 액자, 좌우 비네트, 중앙 스폿라이트 강화
+
+### Phase M (완료) — 아바타 caretaker
+- `TreeScene.showAvatar(situation, durationMs, opts)` / `hideAvatar()`
+- 5상황: idle / watering / harvest / night / petting
+- 트리거: `doWater` (watering 1.7s), `doHarvest` (harvest 2.4s), `petPet` (petting 2.2s, 펫 위치)
+- 야간/idle 자동 등장: update() 60초 체크, 밤 19~5시는 ~5분에 1회, 낮은 ~10분에 1회
+- 단순 픽셀 실루엣 (`_drawAvatar`), 페이드 인/아웃 320~420ms
+- 조작 불가, 인벤토리/장비 없음 (caretaker presence 원칙)
+
+### Phase F-3 ~ Phase I (계획) — 기록/계절/농장/쿠폰
 - 기록장(이모지+날짜+단계+한 줄 메모, 이미지 저장 금지)
-- 펫 2종 추가 + 가벼운 능력 1개씩
-- 계절 테마 장식 드롭
+- 계절 테마 장식 드롭 (Phase G-2 일부 완료)
+- 농장 레벨 / 카페 쿠폰 연동 (브랜드 결정 대기)
 
 ---
 
