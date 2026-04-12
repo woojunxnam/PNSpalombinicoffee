@@ -596,35 +596,18 @@ function applyLang(lang) {
     el.setAttribute('translate', 'no');
   });
 
-  /* GT 배너 iframe → DOM에서 완전 제거 (CSS hide로는 부족) */
-  const killBanner = () => {
-    /* 모든 GT 관련 iframe 제거 */
-    document.querySelectorAll(
-      '.goog-te-banner-frame, iframe.skiptranslate, iframe.VIpgJd-ZVi9od-ORHb-OEVmcd, iframe[id^="goog-gt-"]'
-    ).forEach(el => el.remove());
+  /* GT 배너(toolbar)만 숨김 — 번역 엔진 iframe은 절대 건드리지 않음 */
+  const hideBanner = () => {
+    /* 배너 iframe만 숨김 (remove하면 GT 엔진이 깨짐) */
+    const banner = document.querySelector('.goog-te-banner-frame');
+    if (banner) banner.style.display = 'none';
     /* body top 오프셋 강제 리셋 */
     document.body.style.top = '0px';
     document.body.style.marginTop = '0px';
   };
-  const obs = new MutationObserver((mutations) => {
-    for (const m of mutations) {
-      for (const node of m.addedNodes) {
-        if (node.nodeType === 1 &&
-            (node.tagName === 'IFRAME' || node.classList?.contains('skiptranslate'))) {
-          killBanner();
-          return;
-        }
-      }
-    }
-  });
+  const obs = new MutationObserver(() => hideBanner());
   obs.observe(document.documentElement, { childList: true, subtree: true });
-  killBanner();
-  /* GT가 지연 로드하므로 일정 간격으로도 확인 */
-  let bannerChecks = 0;
-  const bannerInterval = setInterval(() => {
-    killBanner();
-    if (++bannerChecks > 20) clearInterval(bannerInterval);
-  }, 500);
+  hideBanner();
 })();
 
 /* ── Google Translate 언어 전환 ── */
