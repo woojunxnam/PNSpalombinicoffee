@@ -590,40 +590,32 @@ function applyLang(lang) {
 
 /* ── Google Translate 언어 전환 ── */
 function gtTranslate(lang) {
+  const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
   if (lang === 'ko') {
-    /* 번역 쿠키 삭제 후 원본 복원 */
-    const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
     document.cookie = `googtrans=; ${exp}; path=/`;
+    document.cookie = `googtrans=; ${exp}; path=/; domain=${location.hostname}`;
     document.cookie = `googtrans=; ${exp}; path=/; domain=.${location.hostname}`;
-    location.reload();
-    return;
-  }
-  const doSwitch = () => {
-    const combo = document.querySelector('.goog-te-combo');
-    if (combo) { combo.value = lang; combo.dispatchEvent(new Event('change')); }
-  };
-  if (document.querySelector('.goog-te-combo')) {
-    doSwitch();
   } else {
-    const obs = new MutationObserver(() => {
-      if (document.querySelector('.goog-te-combo')) { obs.disconnect(); doSwitch(); }
-    });
-    obs.observe(document.body, { childList: true, subtree: true });
-    setTimeout(doSwitch, 3000);
+    document.cookie = `googtrans=/ko/${lang}; path=/`;
+    document.cookie = `googtrans=/ko/${lang}; path=/; domain=.${location.hostname}`;
   }
+  location.reload();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.lang-btn[data-gtlang]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.lang-btn[data-gtlang]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      gtTranslate(btn.dataset.gtlang);
-    });
+  /* ── 언어 버튼 활성 상태 쿠키로 복원 ── */
+  const cookieMatch = document.cookie.match(/googtrans=\/ko\/([^;]+)/);
+  const activeLang = cookieMatch ? decodeURIComponent(cookieMatch[1]) : 'ko';
+  document.querySelectorAll('.lang-btn[data-gtlang]').forEach(b => {
+    b.classList.toggle('active', b.dataset.gtlang === activeLang);
   });
 
-  /* ── 네비게이션 호버 언어 전환 (KO → EN) ── */
-  const NAV_EN = {
+  document.querySelectorAll('.lang-btn[data-gtlang]').forEach(btn => {
+    btn.addEventListener('click', () => gtTranslate(btn.dataset.gtlang));
+  });
+
+  /* ── 네비게이션 호버 언어 전환 (KO → EN) + 페이드 애니메이션 ── */
+  const NAV_TOP_EN = {
     '브랜드': 'Brand',
     '제품': 'Products',
     '🌋 볼케이노 루비': '🌋 Volcano Ruby',
@@ -631,15 +623,47 @@ document.addEventListener('DOMContentLoaded', () => {
     '문의': 'Contact',
     '고객·협력사': 'Partners',
   };
-  document.querySelectorAll('.nav-item > a').forEach(a => {
-    const textNode = [...a.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+  const NAV_DROPDOWN_EN = {
+    '기술력': 'Technology',
+    '헤리티지': 'Heritage',
+    '고객 후기': 'Reviews',
+    'PNS 팔롬비니 상품 라인업': 'PNS Palombini Products',
+    '협력사 상품 라인업': 'Partner Products',
+    '계열사 상품 라인업': 'Partner Products',
+    '드립백·패키징 머신 라인업': 'Drip Bag & Packaging Machines',
+    'B2B 상품 라인업': 'B2B Product Lineup',
+    '드립백 맞춤 주문': 'Custom Drip Bag',
+    '드립백 생산 현장 보기': 'Drip Bag Production',
+    '생두 원두 대량 주문': 'Bulk Bean Order',
+    '봉투 필름지 맞춤 주문': 'Custom Coffee Film',
+    '봉투 필름지 생산 현장 보기': 'Film Production',
+    '일반 문의': 'General Inquiry',
+    'B2B 드립백 문의': 'B2B Drip Bag',
+    'B2B 생두 원두 문의': 'B2B Bean Inquiry',
+    'B2B 봉투 필름지 문의': 'B2B Film Inquiry',
+    '드립백 취향 찾기': 'Find Your Style',
+    '카페 메뉴': 'Café Menu',
+    '커피나무 키우기': 'Grow Coffee Tree',
+  };
+
+  function addHoverSwap(el, mapping) {
+    const textNode = [...el.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
     if (!textNode) return;
     const koText = textNode.textContent.trim();
-    const enText = NAV_EN[koText];
+    const enText = mapping[koText];
     if (!enText) return;
-    a.addEventListener('mouseenter', () => { textNode.textContent = enText; });
-    a.addEventListener('mouseleave', () => { textNode.textContent = koText; });
-  });
+    el.addEventListener('mouseenter', () => {
+      el.style.opacity = '0';
+      setTimeout(() => { textNode.textContent = enText; el.style.opacity = ''; }, 110);
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.opacity = '0';
+      setTimeout(() => { textNode.textContent = koText; el.style.opacity = ''; }, 110);
+    });
+  }
+
+  document.querySelectorAll('.nav-item > a').forEach(a => addHoverSwap(a, NAV_TOP_EN));
+  document.querySelectorAll('.nav-dropdown a').forEach(a => addHoverSwap(a, NAV_DROPDOWN_EN));
 });
 
 /* ── 11. 히어로 슬라이드쇼 ── */

@@ -784,7 +784,7 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   color: var(--text);
   font-weight: 600;
   white-space: nowrap;
-  transition: background .12s ease, color .12s ease;
+  transition: background .12s ease, color .12s ease, opacity .11s ease;
 }
 .nav-dropdown a:hover { background: var(--accent-light); color: var(--accent); }
 .nav-dropdown-icon { font-size: 16px; }
