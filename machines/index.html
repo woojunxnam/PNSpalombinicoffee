@@ -433,7 +433,7 @@
         <h2 class="machines-category-title" style="margin-bottom:20px;">머신 작동 영상 <span>Machine Demos</span></h2>
         <div class="videos-grid">
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="../assets/video/machine-fm100.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -445,7 +445,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="../assets/video/machine-fm200.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -457,7 +457,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="../assets/video/machine-fg60.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -469,7 +469,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="../assets/video/machine-fg70.mp4" type="video/mp4"/>
             </video>
             <div class="video-card-body">
@@ -938,5 +938,19 @@
   }
   </script>
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+  /* 비디오: 화면에 보일 때만 재생 (동시 autoplay 제한 우회) */
+  (function(){
+    const videos = document.querySelectorAll('.video-card video');
+    if (!videos.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.play().catch(() => {}); }
+        else { e.target.pause(); }
+      });
+    }, { threshold: 0.25 });
+    videos.forEach(v => io.observe(v));
+  })();
+  </script>
 </body>
 </html>

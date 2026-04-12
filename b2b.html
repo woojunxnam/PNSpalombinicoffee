@@ -618,7 +618,7 @@
 
           <!-- VIDEO 1 -->
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="assets/video/auto_1.mp4" type="video/mp4">
             </video>
             <div class="video-card-body">
@@ -632,7 +632,7 @@
 
           <!-- VIDEO 2 -->
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="assets/video/auto_2.mp4" type="video/mp4">
             </video>
             <div class="video-card-body">
@@ -646,7 +646,7 @@
 
           <!-- VIDEO 3 -->
           <div class="video-card">
-            <video autoplay muted loop playsinline preload="metadata">
+            <video muted loop playsinline preload="auto">
               <source src="assets/video/auto_3.mp4" type="video/mp4">
             </video>
             <div class="video-card-body">
@@ -992,5 +992,19 @@
   }
   </script>
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script>
+  /* 비디오: 화면에 보일 때만 재생 (동시 autoplay 제한 우회) */
+  (function(){
+    const videos = document.querySelectorAll('.video-card video');
+    if (!videos.length) return;
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.play().catch(() => {}); }
+        else { e.target.pause(); }
+      });
+    }, { threshold: 0.25 });
+    videos.forEach(v => io.observe(v));
+  })();
+  </script>
 </body>
 </html>
