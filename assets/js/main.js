@@ -591,13 +591,17 @@ function applyLang(lang) {
 /* ── Google Translate 언어 전환 ── */
 function gtTranslate(lang) {
   const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
-  if (lang === 'ko') {
-    document.cookie = `googtrans=; ${exp}; path=/`;
-    document.cookie = `googtrans=; ${exp}; path=/; domain=${location.hostname}`;
-    document.cookie = `googtrans=; ${exp}; path=/; domain=.${location.hostname}`;
-  } else {
+  const host = location.hostname;
+  const parts = host.split('.');
+  const root = parts.length > 2 ? parts.slice(-2).join('.') : host;
+  /* 모든 가능한 도메인에서 기존 쿠키 삭제 */
+  ['', host, `.${host}`, root, `.${root}`].forEach(d => {
+    const dm = d ? `; domain=${d}` : '';
+    document.cookie = `googtrans=; ${exp}; path=/${dm}`;
+  });
+  if (lang !== 'ko') {
     document.cookie = `googtrans=/ko/${lang}; path=/`;
-    document.cookie = `googtrans=/ko/${lang}; path=/; domain=.${location.hostname}`;
+    document.cookie = `googtrans=/ko/${lang}; path=/; domain=.${root}`;
   }
   location.reload();
 }
@@ -646,24 +650,25 @@ document.addEventListener('DOMContentLoaded', () => {
     '커피나무 키우기': 'Grow Coffee Tree',
   };
 
-  function addHoverSwap(el, mapping) {
+  const ALL_NAV_EN = Object.assign({}, NAV_TOP_EN, NAV_DROPDOWN_EN);
+
+  function addHoverSwap(el) {
     const textNode = [...el.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
     if (!textNode) return;
     const koText = textNode.textContent.trim();
-    const enText = mapping[koText];
+    const enText = ALL_NAV_EN[koText];
     if (!enText) return;
     el.addEventListener('mouseenter', () => {
       el.style.opacity = '0';
-      setTimeout(() => { textNode.textContent = enText; el.style.opacity = ''; }, 110);
+      setTimeout(() => { textNode.textContent = enText; el.style.opacity = ''; }, 180);
     });
     el.addEventListener('mouseleave', () => {
       el.style.opacity = '0';
-      setTimeout(() => { textNode.textContent = koText; el.style.opacity = ''; }, 110);
+      setTimeout(() => { textNode.textContent = koText; el.style.opacity = ''; }, 180);
     });
   }
 
-  document.querySelectorAll('.nav-item > a').forEach(a => addHoverSwap(a, NAV_TOP_EN));
-  document.querySelectorAll('.nav-dropdown a').forEach(a => addHoverSwap(a, NAV_DROPDOWN_EN));
+  document.querySelectorAll('.nav > a, .nav-item > a, .nav-dropdown a').forEach(a => addHoverSwap(a));
 });
 
 /* ── 11. 히어로 슬라이드쇼 ── */
