@@ -1227,6 +1227,8 @@ body.menu-open .mobile-sticky-cta {
 /* ── Google Translate 위젯 스타일 ── */
 /* GT 상단 배너(toolbar) 완전 숨김 */
 .goog-te-banner-frame { display: none !important; }
+iframe.skiptranslate { display: none !important; height: 0 !important; width: 0 !important; border: none !important; }
+body > .skiptranslate:not(#google_translate_element) { display: none !important; }
 body { top: 0 !important; }
 body.translated-ltr,
 body.translated-rtl { margin-top: 0 !important; top: 0 !important; }

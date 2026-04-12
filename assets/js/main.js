@@ -597,24 +597,34 @@ function applyLang(lang) {
   });
 
   /* GT 배너 iframe → DOM에서 완전 제거 (CSS hide로는 부족) */
-  const killBanner = (mutations) => {
-    if (mutations) {
-      for (const m of mutations) {
-        for (const node of m.addedNodes) {
-          if (node.nodeType === 1 && node.classList?.contains('goog-te-banner-frame')) {
-            node.remove();
-          }
+  const killBanner = () => {
+    /* 모든 GT 관련 iframe 제거 */
+    document.querySelectorAll(
+      '.goog-te-banner-frame, iframe.skiptranslate, iframe.VIpgJd-ZVi9od-ORHb-OEVmcd, iframe[id^="goog-gt-"]'
+    ).forEach(el => el.remove());
+    /* body top 오프셋 강제 리셋 */
+    document.body.style.top = '0px';
+    document.body.style.marginTop = '0px';
+  };
+  const obs = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const node of m.addedNodes) {
+        if (node.nodeType === 1 &&
+            (node.tagName === 'IFRAME' || node.classList?.contains('skiptranslate'))) {
+          killBanner();
+          return;
         }
       }
     }
-    /* 이미 존재하는 배너도 제거 */
-    const banner = document.querySelector('.goog-te-banner-frame');
-    if (banner) banner.remove();
-    document.body.style.top = '0px';
-  };
-  const obs = new MutationObserver(killBanner);
+  });
   obs.observe(document.documentElement, { childList: true, subtree: true });
   killBanner();
+  /* GT가 지연 로드하므로 일정 간격으로도 확인 */
+  let bannerChecks = 0;
+  const bannerInterval = setInterval(() => {
+    killBanner();
+    if (++bannerChecks > 20) clearInterval(bannerInterval);
+  }, 500);
 })();
 
 /* ── Google Translate 언어 전환 ── */
@@ -730,6 +740,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.querySelectorAll('.nav > a, .nav-item > a, .nav-dropdown a').forEach(a => addHoverSwap(a));
+
+  /* 레이아웃 완료 후 min-width 일괄 적용 (이웃 항목 겹침 방지) */
+  setTimeout(() => {
+    document.querySelectorAll('.nav-hover-wrap').forEach(wrap => {
+      const ko = wrap.querySelector('.nav-hover-ko');
+      const en = wrap.querySelector('.nav-hover-en');
+      if (!ko || !en || wrap.offsetParent === null) return;
+      const enW = en.offsetWidth;
+      if (enW > ko.offsetWidth) wrap.style.minWidth = enW + 'px';
+    });
+  }, 100);
 });
 
 /* ── 11. 히어로 슬라이드쇼 ── */
