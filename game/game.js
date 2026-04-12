@@ -388,6 +388,8 @@ function defaultState() {
     popupConsumedOnce: {},
     // Phase N — 발견성 힌트 (1회성, 이미 본 힌트 key 목록)
     discoveryHintsSeen: [],
+    // 팝업 간소화 모드 (로그인 시 반복 팝업 억제)
+    quietMode: false,
   };
 }
 
@@ -1289,6 +1291,20 @@ function updateSoundButton() {
   btn.textContent = state.soundEnabled ? '🔊 사운드 켜짐' : '🔇 사운드 꺼짐';
 }
 
+// ── 팝업 간소화 모드 ─────────────────────────
+// 켜면: 오프라인 리포트, 일일 출석 팝업, 발견성 힌트, 재방문 팝업을 자동 처리 (팝업 안 뜸)
+// 끄면: 기존처럼 모든 팝업 표시
+function toggleQuietMode() {
+  state.quietMode = !state.quietMode;
+  saveState();
+  updateQuietModeButton();
+}
+function updateQuietModeButton() {
+  const btn = $('btnQuietMode');
+  if (!btn) return;
+  btn.textContent = state.quietMode ? '🔕 팝업 간소화 켜짐' : '🔔 팝업 간소화 꺼짐';
+}
+
 // ── Daily bonus ─────────────────────────────
 function todayKey() {
   const d = new Date();
@@ -1308,6 +1324,11 @@ function checkDailyBonus() {
     state.dailyStreak = Math.min(7, (state.dailyStreak || 0) + 1);
   } else {
     state.dailyStreak = 1; // 연속이 끊김 → 1일차부터 다시
+  }
+  // 팝업 간소화 모드면 팝업 없이 자동 수령
+  if (state.quietMode) {
+    claimDailyBonus();
+    return;
   }
   showDailyBonusPopup();
 }
@@ -1782,6 +1803,7 @@ function updateNotifyButton() {
 // ── Re-visit reminder (연속 끊김) ────────────
 function checkRevisit() {
   if (!state.lastDailyClaim) return; // 첫 방문이면 무시
+  if (state.quietMode) return; // 팝업 간소화 모드면 건너뜀
   const today = todayKey();
   if (state.lastDailyClaim === today) return;
   const diff = daysBetween(state.lastDailyClaim, today);
@@ -4287,6 +4309,7 @@ function setupDOMEvents() {
   $('btnSettings').addEventListener('click', () => {
     updateSoundButton();
     updateNotifyButton();
+    updateQuietModeButton();
     showOverlay('settingsPanel');
   });
   $('settingsClose').addEventListener('click', () => hideOverlay('settingsPanel'));
@@ -4295,6 +4318,8 @@ function setupDOMEvents() {
 
   // 사운드 토글
   $('btnSoundToggle').addEventListener('click', toggleSound);
+  // 팝업 간소화 토글
+  $('btnQuietMode').addEventListener('click', toggleQuietMode);
 
   // 가방 (인벤토리)
   $('btnInventory').addEventListener('click', (e) => {
@@ -4555,6 +4580,7 @@ const DISCOVERY_HINTS = [
 
 function showDiscoveryHints() {
   if (!state || !state.tutorialDone) return;
+  if (state.quietMode) return; // 팝업 간소화 모드면 건너뜀
   if (!state.discoveryHintsSeen) state.discoveryHintsSeen = [];
   // 세션당 최대 1개
   for (const hint of DISCOVERY_HINTS) {
@@ -4581,7 +4607,7 @@ function boot() {
     state.stage = getStage(state.growthXp);
     updateHUD();
 
-    if (report && report.elapsedMin >= 1) {
+    if (report && report.elapsedMin >= 1 && !saved.quietMode) {
       showOfflinePopup(report);
     }
     saveState();
