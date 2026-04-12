@@ -621,6 +621,25 @@ document.addEventListener('DOMContentLoaded', () => {
       gtTranslate(btn.dataset.gtlang);
     });
   });
+
+  /* ── 네비게이션 호버 언어 전환 (KO → EN) ── */
+  const NAV_EN = {
+    '브랜드': 'Brand',
+    '제품': 'Products',
+    '🌋 볼케이노 루비': '🌋 Volcano Ruby',
+    '자동화 장비': 'Machines',
+    '문의': 'Contact',
+    '고객·협력사': 'Partners',
+  };
+  document.querySelectorAll('.nav-item > a').forEach(a => {
+    const textNode = [...a.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+    if (!textNode) return;
+    const koText = textNode.textContent.trim();
+    const enText = NAV_EN[koText];
+    if (!enText) return;
+    a.addEventListener('mouseenter', () => { textNode.textContent = enText; });
+    a.addEventListener('mouseleave', () => { textNode.textContent = koText; });
+  });
 });
 
 /* ── 11. 히어로 슬라이드쇼 ── */
