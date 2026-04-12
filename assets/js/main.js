@@ -588,21 +588,33 @@ function applyLang(lang) {
   document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
 }
 
-/* ── Google Translate: 배너 강제 숨김 + 네비 번역 방지 ── */
+/* ── Google Translate: 배너 DOM 제거 + 네비 번역 방지 ── */
 (function () {
-  /* nav에 notranslate → GT가 메뉴 텍스트를 번역하지 않음 (호버 효과로 대체) */
-  const nav = document.querySelector('.nav');
-  if (nav) nav.classList.add('notranslate');
+  /* nav에 notranslate (HTML에도 translate="no" 추가됨 — 이중 보호) */
+  document.querySelectorAll('.nav, .site-header').forEach(el => {
+    el.classList.add('notranslate');
+    el.setAttribute('translate', 'no');
+  });
 
-  /* GT 배너 iframe 강제 숨김 (CSS만으로 부족할 경우 대비) */
-  const hideBanner = () => {
+  /* GT 배너 iframe → DOM에서 완전 제거 (CSS hide로는 부족) */
+  const killBanner = (mutations) => {
+    if (mutations) {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === 1 && node.classList?.contains('goog-te-banner-frame')) {
+            node.remove();
+          }
+        }
+      }
+    }
+    /* 이미 존재하는 배너도 제거 */
     const banner = document.querySelector('.goog-te-banner-frame');
-    if (banner) { banner.style.display = 'none'; }
+    if (banner) banner.remove();
     document.body.style.top = '0px';
   };
-  const obs = new MutationObserver(hideBanner);
+  const obs = new MutationObserver(killBanner);
   obs.observe(document.documentElement, { childList: true, subtree: true });
-  hideBanner();
+  killBanner();
 })();
 
 /* ── Google Translate 언어 전환 ── */
