@@ -588,8 +588,40 @@ function applyLang(lang) {
   document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
 }
 
-/* applyLang / getLang retained for reference but no longer auto-applied on load.
-   Language switching is now handled by Google Translate (googleTranslateElementInit). */
+/* ── Google Translate 언어 전환 ── */
+function gtTranslate(lang) {
+  if (lang === 'ko') {
+    /* 번역 쿠키 삭제 후 원본 복원 */
+    const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
+    document.cookie = `googtrans=; ${exp}; path=/`;
+    document.cookie = `googtrans=; ${exp}; path=/; domain=.${location.hostname}`;
+    location.reload();
+    return;
+  }
+  const doSwitch = () => {
+    const combo = document.querySelector('.goog-te-combo');
+    if (combo) { combo.value = lang; combo.dispatchEvent(new Event('change')); }
+  };
+  if (document.querySelector('.goog-te-combo')) {
+    doSwitch();
+  } else {
+    const obs = new MutationObserver(() => {
+      if (document.querySelector('.goog-te-combo')) { obs.disconnect(); doSwitch(); }
+    });
+    obs.observe(document.body, { childList: true, subtree: true });
+    setTimeout(doSwitch, 3000);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.lang-btn[data-gtlang]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.lang-btn[data-gtlang]').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      gtTranslate(btn.dataset.gtlang);
+    });
+  });
+});
 
 /* ── 11. 히어로 슬라이드쇼 ── */
 (function () {
