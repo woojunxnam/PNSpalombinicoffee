@@ -386,6 +386,8 @@ function defaultState() {
     popupCooldowns: {},
     // Phase J — 1회성 팝업 소비 기록 (예: 'flower' 첫 꽃 1회성 팝업 클릭 완료)
     popupConsumedOnce: {},
+    // Phase N — 발견성 힌트 (1회성, 이미 본 힌트 key 목록)
+    discoveryHintsSeen: [],
   };
 }
 
@@ -1933,6 +1935,20 @@ function showOfflinePopup(report) {
 
   if (report.stoppedDueToWater) {
     html += '<div class="stat-warning">💧 물이 부족해서 성장이 멈췄어요</div>';
+  }
+
+  // Phase N-3 — 재접속 동기: "지금 할 수 있는 것" 소프트 제안
+  const motivations = [];
+  if (canHarvest()) motivations.push('🍒 수확이 가능해요!');
+  if (state.water <= 20) motivations.push('💧 물이 부족해요 — 물을 줘 보세요');
+  const hasUnpettedPet = Object.values(state.pets || {}).some(p =>
+    p.unlocked && p.lastPetDate !== todayKey() && (p.friendship || 0) < MAX_FRIENDSHIP);
+  if (hasUnpettedPet) motivations.push('🐾 오늘 아직 펫에게 인사하지 않았어요');
+  if ((state.letters || []).some(l => !l.read)) motivations.push('💌 읽지 않은 편지가 있어요');
+  if (motivations.length > 0) {
+    html += '<div class="offline-motivations">';
+    motivations.forEach(m => { html += '<div class="offline-motivation-row">' + m + '</div>'; });
+    html += '</div>';
   }
 
   body.innerHTML = html;
@@ -4025,10 +4041,42 @@ const PET_CATALOG = [
   },
 ];
 
+// Phase N-4 — 다음 해금에 가장 가까운 잠긴 화분의 힌트 1줄
+function _getNextLockHint() {
+  const hints = [
+    { id: 'pot_flower_terracotta', text: '🌸 첫 꽃이 피면 새 화분이 열려요' },
+    { id: 'pot_cream_ceramic',     text: '🍒 첫 수확을 하면 새 화분이 열려요' },
+    { id: 'pot_rainy_ceramic',     text: '☔ 비 오는 날에 찾아오면 특별한 화분이...' },
+    { id: 'pot_cat_paw',           text: '🐱 고양이와 더 친해지면 무언가가...' },
+    { id: 'pot_farm_master',       text: '🌟 농장 레벨을 올리면 마지막 화분이...' },
+  ];
+  for (const h of hints) {
+    if (!state.unlocked.includes(h.id)) return h.text;
+  }
+  return null;
+}
+
 function renderCollectionPanel() {
   const body = $('collectionBody');
   let html = '';
   const types = { pot: '화분', decor: '장식' };
+
+  // Phase N-4 — 컬렉션 진행 요약 + 다음 해금 힌트
+  const totalItems = Object.keys(C.ITEMS).length;
+  const totalPets = PET_CATALOG.filter(p => !p.future).length;
+  const unlockedItems = state.unlocked.length;
+  const unlockedPets = Object.values(state.pets || {}).filter(p => p.unlocked).length;
+  const totalAll = totalItems + totalPets;
+  const unlockedAll = unlockedItems + unlockedPets;
+  html += '<div class="collection-progress">';
+  html += '<span class="collection-progress-count">' + unlockedAll + ' / ' + totalAll + '</span>';
+  html += '<span class="collection-progress-label"> 수집 완료</span>';
+  // 다음 해금 힌트 (잠긴 것 중 가장 가까운 화분 1개)
+  const nextPot = _getNextLockHint();
+  if (nextPot) {
+    html += '<div class="collection-next-hint">' + nextPot + '</div>';
+  }
+  html += '</div>';
 
   // Phase F-1: 펫 친구들 (도감) — 가장 위에 표시
   html += '<div class="collection-group"><div class="collection-group-title">🐾 카페 친구들</div>';
@@ -4418,6 +4466,13 @@ const TUTORIAL_CARDS = [
     body: '물이 있어야 나무가 잘 자라요.<br>하단 <strong>물주기</strong> 버튼으로 Water를 채워주세요.' },
   { icon: '📖', title: '자라면 열려요',
     body: '단계가 오를수록 새로운 <strong>컬렉션</strong>이 해금돼요.<br>꽃이 피고, 체리가 맺히고, 수확까지 — 천천히 즐겨주세요.' },
+  // Phase N-1 — 새 시스템 안내 3장
+  { icon: '🐾', title: '카페 친구들이 찾아와요',
+    body: '나무가 자라면 <strong>참새, 고양이, 다람쥐, 개구리</strong>가 하나씩 나타나요.<br>매일 쓰다듬으면 친해져요.' },
+  { icon: '✨', title: '머리 위에 뭔가 뜨면',
+    body: '나무와 펫 위에 가끔 <strong>작은 아이콘</strong>이 떠요.<br>탭하면 황금원두나 물 같은 작은 선물을 받을 수 있어요.' },
+  { icon: '🪴', title: '화분도 바꿀 수 있어요',
+    body: '특별한 순간마다 <strong>새 화분</strong>이 해금돼요.<br>컬렉션에서 마음에 드는 화분을 골라 장착해 보세요.' },
 ];
 
 function startTutorial() {
@@ -4460,6 +4515,55 @@ function spawnParticles(scene, x, y, color, count, spread) {
       ease: 'Quad.easeOut',
       onComplete: () => p.destroy(),
     });
+  }
+}
+
+// ── Phase N — 발견성 힌트 (기존 유저용) ─────
+// 조건을 만족하지만 아직 경험하지 않은 시스템에 대해 부드러운 1회성 힌트.
+// 세션당 최대 1개, 절대 스팸하지 않음.
+const DISCOVERY_HINTS = [
+  { key: 'hint_popup_system',
+    condition: (s) => s.stage >= 1 && !s.discoveryHintsSeen?.includes('hint_popup_system'),
+    notice: { icon: '✨', title: '머리 위를 살펴보세요',
+      body: '나무와 펫 위에 가끔 <strong>작은 아이콘</strong>이 떠요.<br>탭하면 황금원두나 물 같은 작은 선물이 있어요.' }},
+  { key: 'hint_pot_collection',
+    condition: (s) => s.unlocked.length >= 2 && !s.discoveryHintsSeen?.includes('hint_pot_collection'),
+    notice: { icon: '🪴', title: '새 화분을 발견했어요',
+      body: '하단 <strong>컬렉션</strong>에서 해금된 화분을 장착할 수 있어요.<br>특별한 순간마다 새 화분이 열려요.' }},
+  { key: 'hint_pet_friendship',
+    condition: (s) => {
+      const pets = s.pets || {};
+      const hasUnlockedPet = Object.values(pets).some(p => p.unlocked);
+      const noPetToday = Object.values(pets).every(p => !p.unlocked || p.lastPetDate !== todayKey());
+      return hasUnlockedPet && noPetToday && !s.discoveryHintsSeen?.includes('hint_pet_friendship');
+    },
+    notice: { icon: '🐾', title: '카페 친구에게 인사해 보세요',
+      body: '화면 위의 <strong>펫을 탭</strong>하면 하루에 한 번 친해질 수 있어요.<br>친밀도가 올라가면 특별한 화분도 열려요.' }},
+  { key: 'hint_letter_system',
+    condition: (s) => (s.letters || []).length > 0 && !(s.discoveryHintsSeen || []).includes('hint_letter_system'),
+    notice: { icon: '💌', title: '편지가 도착해 있어요',
+      body: '가방 🎒 안에 펫이 물어온 <strong>편지</strong>가 있어요.<br>가끔 특별한 코드가 숨어 있을지도 몰라요.' }},
+  { key: 'hint_harvest_quality',
+    condition: (s) => s.stage >= 4 && !(s.discoveryHintsSeen || []).includes('hint_harvest_quality'),
+    notice: { icon: '🍒', title: '수확의 품질은 매번 달라요',
+      body: '얼마나 잘 돌봤는지, 날씨, 펫 친밀도에 따라<br><strong>수확 등급</strong>이 달라져요. 특별 수확에는 원두 증서도!' }},
+  { key: 'hint_farm_level',
+    condition: (s) => (s.farmLevel || 1) >= 2 && !(s.discoveryHintsSeen || []).includes('hint_farm_level'),
+    notice: { icon: '🌟', title: '농장 레벨이 올라가고 있어요',
+      body: '수확할 때마다 <strong>농장 레벨</strong>이 올라요.<br>레벨이 높아지면 물 최대량이나 성장 속도 보너스가 열려요.' }},
+];
+
+function showDiscoveryHints() {
+  if (!state || !state.tutorialDone) return;
+  if (!state.discoveryHintsSeen) state.discoveryHintsSeen = [];
+  // 세션당 최대 1개
+  for (const hint of DISCOVERY_HINTS) {
+    if (hint.condition(state)) {
+      state.discoveryHintsSeen.push(hint.key);
+      saveState();
+      showNotice(hint.notice);
+      return; // 1개만
+    }
   }
 }
 
@@ -4529,6 +4633,12 @@ function boot() {
   // 첫 방문 튜토리얼
   if (!state.tutorialDone) {
     setTimeout(startTutorial, 1800);
+  }
+
+  // Phase N-2 — 발견성 힌트 (기존 유저용, 부드러운 1회성 안내)
+  // tutorialDone은 true이지만 특정 시스템을 아직 경험하지 않은 경우
+  if (state.tutorialDone) {
+    setTimeout(() => showDiscoveryHints(), 3000);
   }
 
   // 서비스 워커 등록 (PWA 오프라인 지원)

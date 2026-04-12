@@ -179,6 +179,12 @@ PWA(manifest+sw), 가방(인벤토리), 단계 정보 ⓘ, Web Share 공유, Fir
 - 단순 픽셀 실루엣 (`_drawAvatar`), 페이드 인/아웃 320~420ms
 - 조작 불가, 인벤토리/장비 없음 (caretaker presence 원칙)
 
+### Phase N (완료) — 온보딩·발견성·재접속
+- N-1: 튜토리얼 7장 (기존 4 + 펫/팝업/화분 3장)
+- N-2: `DISCOVERY_HINTS` 6종 — 기존 유저용, 세션당 최대 1개, `state.discoveryHintsSeen`
+- N-3: `showOfflinePopup` 하단에 "지금 할 수 있는 것" 동기 제안 (수확/물/펫/편지)
+- N-4: 컬렉션 패널 상단 진행 요약 (`N/M 수집`) + `_getNextLockHint()` 다음 해금 힌트
+
 ### Phase F-3 ~ Phase I (계획) — 기록/계절/농장/쿠폰
 - 기록장(이모지+날짜+단계+한 줄 메모, 이미지 저장 금지)
 - 계절 테마 장식 드롭 (Phase G-2 일부 완료)

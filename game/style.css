@@ -462,6 +462,18 @@ canvas {
   margin-top: 8px;
 }
 
+/* Phase N-3 — 복귀 팝업 동기 제안 */
+.offline-motivations {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+.offline-motivation-row {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  padding: 3px 0;
+}
+
 .popup-btn {
   background: var(--accent-dk);
   color: #fff;
@@ -579,6 +591,29 @@ canvas {
 
 .collection-group {
   margin-bottom: 16px;
+}
+
+/* Phase N-4 — 컬렉션 진행 요약 */
+.collection-progress {
+  text-align: center;
+  padding: 8px 0 12px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+.collection-progress-count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.collection-progress-label {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+}
+.collection-next-hint {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 4px;
+  font-style: italic;
 }
 
 .collection-group-title {
