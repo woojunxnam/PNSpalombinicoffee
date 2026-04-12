@@ -92,7 +92,7 @@
 
       <div class="header-actions">
         <!-- 언어 토글 -->
-        <div id="google_translate_element" style="display:none;"></div>
+        <div id="google_translate_element"></div>
         <div class="lang-toggle" role="group" aria-label="언어 선택">
           <button class="lang-btn active" data-gtlang="ko">KO</button>
           <button class="lang-btn" data-gtlang="en">EN</button>
@@ -1172,7 +1172,6 @@
     new google.translate.TranslateElement({
       pageLanguage: 'ko',
       includedLanguages: 'en,zh-CN,zh-TW,ja,vi',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
       autoDisplay: false
     }, 'google_translate_element');
   }

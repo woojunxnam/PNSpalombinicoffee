@@ -589,17 +589,46 @@ function applyLang(lang) {
 }
 
 /* ── Google Translate 언어 전환 ── */
-function gtTranslate(lang) {
+function gtClearCookies() {
   const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
   const host = location.hostname;
   const parts = host.split('.');
   const root = parts.length > 2 ? parts.slice(-2).join('.') : host;
-  /* 모든 가능한 도메인에서 기존 쿠키 삭제 */
   ['', host, `.${host}`, root, `.${root}`].forEach(d => {
     const dm = d ? `; domain=${d}` : '';
     document.cookie = `googtrans=; ${exp}; path=/${dm}`;
   });
-  if (lang !== 'ko') {
+}
+
+function gtTranslate(lang) {
+  /* 1) combo가 있으면 직접 조작 (리로드 없이 즉시 전환) */
+  const combo = document.querySelector('.goog-te-combo');
+  if (combo) {
+    if (lang === 'ko') {
+      /* 원본 복원: 배너 버튼 클릭 or 쿠키 삭제+리로드 */
+      const banners = document.querySelectorAll('iframe.VIpgJd-ZVi9od-ORHb-OEVmcd');
+      for (const f of banners) {
+        try {
+          const btn = f.contentDocument.querySelector('button');
+          if (btn) { btn.click(); gtClearCookies(); return; }
+        } catch (e) { /* cross-origin */ }
+      }
+      gtClearCookies();
+      location.reload();
+    } else {
+      combo.value = lang;
+      combo.dispatchEvent(new Event('change'));
+    }
+    return;
+  }
+
+  /* 2) combo 미생성 → 쿠키 + 리로드 폴백 */
+  if (lang === 'ko') {
+    gtClearCookies();
+  } else {
+    const host = location.hostname;
+    const parts = host.split('.');
+    const root = parts.length > 2 ? parts.slice(-2).join('.') : host;
     document.cookie = `googtrans=/ko/${lang}; path=/`;
     document.cookie = `googtrans=/ko/${lang}; path=/; domain=.${root}`;
   }

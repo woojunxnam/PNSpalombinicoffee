@@ -1202,17 +1202,26 @@ body.menu-open .mobile-sticky-cta {
 .lang-btn.active { color: var(--text); font-weight: 800; }
 
 /* ── Google Translate 위젯 스타일 ── */
-/* GT 상단 배너(toolbar) 완전 숨김 */
-.goog-te-banner-frame,
-.goog-te-banner-frame.skiptranslate { display: none !important; }
-.skiptranslate { display: none !important; }
+/* GT 상단 배너(toolbar) 숨김 — visibility로 기능 유지 */
+.goog-te-banner-frame {
+  visibility: hidden !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+}
 body { top: 0 !important; }
-/* 번역 후 상단에 밀리는 문제 방지 */
 body.translated-ltr,
 body.translated-rtl { margin-top: 0 !important; top: 0 !important; }
 
-/* 헤더 내 GT 셀렉트 스타일링 */
-#google_translate_element { display: inline-flex; align-items: center; }
+/* GT 위젯: off-screen으로 숨기되 DOM에는 존재 */
+#google_translate_element {
+  position: fixed !important;
+  top: -300px !important;
+  left: -300px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
 .goog-te-gadget { font-size: 0 !important; }
 .goog-te-gadget .goog-te-gadget-simple {
   background: transparent !important;
