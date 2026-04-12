@@ -197,10 +197,7 @@
         <a href="partners.html" data-en="Partners">고객·협력사</a>
       </nav>
       <div class="header-actions">
-        <div class="lang-toggle" role="group" aria-label="언어 선택">
-          <button class="lang-btn active" data-lang="ko">KO</button>
-          <button class="lang-btn" data-lang="en">EN</button>
-        </div>
+        <div id="google_translate_element"></div>
         <a class="btn btn-primary" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">구매하기</a>
       </div>
     </div>
@@ -539,5 +536,18 @@
     <polyline points="18 15 12 9 6 15"/>
   </svg>
 </button>
+
+  <!-- Google Translate -->
+  <script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ko',
+      includedLanguages: 'en,zh-CN,zh-TW,ja,vi',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

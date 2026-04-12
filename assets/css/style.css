@@ -120,9 +120,9 @@ body, p, h1, h2, h3, h4, h5, li, td, th, .product-desc, .product-card-desc,
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(13,10,7,.6) 0%,
-    rgba(20,14,8,.72) 50%,
-    rgba(10,8,6,.88) 100%
+    rgba(13,10,7,.3) 0%,
+    rgba(20,14,8,.42) 50%,
+    rgba(10,8,6,.58) 100%
   );
 }
 .hero-inner{
@@ -1200,6 +1200,37 @@ body.menu-open .mobile-sticky-cta {
 .lang-btn + .lang-btn { border-left: 1px solid var(--line); }
 .lang-btn:hover { color: var(--text); }
 .lang-btn.active { color: var(--text); font-weight: 800; }
+
+/* ── Google Translate 위젯 스타일 ── */
+/* GT 상단 배너(toolbar) 완전 숨김 */
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+.skiptranslate { display: none !important; }
+body { top: 0 !important; }
+/* 번역 후 상단에 밀리는 문제 방지 */
+body.translated-ltr,
+body.translated-rtl { margin-top: 0 !important; top: 0 !important; }
+
+/* 헤더 내 GT 셀렉트 스타일링 */
+#google_translate_element { display: inline-flex; align-items: center; }
+.goog-te-gadget { font-size: 0 !important; }
+.goog-te-gadget .goog-te-gadget-simple {
+  background: transparent !important;
+  border: none !important;
+  border-right: 1px solid var(--line) !important;
+  padding: 0 10px 0 2px !important;
+  cursor: pointer;
+}
+.goog-te-gadget .goog-te-gadget-simple .goog-te-menu-value {
+  color: var(--muted) !important;
+  font-family: var(--sans) !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: .8px !important;
+}
+.goog-te-gadget .goog-te-gadget-simple .goog-te-menu-value span[style] { display: none !important; }
+.goog-te-gadget .goog-te-gadget-simple img { display: none !important; }
+.goog-te-gadget-simple:hover .goog-te-menu-value { color: var(--text) !important; }
 
 /* ?? ?몄뒪?洹몃옩 ?꾩씠肄?(?ㅻ뜑) ?? */
 .insta-link,

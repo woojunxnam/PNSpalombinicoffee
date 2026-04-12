@@ -166,18 +166,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
   const headerActions = headerInner.querySelector('.header-actions') || headerInner;
 
-  /* inject lang toggle if not already present */
-  if (!headerActions.querySelector('.lang-toggle')) {
-    const lt = document.createElement('div');
-    lt.className = 'lang-toggle';
-    lt.innerHTML = '<button class="lang-btn" data-lang="ko">KO</button><button class="lang-btn" data-lang="en">EN</button>';
-    lt.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (typeof applyLang === 'function') applyLang(btn.dataset.lang);
-      });
-    });
-    headerActions.insertBefore(lt, headerActions.firstChild);
-  }
+  /* Google Translate element is injected via HTML — no dynamic lang-toggle needed */
 
   const panelId = 'mobileNavPanel';
 
@@ -599,12 +588,8 @@ function applyLang(lang) {
   document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.lang-btn').forEach(btn => {
-    btn.addEventListener('click', () => applyLang(btn.dataset.lang));
-  });
-  applyLang(getLang());
-});
+/* applyLang / getLang retained for reference but no longer auto-applied on load.
+   Language switching is now handled by Google Translate (googleTranslateElementInit). */
 
 /* ── 11. 히어로 슬라이드쇼 ── */
 (function () {
