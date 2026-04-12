@@ -588,6 +588,23 @@ function applyLang(lang) {
   document.documentElement.lang = lang === 'ko' ? 'ko' : 'en';
 }
 
+/* ── Google Translate: 배너 강제 숨김 + 네비 번역 방지 ── */
+(function () {
+  /* nav에 notranslate → GT가 메뉴 텍스트를 번역하지 않음 (호버 효과로 대체) */
+  const nav = document.querySelector('.nav');
+  if (nav) nav.classList.add('notranslate');
+
+  /* GT 배너 iframe 강제 숨김 (CSS만으로 부족할 경우 대비) */
+  const hideBanner = () => {
+    const banner = document.querySelector('.goog-te-banner-frame');
+    if (banner) { banner.style.display = 'none'; }
+    document.body.style.top = '0px';
+  };
+  const obs = new MutationObserver(hideBanner);
+  obs.observe(document.documentElement, { childList: true, subtree: true });
+  hideBanner();
+})();
+
 /* ── Google Translate 언어 전환 ── */
 function gtClearCookies() {
   const exp = 'expires=Thu, 01 Jan 1970 00:00:00 UTC';
