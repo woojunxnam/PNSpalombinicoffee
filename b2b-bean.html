@@ -89,6 +89,30 @@
     }
     .bb-hero-grid-cell:hover img { transform: scale(1.05); }
 
+    /* Numbered photo grid */
+    .bb-num-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .bb-num-cell {
+      position: relative; overflow: hidden; border-radius: 14px;
+    }
+    .bb-num-cell img {
+      width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block;
+      transition: transform .4s ease;
+    }
+    .bb-num-cell:hover img { transform: scale(1.05); }
+    .bb-num-badge {
+      position: absolute; top: 8px; left: 8px;
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(192,122,61,.92);
+      color: #fff; font-size: 12px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,.35);
+      z-index: 2;
+    }
+
     /* ── PRODUCT SECTION (생두 / 원두) ── */
     .bb-product {
       padding: 56px 0 0;
@@ -484,13 +508,13 @@
       <div class="container">
         <div class="bb-product-inner">
           <div class="bb-product-imgs">
-            <div class="bb-product-imgs-row">
-              <img class="half" src="products/volcano-ruby/img_04_체리_건조.jpg" alt="체리 건조 과정"/>
-              <img class="half" src="products/volcano-ruby/img_10_컨테이너_싣기_전.jpg" alt="생두 자루"/>
-            </div>
-            <div class="bb-product-imgs-row">
-              <img class="half" src="products/volcano-ruby/img_08_생두_선별기.jpg" alt="생두 선별기"/>
-              <img class="half" src="products/volcano-ruby/img_05_컨테이너.jpg" alt="컨테이너 운송"/>
+            <div class="bb-num-grid">
+              <div class="bb-num-cell"><span class="bb-num-badge">1</span><img src="products/volcano-ruby/img_04_체리_건조.jpg" alt="체리 건조 과정"/></div>
+              <div class="bb-num-cell"><span class="bb-num-badge">2</span><img src="products/volcano-ruby/img_10_컨테이너_싣기_전.jpg" alt="생두 자루"/></div>
+              <div class="bb-num-cell"><span class="bb-num-badge">3</span><img src="products/volcano-ruby/img_08_생두_선별기.jpg" alt="생두 선별기"/></div>
+              <div class="bb-num-cell"><span class="bb-num-badge">4</span><img src="products/volcano-ruby/img_05_컨테이너.jpg" alt="컨테이너 운송"/></div>
+              <div class="bb-num-cell"><span class="bb-num-badge">5</span><img src="assets/img/bean-111.jpg" alt="생두 선별"/></div>
+              <div class="bb-num-cell"><span class="bb-num-badge">6</span><img src="assets/img/bean-112.jpg" alt="컨테이너 수송"/></div>
             </div>
           </div>
           <div>
@@ -498,8 +522,8 @@
             <h2 class="bb-product-title">산지 직송<br/>프리미엄 생두</h2>
             <p class="bb-product-sub">Direct from Origin</p>
             <p class="bb-product-desc">
-              에티오피아 예가체프, 시다모 등 세계적인 산지에서 직접 선별한
-              스페셜티 등급 생두를 컨테이너 단위로 수입합니다.<br/><br/>
+              베트남 화산지대에서 직접 선별한 스페셜티 등급 생두를
+              컨테이너 단위로 수입합니다.<br/><br/>
               농장에서 건조, 선별, 포장까지 전 과정을 직접 관리하여
               품질의 일관성을 보장합니다. 산지에서 한국까지 최단 루트로 운송하여
               신선도를 극대화합니다.
@@ -511,6 +535,71 @@
               <li><strong>유연한 물량</strong> — 60kg 자루 단위부터 컨테이너 단위까지</li>
               <li><strong>안정적 공급</strong> — 수확 시즌별 선물(船物) 스케줄 공유</li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 생두 공급 프로세스 ── -->
+    <section style="background:linear-gradient(160deg,#120d08 0%,#1e1409 50%,#120d08 100%);padding:56px 0;">
+      <div class="container">
+        <p style="font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#c8aa6e;margin-bottom:8px;">Supply Process</p>
+        <h2 style="font-family:var(--serif);font-size:clamp(22px,3vw,32px);font-weight:600;color:#f5ede1;margin:0 0 40px;line-height:1.3;">생두 공급 6단계 프로세스</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;position:relative;">
+          <div style="content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,rgba(200,170,110,.4),transparent);pointer-events:none;"></div>
+          <!-- Step 1 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              🌿<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">1</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">내추럴 가공</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Natural Processing</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">체리 상태 그대로 건조하여 과육의 단맛·과일향을 생두에 흡수.</p>
+          </div>
+          <!-- Step 2 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              🔬<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">2</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">색채선별기</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Color Sorting</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">광학 색채선별기로 결점두·이색두를 완전 제거. 균일한 품질 확보.</p>
+          </div>
+          <!-- Step 3 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              ✅<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">3</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">품질검증</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Quality Verification</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">핸드픽 및 수분 함량 측정. SCA 스페셜티 등급 기준 최종 확인.</p>
+          </div>
+          <!-- Step 4 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              🚛<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">4</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">물류 수송</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Inland Logistics</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">포장 완료 생두를 항구까지 온도 관리 차량으로 안전 운송.</p>
+          </div>
+          <!-- Step 5 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              🚢<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">5</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">컨테이너 선적</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Container Loading</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">60kg 자루 단위로 컨테이너 적재. 선물(船物) 스케줄 사전 공유.</p>
+          </div>
+          <!-- Step 6 -->
+          <div style="text-align:center;padding:0 12px 32px;position:relative;">
+            <div style="width:72px;height:72px;border-radius:50%;background:rgba(200,170,110,.08);border:2px solid rgba(200,170,110,.25);display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin:0 auto 16px;position:relative;z-index:1;">
+              🏭<span style="position:absolute;top:-6px;right:-6px;width:22px;height:22px;background:#c8aa6e;color:#000;border-radius:50%;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;">6</span>
+            </div>
+            <h4 style="color:#fff;font-size:.9rem;font-weight:700;margin:0 0 4px;">컨테이너 수송</h4>
+            <p style="color:rgba(200,170,110,.65);font-size:.72rem;margin:0 0 8px;letter-spacing:.5px;">Container Delivery</p>
+            <p style="color:rgba(255,255,255,.55);font-size:.78rem;line-height:1.6;margin:0;">한국 입항 후 통관, 창고 입고까지 원스톱 처리. 신선도 극대화.</p>
           </div>
         </div>
       </div>
