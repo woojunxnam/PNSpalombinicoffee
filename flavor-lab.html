@@ -33,7 +33,7 @@
     .fl-lab { display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:600px; }
 
     /* ── LEFT PANEL ── */
-    .fl-left { padding:32px 28px; background:var(--fl-bg2); border-right:1px solid var(--fl-border); overflow-y:auto; max-height:calc(100vh - 60px); position:sticky; top:60px; }
+    .fl-left { padding:32px 28px; background:var(--fl-bg2); border-right:1px solid var(--fl-border); }
     .fl-section-label { font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fl-gold); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
     .fl-section-label:first-child { margin-top:0; }
     .fl-section-label .fl-toggle-arrow { cursor:pointer; transition:transform .2s; font-size:14px; }
@@ -67,9 +67,13 @@
     .fl-slider-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:8px 10px; background:var(--fl-card); border:1px solid var(--fl-border); border-radius:10px; }
     .fl-slider-row.slot5 { border-style:dashed; opacity:.85; }
     .fl-slider-name { font-size:12px; font-weight:600; color:var(--fl-cream); min-width:80px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .fl-slider-input { flex:1; -webkit-appearance:none; appearance:none; height:6px; border-radius:3px; background:rgba(200,170,110,.2); outline:none; cursor:pointer; }
-    .fl-slider-input::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--fl-gold); cursor:pointer; border:2px solid var(--fl-bg2); }
-    .fl-slider-input::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--fl-gold); cursor:pointer; border:2px solid var(--fl-bg2); }
+    .fl-slider-input { flex:1; -webkit-appearance:none; appearance:none; height:6px; border-radius:3px; background:rgba(200,170,110,.2); outline:none; cursor:pointer; transition:background .15s; }
+    .fl-slider-input::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--fl-gold); cursor:grab; border:2.5px solid var(--fl-bg2); box-shadow:0 2px 8px rgba(0,0,0,.35); transition:transform .1s,box-shadow .1s; }
+    .fl-slider-input::-webkit-slider-thumb:active { cursor:grabbing; transform:scale(1.15); box-shadow:0 3px 12px rgba(192,122,61,.5); }
+    .fl-slider-input::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:var(--fl-gold); cursor:grab; border:2.5px solid var(--fl-bg2); box-shadow:0 2px 8px rgba(0,0,0,.35); }
+    .fl-slider-input::-moz-range-thumb:active { cursor:grabbing; transform:scale(1.15); }
+    .fl-slider-input::-webkit-slider-runnable-track { height:6px; border-radius:3px; }
+    .fl-slider-input::-moz-range-track { height:6px; border-radius:3px; background:rgba(200,170,110,.2); border:none; }
     .fl-slider-pct { font-size:13px; font-weight:700; color:var(--fl-gold); min-width:36px; text-align:right; }
     .fl-slider-remove { background:none; border:none; color:rgba(220,120,100,.7); font-size:16px; cursor:pointer; padding:2px 4px; line-height:1; }
     .fl-slider-remove:hover { color:#e66; }
@@ -129,7 +133,7 @@
     /* ── RESPONSIVE ── */
     @media(max-width:900px){
       .fl-lab { grid-template-columns:1fr; }
-      .fl-left { max-height:none; position:static; border-right:none; border-bottom:1px solid var(--fl-border); padding:24px 20px; }
+      .fl-left { border-right:none; border-bottom:1px solid var(--fl-border); padding:24px 20px; }
       .fl-right { min-height:420px; padding:28px 20px 60px; }
       .fl-tier1 { grid-template-columns:repeat(3,1fr); gap:8px; }
     }
@@ -374,14 +378,14 @@
 
 // ── DATA ──
 const BEANS = {
-  'gran-bar':  {name:'Gran Bar',     group:'classic', color:[24,45,28], tag:'다크 코코아 · 묵직', flavor:{body:8,acidity:2,sweetness:4,bitterness:7,nutty:7,cocoa:8,fruity:2,smoky:5}, profile:'구운 견과와 다크 코코아의 묵직한 조화. 갓 구운 빵처럼 고소하고 진한 바디에, 클래식 이탈리안 바의 무게감이 살아 있습니다.'},
-  'dolce':     {name:'Dolce Italia', group:'classic', color:[35,50,54], tag:'바닐라 · 달콤',       flavor:{body:6,acidity:3,sweetness:8,bitterness:4,nutty:6,cocoa:6,fruity:3,smoky:2}, profile:'바닐라와 코코아가 만드는 부드러운 단맛의 세계. 우유 음료와 만나면 더욱 빛나는, 편안하고 크리미한 블렌드.'},
-  'roma':      {name:'Roma',         group:'classic', color:[22,38,57], tag:'클린 · 균형',         flavor:{body:5,acidity:5,sweetness:5,bitterness:4,nutty:4,cocoa:5,fruity:5,smoky:3}, profile:'100% 아라비카의 깨끗한 향미. 은은한 과일과 초콜릿이 균형 잡힌 중간 바디 위에 자리합니다.'},
-  'vr-ll':     {name:'VR Light',     group:'volcano', color:[22,30,52], tag:'밝은 · 베리',         flavor:{body:6,acidity:5,sweetness:6,bitterness:4,nutty:4,cocoa:5,fruity:6,smoky:3}, profile:'로부스타의 편견을 깨는 밝은 첫인상. 베리류의 산뜻한 리프트와 내추럴 프로세스의 은은한 단맛.'},
-  'vr-lm':     {name:'VR Med-Light', group:'volcano', color:[22,32,41], tag:'캐러멜 · 균형',       flavor:{body:7,acidity:4,sweetness:5,bitterness:5,nutty:4,cocoa:6,fruity:5,smoky:4}, profile:'밝은 과일 톤이 살아 있으면서 바디감이 올라옵니다. 캐러멜과 건포도의 달콤함 사이로 초콜릿이 스며드는 균형점.'},
-  'vr-m':      {name:'VR Medium',    group:'volcano', color:[20,35,32], tag:'다크초콜릿 · 묵직',   flavor:{body:8,acidity:3,sweetness:5,bitterness:6,nutty:4,cocoa:7,fruity:4,smoky:5}, profile:'다크 초콜릿과 내추럴 단맛의 정점. 묵직한 바디, 체리와 건과일의 깊은 톤, 부드러운 스모키 피니시.'},
-  'vr-mh':     {name:'VR Med-Dark',  group:'volcano', color:[14,42,23], tag:'스모키 · 풀바디',     flavor:{body:9,acidity:2,sweetness:4,bitterness:7,nutty:4,cocoa:8,fruity:3,smoky:7}, profile:'깊고 진한 초콜릿에 스파이스와 훈연이 강하게 올라옵니다. 풀 바디, 묵직한 입안 감촉, 긴 여운.'},
-  'vr-hh':     {name:'VR Dark',      group:'volcano', color:[10,40,16], tag:'강렬 · 원시적',       flavor:{body:10,acidity:1,sweetness:3,bitterness:8,nutty:3,cocoa:8,fruity:2,smoky:9}, profile:'강렬한 스모키 향과 다크 카카오. 최대 바디, 캐러멜화된 쓴맛, 원시적이고 깊은 피니시.'},
+  'gran-bar':  {name:'Gran Bar',     group:'classic', color:[340,55,38], tag:'다크 코코아 · 묵직', flavor:{body:8,acidity:2,sweetness:4,bitterness:7,nutty:7,cocoa:8,fruity:2,smoky:5}, profile:'구운 견과와 다크 코코아의 묵직한 조화. 갓 구운 빵처럼 고소하고 진한 바디에, 클래식 이탈리안 바의 무게감이 살아 있습니다.'},
+  'dolce':     {name:'Dolce Italia', group:'classic', color:[45,70,65], tag:'바닐라 · 달콤',       flavor:{body:6,acidity:3,sweetness:8,bitterness:4,nutty:6,cocoa:6,fruity:3,smoky:2}, profile:'바닐라와 코코아가 만드는 부드러운 단맛의 세계. 우유 음료와 만나면 더욱 빛나는, 편안하고 크리미한 블렌드.'},
+  'roma':      {name:'Roma',         group:'classic', color:[160,45,52], tag:'클린 · 균형',         flavor:{body:5,acidity:5,sweetness:5,bitterness:4,nutty:4,cocoa:5,fruity:5,smoky:3}, profile:'100% 아라비카의 깨끗한 향미. 은은한 과일과 초콜릿이 균형 잡힌 중간 바디 위에 자리합니다.'},
+  'vr-ll':     {name:'VR Light',     group:'volcano', color:[280,50,58], tag:'밝은 · 베리',         flavor:{body:6,acidity:5,sweetness:6,bitterness:4,nutty:4,cocoa:5,fruity:6,smoky:3}, profile:'로부스타의 편견을 깨는 밝은 첫인상. 베리류의 산뜻한 리프트와 내추럴 프로세스의 은은한 단맛.'},
+  'vr-lm':     {name:'VR Med-Light', group:'volcano', color:[250,48,50], tag:'캐러멜 · 균형',       flavor:{body:7,acidity:4,sweetness:5,bitterness:5,nutty:4,cocoa:6,fruity:5,smoky:4}, profile:'밝은 과일 톤이 살아 있으면서 바디감이 올라옵니다. 캐러멜과 건포도의 달콤함 사이로 초콜릿이 스며드는 균형점.'},
+  'vr-m':      {name:'VR Medium',    group:'volcano', color:[220,55,42], tag:'다크초콜릿 · 묵직',   flavor:{body:8,acidity:3,sweetness:5,bitterness:6,nutty:4,cocoa:7,fruity:4,smoky:5}, profile:'다크 초콜릿과 내추럴 단맛의 정점. 묵직한 바디, 체리와 건과일의 깊은 톤, 부드러운 스모키 피니시.'},
+  'vr-mh':     {name:'VR Med-Dark',  group:'volcano', color:[195,60,35], tag:'스모키 · 풀바디',     flavor:{body:9,acidity:2,sweetness:4,bitterness:7,nutty:4,cocoa:8,fruity:3,smoky:7}, profile:'깊고 진한 초콜릿에 스파이스와 훈연이 강하게 올라옵니다. 풀 바디, 묵직한 입안 감촉, 긴 여운.'},
+  'vr-hh':     {name:'VR Dark',      group:'volcano', color:[180,50,28], tag:'강렬 · 원시적',       flavor:{body:10,acidity:1,sweetness:3,bitterness:8,nutty:3,cocoa:8,fruity:2,smoky:9}, profile:'강렬한 스모키 향과 다크 카카오. 최대 바디, 캐러멜화된 쓴맛, 원시적이고 깊은 피니시.'},
 };
 
 const SIGNATURES = {
@@ -399,36 +403,74 @@ const SIGNATURES = {
   'sequoia':     {name:'Sequoia',     recipe:{'gran-bar':30,dolce:40,roma:30},       tag:'균형 · 트리플',     profile:'고소함, 달콤함, 깨끗함이 어느 하나 돌출되지 않는 부드러운 합주.'},
 };
 
-const BODY_DESC = [
-  [4,'가볍고 섬세한'],[6.5,'부드럽고 균형 잡힌'],[8,'묵직하고 풀 바디의'],[10,'강렬하고 압도적인']
-];
-const DOM_DESC = {
-  acidity:'맑은 산미가 입안에 밝음을 더합니다',
-  sweetness:'바닐라와 캐러멜의 달콤함이 부드럽게 퍼집니다',
-  bitterness:'깊은 쓴맛이 무게감을 만듭니다',
-  nutty:'구운 견과류의 고소함이 중심을 잡습니다',
-  cocoa:'다크 코코아가 풍성하게 감쌉니다',
-  fruity:'과일의 밝은 톤이 피어오릅니다',
-  smoky:'훈연 향이 깊게 존재감을 드러냅니다'
+// ── DIAGNOSTIC TEXT SYSTEM (intensity-aware) ──
+const AXIS_KO = {acidity:'산미',sweetness:'단맛',bitterness:'쓴맛',nutty:'고소함',cocoa:'코코아',fruity:'과일',smoky:'훈연'};
+const BODY_WORDS = [[3,'깃털처럼 가벼운'],[4.5,'가볍고 섬세한'],[5.5,'라이트-미디엄의'],[6.5,'부드럽고 균형 잡힌'],[7.5,'단단하고 채워진'],[8.5,'묵직한 풀 바디의'],[10,'강렬하고 압도적인']];
+const DOM_TEMPLATES = {
+  acidity: [
+    [3,'은은한 산미가 입안을 가볍게 터치합니다'],
+    [5,'맑은 산미가 입안에 밝음을 더합니다'],
+    [7,'또렷한 산미가 선명하게 존재감을 드러냅니다'],
+    [10,'날카로운 산미가 전면에서 강렬하게 터집니다']
+  ],
+  sweetness: [
+    [4,'은은한 단맛이 부드럽게 스며듭니다'],
+    [6,'바닐라와 캐러멜의 달콤함이 부드럽게 퍼집니다'],
+    [8,'풍성한 단맛이 입안 가득 퍼지며 감싸안습니다'],
+    [10,'압도적인 달콤함이 모든 것을 지배합니다']
+  ],
+  bitterness: [
+    [4,'은은한 쓴맛이 깊이를 더합니다'],
+    [6,'깊은 쓴맛이 무게감을 만듭니다'],
+    [8,'진하고 강한 쓴맛이 존재감을 드러냅니다'],
+    [10,'강렬한 쓴맛이 입안을 강하게 지배합니다']
+  ],
+  nutty: [
+    [4,'가벼운 견과류 향이 배경에 깔립니다'],
+    [6,'구운 견과류의 고소함이 중심을 잡습니다'],
+    [8,'볶은 아몬드와 헤이즐넛의 고소함이 가득합니다'],
+    [10,'깊은 견과류 향이 압도적으로 중심에 섭니다']
+  ],
+  cocoa: [
+    [4,'연한 코코아 향이 은은하게 감돕니다'],
+    [6,'다크 코코아가 풍성하게 감쌉니다'],
+    [8,'진한 초콜릿 향이 깊고 풍성하게 펼쳐집니다'],
+    [10,'다크 카카오가 모든 향을 압도합니다']
+  ],
+  fruity: [
+    [3,'가벼운 과일 뉘앙스가 살짝 느껴집니다'],
+    [5,'과일의 밝은 톤이 피어오릅니다'],
+    [7,'선명한 과일 향이 활기차게 터져나옵니다'],
+    [10,'풍성한 과일 향이 모든 감각을 채웁니다']
+  ],
+  smoky: [
+    [3,'가벼운 스모키 뉘앙스가 배경에 깔립니다'],
+    [5,'훈연 향이 은은하게 존재감을 드러냅니다'],
+    [7,'강한 훈연이 깊이 있게 감싸안습니다'],
+    [10,'강렬한 훈연이 모든 것을 지배합니다']
+  ]
 };
-const SEC_DESC = {
-  acidity:'산미가 은은하게 받쳐주고',
-  sweetness:'단맛이 여운을 더하며',
-  bitterness:'쓴맛이 무게를 잡아주고',
-  nutty:'견과의 고소함이 배경에 깔리며',
-  cocoa:'코코아 향이 뒤를 감싸고',
-  fruity:'과일의 밝음이 곁들여지며',
-  smoky:'스모키한 기운이 스며들고'
+const SEC_TEMPLATES = {
+  acidity:   [[4,'미세한 산미가 곁들여지고'],[6,'산미가 은은하게 받쳐주고'],[10,'밝은 산미가 강하게 대비되고']],
+  sweetness: [[4,'가벼운 단맛이 스치고'],[6,'단맛이 여운을 더하며'],[10,'달콤함이 풍성하게 감싸며']],
+  bitterness:[[4,'가벼운 쓴맛이 깊이를 주고'],[6,'쓴맛이 무게를 잡아주고'],[10,'강한 쓴맛이 대비를 만들고']],
+  nutty:     [[4,'가벼운 견과 향이 스치고'],[6,'견과의 고소함이 배경에 깔리며'],[10,'깊은 고소함이 두텁게 깔리며']],
+  cocoa:     [[4,'가벼운 코코아가 곁들여지고'],[6,'코코아 향이 뒤를 감싸고'],[10,'진한 초콜릿이 무겁게 감싸고']],
+  fruity:    [[4,'가벼운 과일 힌트가 스치고'],[6,'과일의 밝음이 곁들여지며'],[10,'선명한 과일이 강하게 대비되며']],
+  smoky:     [[4,'미세한 훈연이 스치고'],[6,'스모키한 기운이 스며들고'],[10,'강한 훈연이 깊게 깔리고']]
 };
-const FINISH_MAP = {
-  'sweetness+fruity':'꿀과 과일의 따뜻한 여운이 남습니다',
-  'nutty+cocoa':'고소하고 깊은 초콜릿 피니시',
-  'bitterness+smoky':'강렬하고 긴 에스프레소 여운',
-  'sweetness+cocoa':'벨벳 같은 달콤한 마무리',
-  'fruity+acidity':'산뜻하고 깨끗한 마무리',
-  'cocoa+smoky':'다크 초콜릿과 훈연의 깊은 여운',
-  'nutty+sweetness':'고소하고 달콤한 따뜻한 마무리',
-  'cocoa+bitterness':'진한 카카오의 긴 여운'
+const FINISH_POOL = {
+  'sweetness+fruity':['꿀과 과일의 따뜻한 여운','열대 과일을 머금은 달콤한 피니시'],
+  'sweetness+cocoa':['벨벳 같은 달콤한 마무리','부드러운 초콜릿 밀크의 여운'],
+  'sweetness+nutty':['고소하고 달콤한 따뜻한 마무리','아몬드 크림의 부드러운 끝맛'],
+  'nutty+cocoa':['고소하고 깊은 초콜릿 피니시','구운 카카오닙의 따뜻한 끝맛'],
+  'bitterness+smoky':['강렬하고 긴 에스프레소 여운','숯불 위 에스프레소의 긴 피니시'],
+  'cocoa+smoky':['다크 초콜릿과 훈연의 깊은 여운','그을린 카카오의 무거운 끝맛'],
+  'cocoa+bitterness':['진한 카카오의 긴 여운','다크 에스프레소의 단단한 피니시'],
+  'fruity+acidity':['산뜻하고 깨끗한 마무리','시트러스의 맑은 끝맛'],
+  'acidity+fruity':['밝고 산뜻한 과일 피니시','깨끗한 산미의 상쾌한 여운'],
+  'acidity+sweetness':['달콤한 시트러스의 밝은 여운','과즙 같은 상쾌한 마무리'],
+  '_default':['부드럽게 사라지는 잔잔한 여운','조용히 물러나는 담백한 끝맛']
 };
 
 const QUICK_MAP = {
@@ -463,11 +505,17 @@ function calcFlavor(atoms) {
 }
 
 function calcColor(atoms) {
-  let h=0,s=0,l=0;
+  // Circular mean for hue (avoids 350+10=180 problem)
+  let sinH=0,cosH=0,s=0,l=0;
   for (const [bean, pct] of Object.entries(atoms)) {
     const [bh,bs,bl] = BEANS[bean].color;
-    h += bh*pct/100; s += bs*pct/100; l += bl*pct/100;
+    const rad = bh * Math.PI / 180;
+    sinH += Math.sin(rad)*pct/100;
+    cosH += Math.cos(rad)*pct/100;
+    s += bs*pct/100; l += bl*pct/100;
   }
+  let h = Math.atan2(sinH,cosH)*180/Math.PI;
+  if (h < 0) h += 360;
   return {h:Math.round(h),s:Math.round(s),l:Math.round(l)};
 }
 
@@ -478,19 +526,38 @@ function hslToHex(h,s,l) {
   return '#'+[f(0),f(8),f(4)].map(x=>x.toString(16).padStart(2,'0')).join('');
 }
 
+function pickByScore(templates, score) {
+  let pick = templates[0][1];
+  for (const [thr, txt] of templates) { if (score <= thr) { pick = txt; break; } }
+  return pick;
+}
 function generateDiagnostic(fl) {
-  let bodyClass = '부드럽고 균형 잡힌';
-  for (const [threshold, label] of BODY_DESC) {
-    if (fl.body <= threshold) { bodyClass = label; break; }
-  }
+  // Body
+  let bodyWord = BODY_WORDS[BODY_WORDS.length-1][1];
+  for (const [thr, w] of BODY_WORDS) { if (fl.body <= thr) { bodyWord = w; break; } }
+  // Sort axes by score (exclude body)
   const axes = Object.keys(fl).filter(k=>k!=='body');
-  const sorted = axes.sort((a,b)=>fl[b]-fl[a]);
-  const dom = sorted[0], sec = sorted[1];
-  const domText = DOM_DESC[dom] || '';
-  const secText = SEC_DESC[sec] || '';
-  const fKey1 = dom+'+'+sec, fKey2 = sec+'+'+dom;
-  const finish = FINISH_MAP[fKey1] || FINISH_MAP[fKey2] || '부드럽게 사라지는 여운이 남습니다';
-  return bodyClass+' 바디. '+domText+'. '+secText+' '+finish+'.';
+  const sorted = [...axes].sort((a,b)=>fl[b]-fl[a]);
+  const dom = sorted[0], sec = sorted[1], third = sorted[2];
+  // Dominant text (intensity-matched)
+  const domText = pickByScore(DOM_TEMPLATES[dom], fl[dom]);
+  // Secondary text (intensity-matched)
+  const secText = pickByScore(SEC_TEMPLATES[sec], fl[sec]);
+  // Finish (pair-matched, with score-based variation)
+  const fKey = dom+'+'+sec;
+  const rKey = sec+'+'+dom;
+  const pool = FINISH_POOL[fKey] || FINISH_POOL[rKey] || FINISH_POOL['_default'];
+  const finishIdx = fl[dom] > 6 ? Math.min(1, pool.length-1) : 0;
+  const finish = pool[finishIdx];
+  // Intensity hint when scores are very close (spread < 1.5)
+  const spread = fl[dom] - fl[sec];
+  let balanceNote = '';
+  if (spread < 1.0 && fl[dom] > 3) {
+    balanceNote = ' '+AXIS_KO[dom]+'과 '+AXIS_KO[sec]+'이 거의 동등하게 경합하는 복합적인 프로필입니다.';
+  } else if (spread < 1.5 && fl[third] > 4) {
+    balanceNote = ' '+AXIS_KO[third]+'도 존재감 있게 균형을 잡아줍니다.';
+  }
+  return bodyWord+' 바디. '+domText+'. '+secText+' '+finish+'.'+balanceNote;
 }
 
 function generateTags(fl) {
@@ -584,19 +651,19 @@ function removeMaterial(idx) {
 function redistributeEqual() {
   const n = blend.length;
   if (n === 0) return;
-  const base = Math.floor(100 / n / 5) * 5;
+  const base = Math.floor(100 / n);
   let rem = 100 - base * n;
   blend.forEach((b,i) => {
     b.pct = base;
-    if (rem >= 5) { b.pct += 5; rem -= 5; }
+    if (rem > 0) { b.pct += 1; rem -= 1; }
   });
 }
 
 // ── SLIDER CHANGE ──
 function setSlider(idx, rawVal) {
   const n = blend.length;
-  let val = Math.round(rawVal / 5) * 5;
-  val = Math.max(5, Math.min(val, 100 - (n-1)*5));
+  let val = Math.round(Number(rawVal));
+  val = Math.max(1, Math.min(val, 100 - (n-1)));
   const oldVal = blend[idx].pct;
   if (val === oldVal) return;
 
@@ -615,17 +682,17 @@ function setSlider(idx, rawVal) {
       blend[oi].pct = remaining - allocated;
     } else {
       const ratio = otherSum > 0 ? blend[oi].pct / otherSum : 1/others.length;
-      blend[oi].pct = Math.max(5, Math.round(ratio * remaining / 5) * 5);
+      blend[oi].pct = Math.max(1, Math.round(ratio * remaining));
       allocated += blend[oi].pct;
     }
   }
-  // Fix last if < 5
+  // Fix last if < 1
   const lastOi = others[others.length-1];
-  if (blend[lastOi].pct < 5) {
-    const deficit = 5 - blend[lastOi].pct;
-    blend[lastOi].pct = 5;
+  if (blend[lastOi].pct < 1) {
+    const deficit = 1 - blend[lastOi].pct;
+    blend[lastOi].pct = 1;
     for (let j=others.length-2; j>=0; j--) {
-      if (blend[others[j]].pct > 5) {
+      if (blend[others[j]].pct > 1) {
         blend[others[j]].pct -= deficit;
         break;
       }
@@ -712,7 +779,7 @@ function render() {
       const cls = i === 4 ? ' slot5' : '';
       html += '<div class="fl-slider-row'+cls+'">';
       html += '<span class="fl-slider-name">'+info.name+'</span>';
-      html += '<input type="range" class="fl-slider-input" min="5" max="'+(100-(n-1)*5)+'" step="5" value="'+b.pct+'" oninput="setSlider('+i+',this.value)">';
+      html += '<input type="range" class="fl-slider-input" min="1" max="'+(100-(n-1)*1)+'" step="1" value="'+b.pct+'" oninput="setSlider('+i+',this.value)">';
       html += '<span class="fl-slider-pct">'+b.pct+'%</span>';
       html += '<button class="fl-slider-remove" onclick="removeMaterial('+i+')">&times;</button>';
       html += '</div>';
