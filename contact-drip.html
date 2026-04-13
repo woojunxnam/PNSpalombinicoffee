@@ -276,6 +276,8 @@
             <a href="contact-drip.html" style="color:var(--accent)"><span class="nav-dropdown-icon">☕</span> B2B 드립백 문의</a>
             <a href="contact-bean.html"><span class="nav-dropdown-icon">🫘</span> B2B 생두 원두 문의</a>
             <a href="#" style="opacity:.5"><span class="nav-dropdown-icon">📦</span> B2B 봉투 필름지 문의 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 5px;border-radius:4px;margin-left:3px;">준비중</span></a>
+            <div class="nav-dropdown-label">디자인 리소스</div>
+            <a href="design-templates.html" style="color:var(--accent)"><span class="nav-dropdown-icon">📐</span> 디자인 템플릿 다운로드</a>
           </div></div>
         <a href="partners.html">고객·협력사</a>
       </nav>
@@ -319,31 +321,69 @@
 
         <!-- Step Indicator -->
         <div class="cd-steps">
-          <div class="cd-step active" data-step="1">
+          <div class="cd-step active" data-step="0">
             <span class="cd-step-num">1</span>
+            <span>준비 사항</span>
+          </div>
+          <div class="cd-step-line"></div>
+          <div class="cd-step" data-step="1">
+            <span class="cd-step-num">2</span>
             <span>기본 정보</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="2">
-            <span class="cd-step-num">2</span>
+            <span class="cd-step-num">3</span>
             <span>디자인</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="3">
-            <span class="cd-step-num">3</span>
+            <span class="cd-step-num">4</span>
             <span>제품 사양</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="4">
-            <span class="cd-step-num">4</span>
+            <span class="cd-step-num">5</span>
             <span>미리보기</span>
           </div>
         </div>
 
         <form id="dripForm" class="cd-form-wrap" novalidate>
 
+          <!-- ═══ STEP 0: 준비 사항 ═══ -->
+          <div class="cd-panel active" id="panel0">
+            <h2 class="cd-form-title">문의 전 준비 사항</h2>
+            <p class="cd-form-subtitle">아래 정보를 미리 준비하시면 빠르게 견적을 받으실 수 있습니다.</p>
+            <div style="display:flex;flex-direction:column;gap:14px;margin:24px 0 32px;">
+              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
+                <span style="font-size:22px;flex-shrink:0;">👤</span>
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">기본 정보 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 2)</span></div>
+                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">이름 · 전화번호 · 업체명 · 이메일 주소</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
+                <span style="font-size:22px;flex-shrink:0;">🎨</span>
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">디자인 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 3)</span></div>
+                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">디자인 파일 보유 여부 (AI·PSD·PDF·JPG·PNG, 최대 10MB)<br/>디자인이 없으면 원하는 느낌·색상·텍스트 설명 준비</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
+                <span style="font-size:22px;flex-shrink:0;">☕</span>
+                <div>
+                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">제품 사양 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 4)</span></div>
+                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">원두 종류 · 제작 수량 · 드립백 규격 · 필름지 색상 · 포장 방법</div>
+                </div>
+              </div>
+            </div>
+            <div class="cd-actions">
+              <span></span>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(1)">시작하기 →</button>
+            </div>
+          </div>
+
           <!-- ═══ STEP 1: 기본 정보 ═══ -->
-          <div class="cd-panel active" id="panel1">
+          <div class="cd-panel" id="panel1">
             <h2 class="cd-form-title">기본 정보</h2>
             <p class="cd-form-subtitle">문의하시는 분의 연락처를 입력해 주세요.</p>
 
@@ -432,13 +472,15 @@
               <p style="font-size:12px;color:var(--muted);margin:0 0 8px;">또는 <a href="custom-edition.html#samples" style="color:var(--accent);font-weight:600;">샘플 갤러리</a>에서 참고 디자인을 확인해 보세요.</p>
             </div>
 
-            <!-- 칼집 다운로드 -->
+            <!-- 템플릿 다운로드 -->
             <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line);">
-              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px;">디자인 칼집 (가이드 파일)</label>
-              <a class="cd-download" href="#" onclick="alert('디자인 칼집 파일은 곧 업데이트 예정입니다. 담당자에게 문의해 주세요.');return false;">
-                📐 드립백 디자인 칼집 다운로드 (PDF)
-              </a>
-              <p class="cd-download-note">* 칼집 파일은 곧 업데이트 예정입니다. 디자인 작업 시 참고용 가이드입니다.</p>
+              <label style="font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:8px;">디자인 템플릿 (가이드 파일)</label>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <a class="cd-download" href="assets/templates/drip-10x12.5cm.ai" download>📐 드립백 필름지 템플릿 — 10×12.5cm (AI)</a>
+                <a class="cd-download" href="assets/templates/drip-12x12cm.ai" download>📐 드립백 필름지 템플릿 — 12×12cm (AI)</a>
+                <a class="cd-download" href="assets/templates/drip-12.5x12.5cm.ai" download>📐 드립백 필름지 템플릿 — 12.5×12.5cm (AI)</a>
+              </div>
+              <p class="cd-download-note">* Adobe Illustrator(.ai) 파일입니다. 디자인 작업 시 참고용 템플릿으로 사용하세요.</p>
             </div>
 
             <div class="cd-error-msg" id="step2_error"></div>
@@ -746,8 +788,22 @@
     function showErr(id, msg) { var el = document.getElementById(id); if(el){el.textContent = msg; el.classList.add('show');} }
     function hideErr(id) { var el = document.getElementById(id); if(el){el.classList.remove('show');} }
 
+    /* ── Radio card toggle (click selected → deselect) ── */
+    document.addEventListener('click', function(e) {
+      var label = e.target.closest('.cd-radio-card label');
+      if (!label) return;
+      var inp = label.previousElementSibling;
+      if (!inp || inp.type !== 'radio') return;
+      if (inp.checked) {
+        // Already checked → uncheck
+        inp.checked = false;
+        inp.dispatchEvent(new Event('change', {bubbles:true}));
+        e.preventDefault();
+      }
+    });
+
     /* ── Step Navigation ── */
-    var currentStep = 1;
+    var currentStep = 0;
     function goStep(n) {
       // Validate current step before moving forward
       if (n > currentStep) {
