@@ -193,10 +193,26 @@
     .cd-preview-table td:empty::after { content:'미입력'; color:var(--muted); font-style:italic; }
     .cd-preview-note { font-size:12px; color:var(--muted); margin-top:16px; line-height:1.7; text-align:center; }
 
+    /* ── LAB BLEND BANNER ── */
+    .cd-lab-banner {
+      background:linear-gradient(135deg,#1a1410 0%,#2a1f18 100%);
+      border:1.5px solid rgba(192,122,61,.35); border-radius:16px;
+      padding:24px 28px; margin-bottom:28px; position:relative; overflow:hidden;
+    }
+    .cd-lab-banner::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 30%,rgba(192,122,61,.12) 0%,transparent 70%); pointer-events:none; }
+    .cd-lab-banner-badge { display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-bottom:10px; position:relative; }
+    .cd-lab-banner h3 { font-family:var(--serif); font-size:18px; color:#fff; margin:0 0 12px; position:relative; }
+    .cd-lab-banner-blend { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; position:relative; }
+    .cd-lab-blend-chip { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; background:rgba(192,122,61,.12); border:1px solid rgba(192,122,61,.25); border-radius:8px; font-size:13px; font-weight:600; color:rgba(255,255,255,.85); }
+    .cd-lab-blend-chip .cd-lab-pct { color:var(--accent); font-weight:700; }
+    .cd-lab-color-swatch { width:14px; height:14px; border-radius:4px; border:1px solid rgba(255,255,255,.2); flex-shrink:0; }
+    .cd-lab-banner-note { font-size:12px; color:rgba(255,255,255,.45); line-height:1.6; position:relative; }
+
     /* ── RESPONSIVE ── */
     @media (max-width:640px) {
       .cd-form-wrap { padding:24px 18px; }
       .cd-row { grid-template-columns:1fr; }
+      .cd-lab-banner { padding:18px 16px; }
       .cd-coffee-grid { grid-template-columns:1fr; }
       .cd-steps { gap:4px; }
       .cd-step-line { width:20px; }
@@ -223,6 +239,7 @@
               <a class="nav-sub-trigger"><span class="nav-dropdown-icon">&#x1F9EA;</span> PNS Lab <svg class="nav-sub-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 2 7 5 3 8"/></svg></a>
               <div class="nav-sub-menu">
                 <a href="flavor-guide.html"><span class="nav-dropdown-icon">&#x1F3AF;</span> 드립백 취향 찾기</a>
+                <a href="flavor-lab.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> Flavor-Color Lab</a>
                 <a href="menu.html"><span class="nav-dropdown-icon">&#x2615;</span> 카페 메뉴</a>
                 <a href="game/"><span class="nav-dropdown-icon">&#x1F331;</span> 커피나무 키우기 <span class="nav-badge-small">BETA</span></a>
               </div>
@@ -296,6 +313,9 @@
     <!-- ── FORM SECTION ── -->
     <section class="section" style="padding-top:48px;padding-bottom:64px;">
       <div class="container">
+
+        <!-- Lab Blend Banner (shown when ?from=lab) -->
+        <div id="labBanner" style="display:none;"></div>
 
         <!-- Step Indicator -->
         <div class="cd-steps">
@@ -664,6 +684,63 @@
     var header = document.querySelector('.site-header');
     window.addEventListener('scroll', function() { header.classList.toggle('scrolled', window.scrollY > 20); }, {passive:true});
 
+    /* ── Lab Blend URL Params ── */
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      if (params.get('from') !== 'lab') return;
+      var blendStr = params.get('b');
+      if (!blendStr) return;
+
+      var NAMES = {
+        'gran-bar':'Gran Bar 그란바', 'dolce':'Dolce Italia 돌체이탈리아', 'roma':'Roma 로마',
+        'vr-ll':'Volcano Ruby Light-Light', 'vr-lm':'Volcano Ruby Light-Medium',
+        'vr-m':'Volcano Ruby Medium', 'vr-mh':'Volcano Ruby Medium-High', 'vr-hh':'Volcano Ruby High-High',
+        'birch':'Birch', 'jujube':'Jujube', 'juniper':'Juniper', 'magnolia':'Magnolia',
+        'miru':'Miru', 'poplar':'Poplar', 'sequoia':'Sequoia', 'silverberry':'Silverberry',
+        'spruce':'Spruce', 'tamarind':'Tamarind', 'willow':'Willow', 'zelkova':'Zelkova'
+      };
+      var COLORS = {
+        'gran-bar':'#46341e', 'dolce':'#8b6d47', 'roma':'#7a6e5f',
+        'vr-ll':'#5a3e2a', 'vr-lm':'#4e3322', 'vr-m':'#42291c', 'vr-mh':'#3a2218', 'vr-hh':'#2e1a12',
+        'birch':'#7d6a4e', 'jujube':'#5e3d2e', 'juniper':'#806a4a', 'magnolia':'#7e6b4d',
+        'miru':'#5b402f', 'poplar':'#574030', 'sequoia':'#3c2518', 'silverberry':'#6d5a42',
+        'spruce':'#49301e', 'tamarind':'#5a3e2d', 'willow':'#755e45', 'zelkova':'#4d3524'
+      };
+
+      var items = blendStr.split(',').map(function(s) {
+        var p = s.split(':');
+        return { id: p[0], pct: parseInt(p[1]) || 0 };
+      }).filter(function(x) { return x.id && x.pct > 0; });
+
+      if (!items.length) return;
+
+      var chipsHtml = items.map(function(it) {
+        var name = NAMES[it.id] || it.id;
+        var color = COLORS[it.id] || '#6b5e55';
+        return '<span class="cd-lab-blend-chip"><span class="cd-lab-color-swatch" style="background:' + color + '"></span>' + name + ' <span class="cd-lab-pct">' + it.pct + '%</span></span>';
+      }).join('');
+
+      var banner = document.getElementById('labBanner');
+      banner.style.display = 'block';
+      banner.innerHTML =
+        '<div class="cd-lab-banner">' +
+          '<div class="cd-lab-banner-badge">🎨 Flavor-Color Lab 추천</div>' +
+          '<h3>나만의 블렌드로 드립백 주문</h3>' +
+          '<div class="cd-lab-banner-blend">' + chipsHtml + '</div>' +
+          '<p class="cd-lab-banner-note">위 블렌드 비율이 기타 요청사항에 자동 입력되었습니다. 수정 가능합니다.</p>' +
+        '</div>';
+
+      // Auto-fill the blend into notes
+      var recipeText = items.map(function(it) {
+        return (NAMES[it.id] || it.id) + ' ' + it.pct + '%';
+      }).join(' + ');
+      var notes = document.getElementById('d_notes');
+      var prefix = '[Flavor Lab 블렌드] ' + recipeText;
+      if (notes.value) notes.value = prefix + '\n\n' + notes.value;
+      else notes.value = prefix;
+      window._labAutoFilled = true; // flag to reset formDirty after it's declared
+    })();
+
     /* ── Helpers ── */
     function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
     function showErr(id, msg) { var el = document.getElementById(id); if(el){el.textContent = msg; el.classList.add('show');} }
@@ -877,6 +954,7 @@
     });
     /* ── Unsaved Changes Warning ── */
     var formDirty = false;
+    if (window._labAutoFilled) formDirty = false;
     document.getElementById('dripForm').addEventListener('input', function() { formDirty = true; });
     document.getElementById('dripForm').addEventListener('change', function() { formDirty = true; });
     window.addEventListener('beforeunload', function(e) {

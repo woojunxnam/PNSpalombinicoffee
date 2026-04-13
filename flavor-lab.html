@@ -1,0 +1,891 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Flavor-Color Lab — PNS 팔롬비니</title>
+  <meta name="description" content="당신의 취향을 색으로 디자인하세요. PNS 팔롬비니 커피 블렌딩 시뮬레이터."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://www.pnscoffee.com/flavor-lab.html"/>
+  <meta property="og:title" content="Flavor-Color Lab — PNS 팔롬비니"/>
+  <meta property="og:description" content="당신의 취향을 색으로 디자인하세요. PNS 팔롬비니 커피 블렌딩 시뮬레이터."/>
+  <meta property="og:image" content="https://www.pnscoffee.com/assets/img/pns-logo-upscaled.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ── TOKENS ── */
+    .fl-page { --fl-bg:#100c07; --fl-bg2:#1a1410; --fl-bg3:#231c14; --fl-card:#1e1710; --fl-border:rgba(200,170,110,.18); --fl-gold:#c8aa6e; --fl-gold-lt:#e2cc96; --fl-cream:#f0e8d8; --fl-muted:rgba(240,232,216,.45); --fl-accent:#C07A3D; }
+    .fl-page { background:var(--fl-bg); color:var(--fl-cream); min-height:100vh; }
+
+    /* ── HERO ── */
+    .fl-hero { background:radial-gradient(800px 400px at 50% 50%,rgba(200,170,110,.1),transparent 60%),linear-gradient(160deg,#1a1008,#2b1a0e 50%,#1a1008); padding:56px 0 40px; text-align:center; }
+    .fl-hero-eyebrow { font-size:11px; font-weight:800; letter-spacing:.18em; text-transform:uppercase; color:var(--fl-gold); margin-bottom:12px; }
+    .fl-hero h1 { font-family:'Noto Serif KR',serif; font-size:clamp(24px,4vw,42px); font-weight:600; color:var(--fl-cream); margin:0 0 8px; line-height:1.2; }
+    .fl-hero-sub { font-size:14px; color:var(--fl-muted); margin:0 0 24px; line-height:1.7; }
+    .fl-hero-random { display:inline-flex; align-items:center; gap:8px; padding:12px 28px; background:linear-gradient(135deg,var(--fl-accent),#d4a054); color:#fff; border:none; border-radius:999px; font-size:14px; font-weight:700; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:transform .15s,box-shadow .15s; }
+    .fl-hero-random:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(192,122,61,.35); }
+
+    /* ── LAB LAYOUT ── */
+    .fl-lab { display:grid; grid-template-columns:1fr 1fr; gap:0; min-height:600px; }
+
+    /* ── LEFT PANEL ── */
+    .fl-left { padding:32px 28px; background:var(--fl-bg2); border-right:1px solid var(--fl-border); overflow-y:auto; max-height:calc(100vh - 60px); position:sticky; top:60px; }
+    .fl-section-label { font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--fl-gold); margin:24px 0 12px; display:flex; align-items:center; gap:8px; }
+    .fl-section-label:first-child { margin-top:0; }
+    .fl-section-label .fl-toggle-arrow { cursor:pointer; transition:transform .2s; font-size:14px; }
+    .fl-section-label .fl-toggle-arrow.collapsed { transform:rotate(-90deg); }
+
+    /* ── MATERIAL CARDS ── */
+    .fl-tier1 { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+    .fl-tier2 { display:flex; flex-wrap:wrap; gap:8px; }
+    .fl-tier3 { display:flex; flex-wrap:wrap; gap:6px; }
+    .fl-mat { background:var(--fl-card); border:1.5px solid var(--fl-border); border-radius:12px; padding:14px 12px; cursor:pointer; transition:all .15s; text-align:center; user-select:none; }
+    .fl-mat:hover { border-color:var(--fl-gold); background:rgba(200,170,110,.08); }
+    .fl-mat.active { border-color:var(--fl-gold); background:rgba(200,170,110,.15); box-shadow:0 0 0 2px rgba(200,170,110,.3); }
+    .fl-mat.disabled { opacity:.35; pointer-events:none; }
+    .fl-mat-name { font-size:13px; font-weight:700; color:var(--fl-cream); margin-bottom:3px; white-space:nowrap; }
+    .fl-mat-tag { font-size:10px; color:var(--fl-muted); line-height:1.4; }
+    /* Tier 2 (VR) */
+    .fl-tier2 .fl-mat { padding:10px 14px; border-radius:10px; flex:1; min-width:80px; }
+    .fl-tier2 .fl-mat-name { font-size:12px; }
+    /* Tier 3 (Signature) */
+    .fl-tier3 .fl-mat { padding:8px 12px; border-radius:8px; }
+    .fl-tier3 .fl-mat-name { font-size:11px; }
+    .fl-tier3 .fl-mat-tag { font-size:9px; }
+    .fl-collapsible { overflow:hidden; transition:max-height .3s ease; }
+    .fl-collapsible.collapsed { max-height:0 !important; }
+
+    /* ── MY BLEND ── */
+    .fl-blend-section { margin-top:24px; padding-top:20px; border-top:1px solid var(--fl-border); }
+    .fl-blend-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+    .fl-blend-count { font-size:12px; color:var(--fl-muted); }
+    .fl-blend-empty { font-size:13px; color:var(--fl-muted); text-align:center; padding:20px 0; line-height:1.7; }
+    .fl-slider-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; padding:8px 10px; background:var(--fl-card); border:1px solid var(--fl-border); border-radius:10px; }
+    .fl-slider-row.slot5 { border-style:dashed; opacity:.85; }
+    .fl-slider-name { font-size:12px; font-weight:600; color:var(--fl-cream); min-width:80px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .fl-slider-input { flex:1; -webkit-appearance:none; appearance:none; height:6px; border-radius:3px; background:rgba(200,170,110,.2); outline:none; cursor:pointer; }
+    .fl-slider-input::-webkit-slider-thumb { -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--fl-gold); cursor:pointer; border:2px solid var(--fl-bg2); }
+    .fl-slider-input::-moz-range-thumb { width:18px; height:18px; border-radius:50%; background:var(--fl-gold); cursor:pointer; border:2px solid var(--fl-bg2); }
+    .fl-slider-pct { font-size:13px; font-weight:700; color:var(--fl-gold); min-width:36px; text-align:right; }
+    .fl-slider-remove { background:none; border:none; color:rgba(220,120,100,.7); font-size:16px; cursor:pointer; padding:2px 4px; line-height:1; }
+    .fl-slider-remove:hover { color:#e66; }
+    .fl-guide5 { font-size:10px; color:rgba(220,180,120,.6); margin:-4px 0 8px 10px; font-style:italic; }
+
+    /* Quick ratios */
+    .fl-quick { display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+    .fl-quick button { padding:5px 10px; font-size:11px; font-weight:600; background:rgba(200,170,110,.1); border:1px solid var(--fl-border); border-radius:6px; color:var(--fl-cream); cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:background .15s; }
+    .fl-quick button:hover { background:rgba(200,170,110,.2); }
+    .fl-actions { display:flex; gap:8px; margin-top:12px; }
+    .fl-actions button { flex:1; padding:10px; font-size:12px; font-weight:600; border-radius:8px; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:all .15s; }
+    .fl-btn-add { background:rgba(200,170,110,.12); border:1px solid var(--fl-border); color:var(--fl-cream); }
+    .fl-btn-add:hover { background:rgba(200,170,110,.22); }
+    .fl-btn-add.disabled { opacity:.35; pointer-events:none; }
+    .fl-btn-reset { background:none; border:1px solid rgba(220,120,100,.25); color:rgba(220,120,100,.7); }
+    .fl-btn-reset:hover { background:rgba(220,120,100,.08); }
+
+    /* ── RIGHT PANEL (RESULT) ── */
+    .fl-right { padding:32px 28px; display:flex; flex-direction:column; align-items:center; justify-content:center; transition:background-color .6s ease,color .3s ease; position:relative; min-height:500px; }
+    .fl-right.dark-text { color:rgba(30,20,10,.9); }
+    .fl-right.light-text { color:rgba(245,237,225,.95); }
+    .fl-empty-msg { text-align:center; max-width:300px; }
+    .fl-empty-msg h3 { font-family:'Noto Serif KR',serif; font-size:20px; font-weight:600; margin-bottom:10px; }
+    .fl-empty-msg p { font-size:14px; opacity:.6; line-height:1.7; }
+
+    .fl-result { width:100%; max-width:360px; display:none; flex-direction:column; align-items:center; gap:16px; }
+    .fl-result.visible { display:flex; }
+    .fl-swatch-row { display:flex; align-items:center; gap:12px; }
+    .fl-swatch { width:64px; height:64px; border-radius:12px; border:2px solid rgba(255,255,255,.15); box-shadow:0 4px 16px rgba(0,0,0,.25); flex-shrink:0; }
+    .fl-hex { font-size:13px; font-weight:600; font-family:'Noto Sans KR',monospace; opacity:.7; }
+    .fl-tags { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+    .fl-tag { padding:4px 10px; border-radius:999px; font-size:11px; font-weight:600; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.1); }
+    .fl-right.dark-text .fl-tag { background:rgba(0,0,0,.08); border-color:rgba(0,0,0,.1); }
+    .fl-diagnostic { font-size:14px; line-height:1.8; text-align:center; max-width:320px; font-family:'Noto Serif KR',serif; }
+    .fl-divider { width:60px; height:1px; background:currentColor; opacity:.2; }
+
+    /* CTA */
+    .fl-cta-area { display:flex; flex-direction:column; align-items:center; gap:8px; width:100%; max-width:320px; }
+    .fl-cta-order { display:none; width:100%; padding:14px; font-size:14px; font-weight:700; text-align:center; text-decoration:none; border-radius:12px; background:linear-gradient(135deg,#c8823f,#ddb56b); color:#21160f; border:none; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:transform .15s,box-shadow .15s; }
+    .fl-cta-order.visible { display:block; }
+    .fl-cta-order:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(192,122,61,.3); }
+    .fl-cta-small { display:none; font-size:12px; opacity:.6; text-decoration:underline; cursor:pointer; background:none; border:none; color:inherit; font-family:'Noto Sans KR',sans-serif; }
+    .fl-cta-small.visible { display:inline; }
+    .fl-secondary-btns { display:flex; gap:12px; }
+    .fl-secondary-btns button { background:none; border:1px solid rgba(255,255,255,.15); color:inherit; padding:8px 16px; border-radius:8px; font-size:12px; font-weight:600; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:background .15s; }
+    .fl-right.dark-text .fl-secondary-btns button { border-color:rgba(0,0,0,.15); }
+    .fl-secondary-btns button:hover { background:rgba(255,255,255,.1); }
+    .fl-right.dark-text .fl-secondary-btns button:hover { background:rgba(0,0,0,.06); }
+
+    /* History */
+    .fl-history { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; gap:6px; align-items:center; }
+    .fl-history-label { font-size:10px; opacity:.4; margin-right:4px; white-space:nowrap; }
+    .fl-history-chip { width:24px; height:24px; border-radius:6px; border:1px solid rgba(255,255,255,.12); cursor:pointer; transition:transform .15s; flex-shrink:0; }
+    .fl-history-chip:hover { transform:scale(1.2); }
+    .fl-right.dark-text .fl-history-chip { border-color:rgba(0,0,0,.12); }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width:900px){
+      .fl-lab { grid-template-columns:1fr; }
+      .fl-left { max-height:none; position:static; border-right:none; border-bottom:1px solid var(--fl-border); padding:24px 20px; }
+      .fl-right { min-height:420px; padding:28px 20px 60px; }
+      .fl-tier1 { grid-template-columns:repeat(3,1fr); gap:8px; }
+    }
+    @media(max-width:560px){
+      .fl-hero h1 { font-size:22px; }
+      .fl-tier1 { gap:6px; }
+      .fl-mat { padding:10px 8px; }
+      .fl-mat-name { font-size:11px; }
+      .fl-tier2 .fl-mat { min-width:60px; padding:8px 10px; }
+      .fl-slider-name { min-width:60px; font-size:11px; }
+      .fl-result { max-width:100%; }
+    }
+
+    /* ── TOAST ── */
+    .fl-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#333; color:#fff; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600; opacity:0; transition:all .3s ease; z-index:9999; pointer-events:none; }
+    .fl-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* Sticky mobile CTA */
+    .fl-sticky-cta { display:none; position:fixed; bottom:0; left:0; right:0; padding:12px 20px; background:linear-gradient(135deg,#c8823f,#ddb56b); z-index:100; text-align:center; }
+    .fl-sticky-cta a { color:#21160f; font-size:14px; font-weight:700; text-decoration:none; }
+    @media(max-width:900px){
+      .fl-sticky-cta.visible { display:block; }
+    }
+  </style>
+</head>
+<body class="fl-page">
+
+  <header class="site-header notranslate" translate="no" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-mark"><img src="assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span>
+        <span class="brand-name">PNS 팔롬비니</span>
+      </a>
+      <nav class="nav notranslate" translate="no" aria-label="주요 메뉴">
+        <div class="nav-item">
+          <a href="index.html#about">브랜드</a>
+          <div class="nav-dropdown">
+            <a href="index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> 기술력</a>
+            <a href="index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> 헤리티지</a>
+            <a href="index.html#reviews"><span class="nav-dropdown-icon">&#x2B50;</span> 고객 후기</a>
+            <a href="index.html#faq"><span class="nav-dropdown-icon">&#x2753;</span> FAQ</a>
+            <div class="nav-sub-group">
+              <a class="nav-sub-trigger"><span class="nav-dropdown-icon">&#x1F9EA;</span> PNS Lab <svg class="nav-sub-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 2 7 5 3 8"/></svg></a>
+              <div class="nav-sub-menu">
+                <a href="flavor-guide.html"><span class="nav-dropdown-icon">&#x1F3AF;</span> 드립백 취향 찾기</a>
+                <a href="flavor-lab.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> Flavor-Color Lab</a>
+                <a href="menu.html"><span class="nav-dropdown-icon">&#x2615;</span> 카페 메뉴</a>
+                <a href="game/"><span class="nav-dropdown-icon">&#x1F331;</span> 커피나무 키우기 <span class="nav-badge-small">BETA</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">제품</a>
+          <div class="nav-dropdown">
+            <a href="products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS &#xD314;&#xB86C;&#xBE44;&#xB2C8; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+            <a href="lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> &#xD611;&#xB825;&#xC0AC; &#xC0C1;&#xD488; &#xB77C;&#xC778;&#xC5C5;</a>
+          </div>
+        </div>
+        <a href="products/volcano-ruby.html" class="nav-volcano">&#x1F30B; 볼케이노 루비</a>
+        <div class="nav-item">
+          <a href="machines/">자동화 장비</a>
+          <div class="nav-dropdown">
+            <a href="machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="b2b-lineup.html">B2B</a><div class="nav-dropdown">
+            <a href="b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
+            <div class="nav-dropdown-label">드립백 B2B</div>
+            <a href="custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
+            <a href="b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
+            <div class="nav-dropdown-label">원두 생두 B2B</div>
+            <a href="b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 생두 원두 대량 주문</a>
+            <div class="nav-dropdown-label">봉투 필름지 B2B</div>
+            <a href="film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
+            <a href="b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기</a>
+          </div></div>
+        <div class="nav-item"><a href="contact.html">문의</a><div class="nav-dropdown">
+            <a href="contact.html"><span class="nav-dropdown-icon">💬</span> 일반 문의</a>
+            <a href="contact-drip.html"><span class="nav-dropdown-icon">☕</span> B2B 드립백 문의</a>
+            <a href="contact-bean.html"><span class="nav-dropdown-icon">🫘</span> B2B 생두 원두 문의</a>
+            <a href="#" style="opacity:.5"><span class="nav-dropdown-icon">📦</span> B2B 봉투 필름지 문의 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 5px;border-radius:4px;margin-left:3px;">준비중</span></a>
+          </div></div>
+        <a href="partners.html">고객·협력사</a>
+      </nav>
+      <div class="header-actions">
+        <div id="google_translate_element"></div>
+        <div class="lang-toggle" role="group" aria-label="언어 선택">
+          <button class="lang-btn active" data-gtlang="ko">KO</button>
+          <button class="lang-btn" data-gtlang="en">EN</button>
+          <button class="lang-btn" data-gtlang="zh-CN">中</button>
+        </div>
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="store-link" href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener" aria-label="네이버 스마트스토어" data-store-link>
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16"></path><path d="M6 9V7.8A2.8 2.8 0 0 1 8.8 5h6.4A2.8 2.8 0 0 1 18 7.8V9"></path><path d="M5.5 9h13l-.8 9.5a1.5 1.5 0 0 1-1.49 1.37H7.3a1.5 1.5 0 0 1-1.49-1.37L5.5 9Z"></path><path d="M9 13.5h6"></path><path d="M9 16.5h6"></path></svg>
+        </a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true">
+            <span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ── HERO ── -->
+    <section class="fl-hero">
+      <div class="container">
+        <p class="fl-hero-eyebrow">PNS Palombini · Flavor-Color Lab</p>
+        <h1>당신의 취향을<br/>색으로 디자인하세요</h1>
+        <p class="fl-hero-sub">원두와 블렌드를 자유롭게 조합하고, 그 맛을 색으로 만나보세요.</p>
+        <button class="fl-hero-random" onclick="randomBlend()">&#x2615; 오늘의 블렌드 뽑기</button>
+      </div>
+    </section>
+
+    <!-- ── LAB ── -->
+    <section class="fl-lab">
+      <!-- LEFT PANEL -->
+      <div class="fl-left">
+        <!-- Palombini Classic -->
+        <div class="fl-section-label">Palombini Classic</div>
+        <div class="fl-tier1" id="tier1"></div>
+
+        <!-- Volcano Ruby -->
+        <div class="fl-section-label">
+          Volcano Ruby
+          <span class="fl-toggle-arrow" onclick="toggleSection('tier2wrap',this)">&#x25BC;</span>
+        </div>
+        <div class="fl-collapsible" id="tier2wrap" style="max-height:200px;">
+          <div class="fl-tier2" id="tier2"></div>
+        </div>
+
+        <!-- Signature Blends -->
+        <div class="fl-section-label">
+          Signature Blends
+          <span class="fl-toggle-arrow" onclick="toggleSection('tier3wrap',this)">&#x25BC;</span>
+        </div>
+        <div class="fl-collapsible" id="tier3wrap" style="max-height:400px;">
+          <div class="fl-tier3" id="tier3"></div>
+        </div>
+
+        <!-- MY BLEND -->
+        <div class="fl-blend-section">
+          <div class="fl-blend-header">
+            <div class="fl-section-label" style="margin:0;">MY BLEND</div>
+            <div class="fl-blend-count" id="blendCount">0 / 5</div>
+          </div>
+          <div id="sliderArea"></div>
+          <div id="guideMsg"></div>
+          <div class="fl-quick" id="quickRatios"></div>
+          <div class="fl-actions">
+            <button class="fl-btn-reset" onclick="resetBlend()">&#x21bb; 초기화</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="fl-right light-text" id="resultPanel" style="background-color:#1a1410;">
+        <div class="fl-empty-msg" id="emptyMsg">
+          <h3>블렌드를 만들어보세요</h3>
+          <p>왼쪽에서 재료를 선택하거나,<br/>위의 "오늘의 블렌드 뽑기"를 눌러보세요.</p>
+        </div>
+        <div class="fl-result" id="resultContent">
+          <div class="fl-swatch-row">
+            <div class="fl-swatch" id="swatchChip"></div>
+            <span class="fl-hex" id="hexCode"></span>
+          </div>
+          <div class="fl-tags" id="flavorTags"></div>
+          <div class="fl-diagnostic" id="diagnostic"></div>
+          <div class="fl-divider"></div>
+          <div class="fl-cta-area">
+            <a class="fl-cta-order" id="ctaOrder" href="contact.html">&#x1F4E9; 이 블렌드로 주문 문의하기</a>
+            <button class="fl-cta-small" id="ctaSmall" onclick="goContact()">이 블렌드로 문의 &rarr;</button>
+            <div class="fl-secondary-btns">
+              <button onclick="shareBlend()">&#x1F517; 공유</button>
+              <button onclick="saveBlend()">&#x1F4BE; 저장</button>
+            </div>
+          </div>
+        </div>
+        <div class="fl-history" id="historyStrip"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-sitemap">
+        <div class="footer-col">
+          <h4>브랜드</h4>
+          <a href="index.html#about">회사 소개</a>
+          <a href="index.html#tech">기술력</a>
+          <a href="index.html#heritage">헤리티지</a>
+          <a href="index.html#reviews">고객 후기</a>
+          <a href="index.html#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>제품</h4>
+          <a href="products/">팔롬비니 상품 라인업</a>
+          <a href="lineup.html">협력사 상품 라인업</a>
+          <a href="products/volcano-ruby.html">볼케이노 루비</a>
+          <a href="machines/">패키징 머신 라인업</a>
+        </div>
+        <div class="footer-col">
+          <h4>B2B</h4>
+          <a href="b2b-lineup.html">B2B 상품 라인업</a>
+          <a href="custom-edition.html">드립백 맞춤 주문</a>
+          <a href="b2b.html">드립백 생산 현장</a>
+          <a href="b2b-bean.html">생두·원두 대량 주문</a>
+          <a href="film-custom.html">봉투 필름지 맞춤 주문</a>
+        </div>
+        <div class="footer-col">
+          <h4>고객지원</h4>
+          <a href="contact.html">문의하기</a>
+          <a href="privacy.html">개인정보처리방침</a>
+          <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">네이버 스마트스토어</a>
+          <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-biz">
+        <p><strong>상호명</strong> 피앤에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-2604-5567</p>
+        <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+        <p class="footer-sub">원두에서 패키지까지 · Caffè Palombini Heritage · Volcano Ruby · Custom Drip Bag · Packaging Machines</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="fl-sticky-cta" id="stickyCta">
+    <a href="contact.html" id="stickyCtaLink">&#x1F4E9; 이 블렌드로 주문 문의하기</a>
+  </div>
+  <div class="fl-toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   FLAVOR-COLOR LAB ENGINE
+   ═══════════════════════════════════════════ */
+
+// ── DATA ──
+const BEANS = {
+  'gran-bar':  {name:'Gran Bar',     group:'classic', color:[24,45,28], tag:'다크 코코아 · 묵직', flavor:{body:8,acidity:2,sweetness:4,bitterness:7,nutty:7,cocoa:8,fruity:2,smoky:5}, profile:'구운 견과와 다크 코코아의 묵직한 조화. 갓 구운 빵처럼 고소하고 진한 바디에, 클래식 이탈리안 바의 무게감이 살아 있습니다.'},
+  'dolce':     {name:'Dolce Italia', group:'classic', color:[35,50,54], tag:'바닐라 · 달콤',       flavor:{body:6,acidity:3,sweetness:8,bitterness:4,nutty:6,cocoa:6,fruity:3,smoky:2}, profile:'바닐라와 코코아가 만드는 부드러운 단맛의 세계. 우유 음료와 만나면 더욱 빛나는, 편안하고 크리미한 블렌드.'},
+  'roma':      {name:'Roma',         group:'classic', color:[22,38,57], tag:'클린 · 균형',         flavor:{body:5,acidity:5,sweetness:5,bitterness:4,nutty:4,cocoa:5,fruity:5,smoky:3}, profile:'100% 아라비카의 깨끗한 향미. 은은한 과일과 초콜릿이 균형 잡힌 중간 바디 위에 자리합니다.'},
+  'vr-ll':     {name:'VR Light',     group:'volcano', color:[22,30,52], tag:'밝은 · 베리',         flavor:{body:6,acidity:5,sweetness:6,bitterness:4,nutty:4,cocoa:5,fruity:6,smoky:3}, profile:'로부스타의 편견을 깨는 밝은 첫인상. 베리류의 산뜻한 리프트와 내추럴 프로세스의 은은한 단맛.'},
+  'vr-lm':     {name:'VR Med-Light', group:'volcano', color:[22,32,41], tag:'캐러멜 · 균형',       flavor:{body:7,acidity:4,sweetness:5,bitterness:5,nutty:4,cocoa:6,fruity:5,smoky:4}, profile:'밝은 과일 톤이 살아 있으면서 바디감이 올라옵니다. 캐러멜과 건포도의 달콤함 사이로 초콜릿이 스며드는 균형점.'},
+  'vr-m':      {name:'VR Medium',    group:'volcano', color:[20,35,32], tag:'다크초콜릿 · 묵직',   flavor:{body:8,acidity:3,sweetness:5,bitterness:6,nutty:4,cocoa:7,fruity:4,smoky:5}, profile:'다크 초콜릿과 내추럴 단맛의 정점. 묵직한 바디, 체리와 건과일의 깊은 톤, 부드러운 스모키 피니시.'},
+  'vr-mh':     {name:'VR Med-Dark',  group:'volcano', color:[14,42,23], tag:'스모키 · 풀바디',     flavor:{body:9,acidity:2,sweetness:4,bitterness:7,nutty:4,cocoa:8,fruity:3,smoky:7}, profile:'깊고 진한 초콜릿에 스파이스와 훈연이 강하게 올라옵니다. 풀 바디, 묵직한 입안 감촉, 긴 여운.'},
+  'vr-hh':     {name:'VR Dark',      group:'volcano', color:[10,40,16], tag:'강렬 · 원시적',       flavor:{body:10,acidity:1,sweetness:3,bitterness:8,nutty:3,cocoa:8,fruity:2,smoky:9}, profile:'강렬한 스모키 향과 다크 카카오. 최대 바디, 캐러멜화된 쓴맛, 원시적이고 깊은 피니시.'},
+};
+
+const SIGNATURES = {
+  'juniper':     {name:'Juniper',     recipe:{dolce:80,roma:20},                     tag:'달콤 · 크리미',     profile:'바닐라의 부드러운 단맛이 감싸고, 깨끗한 아라비카 톤이 끝을 맑게 정리해줍니다.'},
+  'miru':        {name:'Miru',        recipe:{'gran-bar':80,roma:20},                tag:'고소 · 묵직',       profile:'구운 견과와 다크 코코아의 묵직함 속에, 아라비카의 깨끗한 밝음이 스며듭니다.'},
+  'silverberry': {name:'Silverberry', recipe:{'gran-bar':50,dolce:50},               tag:'균형 · 고소달콤',   profile:'구운 고소함과 바닐라 단맛이 정확히 반반. 라떼에서 에스프레소까지 어울립니다.'},
+  'willow':      {name:'Willow',      recipe:{'gran-bar':50,roma:50},                tag:'단단 · 코코아',     profile:'다크 바의 묵직함과 아라비카의 깨끗함이 나란히. 고소한 코코아 바디 위에 은은한 과일.'},
+  'spruce':      {name:'Spruce',      recipe:{'gran-bar':60,dolce:20,roma:20},       tag:'고소 · 올라운더',   profile:'구운 견과와 코코아가 중심을 잡고, 바닐라와 맑은 아라비카 톤이 양 옆에서 받쳐줍니다.'},
+  'birch':       {name:'Birch',       recipe:{'gran-bar':20,dolce:60,roma:20},       tag:'달콤 · 부드러운',   profile:'바닐라와 코코아의 달콤한 부드러움이 주인공. 뒤쪽에서 구운 견과의 고소함이 깊이를 더합니다.'},
+  'poplar':      {name:'Poplar',      recipe:{'gran-bar':20,dolce:20,roma:60},       tag:'클린 · 데일리',     profile:'깨끗하고 균형 잡힌 아라비카 캐릭터가 전면에 서고, 고소함과 단맛이 배경에서 복잡성을 더합니다.'},
+  'magnolia':    {name:'Magnolia',    recipe:{'gran-bar':10,dolce:80,roma:10},       tag:'크리미 · 최달콤',   profile:'바닐라와 코코아의 달콤함이 거의 순수하게 펼쳐집니다. 가장 부드러운 우유 음료 파트너.'},
+  'tamarind':    {name:'Tamarind',    recipe:{'gran-bar':80,dolce:10,roma:10},       tag:'고소 · 정점',       profile:'구운 견과와 다크 코코아가 압도적 중심. 미세한 단맛과 깨끗함이 끝을 다듬습니다.'},
+  'zelkova':     {name:'Zelkova',     recipe:{'gran-bar':10,dolce:10,roma:80},       tag:'깨끗 · 가벼운',     profile:'100% 아라비카에 가장 가까운 깨끗한 프로필. 은은한 과일과 초콜릿, 가벼운 바디.'},
+  'jujube':      {name:'Jujube',      recipe:{dolce:50,roma:50},                     tag:'달콤 · 맑은',       profile:'바닐라 단맛과 깨끗한 아라비카가 정면에서 만납니다. 라이트하면서도 채워진 블렌드.'},
+  'sequoia':     {name:'Sequoia',     recipe:{'gran-bar':30,dolce:40,roma:30},       tag:'균형 · 트리플',     profile:'고소함, 달콤함, 깨끗함이 어느 하나 돌출되지 않는 부드러운 합주.'},
+};
+
+const BODY_DESC = [
+  [4,'가볍고 섬세한'],[6.5,'부드럽고 균형 잡힌'],[8,'묵직하고 풀 바디의'],[10,'강렬하고 압도적인']
+];
+const DOM_DESC = {
+  acidity:'맑은 산미가 입안에 밝음을 더합니다',
+  sweetness:'바닐라와 캐러멜의 달콤함이 부드럽게 퍼집니다',
+  bitterness:'깊은 쓴맛이 무게감을 만듭니다',
+  nutty:'구운 견과류의 고소함이 중심을 잡습니다',
+  cocoa:'다크 코코아가 풍성하게 감쌉니다',
+  fruity:'과일의 밝은 톤이 피어오릅니다',
+  smoky:'훈연 향이 깊게 존재감을 드러냅니다'
+};
+const SEC_DESC = {
+  acidity:'산미가 은은하게 받쳐주고',
+  sweetness:'단맛이 여운을 더하며',
+  bitterness:'쓴맛이 무게를 잡아주고',
+  nutty:'견과의 고소함이 배경에 깔리며',
+  cocoa:'코코아 향이 뒤를 감싸고',
+  fruity:'과일의 밝음이 곁들여지며',
+  smoky:'스모키한 기운이 스며들고'
+};
+const FINISH_MAP = {
+  'sweetness+fruity':'꿀과 과일의 따뜻한 여운이 남습니다',
+  'nutty+cocoa':'고소하고 깊은 초콜릿 피니시',
+  'bitterness+smoky':'강렬하고 긴 에스프레소 여운',
+  'sweetness+cocoa':'벨벳 같은 달콤한 마무리',
+  'fruity+acidity':'산뜻하고 깨끗한 마무리',
+  'cocoa+smoky':'다크 초콜릿과 훈연의 깊은 여운',
+  'nutty+sweetness':'고소하고 달콤한 따뜻한 마무리',
+  'cocoa+bitterness':'진한 카카오의 긴 여운'
+};
+
+const QUICK_MAP = {
+  2:[[50,50],[70,30],[80,20]],
+  3:[[60,20,20],[50,30,20],[40,30,30]],
+  4:[[40,30,20,10],[25,25,25,25],[50,20,20,10]],
+  5:[[30,25,20,15,10],[20,20,20,20,20]]
+};
+
+// ── ENGINE ──
+function resolveToAtoms(blend) {
+  const atoms = {};
+  for (const {id, pct} of blend) {
+    if (BEANS[id]) {
+      atoms[id] = (atoms[id]||0) + pct;
+    } else if (SIGNATURES[id]) {
+      for (const [bean, ratio] of Object.entries(SIGNATURES[id].recipe)) {
+        atoms[bean] = (atoms[bean]||0) + pct * ratio / 100;
+      }
+    }
+  }
+  return atoms;
+}
+
+function calcFlavor(atoms) {
+  const r = {body:0,acidity:0,sweetness:0,bitterness:0,nutty:0,cocoa:0,fruity:0,smoky:0};
+  for (const [bean, pct] of Object.entries(atoms)) {
+    const f = BEANS[bean].flavor;
+    for (const k of Object.keys(r)) r[k] += f[k] * pct / 100;
+  }
+  return r;
+}
+
+function calcColor(atoms) {
+  let h=0,s=0,l=0;
+  for (const [bean, pct] of Object.entries(atoms)) {
+    const [bh,bs,bl] = BEANS[bean].color;
+    h += bh*pct/100; s += bs*pct/100; l += bl*pct/100;
+  }
+  return {h:Math.round(h),s:Math.round(s),l:Math.round(l)};
+}
+
+function hslToHex(h,s,l) {
+  s/=100; l/=100;
+  const a=s*Math.min(l,1-l);
+  const f=n=>{const k=(n+h/30)%12; return Math.round(255*(l-a*Math.max(Math.min(k-3,9-k,1),-1))); };
+  return '#'+[f(0),f(8),f(4)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+
+function generateDiagnostic(fl) {
+  let bodyClass = '부드럽고 균형 잡힌';
+  for (const [threshold, label] of BODY_DESC) {
+    if (fl.body <= threshold) { bodyClass = label; break; }
+  }
+  const axes = Object.keys(fl).filter(k=>k!=='body');
+  const sorted = axes.sort((a,b)=>fl[b]-fl[a]);
+  const dom = sorted[0], sec = sorted[1];
+  const domText = DOM_DESC[dom] || '';
+  const secText = SEC_DESC[sec] || '';
+  const fKey1 = dom+'+'+sec, fKey2 = sec+'+'+dom;
+  const finish = FINISH_MAP[fKey1] || FINISH_MAP[fKey2] || '부드럽게 사라지는 여운이 남습니다';
+  return bodyClass+' 바디. '+domText+'. '+secText+' '+finish+'.';
+}
+
+function generateTags(fl) {
+  const tags = [];
+  if (fl.body <= 4) tags.push('라이트 바디');
+  else if (fl.body <= 6.5) tags.push('미디엄 바디');
+  else if (fl.body <= 8) tags.push('풀 바디');
+  else tags.push('최강 바디');
+  const map = {acidity:'밝은 산미',sweetness:'달콤한',bitterness:'진한 쓴맛',nutty:'견과',cocoa:'초콜릿',fruity:'과일향',smoky:'스모키'};
+  for (const [k,label] of Object.entries(map)) {
+    if (fl[k] >= 6.5) tags.push(label);
+  }
+  return tags;
+}
+
+// ── STATE ──
+let blend = []; // [{id, pct}]
+let history = []; // [{h,s,l}]
+const MAX_MIX = 5;
+
+// ── DOM ──
+const $tier1 = document.getElementById('tier1');
+const $tier2 = document.getElementById('tier2');
+const $tier3 = document.getElementById('tier3');
+const $sliderArea = document.getElementById('sliderArea');
+const $blendCount = document.getElementById('blendCount');
+const $resultPanel = document.getElementById('resultPanel');
+const $emptyMsg = document.getElementById('emptyMsg');
+const $resultContent = document.getElementById('resultContent');
+const $swatchChip = document.getElementById('swatchChip');
+const $hexCode = document.getElementById('hexCode');
+const $flavorTags = document.getElementById('flavorTags');
+const $diagnostic = document.getElementById('diagnostic');
+const $ctaOrder = document.getElementById('ctaOrder');
+const $ctaSmall = document.getElementById('ctaSmall');
+const $historyStrip = document.getElementById('historyStrip');
+const $quickRatios = document.getElementById('quickRatios');
+const $guideMsg = document.getElementById('guideMsg');
+const $stickyCta = document.getElementById('stickyCta');
+const $stickyCtaLink = document.getElementById('stickyCtaLink');
+
+// ── INIT MATERIALS ──
+function initMaterials() {
+  for (const [id, bean] of Object.entries(BEANS)) {
+    const el = document.createElement('div');
+    el.className = 'fl-mat';
+    el.dataset.id = id;
+    el.innerHTML = '<div class="fl-mat-name">'+bean.name+'</div><div class="fl-mat-tag">'+bean.tag+'</div>';
+    el.title = bean.profile;
+    el.onclick = () => toggleMaterial(id);
+    if (bean.group === 'classic') $tier1.appendChild(el);
+    else if (bean.group === 'volcano') $tier2.appendChild(el);
+  }
+  for (const [id, sig] of Object.entries(SIGNATURES)) {
+    const el = document.createElement('div');
+    el.className = 'fl-mat';
+    el.dataset.id = id;
+    el.innerHTML = '<div class="fl-mat-name">'+sig.name+'</div><div class="fl-mat-tag">'+sig.tag+'</div>';
+    el.title = sig.profile;
+    el.onclick = () => toggleMaterial(id);
+    $tier3.appendChild(el);
+  }
+}
+
+// ── TOGGLE MATERIAL ──
+function toggleMaterial(id) {
+  const idx = blend.findIndex(b => b.id === id);
+  if (idx >= 0) {
+    removeMaterial(idx);
+  } else {
+    addMaterial(id);
+  }
+}
+
+function addMaterial(id) {
+  if (blend.length >= MAX_MIX) return;
+  if (blend.find(b => b.id === id)) return;
+  blend.push({id, pct: 0});
+  redistributeEqual();
+  pushHistory();
+  render();
+}
+
+function removeMaterial(idx) {
+  blend.splice(idx, 1);
+  if (blend.length > 0) redistributeEqual();
+  pushHistory();
+  render();
+}
+
+function redistributeEqual() {
+  const n = blend.length;
+  if (n === 0) return;
+  const base = Math.floor(100 / n / 5) * 5;
+  let rem = 100 - base * n;
+  blend.forEach((b,i) => {
+    b.pct = base;
+    if (rem >= 5) { b.pct += 5; rem -= 5; }
+  });
+}
+
+// ── SLIDER CHANGE ──
+function setSlider(idx, rawVal) {
+  const n = blend.length;
+  let val = Math.round(rawVal / 5) * 5;
+  val = Math.max(5, Math.min(val, 100 - (n-1)*5));
+  const oldVal = blend[idx].pct;
+  if (val === oldVal) return;
+
+  blend[idx].pct = val;
+  const remaining = 100 - val;
+  const others = [];
+  let otherSum = 0;
+  for (let i=0;i<n;i++) { if (i!==idx) { others.push(i); otherSum += blend[i].pct; } }
+
+  if (others.length === 0) return render();
+
+  let allocated = 0;
+  for (let j=0; j<others.length; j++) {
+    const oi = others[j];
+    if (j === others.length - 1) {
+      blend[oi].pct = remaining - allocated;
+    } else {
+      const ratio = otherSum > 0 ? blend[oi].pct / otherSum : 1/others.length;
+      blend[oi].pct = Math.max(5, Math.round(ratio * remaining / 5) * 5);
+      allocated += blend[oi].pct;
+    }
+  }
+  // Fix last if < 5
+  const lastOi = others[others.length-1];
+  if (blend[lastOi].pct < 5) {
+    const deficit = 5 - blend[lastOi].pct;
+    blend[lastOi].pct = 5;
+    for (let j=others.length-2; j>=0; j--) {
+      if (blend[others[j]].pct > 5) {
+        blend[others[j]].pct -= deficit;
+        break;
+      }
+    }
+  }
+  pushHistory();
+  render();
+}
+
+// ── QUICK RATIOS ──
+function applyQuick(ratios) {
+  ratios.forEach((r,i) => { if (blend[i]) blend[i].pct = r; });
+  pushHistory();
+  render();
+}
+
+// ── RANDOM ──
+function randomBlend() {
+  blend = [];
+  const allIds = [...Object.keys(BEANS), ...Object.keys(SIGNATURES)];
+  const count = 2 + Math.floor(Math.random()*3); // 2~4
+  const groups = {classic:0, volcano:0, signature:0};
+  const shuffled = allIds.sort(() => Math.random()-.5);
+
+  for (const id of shuffled) {
+    if (blend.length >= count) break;
+    const g = BEANS[id] ? BEANS[id].group : 'signature';
+    if (groups[g] >= 2) continue;
+    blend.push({id, pct:0});
+    groups[g]++;
+  }
+  redistributeEqual();
+  pushHistory();
+  render();
+  // Scroll to lab on mobile
+  document.querySelector('.fl-lab').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── RESET ──
+function resetBlend() {
+  blend = [];
+  render();
+}
+
+// ── HISTORY ──
+function pushHistory() {
+  if (blend.length === 0) return;
+  const atoms = resolveToAtoms(blend);
+  const c = calcColor(atoms);
+  history.push(c);
+  if (history.length > 8) history.shift();
+}
+
+function restoreHistory(idx) {
+  // History doesn't store blend state, just color
+  // We could store full blend, but for MVP just show toast
+  showToast('히스토리에서 색상만 확인할 수 있습니다');
+}
+
+// ── RENDER ──
+function render() {
+  const n = blend.length;
+  const activeIds = new Set(blend.map(b=>b.id));
+
+  // Update material cards
+  document.querySelectorAll('.fl-mat').forEach(el => {
+    const id = el.dataset.id;
+    el.classList.toggle('active', activeIds.has(id));
+    el.classList.toggle('disabled', n >= MAX_MIX && !activeIds.has(id));
+  });
+
+  // Blend count
+  $blendCount.textContent = n + ' / ' + MAX_MIX;
+
+  // Sliders
+  if (n === 0) {
+    $sliderArea.innerHTML = '<div class="fl-blend-empty">재료를 선택하면 여기에 슬라이더가 나타납니다</div>';
+    $quickRatios.innerHTML = '';
+    $guideMsg.innerHTML = '';
+  } else {
+    let html = '';
+    blend.forEach((b,i) => {
+      const info = BEANS[b.id] || SIGNATURES[b.id];
+      const cls = i === 4 ? ' slot5' : '';
+      html += '<div class="fl-slider-row'+cls+'">';
+      html += '<span class="fl-slider-name">'+info.name+'</span>';
+      html += '<input type="range" class="fl-slider-input" min="5" max="'+(100-(n-1)*5)+'" step="5" value="'+b.pct+'" oninput="setSlider('+i+',this.value)">';
+      html += '<span class="fl-slider-pct">'+b.pct+'%</span>';
+      html += '<button class="fl-slider-remove" onclick="removeMaterial('+i+')">&times;</button>';
+      html += '</div>';
+    });
+    $sliderArea.innerHTML = html;
+
+    // Guide for 5th item
+    if (n === 5) {
+      $guideMsg.innerHTML = '<div class="fl-guide5">5개 혼합은 맛이 중간으로 수렴할 수 있습니다</div>';
+    } else {
+      $guideMsg.innerHTML = '';
+    }
+
+    // Quick ratios
+    const qr = QUICK_MAP[n];
+    if (qr) {
+      $quickRatios.innerHTML = qr.map(r =>
+        '<button onclick="applyQuick(['+r.join(',')+'])">'+r.join('/')+'</button>'
+      ).join('');
+    } else {
+      $quickRatios.innerHTML = '';
+    }
+  }
+
+  // Result panel
+  if (n === 0) {
+    $emptyMsg.style.display = '';
+    $resultContent.classList.remove('visible');
+    $resultPanel.style.backgroundColor = '#1a1410';
+    $resultPanel.classList.remove('dark-text');
+    $resultPanel.classList.add('light-text');
+    $ctaOrder.classList.remove('visible');
+    $ctaSmall.classList.remove('visible');
+    $stickyCta.classList.remove('visible');
+    renderHistory();
+    return;
+  }
+
+  $emptyMsg.style.display = 'none';
+  $resultContent.classList.add('visible');
+
+  const atoms = resolveToAtoms(blend);
+  const fl = calcFlavor(atoms);
+  const col = calcColor(atoms);
+  const hex = hslToHex(col.h, col.s, col.l);
+
+  // Color field background
+  $resultPanel.style.backgroundColor = 'hsl('+col.h+','+col.s+'%,'+col.l+'%)';
+
+  // Text contrast
+  if (col.l <= 45) {
+    $resultPanel.classList.remove('dark-text');
+    $resultPanel.classList.add('light-text');
+  } else {
+    $resultPanel.classList.remove('light-text');
+    $resultPanel.classList.add('dark-text');
+  }
+
+  // Swatch
+  $swatchChip.style.backgroundColor = hex;
+  $hexCode.textContent = hex.toUpperCase();
+
+  // Tags
+  const tags = generateTags(fl);
+  $flavorTags.innerHTML = tags.map(t => '<span class="fl-tag">'+t+'</span>').join('');
+
+  // Diagnostic text
+  $diagnostic.textContent = generateDiagnostic(fl);
+
+  // CTA
+  const contactUrl = buildContactUrl();
+  if (n >= 3) {
+    $ctaOrder.classList.add('visible');
+    $ctaSmall.classList.remove('visible');
+    $ctaOrder.href = contactUrl;
+    $stickyCta.classList.add('visible');
+    $stickyCtaLink.href = contactUrl;
+  } else {
+    $ctaOrder.classList.remove('visible');
+    $ctaSmall.classList.add('visible');
+    $stickyCta.classList.remove('visible');
+  }
+
+  renderHistory();
+}
+
+function renderHistory() {
+  if (history.length === 0) {
+    $historyStrip.innerHTML = '';
+    return;
+  }
+  let html = '<span class="fl-history-label">히스토리</span>';
+  history.forEach((c,i) => {
+    html += '<div class="fl-history-chip" style="background:hsl('+c.h+','+c.s+'%,'+c.l+'%)" title="이전 블렌드 #'+(i+1)+'"></div>';
+  });
+  $historyStrip.innerHTML = html;
+}
+
+// ── URL HANDLING ──
+function buildBlendParam() {
+  return blend.map(b => b.id+':'+b.pct).join(',');
+}
+
+function buildContactUrl() {
+  return 'contact.html?from=lab&b=' + encodeURIComponent(buildBlendParam());
+}
+
+function goContact() {
+  window.location.href = buildContactUrl();
+}
+
+function shareBlend() {
+  const url = window.location.origin + window.location.pathname + '?b=' + encodeURIComponent(buildBlendParam());
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('블렌드 URL이 복사되었습니다'));
+  } else {
+    prompt('아래 URL을 복사하세요:', url);
+  }
+}
+
+function saveBlend() {
+  shareBlend(); // MVP: same as share
+}
+
+function loadFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const b = params.get('b');
+  if (!b) return;
+  try {
+    const items = b.split(',').map(s => {
+      const [id, pct] = s.split(':');
+      return {id: id.trim(), pct: parseInt(pct)};
+    }).filter(item => (BEANS[item.id] || SIGNATURES[item.id]) && item.pct > 0);
+    if (items.length > 0) {
+      blend = items.slice(0, MAX_MIX);
+      // Verify total = 100
+      const total = blend.reduce((s,b)=>s+b.pct, 0);
+      if (total !== 100) redistributeEqual();
+    }
+  } catch(e) { /* ignore bad params */ }
+}
+
+// ── TOGGLE SECTIONS ──
+function toggleSection(id, arrow) {
+  const el = document.getElementById(id);
+  el.classList.toggle('collapsed');
+  arrow.classList.toggle('collapsed');
+}
+
+// ── TOAST ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── BOOT ──
+initMaterials();
+loadFromUrl();
+render();
+</script>
+
+  <script src="assets/js/main.js"></script>
+  <script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage:'ko',
+      includedLanguages:'en,zh-CN,zh-TW,ja,vi',
+      autoDisplay:false
+    },'google_translate_element');
+  }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

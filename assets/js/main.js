@@ -270,6 +270,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}index.html#faq`, label: 'FAQ' },
         { type: 'subgroup', label: '🧪 PNS Lab', items: [
           { href: `${prefix}flavor-guide.html`, label: '드립백 취향 찾기' },
+          { href: `${prefix}flavor-lab.html`, label: '🎨 Flavor-Color Lab' },
           { href: `${prefix}menu.html`, label: '카페 메뉴' },
           { href: `${prefix}game/`, label: '커피나무 키우기', badge: 'BETA' },
         ]},
