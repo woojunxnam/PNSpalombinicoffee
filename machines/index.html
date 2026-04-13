@@ -440,8 +440,7 @@
         <h2 class="machines-category-title" style="margin-bottom:20px;">머신 작동 영상 <span>Machine Demos</span></h2>
         <div class="videos-grid">
           <div class="video-card">
-            <video muted loop playsinline preload="auto">
-              <source src="../assets/video/machine-fm100.mp4" type="video/mp4"/>
+            <video muted loop playsinline preload="none" data-src="../assets/video/machine-fm100.mp4">
             </video>
             <div class="video-card-body">
               <p class="video-num">01 — 드립백 자동 포장 라인</p>
@@ -452,8 +451,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video muted loop playsinline preload="auto">
-              <source src="../assets/video/machine-fm200.mp4" type="video/mp4"/>
+            <video muted loop playsinline preload="none" data-src="../assets/video/machine-fm200.mp4">
             </video>
             <div class="video-card-body">
               <p class="video-num">02 — 프리메이드 파우치 자동 충진</p>
@@ -464,8 +462,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video muted loop playsinline preload="auto">
-              <source src="../assets/video/machine-fg60.mp4" type="video/mp4"/>
+            <video muted loop playsinline preload="none" data-src="../assets/video/machine-fg60.mp4">
             </video>
             <div class="video-card-body">
               <p class="video-num">03 — FG-60 드립백 패키징 머신</p>
@@ -476,8 +473,7 @@
             </div>
           </div>
           <div class="video-card">
-            <video muted loop playsinline preload="auto">
-              <source src="../assets/video/machine-fg70.mp4" type="video/mp4"/>
+            <video muted loop playsinline preload="none" data-src="../assets/video/machine-fg70.mp4">
             </video>
             <div class="video-card-body">
               <p class="video-num">04 — FG-70 드립백 패키징 머신</p>
@@ -946,17 +942,29 @@
   </script>
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script>
-  /* 비디오: 화면에 보일 때만 재생 (동시 autoplay 제한 우회) */
+  /* 비디오: 화면에 보일 때만 로드+재생, 벗어나면 완전 언로드
+     저사양 기기(Galaxy A3 등)의 하드웨어 디코더 제한 우회 */
   (function(){
-    const videos = document.querySelectorAll('.video-card video');
+    var videos = document.querySelectorAll('.video-card video[data-src]');
     if (!videos.length) return;
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.play().catch(() => {}); }
-        else { e.target.pause(); }
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        var v = e.target;
+        if (e.isIntersecting) {
+          if (!v.getAttribute('src') && v.dataset.src) {
+            v.src = v.dataset.src;
+          }
+          v.play().catch(function(){});
+        } else {
+          v.pause();
+          if (v.getAttribute('src')) {
+            v.removeAttribute('src');
+            v.load();
+          }
+        }
       });
-    }, { threshold: 0.25 });
-    videos.forEach(v => io.observe(v));
+    }, { threshold: 0.15 });
+    videos.forEach(function(v) { io.observe(v); });
   })();
   </script>
 </body>
