@@ -135,7 +135,7 @@ a:hover .nav-hover-wrap .nav-hover-en {
   inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  opacity: 0.38;
+  opacity: 0.72;
   pointer-events: none;
 }
 .hero-overlay{
@@ -143,9 +143,9 @@ a:hover .nav-hover-wrap .nav-hover-en {
   inset: 0;
   background: linear-gradient(
     160deg,
-    rgba(13,10,7,.18) 0%,
-    rgba(20,14,8,.28) 50%,
-    rgba(10,8,6,.42) 100%
+    rgba(13,10,7,.08) 0%,
+    rgba(20,14,8,.14) 50%,
+    rgba(10,8,6,.22) 100%
   );
 }
 .hero-inner{
@@ -173,6 +173,7 @@ a:hover .nav-hover-wrap .nav-hover-en {
   color: #fff;
   font-size: clamp(32px, 4.2vw, 52px);
   line-height: 1.12;
+  text-shadow: 0 2px 12px rgba(0,0,0,.5), 0 1px 3px rgba(0,0,0,.3);
 }
 .hero-title--large{
   font-size: clamp(36px, 5.5vw, 72px);
@@ -181,7 +182,8 @@ a:hover .nav-hover-wrap .nav-hover-en {
   letter-spacing: -0.02em;
   margin: 0 0 40px;
 }
-.hero-sub{ color: rgba(255,255,255,.65); font-size: 16px; margin: 0 0 24px; max-width: 56ch; line-height: 1.75; }
+.hero-sub{ color: rgba(255,255,255,.65); font-size: 16px; margin: 0 0 24px; max-width: 56ch; line-height: 1.75; text-shadow: 0 1px 6px rgba(0,0,0,.4); }
+.eyebrow, .hero-cta .btn-hero-primary, .hero-cta .btn-hero-ghost { text-shadow: 0 1px 4px rgba(0,0,0,.3); }
 .hero-cta{ display:flex; flex-wrap:wrap; gap:12px; margin-bottom: 40px; }
 
 /* Hero buttons */
