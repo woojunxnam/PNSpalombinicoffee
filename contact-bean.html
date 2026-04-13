@@ -295,67 +295,29 @@
         <div class="cb-steps">
           <div class="cb-step active" data-step="0">
             <span class="cb-step-num">1</span>
-            <span>준비 사항</span>
+            <span>원두 · 포장</span>
           </div>
           <div class="cb-step-line"></div>
           <div class="cb-step" data-step="1">
             <span class="cb-step-num">2</span>
-            <span>기본 정보</span>
+            <span>주문 상세</span>
           </div>
           <div class="cb-step-line"></div>
           <div class="cb-step" data-step="2">
             <span class="cb-step-num">3</span>
-            <span>원두 · 포장</span>
+            <span>기본 정보</span>
           </div>
           <div class="cb-step-line"></div>
           <div class="cb-step" data-step="3">
             <span class="cb-step-num">4</span>
-            <span>주문 상세</span>
-          </div>
-          <div class="cb-step-line"></div>
-          <div class="cb-step" data-step="4">
-            <span class="cb-step-num">5</span>
             <span>미리보기</span>
           </div>
         </div>
 
         <form id="beanForm" class="cb-form-wrap" novalidate>
 
-          <!-- ═══ STEP 0: 준비 사항 ═══ -->
-          <div class="cb-panel active" id="panel0">
-            <h2 class="cb-form-title">문의 전 준비 사항</h2>
-            <p class="cb-form-subtitle">아래 정보를 미리 준비하시면 빠르게 견적을 받으실 수 있습니다.</p>
-            <div style="display:flex;flex-direction:column;gap:14px;margin:24px 0 32px;">
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">👤</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">기본 정보 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 2)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">이름 · 전화번호 · 업체명 · 이메일 주소</div>
-                </div>
-              </div>
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">🫘</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">원두 · 포장 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 3)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">생두/원두 종류 · 원두 블렌드 선택 · 포장 디자인 보유 여부 (AI·PSD·PDF·JPG·PNG)</div>
-                </div>
-              </div>
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">📦</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">주문 상세 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 4)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">주문 수량 · 포장 규격 · 납품 방법 · 희망 납품 날짜</div>
-                </div>
-              </div>
-            </div>
-            <div class="cb-actions">
-              <span></span>
-              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(1)">시작하기 →</button>
-            </div>
-          </div>
-
           <!-- ═══ STEP 1: 기본 정보 ═══ -->
-          <div class="cb-panel" id="panel1">
+          <div class="cb-panel" id="panel2">
             <h2 class="cb-form-title">기본 정보</h2>
             <p class="cb-form-subtitle">문의하시는 분의 연락처를 입력해 주세요.</p>
 
@@ -387,8 +349,8 @@
             </div>
           </div>
 
-          <!-- ═══ STEP 2: 원두 · 포장 ═══ -->
-          <div class="cb-panel" id="panel2">
+          <!-- ═══ STEP 1: 원두 · 포장 ═══ -->
+          <div class="cb-panel active" id="panel0">
             <h2 class="cb-form-title">원두 · 포장 선택</h2>
             <p class="cb-form-subtitle">생두/원두 종류와 포장 옵션을 선택해 주세요.</p>
 
@@ -538,13 +500,13 @@
 
             <div class="cb-error-msg" id="step2_error"></div>
             <div class="cb-actions">
-              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(1)">← 이전</button>
-              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(3)">다음 단계 →</button>
+              <span></span>
+              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(1)">다음 단계 →</button>
             </div>
           </div>
 
-          <!-- ═══ STEP 3: 주문 상세 ═══ -->
-          <div class="cb-panel" id="panel3">
+          <!-- ═══ STEP 2: 주문 상세 ═══ -->
+          <div class="cb-panel" id="panel1">
             <h2 class="cb-form-title">주문 상세</h2>
             <p class="cb-form-subtitle">포장 무게, 수량, 봉지 타입을 선택해 주세요.</p>
 
@@ -619,13 +581,13 @@
 
             <div class="cb-error-msg" id="step3_error"></div>
             <div class="cb-actions">
-              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(2)">← 이전</button>
-              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(4)">미리보기 →</button>
+              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(0)">← 이전</button>
+              <button type="button" class="cb-btn cb-btn-next" onclick="goStep(2)">다음 단계 →</button>
             </div>
           </div>
 
-          <!-- ═══ STEP 4: 미리보기 ═══ -->
-          <div class="cb-panel" id="panel4">
+          <!-- ═══ STEP 3: 기본 정보 ═══ -->
+          <div class="cb-panel" id="panel3">
             <h2 class="cb-form-title">작성 문의 미리보기</h2>
             <p class="cb-form-subtitle">입력하신 내용을 확인한 후 견적을 요청해 주세요.</p>
 
@@ -640,7 +602,7 @@
             </div>
 
             <div class="cb-actions">
-              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(3)">← 이전</button>
+              <button type="button" class="cb-btn cb-btn-prev" onclick="goStep(2)">← 이전</button>
               <button type="submit" class="cb-btn cb-btn-submit" id="beanSubmitBtn">📩 견적 요청하기</button>
             </div>
 
@@ -725,7 +687,29 @@
     var currentStep = 0;
     function goStep(n) {
       if (n > currentStep) {
+        if (currentStep === 0) {
+          var missing2 = [];
+          if (!document.querySelector('input[name="b_bean_type"]:checked')) missing2.push('생두/원두 선택');
+          if (!document.querySelector('input[name="b_coffee"]:checked')) missing2.push('원두 블렌드');
+          if (!document.querySelector('input[name="b_has_design"]:checked')) missing2.push('포장 디자인 보유 여부');
+          if (missing2.length) {
+            showErr('step2_error', '다음 필수 항목을 선택해 주세요: ' + missing2.join(', '));
+            return;
+          }
+          hideErr('step2_error');
+        }
         if (currentStep === 1) {
+          var missing3 = [];
+          if (!document.querySelector('input[name="b_weight"]:checked')) missing3.push('포장 무게');
+          if (!document.querySelector('input[name="b_qty"]:checked')) missing3.push('주문 수량');
+          if (!document.querySelector('input[name="b_bag_type"]:checked')) missing3.push('봉지 타입');
+          if (missing3.length) {
+            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
+            return;
+          }
+          hideErr('step3_error');
+        }
+        if (currentStep === 2) {
           var missing = [];
           var fields = [
             {id:'b_name', label:'이름'},
@@ -750,28 +734,6 @@
             return;
           }
           hideErr('step1_error');
-        }
-        if (currentStep === 2) {
-          var missing2 = [];
-          if (!document.querySelector('input[name="b_bean_type"]:checked')) missing2.push('생두/원두 선택');
-          if (!document.querySelector('input[name="b_coffee"]:checked')) missing2.push('원두 블렌드');
-          if (!document.querySelector('input[name="b_has_design"]:checked')) missing2.push('포장 디자인 보유 여부');
-          if (missing2.length) {
-            showErr('step2_error', '다음 필수 항목을 선택해 주세요: ' + missing2.join(', '));
-            return;
-          }
-          hideErr('step2_error');
-        }
-        if (currentStep === 3) {
-          var missing3 = [];
-          if (!document.querySelector('input[name="b_weight"]:checked')) missing3.push('포장 무게');
-          if (!document.querySelector('input[name="b_qty"]:checked')) missing3.push('주문 수량');
-          if (!document.querySelector('input[name="b_bag_type"]:checked')) missing3.push('봉지 타입');
-          if (missing3.length) {
-            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
-            return;
-          }
-          hideErr('step3_error');
           buildPreview();
         }
       }
@@ -785,7 +747,7 @@
         else if (sn < n) s.classList.add('done');
       });
       document.querySelectorAll('.cb-step-line').forEach(function(l, i) {
-        l.classList.toggle('active', i < n - 1);
+        l.classList.toggle('active', i < n);
       });
       window.scrollTo({top: document.querySelector('.cb-steps').offsetTop - 100, behavior:'smooth'});
     }
@@ -918,7 +880,7 @@
         formDirty = false;
         this.reset();
         uploadedFiles = []; renderFileList();
-        goStep(1);
+        goStep(0);
       } catch(err) {
         status.className = 'cb-status error';
         status.textContent = '❌ 전송 중 오류가 발생했습니다. 이메일(skdngus77@naver.com)로 직접 문의해 주세요.';

@@ -323,67 +323,29 @@
         <div class="cd-steps">
           <div class="cd-step active" data-step="0">
             <span class="cd-step-num">1</span>
-            <span>준비 사항</span>
+            <span>디자인</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="1">
             <span class="cd-step-num">2</span>
-            <span>기본 정보</span>
+            <span>제품 사양</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="2">
             <span class="cd-step-num">3</span>
-            <span>디자인</span>
+            <span>기본 정보</span>
           </div>
           <div class="cd-step-line"></div>
           <div class="cd-step" data-step="3">
             <span class="cd-step-num">4</span>
-            <span>제품 사양</span>
-          </div>
-          <div class="cd-step-line"></div>
-          <div class="cd-step" data-step="4">
-            <span class="cd-step-num">5</span>
             <span>미리보기</span>
           </div>
         </div>
 
         <form id="dripForm" class="cd-form-wrap" novalidate>
 
-          <!-- ═══ STEP 0: 준비 사항 ═══ -->
-          <div class="cd-panel active" id="panel0">
-            <h2 class="cd-form-title">문의 전 준비 사항</h2>
-            <p class="cd-form-subtitle">아래 정보를 미리 준비하시면 빠르게 견적을 받으실 수 있습니다.</p>
-            <div style="display:flex;flex-direction:column;gap:14px;margin:24px 0 32px;">
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">👤</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">기본 정보 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 2)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">이름 · 전화번호 · 업체명 · 이메일 주소</div>
-                </div>
-              </div>
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">🎨</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">디자인 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 3)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">디자인 파일 보유 여부 (AI·PSD·PDF·JPG·PNG, 최대 10MB)<br/>디자인이 없으면 원하는 느낌·색상·텍스트 설명 준비</div>
-                </div>
-              </div>
-              <div style="display:flex;gap:14px;align-items:flex-start;background:var(--bg2,#f5f0eb);border-radius:12px;padding:16px 18px;">
-                <span style="font-size:22px;flex-shrink:0;">☕</span>
-                <div>
-                  <div style="font-size:14px;font-weight:700;color:var(--accent2);margin-bottom:4px;">제품 사양 <span style="font-size:12px;font-weight:400;color:var(--muted);">(Step 4)</span></div>
-                  <div style="font-size:13px;color:var(--muted);line-height:1.6;">원두 종류 · 제작 수량 · 드립백 규격 · 필름지 색상 · 포장 방법</div>
-                </div>
-              </div>
-            </div>
-            <div class="cd-actions">
-              <span></span>
-              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(1)">시작하기 →</button>
-            </div>
-          </div>
-
           <!-- ═══ STEP 1: 기본 정보 ═══ -->
-          <div class="cd-panel" id="panel1">
+          <div class="cd-panel" id="panel2">
             <h2 class="cd-form-title">기본 정보</h2>
             <p class="cd-form-subtitle">문의하시는 분의 연락처를 입력해 주세요.</p>
 
@@ -415,8 +377,8 @@
             </div>
           </div>
 
-          <!-- ═══ STEP 2: 디자인 ═══ -->
-          <div class="cd-panel" id="panel2">
+          <!-- ═══ STEP 1: 디자인 ═══ -->
+          <div class="cd-panel active" id="panel0">
             <h2 class="cd-form-title">디자인 선택</h2>
             <p class="cd-form-subtitle">드립백 패키지에 인쇄할 디자인을 알려주세요.</p>
 
@@ -485,13 +447,13 @@
 
             <div class="cd-error-msg" id="step2_error"></div>
             <div class="cd-actions">
-              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(1)">← 이전</button>
-              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(3)">다음 단계 →</button>
+              <span></span>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(1)">다음 단계 →</button>
             </div>
           </div>
 
-          <!-- ═══ STEP 3: 제품 사양 ═══ -->
-          <div class="cd-panel" id="panel3">
+          <!-- ═══ STEP 2: 제품 사양 ═══ -->
+          <div class="cd-panel" id="panel1">
             <h2 class="cd-form-title">제품 사양</h2>
             <p class="cd-form-subtitle">원두, 수량, 포장 옵션을 선택해 주세요.</p>
 
@@ -642,13 +604,13 @@
 
             <div class="cd-error-msg" id="step3_error"></div>
             <div class="cd-actions">
-              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(2)">← 이전</button>
-              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(4)">미리보기 →</button>
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(0)">← 이전</button>
+              <button type="button" class="cd-btn cd-btn-next" onclick="goStep(2)">다음 단계 →</button>
             </div>
           </div>
 
-          <!-- ═══ STEP 4: 미리보기 ═══ -->
-          <div class="cd-panel" id="panel4">
+          <!-- ═══ STEP 3: 기본 정보 ═══ -->
+          <div class="cd-panel" id="panel3">
             <h2 class="cd-form-title">작성 문의 미리보기</h2>
             <p class="cd-form-subtitle">입력하신 내용을 확인한 후 견적을 요청해 주세요.</p>
 
@@ -663,7 +625,7 @@
             </div>
 
             <div class="cd-actions">
-              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(3)">← 이전</button>
+              <button type="button" class="cd-btn cd-btn-prev" onclick="goStep(2)">← 이전</button>
               <button type="submit" class="cd-btn cd-btn-submit" id="dripSubmitBtn">📩 견적 요청하기</button>
             </div>
 
@@ -807,7 +769,27 @@
     function goStep(n) {
       // Validate current step before moving forward
       if (n > currentStep) {
+        if (currentStep === 0) {
+          var hasDesign = document.querySelector('input[name="d_has_design"]:checked');
+          if (!hasDesign) {
+            showErr('step2_error', '디자인 보유 여부를 선택해 주세요.');
+            return;
+          }
+          hideErr('step2_error');
+        }
         if (currentStep === 1) {
+          var missing3 = [];
+          if (!document.querySelector('input[name="d_coffee"]:checked')) missing3.push('사용 원두');
+          if (!document.querySelector('input[name="d_qty"]:checked')) missing3.push('주문 수량');
+          if (!document.querySelector('input[name="d_film"]:checked')) missing3.push('드립백 필름지');
+          if (!document.querySelector('input[name="d_pkg"]:checked')) missing3.push('포장 방법');
+          if (missing3.length) {
+            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
+            return;
+          }
+          hideErr('step3_error');
+        }
+        if (currentStep === 2) {
           var missing = [];
           var fields = [
             {id:'d_name', label:'이름'},
@@ -832,26 +814,6 @@
             return;
           }
           hideErr('step1_error');
-        }
-        if (currentStep === 2) {
-          var hasDesign = document.querySelector('input[name="d_has_design"]:checked');
-          if (!hasDesign) {
-            showErr('step2_error', '디자인 보유 여부를 선택해 주세요.');
-            return;
-          }
-          hideErr('step2_error');
-        }
-        if (currentStep === 3) {
-          var missing3 = [];
-          if (!document.querySelector('input[name="d_coffee"]:checked')) missing3.push('사용 원두');
-          if (!document.querySelector('input[name="d_qty"]:checked')) missing3.push('주문 수량');
-          if (!document.querySelector('input[name="d_film"]:checked')) missing3.push('드립백 필름지');
-          if (!document.querySelector('input[name="d_pkg"]:checked')) missing3.push('포장 방법');
-          if (missing3.length) {
-            showErr('step3_error', '다음 필수 항목을 선택해 주세요: ' + missing3.join(', '));
-            return;
-          }
-          hideErr('step3_error');
           buildPreview();
         }
       }
@@ -865,7 +827,7 @@
         else if (sn < n) s.classList.add('done');
       });
       document.querySelectorAll('.cd-step-line').forEach(function(l, i) {
-        l.classList.toggle('active', i < n - 1);
+        l.classList.toggle('active', i < n);
       });
       window.scrollTo({top: document.querySelector('.cd-steps').offsetTop - 100, behavior:'smooth'});
     }
@@ -999,7 +961,7 @@
         formDirty = false;
         this.reset();
         uploadedFiles = []; renderFileList();
-        goStep(1);
+        goStep(0);
       } catch(err) {
         status.className = 'cd-status error';
         status.textContent = '❌ 전송 중 오류가 발생했습니다. 이메일(skdngus77@naver.com)로 직접 문의해 주세요.';
@@ -1010,7 +972,6 @@
     });
     /* ── Unsaved Changes Warning ── */
     var formDirty = false;
-    if (window._labAutoFilled) formDirty = false;
     document.getElementById('dripForm').addEventListener('input', function() { formDirty = true; });
     document.getElementById('dripForm').addEventListener('change', function() { formDirty = true; });
     window.addEventListener('beforeunload', function(e) {
