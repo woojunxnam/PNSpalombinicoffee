@@ -147,6 +147,32 @@
       .fl-result { max-width:100%; }
     }
 
+    /* ── COLOR PICKER MODE ── */
+    .fl-hero-actions { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:4px; }
+    .fl-hero-pick { display:inline-flex; align-items:center; gap:6px; padding:10px 22px; font-size:14px; font-weight:700; border:2px solid rgba(200,170,110,.5); background:transparent; color:var(--fl-gold); border-radius:10px; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:all .2s; }
+    .fl-hero-pick:hover { background:rgba(200,170,110,.12); border-color:var(--fl-gold); }
+    .fl-color-picker-panel { display:none; margin-top:20px; padding:20px; background:var(--fl-card); border:1px solid var(--fl-border); border-radius:14px; }
+    .fl-color-picker-panel.open { display:block; }
+    .fl-cp-label { font-size:12px; font-weight:700; color:var(--fl-gold); letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; }
+    .fl-cp-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+    .fl-cp-input-wrap { position:relative; }
+    .fl-cp-input { width:56px; height:56px; border:none; border-radius:12px; cursor:pointer; background:none; padding:0; }
+    .fl-cp-input::-webkit-color-swatch-wrapper { padding:0; }
+    .fl-cp-input::-webkit-color-swatch { border:2px solid rgba(255,255,255,.2); border-radius:10px; }
+    .fl-cp-input::-moz-color-swatch { border:2px solid rgba(255,255,255,.2); border-radius:10px; }
+    .fl-cp-hex-display { font-size:15px; font-weight:700; font-family:'Courier New',monospace; color:var(--fl-cream); }
+    .fl-cp-btn { padding:10px 20px; font-size:13px; font-weight:700; background:var(--fl-gold); color:#1a1410; border:none; border-radius:8px; cursor:pointer; font-family:'Noto Sans KR',sans-serif; transition:all .15s; }
+    .fl-cp-btn:hover { filter:brightness(1.1); }
+    .fl-cp-result { margin-top:14px; padding:14px; background:rgba(200,170,110,.08); border:1px solid var(--fl-border); border-radius:10px; font-size:13px; color:var(--fl-cream); line-height:1.7; display:none; }
+    .fl-cp-result.show { display:block; }
+    .fl-cp-result-label { font-size:11px; font-weight:700; color:var(--fl-gold); letter-spacing:.06em; margin-bottom:6px; }
+    .fl-cp-blend-item { display:flex; align-items:center; gap:8px; padding:4px 0; }
+    .fl-cp-blend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+    .fl-cp-blend-name { font-weight:600; }
+    .fl-cp-blend-pct { color:var(--fl-gold); font-weight:700; margin-left:auto; }
+    .fl-cp-close { background:none; border:1px solid var(--fl-border); color:var(--fl-muted); padding:8px 14px; border-radius:8px; cursor:pointer; font-size:12px; font-family:'Noto Sans KR',sans-serif; margin-left:auto; }
+    .fl-cp-close:hover { border-color:var(--fl-gold); color:var(--fl-cream); }
+
     /* ── TOAST ── */
     .fl-toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:#333; color:#fff; padding:10px 20px; border-radius:8px; font-size:13px; font-weight:600; opacity:0; transition:all .3s ease; z-index:9999; pointer-events:none; }
     .fl-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
@@ -248,7 +274,10 @@
         <p class="fl-hero-eyebrow">PNS Palombini · Flavor-Color Lab</p>
         <h1>당신의 취향을<br/>색으로 디자인하세요</h1>
         <p class="fl-hero-sub">원두와 블렌드를 자유롭게 조합하고, 그 맛을 색으로 만나보세요.</p>
-        <button class="fl-hero-random" onclick="randomBlend()">&#x2615; 오늘의 블렌드 뽑기</button>
+        <div class="fl-hero-actions">
+          <button class="fl-hero-random" onclick="randomBlend()">&#x2615; 오늘의 블렌드 뽑기</button>
+          <button class="fl-hero-pick" onclick="toggleColorPicker()">&#x1F3A8; 색으로 블렌드 찾기</button>
+        </div>
       </div>
     </section>
 
@@ -256,6 +285,20 @@
     <section class="fl-lab">
       <!-- LEFT PANEL -->
       <div class="fl-left">
+        <!-- Color Picker Panel -->
+        <div class="fl-color-picker-panel" id="colorPickerPanel">
+          <div class="fl-cp-label">&#x1F3A8; 색으로 블렌드 찾기</div>
+          <div class="fl-cp-row">
+            <div class="fl-cp-input-wrap">
+              <input type="color" class="fl-cp-input" id="cpInput" value="#7B68AE"/>
+            </div>
+            <span class="fl-cp-hex-display" id="cpHex">#7B68AE</span>
+            <button class="fl-cp-btn" onclick="findBlendFromColor()">이 색의 블렌드 보기</button>
+            <button class="fl-cp-close" onclick="toggleColorPicker()">닫기</button>
+          </div>
+          <div class="fl-cp-result" id="cpResult"></div>
+        </div>
+
         <!-- Palombini Classic -->
         <div class="fl-section-label">Palombini Classic</div>
         <div class="fl-tier1" id="tier1"></div>
@@ -698,8 +741,66 @@ function setSlider(idx, rawVal) {
       }
     }
   }
-  pushHistory();
-  render();
+  updateSlidersOnly();
+  updateResult();
+}
+
+// ── LIGHTWEIGHT SLIDER UPDATE (no DOM rebuild) ──
+function updateSlidersOnly() {
+  const sliders = $sliderArea.querySelectorAll('.fl-slider-row');
+  blend.forEach((b, i) => {
+    if (!sliders[i]) return;
+    const input = sliders[i].querySelector('.fl-slider-input');
+    const pctLabel = sliders[i].querySelector('.fl-slider-pct');
+    if (input && Number(input.value) !== b.pct) input.value = b.pct;
+    if (input) input.max = 100 - (blend.length - 1);
+    if (pctLabel) pctLabel.textContent = b.pct + '%';
+  });
+}
+
+// ── UPDATE RESULT PANEL ONLY ──
+function updateResult() {
+  const n = blend.length;
+  if (n === 0) {
+    $emptyMsg.style.display = '';
+    $resultContent.classList.remove('visible');
+    $resultPanel.style.backgroundColor = '#1a1410';
+    $resultPanel.classList.remove('dark-text');
+    $resultPanel.classList.add('light-text');
+    $ctaOrder.classList.remove('visible');
+    $ctaSmall.classList.remove('visible');
+    $stickyCta.classList.remove('visible');
+    renderHistory();
+    return;
+  }
+
+  $emptyMsg.style.display = 'none';
+  $resultContent.classList.add('visible');
+
+  const atoms = resolveToAtoms(blend);
+  const fl = calcFlavor(atoms);
+  const col = calcColor(atoms);
+  const hex = hslToHex(col.h, col.s, col.l);
+
+  $resultPanel.style.backgroundColor = 'hsl('+col.h+','+col.s+'%,'+col.l+'%)';
+  if (col.l <= 45) { $resultPanel.classList.remove('dark-text'); $resultPanel.classList.add('light-text'); }
+  else { $resultPanel.classList.remove('light-text'); $resultPanel.classList.add('dark-text'); }
+
+  $swatchChip.style.backgroundColor = hex;
+  $hexCode.textContent = hex.toUpperCase();
+
+  const tags = generateTags(fl);
+  $flavorTags.innerHTML = tags.map(t => '<span class="fl-tag">'+t+'</span>').join('');
+  $diagnostic.textContent = generateDiagnostic(fl);
+
+  const contactUrl = buildContactUrl();
+  if (n >= 3) {
+    $ctaOrder.classList.add('visible'); $ctaSmall.classList.remove('visible');
+    $ctaOrder.href = contactUrl; $stickyCta.classList.add('visible'); $stickyCtaLink.href = contactUrl;
+  } else {
+    $ctaOrder.classList.remove('visible'); $ctaSmall.classList.add('visible'); $stickyCta.classList.remove('visible');
+  }
+  renderHistory();
 }
 
 // ── QUICK RATIOS ──
@@ -804,66 +905,8 @@ function render() {
     }
   }
 
-  // Result panel
-  if (n === 0) {
-    $emptyMsg.style.display = '';
-    $resultContent.classList.remove('visible');
-    $resultPanel.style.backgroundColor = '#1a1410';
-    $resultPanel.classList.remove('dark-text');
-    $resultPanel.classList.add('light-text');
-    $ctaOrder.classList.remove('visible');
-    $ctaSmall.classList.remove('visible');
-    $stickyCta.classList.remove('visible');
-    renderHistory();
-    return;
-  }
-
-  $emptyMsg.style.display = 'none';
-  $resultContent.classList.add('visible');
-
-  const atoms = resolveToAtoms(blend);
-  const fl = calcFlavor(atoms);
-  const col = calcColor(atoms);
-  const hex = hslToHex(col.h, col.s, col.l);
-
-  // Color field background
-  $resultPanel.style.backgroundColor = 'hsl('+col.h+','+col.s+'%,'+col.l+'%)';
-
-  // Text contrast
-  if (col.l <= 45) {
-    $resultPanel.classList.remove('dark-text');
-    $resultPanel.classList.add('light-text');
-  } else {
-    $resultPanel.classList.remove('light-text');
-    $resultPanel.classList.add('dark-text');
-  }
-
-  // Swatch
-  $swatchChip.style.backgroundColor = hex;
-  $hexCode.textContent = hex.toUpperCase();
-
-  // Tags
-  const tags = generateTags(fl);
-  $flavorTags.innerHTML = tags.map(t => '<span class="fl-tag">'+t+'</span>').join('');
-
-  // Diagnostic text
-  $diagnostic.textContent = generateDiagnostic(fl);
-
-  // CTA
-  const contactUrl = buildContactUrl();
-  if (n >= 3) {
-    $ctaOrder.classList.add('visible');
-    $ctaSmall.classList.remove('visible');
-    $ctaOrder.href = contactUrl;
-    $stickyCta.classList.add('visible');
-    $stickyCtaLink.href = contactUrl;
-  } else {
-    $ctaOrder.classList.remove('visible');
-    $ctaSmall.classList.add('visible');
-    $stickyCta.classList.remove('visible');
-  }
-
-  renderHistory();
+  // Result panel (delegated to shared function)
+  updateResult();
 }
 
 function renderHistory() {
@@ -935,6 +978,111 @@ function showToast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ── COLOR PICKER REVERSE MODE ──
+function toggleColorPicker() {
+  document.getElementById('colorPickerPanel').classList.toggle('open');
+}
+
+document.getElementById('cpInput').addEventListener('input', function() {
+  document.getElementById('cpHex').textContent = this.value.toUpperCase();
+});
+
+function hexToHsl(hex) {
+  let r = parseInt(hex.slice(1,3),16)/255;
+  let g = parseInt(hex.slice(3,5),16)/255;
+  let b = parseInt(hex.slice(5,7),16)/255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h, s, l = (max+min)/2;
+  if (max === min) { h = s = 0; }
+  else {
+    const d = max-min;
+    s = l > 0.5 ? d/(2-max-min) : d/(max+min);
+    if (max === r) h = ((g-b)/d + (g<b?6:0))/6;
+    else if (max === g) h = ((b-r)/d+2)/6;
+    else h = ((r-g)/d+4)/6;
+    h *= 360;
+  }
+  return {h:Math.round(h), s:Math.round(s*100), l:Math.round(l*100)};
+}
+
+function hslDistance(a, b) {
+  // Circular hue distance + euclidean on S,L
+  let dh = Math.abs(a.h - b.h);
+  if (dh > 180) dh = 360 - dh;
+  return Math.sqrt((dh*2)**2 + (a.s-b.s)**2 + (a.l-b.l)**2);
+}
+
+function findBlendFromColor() {
+  const hex = document.getElementById('cpInput').value;
+  const target = hexToHsl(hex);
+  const beanIds = Object.keys(BEANS);
+
+  let bestBlend = null;
+  let bestDist = Infinity;
+
+  // Try all single beans
+  for (const id of beanIds) {
+    const [h,s,l] = BEANS[id].color;
+    const d = hslDistance(target, {h,s,l});
+    if (d < bestDist) { bestDist = d; bestBlend = [{id, pct:100}]; }
+  }
+
+  // Try all pairs with 10% steps
+  for (let i=0; i<beanIds.length; i++) {
+    for (let j=i+1; j<beanIds.length; j++) {
+      for (let p=10; p<=90; p+=10) {
+        const atoms = {}; atoms[beanIds[i]] = p; atoms[beanIds[j]] = 100-p;
+        const col = calcColor(atoms);
+        const d = hslDistance(target, col);
+        if (d < bestDist) { bestDist = d; bestBlend = [{id:beanIds[i],pct:p},{id:beanIds[j],pct:100-p}]; }
+      }
+    }
+  }
+
+  // Try triples with coarser steps
+  for (let i=0; i<beanIds.length; i++) {
+    for (let j=i+1; j<beanIds.length; j++) {
+      for (let k=j+1; k<beanIds.length; k++) {
+        for (let p1=20; p1<=60; p1+=20) {
+          for (let p2=20; p2<=80-p1; p2+=20) {
+            const p3 = 100-p1-p2;
+            if (p3 < 10) continue;
+            const atoms = {}; atoms[beanIds[i]]=p1; atoms[beanIds[j]]=p2; atoms[beanIds[k]]=p3;
+            const col = calcColor(atoms);
+            const d = hslDistance(target, col);
+            if (d < bestDist) { bestDist = d; bestBlend = [{id:beanIds[i],pct:p1},{id:beanIds[j],pct:p2},{id:beanIds[k],pct:p3}]; }
+          }
+        }
+      }
+    }
+  }
+
+  // Display result
+  const $r = document.getElementById('cpResult');
+  if (!bestBlend) { $r.className = 'fl-cp-result'; return; }
+
+  // Apply the blend
+  blend = bestBlend.map(b => ({id:b.id, pct:b.pct}));
+  pushHistory();
+  render();
+
+  // Show result summary
+  const resultCol = calcColor(resolveToAtoms(blend));
+  const resultHex = hslToHex(resultCol.h, resultCol.s, resultCol.l);
+  let html = '<div class="fl-cp-result-label">가장 가까운 블렌드 (거리: '+Math.round(bestDist)+')</div>';
+  bestBlend.forEach(b => {
+    const info = BEANS[b.id];
+    const col = 'hsl('+info.color[0]+','+info.color[1]+'%,'+info.color[2]+'%)';
+    html += '<div class="fl-cp-blend-item"><span class="fl-cp-blend-dot" style="background:'+col+'"></span><span class="fl-cp-blend-name">'+info.name+'</span><span class="fl-cp-blend-pct">'+b.pct+'%</span></div>';
+  });
+  html += '<div style="margin-top:8px;font-size:12px;color:var(--fl-muted);">선택 색상 '+hex.toUpperCase()+' → 결과 '+resultHex.toUpperCase()+'</div>';
+  $r.innerHTML = html;
+  $r.className = 'fl-cp-result show';
+
+  // Scroll to result
+  document.querySelector('.fl-lab').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── BOOT ──
