@@ -255,7 +255,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
     const itemPath = new URL(item.href, window.location.href).pathname.replace(/\/$/, '/index.html');
     const isCurrent = !item.href.includes('#') && currentPath === itemPath;
-    const cls = item.volcano ? ' class="mobile-nav-volcano"' : '';
+    const cls = item.volcano ? ' class="mobile-nav-volcano"' : item.accent ? ' style="color:var(--accent);font-weight:700;"' : '';
     return `<a href="${item.href}"${cls}${isCurrent ? ' aria-current="page"' : ''}>${item.label}${badge}</a>`;
   };
 
@@ -308,6 +308,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}contact-drip.html`, label: 'B2B 드립백 문의' },
         { href: `${prefix}contact-bean.html`, label: 'B2B 생두 원두 문의' },
         { href: '#', label: 'B2B 봉투 필름지 문의', badge: '준비중' },
+        { href: `${prefix}design-templates.html`, label: '디자인 템플릿 다운로드', accent: true },
       ]
     },
     { href: `${prefix}partners.html`, label: '고객·협력사' },
@@ -689,6 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'B2B 드립백 문의': 'B2B Drip Bag',
     'B2B 생두 원두 문의': 'B2B Bean Inquiry',
     'B2B 봉투 필름지 문의': 'B2B Film Inquiry',
+    '디자인 템플릿 다운로드': 'Design Templates',
     '드립백 취향 찾기': 'Find Your Style',
     '카페 메뉴': 'Café Menu',
     '커피나무 키우기': 'Grow Coffee Tree',
