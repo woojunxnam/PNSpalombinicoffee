@@ -1,0 +1,778 @@
+<!--
+  ╔══════════════════════════════════════════════════════════════╗
+  ║  📄 FILE: index.html  |  📁 LOCATION: /sorting-machines/     ║
+  ║  🌐 URL: /sorting-machines/  |  선별기 머신 라인업              ║
+  ╚══════════════════════════════════════════════════════════════╝
+-->
+<!doctype html>
+<html lang="ko">
+<head>
+  <link rel="icon" href="/favicon.png" type="image/png">
+  <meta charset="utf-8"/>
+  <meta name="theme-color" content="#C07A3D"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="description" content="AI 색채 선별기 전체 라인업. 생두용 H-시리즈(H-1~H-12)와 로스팅 원두용 SMART 시리즈. Anysort 국내 공식 파트너."/>
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.pnscoffee.com/sorting-machines/" />
+  <meta property="og:title" content="선별기 머신 라인업 — PNS 팔롬비니" />
+  <meta property="og:description" content="AI 색채 선별기 전체 라인업. 생두용 H-시리즈와 로스팅 원두용 SMART 시리즈." />
+  <meta property="og:image" content="https://www.pnscoffee.com/assets/img/pns-logo-upscaled.png" />
+  <title>선별기 머신 라인업 — PNS 팔롬비니</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    /* ── ANYSORT PARTNER BANNER ── */
+    .partner-banner {
+      background: linear-gradient(135deg, #faf8f5 0%, #f0ebe1 100%);
+      border-top: 3px solid var(--accent);
+      border-bottom: 1px solid var(--line);
+      padding: 28px 0;
+    }
+    .partner-inner {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .partner-logos {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-shrink: 0;
+    }
+    .partner-logo-pns {
+      height: 48px;
+      width: auto;
+      display: block;
+    }
+    .partner-times {
+      font-size: 1.4rem;
+      font-weight: 200;
+      color: var(--muted);
+      line-height: 1;
+    }
+    .partner-logo-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      gap: 3px;
+    }
+    .brand-wordmark {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #4A2B8F;
+      letter-spacing: 2px;
+      line-height: 1;
+    }
+    .brand-sub {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 3.5px;
+      color: #4A2B8F;
+      opacity: 0.7;
+      text-transform: uppercase;
+    }
+    .partner-divider {
+      width: 1px;
+      height: 64px;
+      background: var(--line);
+      flex-shrink: 0;
+    }
+    .partner-info { flex: 1; min-width: 220px; }
+    .partner-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(74,43,143,.1);
+      border: 1px solid rgba(74,43,143,.3);
+      color: #4A2B8F;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .partner-title {
+      font-size: 1rem; font-weight: 700; color: var(--accent2);
+      margin: 0 0 7px; line-height: 1.3;
+    }
+    .partner-desc {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.75;
+      margin: 0 0 12px; word-break: keep-all;
+    }
+    .partner-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .partner-pill {
+      font-size: 0.72rem; font-weight: 600;
+      background: rgba(255,255,255,.6); color: var(--accent2);
+      padding: 4px 10px; border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+
+    /* ── HERO ── */
+    .sort-hero {
+      background: linear-gradient(160deg, #1a1208 0%, #2e1f10 50%, #1a1208 100%);
+      padding: 56px 0 36px; color: #fff; position: relative; overflow: hidden;
+    }
+    .sort-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(192,122,61,.18), transparent);
+    }
+    .sort-hero-inner { position: relative; display: flex; gap: 40px; align-items: center; flex-wrap: wrap; }
+    .sort-hero-copy { flex: 1 1 320px; min-width: 280px; }
+    .sort-hero-eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: rgba(192,122,61,.9); margin: 0 0 10px;
+    }
+    .sort-hero h1 {
+      font-family: var(--serif); font-size: clamp(26px, 4vw, 42px);
+      font-weight: 600; color: #f5ede1; margin: 0 0 14px; line-height: 1.25;
+    }
+    .sort-hero-desc {
+      font-size: 14px; color: rgba(245,237,225,.72);
+      line-height: 1.75; margin: 0 0 22px; max-width: 520px; word-break: keep-all;
+    }
+    .sort-hero-stats { display: flex; gap: 28px; flex-wrap: wrap; margin: 0 0 22px; }
+    .sort-hero-stat { border-left: 2px solid var(--accent); padding-left: 14px; }
+    .sort-hero-stat strong {
+      display: block; font-size: 22px; font-weight: 700; color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .sort-hero-stat span {
+      font-size: 11px; color: rgba(245,237,225,.55); letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .sort-hero-visual { flex: 1 1 320px; min-width: 260px; display: flex; justify-content: center; }
+    .sort-hero-visual img {
+      max-width: 100%; width: 460px; height: auto; border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+    }
+
+    /* ── CATEGORY SECTIONS ── */
+    .sort-section { padding: 48px 0; }
+    .sort-section.alt { background: var(--bg2, #f8f3ea); }
+
+    .sort-intro {
+      max-width: 720px; margin: 0 auto 36px; text-align: center;
+    }
+    .sort-intro h2 {
+      font-family: var(--serif); font-size: clamp(22px, 3vw, 30px);
+      color: var(--accent2); margin: 0 0 10px;
+    }
+    .sort-intro h2 span {
+      display: block; font-size: 14px; font-weight: 400;
+      color: var(--muted); letter-spacing: 1px; margin-top: 4px;
+    }
+    .sort-intro p {
+      font-size: 14px; line-height: 1.8; color: var(--muted);
+      margin: 0; word-break: keep-all;
+    }
+
+    /* ── PRODUCT FEATURE (image + tech highlights) ── */
+    .sort-feature {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+      align-items: center; margin-bottom: 36px;
+    }
+    .sort-feature-img {
+      background: #fff; border: 1px solid var(--line); border-radius: 20px;
+      padding: 30px; box-shadow: var(--shadow2);
+    }
+    .sort-feature-img img { width: 100%; height: auto; display: block; }
+    .sort-feature-body h3 {
+      font-family: var(--serif); font-size: 1.6rem;
+      color: var(--accent2); margin: 0 0 6px;
+    }
+    .sort-feature-body .eyebrow {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--accent); margin: 0 0 8px;
+    }
+    .sort-feature-body > p {
+      font-size: 14px; line-height: 1.8; color: var(--muted);
+      margin: 0 0 20px; word-break: keep-all;
+    }
+    .sort-tech-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    }
+    .sort-tech-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .sort-tech-card .tc-icon {
+      font-size: 22px; margin-bottom: 6px;
+    }
+    .sort-tech-card .tc-title {
+      font-size: 13px; font-weight: 700; color: var(--accent2); margin: 0 0 4px;
+    }
+    .sort-tech-card .tc-desc {
+      font-size: 11.5px; color: var(--muted); line-height: 1.6; margin: 0;
+    }
+
+    /* ── DEFECT DETECTION GRID ── */
+    .sort-defects {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; padding: 24px; margin-top: 20px;
+    }
+    .sort-defects-title {
+      font-size: 13px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
+    }
+    .sort-defects-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 12px;
+    }
+    .sort-defect {
+      text-align: center; padding: 10px 4px;
+      border-radius: 8px; background: var(--bg2, #f8f3ea);
+    }
+    .sort-defect .df-ko {
+      display: block; font-size: 13px; font-weight: 700; color: var(--accent2);
+      margin-bottom: 2px;
+    }
+    .sort-defect .df-en {
+      display: block; font-size: 11px; color: var(--muted);
+    }
+
+    /* ── SPECS TABLE ── */
+    .sort-specs-wrap { margin-top: 28px; overflow-x: auto; }
+    .sort-specs {
+      width: 100%; border-collapse: collapse;
+      background: #fff; border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--line); box-shadow: var(--shadow2);
+    }
+    .sort-specs th {
+      background: var(--accent2); color: #fff;
+      font-size: 12px; font-weight: 700; letter-spacing: .5px;
+      padding: 11px 12px; text-align: left; white-space: nowrap;
+    }
+    .sort-specs td {
+      padding: 11px 12px; font-size: 13px; color: var(--accent2);
+      border-top: 1px solid var(--line); white-space: nowrap;
+    }
+    .sort-specs tr:nth-child(even) td { background: rgba(192,122,61,.035); }
+    .sort-specs .model-cell {
+      font-weight: 800; color: var(--accent);
+    }
+
+    /* ── VIDEO DEMOS ── */
+    .sort-videos {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px; margin-top: 28px;
+    }
+    .sort-video-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; overflow: hidden; box-shadow: var(--shadow2);
+      transition: transform .2s;
+    }
+    .sort-video-card:hover { transform: translateY(-3px); }
+    .sort-video-card video {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      background: #000; display: block;
+    }
+    .sort-video-body { padding: 16px 18px 18px; }
+    .sort-video-num {
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      color: var(--accent); margin: 0 0 4px;
+    }
+    .sort-video-body h4 {
+      font-size: 14px; font-weight: 700; color: var(--accent2); margin: 0 0 6px;
+    }
+    .sort-video-body p {
+      font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0;
+    }
+
+    /* ── CTA ── */
+    .sort-cta {
+      background: linear-gradient(160deg, #1a1208 0%, #2e1f10 100%);
+      color: #fff; padding: 44px 0; text-align: center;
+    }
+    .sort-cta h3 {
+      font-family: var(--serif); font-size: clamp(20px, 2.6vw, 28px);
+      color: #fff; margin: 0 0 8px;
+    }
+    .sort-cta p {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      max-width: 560px; margin: 0 auto 22px; line-height: 1.7;
+    }
+    .sort-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 860px) {
+      .sort-feature { grid-template-columns: 1fr; gap: 24px; }
+      .sort-feature-img { padding: 20px; }
+      .sort-tech-grid { grid-template-columns: 1fr; }
+      .sort-hero { padding: 40px 0 28px; }
+      .sort-hero-inner { gap: 28px; }
+      .sort-hero-stats { gap: 16px; }
+      .sort-hero-stat strong { font-size: 18px; }
+      .partner-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header notranslate" translate="no" id="top">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html"><span class="brand-mark"><img src="../assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니 로고"/></span><span class="brand-name">PNS 팔롬비니</span></a>
+      <nav class="nav notranslate" translate="no" aria-label="주요 메뉴">
+        <div class="nav-item">
+          <a href="../index.html#about">브랜드</a>
+          <div class="nav-dropdown">
+            <a href="../index.html#tech"><span class="nav-dropdown-icon">&#x1F52C;</span> 기술력</a>
+            <a href="../index.html#heritage"><span class="nav-dropdown-icon">&#x1F3DB;</span> 헤리티지</a>
+            <a href="../index.html#reviews"><span class="nav-dropdown-icon">&#x2B50;</span> 고객 후기</a>
+            <a href="../index.html#faq"><span class="nav-dropdown-icon">&#x2753;</span> FAQ</a>
+            <div class="nav-sub-group">
+              <a class="nav-sub-trigger"><span class="nav-dropdown-icon">&#x1F9EA;</span> PNS Lab <svg class="nav-sub-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 2 7 5 3 8"/></svg></a>
+              <div class="nav-sub-menu">
+                <a href="../flavor-guide.html"><span class="nav-dropdown-icon">&#x1F3AF;</span> 드립백 취향 찾기</a>
+                <a href="../flavor-lab.html"><span class="nav-dropdown-icon">&#x1F3A8;</span> Flavor-Color Lab</a>
+                <a href="../menu.html"><span class="nav-dropdown-icon">&#x2615;</span> 카페 메뉴</a>
+                <a href="../game/"><span class="nav-dropdown-icon">&#x1F331;</span> 커피나무 키우기 <span class="nav-badge-small">BETA</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#">제품</a>
+          <div class="nav-dropdown">
+            <a href="../products/"><span class="nav-dropdown-icon">&#x2615;</span> PNS 팔롬비니 상품 라인업</a>
+            <a href="../lineup.html"><span class="nav-dropdown-icon">&#x1F3EA;</span> 협력사 상품 라인업</a>
+          </div>
+        </div>
+        <a href="../products/volcano-ruby.html" class="nav-volcano">🌋 볼케이노 루비</a>
+        <div class="nav-item">
+          <a href="../machines/">자동화 장비</a>
+          <div class="nav-dropdown">
+            <a href="../machines/"><span class="nav-dropdown-icon">&#x2699;&#xFE0F;</span> 드립백·패키징 머신 라인업</a>
+            <a href="./" aria-current="page"><span class="nav-dropdown-icon">&#x1F50D;</span> 선별기 머신 라인업</a>
+          </div>
+        </div>
+        <div class="nav-item"><a href="../b2b-lineup.html">B2B</a><div class="nav-dropdown">
+            <a href="../b2b-lineup.html"><span class="nav-dropdown-icon">📋</span> B2B 상품 라인업</a>
+            <div class="nav-dropdown-label">드립백 B2B</div>
+            <a href="../custom-edition.html"><span class="nav-dropdown-icon">🎨</span> 드립백 맞춤 주문</a>
+            <a href="../b2b.html"><span class="nav-dropdown-icon">🏭</span> 드립백 생산 현장 보기</a>
+            <div class="nav-dropdown-label">원두 생두 B2B</div>
+            <a href="../b2b-bean.html"><span class="nav-dropdown-icon">☕</span> 생두 원두 대량 주문</a>
+            <div class="nav-dropdown-label">봉투 필름지 B2B</div>
+            <a href="../film-custom.html"><span class="nav-dropdown-icon">📦</span> 봉투 필름지 맞춤 주문</a>
+            <a href="../b2b-film.html"><span class="nav-dropdown-icon">🎞️</span> 봉투 필름지 생산 현장 보기</a>
+          </div></div>
+        <div class="nav-item"><a href="../contact.html">문의</a><div class="nav-dropdown">
+            <a href="../contact.html"><span class="nav-dropdown-icon">💬</span> 일반 문의</a>
+            <a href="../contact-drip.html"><span class="nav-dropdown-icon">☕</span> B2B 드립백 문의</a>
+            <a href="../contact-bean.html"><span class="nav-dropdown-icon">🫘</span> B2B 생두 원두 문의</a>
+            <a href="#" style="opacity:.5"><span class="nav-dropdown-icon">📦</span> B2B 봉투 필름지 문의 <span style="font-size:10px;background:var(--muted);color:#fff;padding:1px 5px;border-radius:4px;margin-left:3px;">준비중</span></a>
+            <div class="nav-dropdown-label">디자인 리소스</div>
+            <a href="../design-templates.html" style="color:var(--accent)"><span class="nav-dropdown-icon">📐</span> 디자인 템플릿 다운로드</a>
+          </div></div>
+        <a href="../partners.html">고객·협력사</a>
+      </nav>
+      <div class="header-actions">
+        <div id="google_translate_element"></div>
+        <div class="lang-toggle" role="group" aria-label="언어 선택">
+          <button class="lang-btn active" data-gtlang="ko">KO</button>
+          <button class="lang-btn" data-gtlang="en">EN</button>
+          <button class="lang-btn" data-gtlang="zh-CN">中</button>
+        </div>
+        <a class="insta-link" href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a class="btn btn-primary" href="../contact.html">선별기 문의하기</a>
+        <button type="button" class="menu-toggle" data-mobile-menu-toggle aria-controls="mobileNavPanel" aria-expanded="false" aria-label="모바일 메뉴 열기">
+          <span class="menu-toggle-icon" aria-hidden="true"><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span><span class="menu-toggle-bar"></span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="../index.html">홈</a><span class="breadcrumb-sep">›</span><a href="../machines/">자동화 장비</a><span class="breadcrumb-sep">›</span><span>선별기 머신</span>
+      </div>
+    </div>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="sort-hero">
+      <div class="container">
+        <div class="sort-hero-inner">
+          <div class="sort-hero-copy">
+            <p class="sort-hero-eyebrow">AI Color Sorter · Anysort</p>
+            <h1>AI 색채 선별기<br/>전체 라인업</h1>
+            <p class="sort-hero-desc">생두부터 로스팅 원두까지, AI 기반 Hawkeye 3.0 카메라와 MPF(Multi Pixel Fusion) 기술로 색상·형태·크기·이물질을 정밀 선별합니다. 시간당 0.2톤 부티크 라인부터 30톤 대량 처리까지.</p>
+            <div class="sort-hero-stats">
+              <div class="sort-hero-stat">
+                <strong>12종</strong>
+                <span>선별기 라인업</span>
+              </div>
+              <div class="sort-hero-stat">
+                <strong>≥99.99%</strong>
+                <span>선별 정확도</span>
+              </div>
+              <div class="sort-hero-stat">
+                <strong>30 t/h</strong>
+                <span>최대 처리량</span>
+              </div>
+            </div>
+            <a class="btn btn-primary" href="../contact.html">선별기 문의하기 →</a>
+          </div>
+          <div class="sort-hero-visual">
+            <img src="../assets/img/sorting-h-1.jpg" alt="H 시리즈 선별기"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ ANYSORT 파트너십 배너 ═══ -->
+    <div class="partner-banner">
+      <div class="container">
+        <div class="partner-inner">
+          <div class="partner-logos">
+            <img src="../assets/img/pns-logo-upscaled.png" alt="PNS 팔롬비니" class="partner-logo-pns">
+            <span class="partner-times">×</span>
+            <div class="partner-logo-brand">
+              <span class="brand-wordmark">ANYSORT</span>
+              <span class="brand-sub">Cloud Quality Sorter</span>
+            </div>
+          </div>
+          <div class="partner-divider"></div>
+          <div class="partner-info">
+            <div class="partner-badge">★ 국내 공식 파트너 · Official Partner</div>
+            <p class="partner-title">PNS 팔롬비니는 Anysort의 국내 공식 파트너사입니다</p>
+            <p class="partner-desc">Anhui Jiexun Optoelectronic Technology(Anysort)는 AI 기반 클라우드 색채 선별기 전문 제조사로, 전 세계 고급 커피 브랜드와 스페셜티 로스터리에 선별 솔루션을 공급합니다. 공식 파트너를 통해 정품 머신과 한국어 기술 지원을 받으세요.</p>
+            <div class="partner-pills">
+              <span class="partner-pill">✓ 정품 인증 머신</span>
+              <span class="partner-pill">✓ 한국어 기술 지원</span>
+              <span class="partner-pill">✓ 맞춤 사양 협의</span>
+              <span class="partner-pill">✓ 설치·교육 지원</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ H SERIES (생두 선별) ═══ -->
+    <section class="sort-section">
+      <div class="container">
+        <div class="sort-intro">
+          <h2>H 시리즈 <span>Unroasted Coffee Bean Quality Sorter — 생두용 선별기</span></h2>
+          <p>수확·가공 과정에서 혼입되는 돌·금속·나무조각·플라스틱 이물질과 곰팡이·산패·파손된 결점두를 정밀하게 선별합니다. 시간당 0.5톤부터 30톤까지 9개 모델로 규모별 대응.</p>
+        </div>
+
+        <div class="sort-feature">
+          <div class="sort-feature-img">
+            <img src="../assets/img/sorting-h-1.jpg" alt="H 시리즈 생두 색채 선별기"/>
+          </div>
+          <div class="sort-feature-body">
+            <p class="eyebrow">Quality Sorting Technology</p>
+            <h3>AI 기반 클라우드 선별 기술</h3>
+            <p>AI 품질 선별 모델이 색상·형태·크기·재질의 미세한 차이를 판별하고, PLOV 물리 구조 플랫폼으로 파손 제로의 안정 낙하를 구현합니다. 독립형 환경 정화 기술과 지능형 자가 청소 시스템으로 복잡한 작업 환경에서도 지속적이고 안정적인 작동이 가능합니다.</p>
+
+            <div class="sort-tech-grid">
+              <div class="sort-tech-card">
+                <div class="tc-icon">🤖</div>
+                <p class="tc-title">AI 품질 선별 모델</p>
+                <p class="tc-desc">색상·형태·크기·재질 차이를 정밀 판별하는 대형 AI 모델</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">👁️</div>
+                <p class="tc-title">Hawkeye Camera 3.0</p>
+                <p class="tc-desc">고속 이동 물체를 정확하게 인식하는 3세대 호크아이 카메라</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">🔷</div>
+                <p class="tc-title">MPF 기술</p>
+                <p class="tc-desc">다중 픽셀 융합(Multi Pixel Fusion) 기술로 이물질 정밀 제거</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">🔄</div>
+                <p class="tc-title">자가 청소 시스템</p>
+                <p class="tc-desc">환경 정화 + 지능형 자가 청소로 안정적 연속 작동</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 선별 대상 결점두 -->
+        <div class="sort-defects">
+          <p class="sort-defects-title">🎯 H 시리즈 선별 대상</p>
+          <div class="sort-defects-grid">
+            <div class="sort-defect"><span class="df-ko">정상 원두</span><span class="df-en">Good Bean</span></div>
+            <div class="sort-defect"><span class="df-ko">곰팡이</span><span class="df-en">Moldy</span></div>
+            <div class="sort-defect"><span class="df-ko">미탈각</span><span class="df-en">Unhulled</span></div>
+            <div class="sort-defect"><span class="df-ko">산패된 원두</span><span class="df-en">Sour Bean</span></div>
+            <div class="sort-defect"><span class="df-ko">짙은 밀랍색</span><span class="df-en">Dark Waxy</span></div>
+            <div class="sort-defect"><span class="df-ko">껍질이 남음</span><span class="df-en">With Skin</span></div>
+            <div class="sort-defect"><span class="df-ko">충공</span><span class="df-en">Wormhole</span></div>
+          </div>
+        </div>
+
+        <!-- H 시리즈 스펙 테이블 -->
+        <div class="sort-specs-wrap">
+          <table class="sort-specs">
+            <thead>
+              <tr>
+                <th>모델</th>
+                <th>처리량 (t/h)</th>
+                <th>정확도</th>
+                <th>이월률</th>
+                <th>전력 (kW)</th>
+                <th>전원</th>
+                <th>크기 (L×W×H mm)</th>
+                <th>무게 (kg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="model-cell">H-1</td><td>0.5 – 2</td><td>≥99.99%</td><td>&gt;30:1</td><td>1.0</td><td>220V/50Hz</td><td>1,589 × 1,816 × 2,177</td><td>792</td></tr>
+              <tr><td class="model-cell">H-2</td><td>0.5 – 3</td><td>≥99.99%</td><td>&gt;30:1</td><td>1.6</td><td>220V/50Hz</td><td>1,589 × 1,816 × 2,177</td><td>885</td></tr>
+              <tr><td class="model-cell">H-3</td><td>1.0 – 6</td><td>≥99.99%</td><td>&gt;30:1</td><td>2.1</td><td>220V/50Hz</td><td>2,269 × 1,816 × 2,177</td><td>1,180</td></tr>
+              <tr><td class="model-cell">H-4</td><td>1.0 – 6</td><td>≥99.99%</td><td>&gt;30:1</td><td>2.7</td><td>220V/50Hz</td><td>2,269 × 1,816 × 2,177</td><td>1,270</td></tr>
+              <tr><td class="model-cell">H-5</td><td>5.0 – 15</td><td>≥99.99%</td><td>&gt;30:1</td><td>3.2</td><td>220V/50Hz</td><td>2,609 × 1,816 × 2,177</td><td>1,470</td></tr>
+              <tr><td class="model-cell">H-7</td><td>5.5 – 20</td><td>≥99.99%</td><td>&gt;30:1</td><td>4.6</td><td>220V/50Hz</td><td>3,289 × 1,816 × 2,177</td><td>1,850</td></tr>
+              <tr><td class="model-cell">H-8</td><td>5.5 – 20</td><td>≥99.99%</td><td>&gt;30:1</td><td>5.2</td><td>220V/50Hz</td><td>3,629 × 1,816 × 2,177</td><td>2,050</td></tr>
+              <tr><td class="model-cell">H-10</td><td>7 – 28</td><td>≥99.99%</td><td>&gt;30:1</td><td>6.4</td><td>220V/50Hz</td><td>4,309 × 1,816 × 2,177</td><td>2,410</td></tr>
+              <tr><td class="model-cell">H-12</td><td>7 – 30</td><td>≥99.99%</td><td>&gt;30:1</td><td>7.6</td><td>220V/50Hz</td><td>4,989 × 1,816 × 2,177</td><td>2,800</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SMART SERIES (로스팅 원두 선별) ═══ -->
+    <section class="sort-section alt">
+      <div class="container">
+        <div class="sort-intro">
+          <h2>SMART 시리즈 <span>Roasted Coffee Bean Quality Sorter — 로스팅 원두용 선별기</span></h2>
+          <p>커피의 풍미는 로스팅 정도와 밀접하게 연결됩니다. SMART 시리즈는 봉은 원두의 미세한 색상 차이를 기준으로 정밀하게 등급을 나누고 선별하여, 한 잔 한 잔의 풍미 일관성을 보장합니다. 스페셜티 카페·부티크 로스터리의 "매장+로스팅 공장" 형태 운영에 이상적.</p>
+        </div>
+
+        <div class="sort-feature">
+          <div class="sort-feature-body">
+            <p class="eyebrow">Compact & Precise</p>
+            <h3>부티크 로스터리를 위한 정밀 선별 솔루션</h3>
+            <p>경량 소형 설계로 작은 크기에도 불구하고 높은 생산량을 실현하며, 다양한 가공 환경에 유연하게 적용됩니다. PLOV 물리 구조 플랫폼 기술로 로스팅 원두의 잘 부서지는 특성을 고려해 유연한 낙하 구조로 설계되어 선별 시 파손이 전혀 발생하지 않습니다.</p>
+
+            <div class="sort-tech-grid">
+              <div class="sort-tech-card">
+                <div class="tc-icon">🛡️</div>
+                <p class="tc-title">PLOV 낙하 구조</p>
+                <p class="tc-desc">로스팅 원두의 취약성을 고려한 유연 낙하, 파손 Zero</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">👁️</div>
+                <p class="tc-title">Hawkeye Camera 3.0</p>
+                <p class="tc-desc">고속 이동 원두를 정확하게 인식</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">🤖</div>
+                <p class="tc-title">AI 대형 선별 모델</p>
+                <p class="tc-desc">색상·형태·크기·재질 미세 차이 정밀 판별</p>
+              </div>
+              <div class="sort-tech-card">
+                <div class="tc-icon">🔷</div>
+                <p class="tc-title">MPF 기술</p>
+                <p class="tc-desc">색상 결함·형태 결함·이물질을 더욱 정밀하게 수행</p>
+              </div>
+            </div>
+          </div>
+          <div class="sort-feature-img">
+            <img src="../assets/img/sorting-smart-1.jpg" alt="SMART 시리즈 로스팅 원두 선별기"/>
+          </div>
+        </div>
+
+        <!-- 선별 대상 -->
+        <div class="sort-defects">
+          <p class="sort-defects-title">🎯 SMART 시리즈 선별 대상</p>
+          <div class="sort-defects-grid">
+            <div class="sort-defect"><span class="df-ko">정상 원두</span><span class="df-en">Good Bean</span></div>
+            <div class="sort-defect"><span class="df-ko">과도한 로스팅</span><span class="df-en">Burnt</span></div>
+            <div class="sort-defect"><span class="df-ko">연한색</span><span class="df-en">Light Color</span></div>
+            <div class="sort-defect"><span class="df-ko">충공</span><span class="df-en">Wormhole</span></div>
+            <div class="sort-defect"><span class="df-ko">파손된 원두</span><span class="df-en">Incomplete Grains</span></div>
+            <div class="sort-defect"><span class="df-ko">껍질</span><span class="df-en">Husk</span></div>
+          </div>
+        </div>
+
+        <!-- SMART 시리즈 스펙 테이블 -->
+        <div class="sort-specs-wrap">
+          <table class="sort-specs">
+            <thead>
+              <tr>
+                <th>모델</th>
+                <th>처리량 (t/h)</th>
+                <th>정확도</th>
+                <th>이월률</th>
+                <th>전력 (kW)</th>
+                <th>전원</th>
+                <th>크기 (L×W×H mm)</th>
+                <th>무게 (kg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="model-cell">SMART 1</td><td>0.2</td><td>≥99.99%</td><td>&gt;1:1</td><td>0.7</td><td>220V/50Hz</td><td>530 × 880 × 1,210</td><td>172</td></tr>
+              <tr><td class="model-cell">SMART 2</td><td>0.4</td><td>≥99.99%</td><td>&gt;1:1</td><td>0.9</td><td>220V/50Hz</td><td>720 × 880 × 1,210</td><td>240</td></tr>
+              <tr><td class="model-cell">SMART 3</td><td>0.6</td><td>≥99.99%</td><td>&gt;1:1</td><td>1.1</td><td>220V/50Hz</td><td>930 × 880 × 1,210</td><td>300</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ 작동 영상 쇼케이스 ═══ -->
+    <section class="sort-section">
+      <div class="container">
+        <div class="sort-intro">
+          <h2>선별기 작동 영상 <span>Sorting Machine Demos</span></h2>
+          <p>실제 선별 과정을 확인하세요. SMART와 H 시리즈가 어떻게 색채·형태 결함을 정확하게 구분하고 배출하는지 보여드립니다.</p>
+        </div>
+
+        <div class="sort-videos">
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-smart.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">01 — SMART 시리즈</p>
+              <h4>로스팅 원두 선별 (파손·탄화)</h4>
+              <p>SMART가 로스팅 원두의 미세한 색상 차이를 포착해 파손된 원두와 과도 로스팅(탄화)된 원두를 선별하는 실제 작동 영상입니다.</p>
+            </div>
+          </div>
+
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-impurity.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">02 — H 시리즈</p>
+              <h4>생두 이물질 선별</h4>
+              <p>H 시리즈가 생두에서 돌·금속·나무조각·플라스틱 등 이물질을 정밀하게 제거하는 모습을 보여줍니다.</p>
+            </div>
+          </div>
+
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-defect.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">03 — H 시리즈</p>
+              <h4>생두 결점두 선별 (검정·파손)</h4>
+              <p>H 시리즈가 검정 원두(흑두)와 파손된 원두를 정확하게 구분해 별도로 배출하는 작동 영상입니다.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="sort-cta">
+      <div class="container">
+        <h3>귀사의 생산 규모에 맞는 선별기를 찾아드립니다</h3>
+        <p>처리량·설치 공간·예산을 알려주시면 최적의 모델을 제안하고 정확한 견적을 드립니다. 스페셜티 로스터리부터 대량 가공 공장까지.</p>
+        <div class="sort-cta-btns">
+          <a class="btn btn-primary" href="../contact.html">선별기 문의하기 →</a>
+          <a class="btn btn-ghost" href="mailto:skdngus77@naver.com" style="color:#fff;border-color:rgba(255,255,255,.3);">이메일 보내기</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-sitemap">
+        <div class="footer-col">
+          <h4>브랜드</h4>
+          <a href="../index.html#about">회사 소개</a>
+          <a href="../index.html#tech">기술력</a>
+          <a href="../index.html#heritage">헤리티지</a>
+          <a href="../index.html#reviews">고객 후기</a>
+          <a href="../index.html#faq">FAQ</a>
+        </div>
+        <div class="footer-col">
+          <h4>제품</h4>
+          <a href="../products/">팔롬비니 상품 라인업</a>
+          <a href="../lineup.html">협력사 상품 라인업</a>
+          <a href="../products/volcano-ruby.html">볼케이노 루비</a>
+          <a href="../machines/">패키징 머신 라인업</a>
+          <a href="./">선별기 머신 라인업</a>
+        </div>
+        <div class="footer-col">
+          <h4>B2B</h4>
+          <a href="../b2b-lineup.html">B2B 상품 라인업</a>
+          <a href="../custom-edition.html">드립백 맞춤 주문</a>
+          <a href="../b2b.html">드립백 생산 현장</a>
+          <a href="../b2b-bean.html">생두·원두 대량 주문</a>
+          <a href="../film-custom.html">봉투 필름지 맞춤 주문</a>
+        </div>
+        <div class="footer-col">
+          <h4>고객지원</h4>
+          <a href="../contact.html">문의하기</a>
+          <a href="../privacy.html">개인정보처리방침</a>
+          <a href="../partners.html">고객·협력사</a>
+          <a href="https://smartstore.naver.com/palombini" target="_blank" rel="noopener">네이버 스마트스토어</a>
+          <a href="https://www.instagram.com/palombini_eunhaeng" target="_blank" rel="noopener">Instagram</a>
+        </div>
+      </div>
+      <div class="footer-biz">
+        <p><strong>상호명</strong> 피앤에스 팔롬비니 &nbsp;·&nbsp; <strong>대표자명</strong> 박재민 &nbsp;·&nbsp; <strong>사업장 주소</strong> 대전 중구 중앙로164번길 21-6, 1층(은행동) &nbsp;·&nbsp; <strong>대표 전화</strong> 010-2604-5567</p>
+        <p><strong>사업자 등록번호</strong> 162-09-02522 &nbsp;·&nbsp; <strong>개인정보보호책임자</strong> 남우현 &nbsp;·&nbsp; <strong>이메일</strong> skdngus77@naver.com</p>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; <span id="year"></span> PNS 팔롬비니. All rights reserved.</p>
+        <p class="footer-sub">AI 색채 선별기 · Anysort Cloud Quality Sorter · 생두·로스팅 원두 선별 솔루션</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    var header = document.querySelector('.site-header');
+    window.addEventListener('scroll', function() { header.classList.toggle('scrolled', window.scrollY > 20); }, {passive:true});
+  </script>
+  <script src="../assets/js/main.js"></script>
+
+  <!-- JSON-LD: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "홈", "item": "https://www.pnscoffee.com/" },
+      { "@type": "ListItem", "position": 2, "name": "자동화 장비", "item": "https://www.pnscoffee.com/machines/" },
+      { "@type": "ListItem", "position": 3, "name": "선별기 머신 라인업", "item": "https://www.pnscoffee.com/sorting-machines/" }
+    ]
+  }
+  </script>
+
+  <button class="scroll-top" id="scrollTopBtn" aria-label="맨 위로 이동" title="맨 위로">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+         fill="none" stroke="currentColor" stroke-width="2.5"
+         stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"/>
+    </svg>
+  </button>
+
+  <!-- Google Translate -->
+  <script>
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'ko',
+      includedLanguages: 'en,zh-CN,zh-TW,ja,vi',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+  </script>
+  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- 비디오 lazy load/unload -->
+  <script>
+  (function(){
+    var videos = document.querySelectorAll('.sort-video-card video[data-src]');
+    if (!videos.length) return;
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        var v = e.target;
+        if (e.isIntersecting) {
+          if (!v.getAttribute('src') && v.dataset.src) { v.src = v.dataset.src; }
+          v.play().catch(function(){});
+        } else {
+          v.pause();
+          if (v.getAttribute('src')) { v.removeAttribute('src'); v.load(); }
+        }
+      });
+    }, { threshold: 0.15 });
+    videos.forEach(function(v) { io.observe(v); });
+  })();
+  </script>
+</body>
+</html>

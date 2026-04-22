@@ -288,6 +288,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       type: 'group', label: '자동화 장비',
       items: [
         { href: `${prefix}machines/`, label: '드립백·패키징 머신 라인업' },
+        { href: `${prefix}sorting-machines/`, label: '선별기 머신 라인업' },
       ]
     },
     {
@@ -680,6 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '협력사 상품 라인업': 'Partner Products',
     '계열사 상품 라인업': 'Partner Products',
     '드립백·패키징 머신 라인업': 'Drip Bag & Packaging Machines',
+    '선별기 머신 라인업': 'Color Sorter Machines',
     'B2B 상품 라인업': 'B2B Product Lineup',
     '드립백 맞춤 주문': 'Custom Drip Bag',
     '드립백 생산 현장 보기': 'Drip Bag Production',
