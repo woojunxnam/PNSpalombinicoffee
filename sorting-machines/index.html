@@ -320,32 +320,87 @@
     .sort-specs tr:nth-child(even) td { background: rgba(192,122,61,.035); }
     .sort-specs .model-cell { font-weight: 800; color: var(--accent); }
 
-    /* ── CATALOG DOWNLOAD ── */
-    .sort-catalogs {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px; margin-top: 24px;
+    /* ── ANYSORT LINEUP CARDS ── */
+    .lineup-group { margin-bottom: 44px; }
+    .lineup-group:last-child { margin-bottom: 0; }
+    .lineup-group-header {
+      text-align: center; margin-bottom: 22px;
+      padding-bottom: 14px; border-bottom: 1px solid rgba(192,122,61,.2);
     }
-    .sort-catalog-card {
-      display: flex; align-items: center; gap: 14px;
-      background: #fff; border: 1px solid var(--line); border-radius: 12px;
-      padding: 14px 18px; text-decoration: none;
+    .lineup-group-title {
+      font-family: var(--serif); font-size: 1.35rem; font-weight: 600;
+      color: var(--accent2); margin: 0 0 4px;
+    }
+    .lineup-group-desc {
+      font-size: 12.5px; color: var(--muted); margin: 0; letter-spacing: 0.3px;
+    }
+
+    .lineup-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+    .lineup-card {
+      background: #fff; border: 1px solid var(--line); border-radius: 14px;
+      overflow: hidden; box-shadow: var(--shadow2);
       transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
     }
-    .sort-catalog-card:hover {
-      transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.08);
+    .lineup-card:hover {
+      transform: translateY(-3px); box-shadow: 0 12px 28px rgba(0,0,0,.08);
     }
-    .sort-catalog-icon {
-      flex-shrink: 0; width: 44px; height: 44px;
-      background: rgba(192,122,61,.12); border-radius: 10px;
+    .lineup-card-img {
+      background: linear-gradient(180deg, #fafafa 0%, #f0ebe1 100%);
+      padding: 14px;
+      aspect-ratio: 4/3;
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
     }
-    .sort-catalog-info .cat-title {
-      font-size: 13px; font-weight: 700; color: var(--accent2);
-      margin: 0 0 2px; display: block;
+    .lineup-card-img img {
+      max-width: 100%; max-height: 100%; object-fit: contain; display: block;
     }
-    .sort-catalog-info .cat-meta {
-      font-size: 11px; color: var(--muted);
+    .lineup-card-body {
+      padding: 16px 18px 18px; flex: 1;
+      display: flex; flex-direction: column;
+    }
+    .lineup-tag {
+      display: inline-block;
+      font-size: 10.5px; font-weight: 800; letter-spacing: 1.2px;
+      text-transform: uppercase; color: var(--accent);
+      background: rgba(192,122,61,.1); padding: 3px 8px;
+      border-radius: 4px; margin: 0 0 8px; width: fit-content;
+    }
+    .lineup-name {
+      font-family: var(--serif); font-size: 1.05rem; font-weight: 700;
+      color: var(--accent2); margin: 0 0 2px; line-height: 1.3;
+    }
+    .lineup-sub {
+      font-size: 11.5px; color: var(--muted); margin: 0 0 10px;
+      letter-spacing: 0.3px; font-style: italic;
+    }
+    .lineup-desc {
+      font-size: 12.5px; color: var(--accent2); line-height: 1.7;
+      margin: 0; word-break: keep-all; flex: 1;
+    }
+
+    .lineup-inquiry-box {
+      margin-top: 36px;
+      background: #fff; border: 2px dashed var(--accent);
+      border-radius: 16px; padding: 26px 32px;
+      display: flex; gap: 22px; align-items: center; flex-wrap: wrap;
+    }
+    .lineup-inquiry-icon {
+      flex-shrink: 0; width: 56px; height: 56px;
+      background: rgba(192,122,61,.12); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .lineup-inquiry-text { flex: 1; min-width: 220px; }
+    .lineup-inquiry-text h4 {
+      font-family: var(--serif); font-size: 1.1rem;
+      color: var(--accent2); margin: 0 0 4px;
+    }
+    .lineup-inquiry-text p {
+      font-size: 13px; color: var(--muted); margin: 0; line-height: 1.7;
+      word-break: keep-all;
     }
 
     /* ── CTA ── */
@@ -760,42 +815,219 @@
       </div>
     </section>
 
-    <!-- ═══ 카탈로그 다운로드 ═══ -->
-    <section class="sort-section alt" style="padding:36px 0 52px;">
+    <!-- ═══ 전체 Anysort 라인업 ═══ -->
+    <section class="sort-section alt">
       <div class="container">
         <div class="sort-intro">
-          <h2>제품 카탈로그 <span>Official Product Catalogs</span></h2>
-          <p>Anysort 공식 카탈로그 원본을 다운로드하여 사내 검토·결재 자료로 활용하세요. 클릭하면 새 창에서 이미지가 열리며, 저장하여 사용하실 수 있습니다.</p>
+          <h2>Anysort 전체 라인업 <span>Complete Anysort Product Range — 커피 외 전 품목 대응</span></h2>
+          <p>Anysort는 커피 원두 외에도 쌀·곡물·차·견과류·한방재료·광물·소금 등 다양한 산업 영역의 품질 선별기를 설계·생산합니다. 국내 공식 파트너인 PNS 팔롬비니를 통해 아래 전 모델의 도입·컨설팅·설치가 가능합니다.</p>
         </div>
-        <div class="sort-catalogs">
-          <a class="sort-catalog-card" href="../assets/img/sorting-h-1.jpg" target="_blank" rel="noopener">
-            <div class="sort-catalog-icon">📄</div>
-            <div class="sort-catalog-info">
-              <span class="cat-title">H 시리즈 카탈로그 (1/2)</span>
-              <span class="cat-meta">제품 개요·선별 대상 · JPG</span>
+
+        <!-- ── AI Channel Type (곡물·쌀·차) ── -->
+        <div class="lineup-group">
+          <div class="lineup-group-header">
+            <h3 class="lineup-group-title">AI Channel Type 선별기</h3>
+            <p class="lineup-group-desc">곡물·쌀·차·광물용 채널형 AI 색채 선별기</p>
+          </div>
+          <div class="lineup-grid">
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/pro-rice.png" alt="PRO Series Rice" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">쌀 · Rice</p>
+                <h4 class="lineup-name">PRO Series</h4>
+                <p class="lineup-sub">Rice Cloud Quality Sorter</p>
+                <p class="lineup-desc">쌀 전 공정에 특화된 혁신 품질 선별 제품. 쌀 가공 효율과 완제품 품질을 한 단계 끌어올립니다.</p>
+              </div>
             </div>
-          </a>
-          <a class="sort-catalog-card" href="../assets/img/sorting-h-2.jpg" target="_blank" rel="noopener">
-            <div class="sort-catalog-icon">📄</div>
-            <div class="sort-catalog-info">
-              <span class="cat-title">H 시리즈 카탈로그 (2/2)</span>
-              <span class="cat-meta">기술·스펙 테이블 · JPG</span>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/plus-rice.png" alt="PLUS Series Rice" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">쌀 · Rice</p>
+                <h4 class="lineup-name">PLUS Series</h4>
+                <p class="lineup-sub">Rice Cloud Quality Sorter</p>
+                <p class="lineup-desc">쌀 품질 선별의 재진화. 기존 PRO 시리즈를 기반으로 성능·정확도를 더욱 향상시킨 업그레이드 모델.</p>
+              </div>
             </div>
-          </a>
-          <a class="sort-catalog-card" href="../assets/img/sorting-smart-1.jpg" target="_blank" rel="noopener">
-            <div class="sort-catalog-icon">📄</div>
-            <div class="sort-catalog-info">
-              <span class="cat-title">SMART 시리즈 카탈로그 (1/2)</span>
-              <span class="cat-meta">제품 개요·선별 대상 · JPG</span>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/h-highspeed.png" alt="H Series High-speed" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">곡물 · Grains</p>
+                <h4 class="lineup-name">H Series High-speed</h4>
+                <p class="lineup-sub">AI Channel Type Sorter</p>
+                <p class="lineup-desc">고속 처리가 필요한 곡물 가공 공장용 대용량 AI 채널형 선별기. 일반 곡물·생두·잡곡 대응.</p>
+              </div>
             </div>
-          </a>
-          <a class="sort-catalog-card" href="../assets/img/sorting-smart-2.jpg" target="_blank" rel="noopener">
-            <div class="sort-catalog-icon">📄</div>
-            <div class="sort-catalog-info">
-              <span class="cat-title">SMART 시리즈 카탈로그 (2/2)</span>
-              <span class="cat-meta">기술·스펙 테이블 · JPG</span>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/sh-plus-grain.png" alt="SH PLUS" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">잡곡 · Multi-grain</p>
+                <h4 class="lineup-name">SH PLUS Series</h4>
+                <p class="lineup-sub">AI Multifunction Grains Sorter</p>
+                <p class="lineup-desc">한 대로 다양한 곡물 선별 — 더 깊은 인식, 완전한 이물질 제거 시스템을 갖춘 다기능 모델.</p>
+              </div>
             </div>
-          </a>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/df-tea.png" alt="DF Series Tea" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">차 · Tea</p>
+                <h4 class="lineup-name">DF Series</h4>
+                <p class="lineup-sub">Tea Cloud Quality Sorter</p>
+                <p class="lineup-desc">녹차·홍차·보이차 등 차 가공 전용 클라우드 품질 선별기. 전 시리즈 성능 업데이트 적용.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/df-r-infrared.png" alt="DF-R Infrared" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">차·이물질 · Tea/Foreign</p>
+                <h4 class="lineup-name">DF-R Series</h4>
+                <p class="lineup-sub">Infrared Quality Sorter</p>
+                <p class="lineup-desc">적외선 기반 이물질 제거 특화 모델. 가시광에서 보이지 않는 결함까지 적외선으로 정밀 검출.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/ss-mineral.png" alt="SS Minerals" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">광물 · Minerals</p>
+                <h4 class="lineup-name">SS Series</h4>
+                <p class="lineup-sub">Minerals Quality Sorter</p>
+                <p class="lineup-desc">자유 조합 가능한 광물 품질 선별기. 한 대 내에서 한 번의 패스로 완전 청소가 가능합니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── AI Belt Type (견과·한방·광물) ── -->
+        <div class="lineup-group">
+          <div class="lineup-group-header">
+            <h3 class="lineup-group-title">AI Belt Type 선별기</h3>
+            <p class="lineup-group-desc">견과·한방재료·대형 곡물·광물·소금용 벨트형 AI 선별기</p>
+          </div>
+          <div class="lineup-grid">
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/tk-peanut.png" alt="TK Peanut" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">땅콩 · Peanut</p>
+                <h4 class="lineup-name">TK Series</h4>
+                <p class="lineup-sub">Peanut Cloud Sorter</p>
+                <p class="lineup-desc">발아 땅콩·이물질·곰팡이 알갱이를 한 번에 제거. 등급 분류·무손상·고생산량의 클라우드 선별.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/tk-l.png" alt="TK-L Series" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">견과 · Seeds/Nuts</p>
+                <h4 class="lineup-name">TK-L Series</h4>
+                <p class="lineup-sub">Cloud Quality Sorter</p>
+                <p class="lineup-desc">맞춤형·경량화 설계. 초기 투자 비용을 낮추고 유연하게 생산 라인을 구성할 수 있는 스마트 옵션.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/tk-pro.png" alt="TK PRO" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">견과·식품 · Food-grade</p>
+                <h4 class="lineup-name">TK PRO Series</h4>
+                <p class="lineup-sub">Food-grade Cloud Sorter</p>
+                <p class="lineup-desc">스테인리스 스틸 오픈 디자인으로 식품 위생 기준 최상위 레벨 확보. HACCP 대응 가능.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/tkd-tcm.png" alt="TKD TCM" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">한방재료 · Herbs/TCM</p>
+                <h4 class="lineup-name">TKD Series</h4>
+                <p class="lineup-sub">TCM Materials Sorter</p>
+                <p class="lineup-desc">한약재·전통 한방재료 전용 품질 선별기. 전반적 장비 업그레이드로 선별 정밀도 향상.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/mk-grain.png" alt="MK Grains" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">곡물 · Grains</p>
+                <h4 class="lineup-name">MK Series</h4>
+                <p class="lineup-sub">Grains Quality Sorter</p>
+                <p class="lineup-desc">잘 부서지는 곡물, 기름기 많은 곡물, 수분 함량 높은 곡물 등 까다로운 소재를 손쉽게 처리.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/ky-salt.png" alt="KY Salt" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">소금 · Salt</p>
+                <h4 class="lineup-name">KY Series</h4>
+                <p class="lineup-sub">Mineral Salt Sorter</p>
+                <p class="lineup-desc">건조 소금·습윤 소금 모두 대응. 대용량·고성능으로 염전·정제 소금 공장에서 사용.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/lk-mineral.png" alt="LK Minerals" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">광물 · Minerals</p>
+                <h4 class="lineup-name">LK Series</h4>
+                <p class="lineup-sub">Minerals Quality Sorter</p>
+                <p class="lineup-desc">크기별 선별이 가능한 협업 제거형 시스템. 다른 크기의 광물을 동시에 분류할 수 있습니다.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/df-tea.png" alt="SSY7T Salt" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">정제염 · Refined Salt</p>
+                <h4 class="lineup-name">SSY7T</h4>
+                <p class="lineup-sub">Refined Salt Sorter</p>
+                <p class="lineup-desc">정제염 전용 고품질·고효율 선별기. 한 번의 패스만으로 완전 청소가 가능한 압축 설계.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── AI 기반 확장 기술 ── -->
+        <div class="lineup-group">
+          <div class="lineup-group-header">
+            <h3 class="lineup-group-title">AI 확장 기술</h3>
+            <p class="lineup-group-desc">엑스레이 기반 심층 검출 + 클라우드 기반 원격 관리 플랫폼</p>
+          </div>
+          <div class="lineup-grid">
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/xray.png" alt="AI X-ray" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">AI X-ray · 심층 검출</p>
+                <h4 class="lineup-name">AI X-ray Cloud Sorting</h4>
+                <p class="lineup-sub">Multi-dimensional Detection</p>
+                <p class="lineup-desc">AI 품질 선별의 방대한 데이터 모델을 기반으로 엑스레이 기술과 결합. 표면 색상으로는 판별 불가능한 내부 결함·이물질까지 다차원 검출.</p>
+              </div>
+            </div>
+
+            <div class="lineup-card">
+              <div class="lineup-card-img"><img src="../assets/img/anysort/cloud-control.jpg" alt="Cloud Control" loading="lazy"/></div>
+              <div class="lineup-card-body">
+                <p class="lineup-tag">플랫폼 · Software</p>
+                <h4 class="lineup-name">Jiexun Cloud Control</h4>
+                <p class="lineup-sub">Data-driven Management</p>
+                <p class="lineup-desc">정확한 데이터 소스 기반의 디지털 관리 플랫폼. 선별기 가동 현황·생산성·품질 지표를 실시간 모니터링하고 원격으로 운영 결정을 내립니다.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── 문의 유도 박스 ── -->
+        <div class="lineup-inquiry-box">
+          <div class="lineup-inquiry-icon">💬</div>
+          <div class="lineup-inquiry-text">
+            <h4>관심 있는 모델이 있으신가요?</h4>
+            <p>위 모든 모델의 상세 스펙·가격·납기·설치 조건은 PNS 팔롬비니가 Anysort 본사와 직접 조율해 드립니다. 카탈로그 공유·국내 도입 상담은 아래로 문의하세요.</p>
+          </div>
+          <a class="btn btn-primary" href="../contact.html">상담 문의하기 →</a>
         </div>
       </div>
     </section>
