@@ -221,22 +221,42 @@
     }
 
     /* ── PRODUCT SHOWCASE ── */
+    /* Normal (H series): img LEFT + content RIGHT — img narrower, content wider */
     .sort-showcase {
       background: #fff; border: 1px solid var(--line); border-radius: 20px;
-      padding: 36px 40px; box-shadow: var(--shadow2);
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px;
+      padding: 36px 44px; box-shadow: var(--shadow2);
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 44px;
       align-items: center; margin-bottom: 28px;
     }
-    .sort-showcase.reverse { grid-template-columns: 1fr 1.2fr; }
-    .sort-showcase.reverse .sort-showcase-content { order: 1; }
-    .sort-showcase.reverse .sort-showcase-img { order: 2; }
+    /* Reverse (SMART): content LEFT + img RIGHT — content wider, img narrower */
+    .sort-showcase.reverse { grid-template-columns: 1.4fr 1fr; }
 
     .sort-showcase-img {
+      position: relative;
       display: flex; align-items: center; justify-content: center;
-      background: var(--bg2, #f8f3ea); border-radius: 16px; padding: 24px;
-      min-height: 220px;
+      background: linear-gradient(135deg, #f9f5ec 0%, #efe6d5 100%);
+      border-radius: 16px; padding: 22px;
+      aspect-ratio: 4/3;
+      overflow: hidden;
     }
-    .sort-showcase-img img { max-width: 100%; height: auto; display: block; }
+    .sort-showcase-img::after {
+      content: '';
+      position: absolute; bottom: 14px; left: 14%; right: 14%; height: 10px;
+      background: radial-gradient(ellipse at center, rgba(0,0,0,0.18), transparent 70%);
+      filter: blur(4px);
+      pointer-events: none;
+    }
+    .sort-showcase-img img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.08));
+    }
 
     .sort-showcase-content .eyebrow {
       font-size: 11px; font-weight: 800; letter-spacing: 2px;
@@ -451,8 +471,10 @@
       .sort-showcase, .sort-showcase.reverse {
         grid-template-columns: 1fr; padding: 26px 24px; gap: 24px;
       }
-      .sort-showcase.reverse .sort-showcase-content { order: 2; }
-      .sort-showcase.reverse .sort-showcase-img { order: 1; }
+      /* On mobile, always show image first (above text) for both layouts */
+      .sort-showcase .sort-showcase-img { order: 1; }
+      .sort-showcase .sort-showcase-content { order: 2; }
+      .sort-showcase-img { aspect-ratio: 16/10; max-height: 280px; }
       .sort-tech-grid { grid-template-columns: 1fr 1fr; }
       .sort-hero { padding: 40px 0 28px; }
       .sort-hero-inner { gap: 28px; }
