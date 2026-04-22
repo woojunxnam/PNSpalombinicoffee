@@ -251,6 +251,45 @@
     html[lang="en"] .video-card-body > p:not(.video-num):not(.en-title):not(.en-desc) { display: none; }
     html[lang="en"] .en-title,
     html[lang="en"] .en-desc { display: block; }
+
+    /* ── INQUIRY BOX (matches /sorting-machines/ style) ── */
+    .lineup-inquiry-box {
+      margin-top: 36px;
+      background: #fff; border: 2px dashed var(--accent);
+      border-radius: 16px; padding: 26px 32px;
+      display: flex; gap: 22px; align-items: center; flex-wrap: wrap;
+    }
+    .lineup-inquiry-icon {
+      flex-shrink: 0; width: 56px; height: 56px;
+      background: rgba(192,122,61,.12); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .lineup-inquiry-text { flex: 1; min-width: 220px; }
+    .lineup-inquiry-text h4 {
+      font-family: var(--serif); font-size: 1.1rem;
+      color: var(--accent2); margin: 0 0 4px;
+    }
+    .lineup-inquiry-text p {
+      font-size: 13px; color: var(--muted); margin: 0; line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    /* ── DARK CTA (matches /sorting-machines/ style) ── */
+    .machines-cta {
+      background: linear-gradient(160deg, #1a1208 0%, #2e1f10 100%);
+      color: #fff; padding: 48px 0; text-align: center;
+    }
+    .machines-cta h3 {
+      font-family: var(--serif); font-size: clamp(20px, 2.6vw, 28px);
+      color: #fff; margin: 0 0 10px;
+    }
+    .machines-cta p {
+      font-size: 14px; color: rgba(255,255,255,.65);
+      max-width: 620px; margin: 0 auto 24px; line-height: 1.8;
+      word-break: keep-all;
+    }
+    .machines-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
   </style>
 </head>
 <body>
@@ -661,10 +700,26 @@
           </div>
         </div>
 
-        <div class="b2b-cta">
-          <p>사양 비교, 견적, 설치 문의 등 모든 B2B 상담을 도와드립니다.</p>
-          <a class="btn btn-primary" href="../contact.html">문의하기</a>
-          <a class="btn btn-ghost" href="mailto:sungpavla@daum.net">이메일 보내기</a>
+        <!-- ── 문의 유도 박스 ── -->
+        <div class="lineup-inquiry-box">
+          <div class="lineup-inquiry-icon">💬</div>
+          <div class="lineup-inquiry-text">
+            <h4>관심 있는 모델이 있으신가요?</h4>
+            <p>위 모든 모델의 상세 스펙·가격·납기·설치 조건은 PNS 팔롬비니가 MDP 본사와 직접 조율해 드립니다. 카탈로그 공유·국내 도입 상담은 아래로 문의하세요.</p>
+          </div>
+          <a class="btn btn-primary" href="../contact.html">상담 문의하기 →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ CTA ═══ -->
+    <section class="machines-cta">
+      <div class="container">
+        <h3>귀사의 생산 규모에 맞는 패키징 머신을 찾아드립니다</h3>
+        <p>처리량·설치 공간·예산을 알려주시면 드립백·티백·파우더·액체·프리메이드 파우치·캡슐 6개 카테고리 26종 중 최적의 모델을 제안하고 정확한 견적과 설치·교육 일정을 안내드립니다. 스페셜티 로스터리부터 대량 가공 공장까지.</p>
+        <div class="machines-cta-btns">
+          <a class="btn btn-primary" href="../contact.html">머신 문의하기 →</a>
+          <a class="btn btn-ghost" href="mailto:sungpavla@daum.net" style="color:#fff;border-color:rgba(255,255,255,.3);">이메일 보내기</a>
         </div>
       </div>
     </section>
@@ -877,10 +932,16 @@
       ['.machine-card-actions .btn-ghost', 'View Details', 'all'],
       ['.machine-card-actions .btn-primary', 'Inquire', 'all'],
 
-      /* ── B2B CTA Section ── */
-      ['.b2b-cta p', 'We assist with all B2B inquiries including spec comparisons, quotes, and installation consultations.'],
-      ['.b2b-cta .btn-primary', 'Contact Us'],
-      ['.b2b-cta .btn-ghost', 'Send Email'],
+      /* ── Inquiry Box ── */
+      ['.lineup-inquiry-text h4', 'Interested in a specific model?'],
+      ['.lineup-inquiry-text p', 'PNS Palombini coordinates detailed specs, pricing, lead times, and installation directly with MDP headquarters. Contact us below for catalog sharing and domestic import consultations.'],
+      ['.lineup-inquiry-box .btn-primary', 'Request Consultation \u2192'],
+
+      /* ── Dark CTA Section ── */
+      ['.machines-cta h3', 'Finding the Right Packaging Machine for Your Production Scale'],
+      ['.machines-cta p', 'Tell us your throughput, installation space, and budget — we\u2019ll recommend the optimal model from our 26 machines across 6 categories (drip bag, tea bag, powder, liquid, premade pouch, capsule) with precise quotes and installation/training schedules. From specialty roasters to large-scale processing plants.'],
+      ['.machines-cta .btn-primary', 'Machine Inquiry \u2192'],
+      ['.machines-cta .btn-ghost', 'Send Email'],
 
       /* ── Header CTA ── */
       ['.header-actions .btn-primary', 'Machine Inquiry'],
