@@ -139,13 +139,40 @@
       font-size: 11px; color: rgba(245,237,225,.55); letter-spacing: 1px;
       text-transform: uppercase;
     }
-    .sort-hero-visual {
-      flex: 1 1 320px; min-width: 260px; display: flex; justify-content: center;
-      background: rgba(255,255,255,.03); border-radius: 16px; padding: 24px;
+    .sort-hero-visual { flex: 1 1 420px; min-width: 280px; }
+    .sort-hero-slideshow {
+      position: relative; width: 100%; aspect-ratio: 4/3;
+      border-radius: 16px; overflow: hidden;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
     }
-    .sort-hero-visual img {
-      max-width: 100%; width: auto; height: auto;
+    .sh-slide {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: contain; padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      opacity: 0; transition: opacity 1s ease;
     }
+    .sh-slide.active { opacity: 1; }
+    .sh-caption {
+      position: absolute; bottom: 12px; left: 14px; right: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: rgba(245,237,225,.9);
+      text-align: center; padding: 6px 10px;
+      background: rgba(20,14,10,.6); border-radius: 8px;
+      backdrop-filter: blur(6px);
+      pointer-events: none;
+      transition: opacity .5s ease;
+    }
+    .sh-dots {
+      position: absolute; top: 14px; right: 14px;
+      display: flex; gap: 4px;
+    }
+    .sh-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(245,237,225,.25); transition: background .3s;
+    }
+    .sh-dot.active { background: var(--accent); }
 
     /* ── SECTIONS ── */
     .sort-section { padding: 48px 0; }
@@ -547,7 +574,28 @@
             <a class="btn btn-primary" href="../contact.html">선별기 문의하기 →</a>
           </div>
           <div class="sort-hero-visual">
-            <img src="../assets/img/sorting-h-machine.jpg" alt="H 시리즈 색채 선별기"/>
+            <div class="sort-hero-slideshow" aria-label="선별기 제품 슬라이드쇼">
+              <img class="sh-slide active" src="../assets/img/anysort/h-highspeed.png" data-name="H 시리즈 고속형 · AI 채널형" alt="H 시리즈"/>
+              <img class="sh-slide" src="../assets/img/anysort/pro-rice.png" data-name="PRO 시리즈 · 쌀 가공 선별기" alt="PRO 시리즈" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/plus-rice.png" data-name="PLUS 시리즈 · 쌀 선별 재진화" alt="PLUS 시리즈" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/sh-plus-grain.png" data-name="SH PLUS · 다기능 잡곡 선별기" alt="SH PLUS" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/df-tea.png" data-name="DF 시리즈 · 차 선별기" alt="DF 시리즈" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/df-r-infrared.png" data-name="DF-R 시리즈 · 적외선 선별기" alt="DF-R" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/ss-mineral.png" data-name="SS 시리즈 · 광물 선별기" alt="SS 시리즈" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/tk-peanut.png" data-name="TK 시리즈 · 땅콩 선별기" alt="TK 시리즈" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/tk-l.png" data-name="TK-L · 경량 맞춤형" alt="TK-L" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/tk-pro.png" data-name="TK PRO · 식품위생 스테인리스" alt="TK PRO" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/tkd-tcm.png" data-name="TKD · 한방재료 선별기" alt="TKD" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/mk-grain.png" data-name="MK · 수분·기름 곡물 선별기" alt="MK" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/ky-salt.png" data-name="KY · 광물 소금 선별기" alt="KY" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/lk-mineral.png" data-name="LK · 대형 습윤 광물 선별기" alt="LK" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/xray.png" data-name="AI X-ray · 심층 다차원 검출" alt="AI X-ray" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/sorting-smart-machine.jpg" data-name="SMART 시리즈 · 로스팅 원두 선별기" alt="SMART" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/sorting-h-machine.jpg" data-name="H 시리즈 · 생두 품질 선별기" alt="H 생두" loading="lazy"/>
+              <img class="sh-slide" src="../assets/img/anysort/cloud-control.jpg" data-name="Jiexun Cloud Control · 원격 관리 플랫폼" alt="Cloud Control" loading="lazy"/>
+              <div class="sh-caption">H 시리즈 고속형 · AI 채널형</div>
+              <div class="sh-dots" aria-hidden="true"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -1132,6 +1180,36 @@
   }
   </script>
   <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <!-- 히어로 슬라이드쇼 -->
+  <script>
+  (function(){
+    var slides = document.querySelectorAll('.sort-hero-slideshow .sh-slide');
+    var caption = document.querySelector('.sort-hero-slideshow .sh-caption');
+    var dotsWrap = document.querySelector('.sort-hero-slideshow .sh-dots');
+    if (slides.length < 2) return;
+
+    // Build dots
+    if (dotsWrap) {
+      for (var i = 0; i < slides.length; i++) {
+        var d = document.createElement('span');
+        d.className = 'sh-dot' + (i === 0 ? ' active' : '');
+        dotsWrap.appendChild(d);
+      }
+    }
+    var dots = dotsWrap ? dotsWrap.querySelectorAll('.sh-dot') : [];
+
+    var idx = 0;
+    setInterval(function(){
+      slides[idx].classList.remove('active');
+      if (dots[idx]) dots[idx].classList.remove('active');
+      idx = (idx + 1) % slides.length;
+      slides[idx].classList.add('active');
+      if (dots[idx]) dots[idx].classList.add('active');
+      if (caption) caption.textContent = slides[idx].getAttribute('data-name') || '';
+    }, 3500);
+  })();
+  </script>
 
   <!-- 비디오 lazy load/unload -->
   <script>
