@@ -139,19 +139,19 @@
       font-size: 11px; color: rgba(245,237,225,.55); letter-spacing: 1px;
       text-transform: uppercase;
     }
-    .sort-hero-visual { flex: 1 1 320px; min-width: 260px; display: flex; justify-content: center; }
+    .sort-hero-visual {
+      flex: 1 1 320px; min-width: 260px; display: flex; justify-content: center;
+      background: rgba(255,255,255,.03); border-radius: 16px; padding: 24px;
+    }
     .sort-hero-visual img {
-      max-width: 100%; width: 460px; height: auto; border-radius: 12px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      max-width: 100%; width: auto; height: auto;
     }
 
-    /* ── CATEGORY SECTIONS ── */
+    /* ── SECTIONS ── */
     .sort-section { padding: 48px 0; }
     .sort-section.alt { background: var(--bg2, #f8f3ea); }
 
-    .sort-intro {
-      max-width: 720px; margin: 0 auto 36px; text-align: center;
-    }
+    .sort-intro { max-width: 760px; margin: 0 auto 36px; text-align: center; }
     .sort-intro h2 {
       font-family: var(--serif); font-size: clamp(22px, 3vw, 30px);
       color: var(--accent2); margin: 0 0 10px;
@@ -161,76 +161,148 @@
       color: var(--muted); letter-spacing: 1px; margin-top: 4px;
     }
     .sort-intro p {
-      font-size: 14px; line-height: 1.8; color: var(--muted);
+      font-size: 14px; line-height: 1.85; color: var(--muted);
       margin: 0; word-break: keep-all;
     }
 
-    /* ── PRODUCT FEATURE (image + tech highlights) ── */
-    .sort-feature {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
-      align-items: center; margin-bottom: 36px;
+    /* ── VIDEO DEMOS (top section) ── */
+    .sort-videos {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px; margin-top: 24px;
     }
-    .sort-feature-img {
+    .sort-video-card {
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 16px; overflow: hidden; box-shadow: var(--shadow2);
+      transition: transform .2s;
+    }
+    .sort-video-card:hover { transform: translateY(-3px); }
+    .sort-video-card video {
+      width: 100%; aspect-ratio: 16/9; object-fit: cover;
+      background: #000; display: block;
+    }
+    .sort-video-body { padding: 18px 20px 22px; }
+    .sort-video-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 2px;
+      color: var(--accent); margin: 0 0 4px;
+    }
+    .sort-video-body h4 {
+      font-family: var(--serif);
+      font-size: 16px; font-weight: 700; color: var(--accent2); margin: 0 0 8px;
+    }
+    .sort-video-body p {
+      font-size: 12.5px; color: var(--muted); line-height: 1.75; margin: 0;
+    }
+
+    /* ── PRODUCT SHOWCASE ── */
+    .sort-showcase {
       background: #fff; border: 1px solid var(--line); border-radius: 20px;
-      padding: 30px; box-shadow: var(--shadow2);
+      padding: 36px 40px; box-shadow: var(--shadow2);
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 36px;
+      align-items: center; margin-bottom: 28px;
     }
-    .sort-feature-img img { width: 100%; height: auto; display: block; }
-    .sort-feature-body h3 {
-      font-family: var(--serif); font-size: 1.6rem;
-      color: var(--accent2); margin: 0 0 6px;
+    .sort-showcase.reverse { grid-template-columns: 1fr 1.2fr; }
+    .sort-showcase.reverse .sort-showcase-content { order: 1; }
+    .sort-showcase.reverse .sort-showcase-img { order: 2; }
+
+    .sort-showcase-img {
+      display: flex; align-items: center; justify-content: center;
+      background: var(--bg2, #f8f3ea); border-radius: 16px; padding: 24px;
+      min-height: 220px;
     }
-    .sort-feature-body .eyebrow {
+    .sort-showcase-img img { max-width: 100%; height: auto; display: block; }
+
+    .sort-showcase-content .eyebrow {
       font-size: 11px; font-weight: 800; letter-spacing: 2px;
       text-transform: uppercase; color: var(--accent); margin: 0 0 8px;
     }
-    .sort-feature-body > p {
-      font-size: 14px; line-height: 1.8; color: var(--muted);
-      margin: 0 0 20px; word-break: keep-all;
+    .sort-showcase-content h3 {
+      font-family: var(--serif); font-size: 1.55rem; font-weight: 600;
+      color: var(--accent2); margin: 0 0 16px; line-height: 1.3;
+    }
+    .sort-showcase-content > p {
+      font-size: 14px; line-height: 1.85; color: var(--muted);
+      margin: 0 0 18px; word-break: keep-all;
+    }
+    .sort-showcase-points {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .sort-showcase-points li {
+      display: flex; gap: 12px; align-items: flex-start;
+      font-size: 13px; line-height: 1.7; color: var(--accent2);
+    }
+    .sort-showcase-points .pt-icon {
+      flex-shrink: 0; width: 28px; height: 28px;
+      background: rgba(192,122,61,.1); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .sort-showcase-points strong { color: var(--accent); font-weight: 700; }
+
+    /* ── TECH CARDS ── */
+    .sort-tech-title {
+      font-family: var(--serif); font-size: 1.3rem; color: var(--accent2);
+      margin: 36px 0 6px; text-align: center;
+    }
+    .sort-tech-subtitle {
+      font-size: 13px; color: var(--muted); text-align: center;
+      margin: 0 0 22px; letter-spacing: 0.5px;
     }
     .sort-tech-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px; margin-bottom: 32px;
     }
     .sort-tech-card {
       background: #fff; border: 1px solid var(--line); border-radius: 12px;
-      padding: 14px 16px;
+      padding: 18px 20px; transition: transform .2s, box-shadow .2s;
     }
-    .sort-tech-card .tc-icon {
-      font-size: 22px; margin-bottom: 6px;
-    }
+    .sort-tech-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.06); }
+    .sort-tech-card .tc-icon { font-size: 24px; margin-bottom: 8px; }
     .sort-tech-card .tc-title {
-      font-size: 13px; font-weight: 700; color: var(--accent2); margin: 0 0 4px;
+      font-size: 14px; font-weight: 700; color: var(--accent2); margin: 0 0 6px;
     }
     .sort-tech-card .tc-desc {
-      font-size: 11.5px; color: var(--muted); line-height: 1.6; margin: 0;
+      font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0;
+      word-break: keep-all;
     }
 
-    /* ── DEFECT DETECTION GRID ── */
+    /* ── DEFECTS ── */
     .sort-defects {
       background: var(--card); border: 1px solid var(--line);
-      border-radius: 16px; padding: 24px; margin-top: 20px;
+      border-radius: 16px; padding: 24px 28px; margin: 24px 0 32px;
     }
     .sort-defects-title {
       font-size: 13px; font-weight: 800; letter-spacing: 1px;
-      text-transform: uppercase; color: var(--accent); margin: 0 0 14px;
+      text-transform: uppercase; color: var(--accent); margin: 0 0 6px;
+    }
+    .sort-defects-desc {
+      font-size: 12.5px; color: var(--muted); margin: 0 0 16px; line-height: 1.7;
     }
     .sort-defects-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 12px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 10px;
     }
     .sort-defect {
-      text-align: center; padding: 10px 4px;
-      border-radius: 8px; background: var(--bg2, #f8f3ea);
+      text-align: center; padding: 12px 6px;
+      border-radius: 10px; background: var(--bg2, #f8f3ea);
+      border: 1px solid transparent;
+      transition: border-color .2s, background .2s;
     }
+    .sort-defect:hover { border-color: var(--accent); background: #fff; }
     .sort-defect .df-ko {
       display: block; font-size: 13px; font-weight: 700; color: var(--accent2);
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
     .sort-defect .df-en {
-      display: block; font-size: 11px; color: var(--muted);
+      display: block; font-size: 10.5px; color: var(--muted); letter-spacing: 0.3px;
     }
 
     /* ── SPECS TABLE ── */
-    .sort-specs-wrap { margin-top: 28px; overflow-x: auto; }
+    .sort-specs-title {
+      font-family: var(--serif); font-size: 1.2rem; color: var(--accent2);
+      margin: 0 0 14px; text-align: center;
+    }
+    .sort-specs-wrap { overflow-x: auto; margin-bottom: 8px; }
     .sort-specs {
       width: 100%; border-collapse: collapse;
       background: #fff; border-radius: 12px; overflow: hidden;
@@ -246,62 +318,67 @@
       border-top: 1px solid var(--line); white-space: nowrap;
     }
     .sort-specs tr:nth-child(even) td { background: rgba(192,122,61,.035); }
-    .sort-specs .model-cell {
-      font-weight: 800; color: var(--accent);
-    }
+    .sort-specs .model-cell { font-weight: 800; color: var(--accent); }
 
-    /* ── VIDEO DEMOS ── */
-    .sort-videos {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 20px; margin-top: 28px;
+    /* ── CATALOG DOWNLOAD ── */
+    .sort-catalogs {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px; margin-top: 24px;
     }
-    .sort-video-card {
-      background: var(--card); border: 1px solid var(--line);
-      border-radius: 16px; overflow: hidden; box-shadow: var(--shadow2);
-      transition: transform .2s;
+    .sort-catalog-card {
+      display: flex; align-items: center; gap: 14px;
+      background: #fff; border: 1px solid var(--line); border-radius: 12px;
+      padding: 14px 18px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
     }
-    .sort-video-card:hover { transform: translateY(-3px); }
-    .sort-video-card video {
-      width: 100%; aspect-ratio: 16/9; object-fit: cover;
-      background: #000; display: block;
+    .sort-catalog-card:hover {
+      transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.08);
     }
-    .sort-video-body { padding: 16px 18px 18px; }
-    .sort-video-num {
-      font-size: 10px; font-weight: 800; letter-spacing: 2px;
-      color: var(--accent); margin: 0 0 4px;
+    .sort-catalog-icon {
+      flex-shrink: 0; width: 44px; height: 44px;
+      background: rgba(192,122,61,.12); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
     }
-    .sort-video-body h4 {
-      font-size: 14px; font-weight: 700; color: var(--accent2); margin: 0 0 6px;
+    .sort-catalog-info .cat-title {
+      font-size: 13px; font-weight: 700; color: var(--accent2);
+      margin: 0 0 2px; display: block;
     }
-    .sort-video-body p {
-      font-size: 12px; color: var(--muted); line-height: 1.7; margin: 0;
+    .sort-catalog-info .cat-meta {
+      font-size: 11px; color: var(--muted);
     }
 
     /* ── CTA ── */
     .sort-cta {
       background: linear-gradient(160deg, #1a1208 0%, #2e1f10 100%);
-      color: #fff; padding: 44px 0; text-align: center;
+      color: #fff; padding: 48px 0; text-align: center;
     }
     .sort-cta h3 {
       font-family: var(--serif); font-size: clamp(20px, 2.6vw, 28px);
-      color: #fff; margin: 0 0 8px;
+      color: #fff; margin: 0 0 10px;
     }
     .sort-cta p {
       font-size: 14px; color: rgba(255,255,255,.65);
-      max-width: 560px; margin: 0 auto 22px; line-height: 1.7;
+      max-width: 580px; margin: 0 auto 24px; line-height: 1.8;
     }
     .sort-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
-      .sort-feature { grid-template-columns: 1fr; gap: 24px; }
-      .sort-feature-img { padding: 20px; }
-      .sort-tech-grid { grid-template-columns: 1fr; }
+      .sort-showcase, .sort-showcase.reverse {
+        grid-template-columns: 1fr; padding: 26px 24px; gap: 24px;
+      }
+      .sort-showcase.reverse .sort-showcase-content { order: 2; }
+      .sort-showcase.reverse .sort-showcase-img { order: 1; }
+      .sort-tech-grid { grid-template-columns: 1fr 1fr; }
       .sort-hero { padding: 40px 0 28px; }
       .sort-hero-inner { gap: 28px; }
       .sort-hero-stats { gap: 16px; }
       .sort-hero-stat strong { font-size: 18px; }
       .partner-divider { display: none; }
+    }
+    @media (max-width: 520px) {
+      .sort-tech-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -396,7 +473,7 @@
           <div class="sort-hero-copy">
             <p class="sort-hero-eyebrow">AI Color Sorter · Anysort</p>
             <h1>AI 색채 선별기<br/>전체 라인업</h1>
-            <p class="sort-hero-desc">생두부터 로스팅 원두까지, AI 기반 Hawkeye 3.0 카메라와 MPF(Multi Pixel Fusion) 기술로 색상·형태·크기·이물질을 정밀 선별합니다. 시간당 0.2톤 부티크 라인부터 30톤 대량 처리까지.</p>
+            <p class="sort-hero-desc">생두부터 로스팅 원두까지 — AI 학습 모델과 Hawkeye 3.0 고속 카메라, MPF(Multi Pixel Fusion) 기술로 색상·형태·크기·이물질을 정밀 선별합니다. 시간당 0.2톤 부티크 라인부터 30톤 대량 가공 공장까지, 12종의 모델로 모든 규모를 커버합니다.</p>
             <div class="sort-hero-stats">
               <div class="sort-hero-stat">
                 <strong>12종</strong>
@@ -414,7 +491,7 @@
             <a class="btn btn-primary" href="../contact.html">선별기 문의하기 →</a>
           </div>
           <div class="sort-hero-visual">
-            <img src="../assets/img/sorting-h-1.jpg" alt="H 시리즈 선별기"/>
+            <img src="../assets/img/sorting-h-machine.jpg" alt="H 시리즈 색채 선별기"/>
           </div>
         </div>
       </div>
@@ -436,7 +513,7 @@
           <div class="partner-info">
             <div class="partner-badge">★ 국내 공식 파트너 · Official Partner</div>
             <p class="partner-title">PNS 팔롬비니는 Anysort의 국내 공식 파트너사입니다</p>
-            <p class="partner-desc">Anhui Jiexun Optoelectronic Technology(Anysort)는 AI 기반 클라우드 색채 선별기 전문 제조사로, 전 세계 고급 커피 브랜드와 스페셜티 로스터리에 선별 솔루션을 공급합니다. 공식 파트너를 통해 정품 머신과 한국어 기술 지원을 받으세요.</p>
+            <p class="partner-desc">Anhui Jiexun Optoelectronic Technology(Anysort)는 AI 기반 클라우드 색채 선별기 전문 제조사로, 전 세계 고급 커피 브랜드와 스페셜티 로스터리에 선별 솔루션을 공급합니다. 공식 파트너를 통해 정품 머신과 한국어 기술 지원·설치 교육을 받으세요.</p>
             <div class="partner-pills">
               <span class="partner-pill">✓ 정품 인증 머신</span>
               <span class="partner-pill">✓ 한국어 기술 지원</span>
@@ -448,63 +525,119 @@
       </div>
     </div>
 
-    <!-- ═══ H SERIES (생두 선별) ═══ -->
+    <!-- ═══ VIDEO DEMOS (TOP) ═══ -->
     <section class="sort-section">
       <div class="container">
         <div class="sort-intro">
-          <h2>H 시리즈 <span>Unroasted Coffee Bean Quality Sorter — 생두용 선별기</span></h2>
-          <p>수확·가공 과정에서 혼입되는 돌·금속·나무조각·플라스틱 이물질과 곰팡이·산패·파손된 결점두를 정밀하게 선별합니다. 시간당 0.5톤부터 30톤까지 9개 모델로 규모별 대응.</p>
+          <h2>실제 작동 영상 먼저 확인하세요 <span>Sorting Machine Demos — See It in Action</span></h2>
+          <p>카탈로그 수치만으로는 알기 어려운 실제 선별 퍼포먼스를 영상으로 확인하실 수 있습니다. SMART 시리즈가 로스팅 원두의 미세한 색상 차이를 포착하는 모습, H 시리즈가 생두에 섞인 이물질과 결점두를 실시간으로 분리해내는 장면을 직접 보여드립니다.</p>
         </div>
 
-        <div class="sort-feature">
-          <div class="sort-feature-img">
-            <img src="../assets/img/sorting-h-1.jpg" alt="H 시리즈 생두 색채 선별기"/>
+        <div class="sort-videos">
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-smart.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">01 · SMART SERIES</p>
+              <h4>로스팅 원두 파손·탄화 선별</h4>
+              <p>SMART 시리즈가 볶은 원두 컨베이어 위로 지나가는 수만 개의 알갱이에서 <strong>탄화된 원두(Burnt)</strong>와 <strong>파손된 알갱이(Incomplete Grains)</strong>를 실시간으로 구분해 공기압으로 정확하게 배출합니다. 정상 원두는 전혀 영향받지 않습니다.</p>
+            </div>
           </div>
-          <div class="sort-feature-body">
-            <p class="eyebrow">Quality Sorting Technology</p>
-            <h3>AI 기반 클라우드 선별 기술</h3>
-            <p>AI 품질 선별 모델이 색상·형태·크기·재질의 미세한 차이를 판별하고, PLOV 물리 구조 플랫폼으로 파손 제로의 안정 낙하를 구현합니다. 독립형 환경 정화 기술과 지능형 자가 청소 시스템으로 복잡한 작업 환경에서도 지속적이고 안정적인 작동이 가능합니다.</p>
 
-            <div class="sort-tech-grid">
-              <div class="sort-tech-card">
-                <div class="tc-icon">🤖</div>
-                <p class="tc-title">AI 품질 선별 모델</p>
-                <p class="tc-desc">색상·형태·크기·재질 차이를 정밀 판별하는 대형 AI 모델</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">👁️</div>
-                <p class="tc-title">Hawkeye Camera 3.0</p>
-                <p class="tc-desc">고속 이동 물체를 정확하게 인식하는 3세대 호크아이 카메라</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">🔷</div>
-                <p class="tc-title">MPF 기술</p>
-                <p class="tc-desc">다중 픽셀 융합(Multi Pixel Fusion) 기술로 이물질 정밀 제거</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">🔄</div>
-                <p class="tc-title">자가 청소 시스템</p>
-                <p class="tc-desc">환경 정화 + 지능형 자가 청소로 안정적 연속 작동</p>
-              </div>
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-impurity.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">02 · H SERIES</p>
+              <h4>생두 이물질 제거</h4>
+              <p>H 시리즈가 생두 투입 흐름 속에서 <strong>돌·금속·나무 조각·플라스틱</strong> 등 수확·가공 과정에서 혼입된 이물질을 정밀하게 찾아내어 자동 배출합니다. 대형 로스터리의 필수 공정입니다.</p>
+            </div>
+          </div>
+
+          <div class="sort-video-card">
+            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-defect.mp4"></video>
+            <div class="sort-video-body">
+              <p class="sort-video-num">03 · H SERIES</p>
+              <h4>생두 결점두 선별 (흑두·파손)</h4>
+              <p>이물질뿐 아니라 <strong>곰팡이 원두(Moldy)</strong>, 로스팅 시 까맣게 타버리는 <strong>흑두</strong>, 그리고 운송 중 깨진 <strong>파손 원두</strong>까지 — 커피 풍미를 망치는 모든 불량을 컵 퀄리티에 도달하기 전에 걸러냅니다.</p>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- 선별 대상 결점두 -->
+    <!-- ═══ H SERIES (생두 선별) ═══ -->
+    <section class="sort-section alt">
+      <div class="container">
+        <div class="sort-intro">
+          <h2>H 시리즈 <span>Unroasted Coffee Bean Quality Sorter — 생두용 선별기</span></h2>
+          <p>커피 원두 원료는 수확 및 가공 과정에서 이물질·결점·불량품 등 커피 풍미에 영향을 미치는 요소들이 존재합니다. Anysort는 이러한 문제를 해결하기 위해 생두 전용 품질 선별기 <strong>H 시리즈</strong>를 출시했습니다. 전통적인 돌·금속·나무 조각·플라스틱 등의 이물질을 효율적으로 제거할 뿐만 아니라, 결점·병반 및 파손된 알갱이 등의 불량품까지 정밀하게 선별하여 생두의 품질을 근본적으로 향상시킵니다.</p>
+        </div>
+
+        <!-- 제품 소개: 머신 이미지 + 핵심 혜택 4가지 -->
+        <div class="sort-showcase">
+          <div class="sort-showcase-img">
+            <img src="../assets/img/sorting-h-machine.jpg" alt="H 시리즈 생두 선별기 (H-10 PRO)"/>
+          </div>
+          <div class="sort-showcase-content">
+            <p class="eyebrow">H-1 · H-2 · H-3 · H-4 · H-5 · H-7 · H-8 · H-10 · H-12</p>
+            <h3>생두에 숨은 결점을 처음부터 걸러냅니다</h3>
+            <p>H 시리즈는 스페셜티 생두 수입상부터 대형 가공 공장까지, 품질 관리의 첫 단계에 투입되는 핵심 장비입니다. 9개 모델이 시간당 0.5톤부터 30톤까지 생산 규모를 완벽히 커버합니다.</p>
+            <ul class="sort-showcase-points">
+              <li><span class="pt-icon">🪨</span><span><strong>이물질 완전 제거</strong> — 돌·금속·나무 조각·플라스틱 등 수확 단계에서 혼입된 이물질을 한 번의 공정으로 제거</span></li>
+              <li><span class="pt-icon">🫘</span><span><strong>7종 결점두 동시 선별</strong> — 곰팡이·산패·미탈각·짙은 밀랍색·껍질 잔존·충공·파손 원두를 AI가 동시에 판별</span></li>
+              <li><span class="pt-icon">🎯</span><span><strong>정확도 ≥99.99%</strong> — 이월률 30:1 이상의 고효율 재선별, 불량 재유입 최소화</span></li>
+              <li><span class="pt-icon">⚙️</span><span><strong>규모별 9개 모델</strong> — 0.5 t/h 부티크 수입상부터 30 t/h 대량 가공 공장까지</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 선별 기술 -->
+        <h3 class="sort-tech-title">Quality Sorting Technology</h3>
+        <p class="sort-tech-subtitle">5가지 핵심 기술로 업계 최고 수준의 선별 성능을 구현합니다</p>
+        <div class="sort-tech-grid">
+          <div class="sort-tech-card">
+            <div class="tc-icon">🤖</div>
+            <p class="tc-title">AI 대형 품질 선별 모델</p>
+            <p class="tc-desc">다양한 선별 요구에 자동으로 대응하며, 색상·형태·크기·재질의 미세한 차이를 정밀하게 판별합니다. 형태 선별 능력과 이물 선별 능력을 전반적으로 향상시킵니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">👁️</div>
+            <p class="tc-title">Hawkeye Camera 3.0</p>
+            <p class="tc-desc">3세대 호크아이 카메라 기술로, 고속으로 이동하는 물체를 초고속·고정밀로 인식합니다. 분당 수천 회의 프레임 분석으로 놓치는 결점이 없습니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">🛡️</div>
+            <p class="tc-title">PLOV 물리 구조 플랫폼</p>
+            <p class="tc-desc">생두의 물리적 특성을 고려한 유연한 낙하 구조 기술. 선별 과정에서 발생할 수 있는 파손을 원천 차단합니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">🔷</div>
+            <p class="tc-title">MPF (다중 픽셀 융합)</p>
+            <p class="tc-desc">Multi Pixel Fusion 기술로 색상 결함·형태 결함·크기 결함 및 이물질 제거를 더욱 정밀하게 수행합니다. 유사 색상의 결점두도 구분합니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">🔄</div>
+            <p class="tc-title">자가 청소 · 환경 정화</p>
+            <p class="tc-desc">독립형 환경 정화 기술과 지능형 자가 청소 시스템이 결합되어, 먼지·잔여물이 많은 복잡한 작업 환경에서도 지속적이고 안정적으로 작동합니다.</p>
+          </div>
+        </div>
+
+        <!-- 선별 대상 -->
         <div class="sort-defects">
-          <p class="sort-defects-title">🎯 H 시리즈 선별 대상</p>
+          <p class="sort-defects-title">🎯 H 시리즈가 선별해내는 생두 결점 7종</p>
+          <p class="sort-defects-desc">카페 브루잉에 도달하기 전, 풍미를 해치는 모든 결점 원두를 자동으로 분리합니다. AI가 각 원두를 300fps 이상으로 스캔해 미세한 색상·형태 차이를 감지합니다.</p>
           <div class="sort-defects-grid">
             <div class="sort-defect"><span class="df-ko">정상 원두</span><span class="df-en">Good Bean</span></div>
             <div class="sort-defect"><span class="df-ko">곰팡이</span><span class="df-en">Moldy</span></div>
             <div class="sort-defect"><span class="df-ko">미탈각</span><span class="df-en">Unhulled</span></div>
             <div class="sort-defect"><span class="df-ko">산패된 원두</span><span class="df-en">Sour Bean</span></div>
-            <div class="sort-defect"><span class="df-ko">짙은 밀랍색</span><span class="df-en">Dark Waxy</span></div>
-            <div class="sort-defect"><span class="df-ko">껍질이 남음</span><span class="df-en">With Skin</span></div>
+            <div class="sort-defect"><span class="df-ko">짙은 밀랍색</span><span class="df-en">Dark Waxy Yellow</span></div>
+            <div class="sort-defect"><span class="df-ko">껍질 잔존</span><span class="df-en">With Skin</span></div>
             <div class="sort-defect"><span class="df-ko">충공</span><span class="df-en">Wormhole</span></div>
           </div>
         </div>
 
-        <!-- H 시리즈 스펙 테이블 -->
+        <!-- 스펙 테이블 -->
+        <h4 class="sort-specs-title">H 시리즈 전체 모델 사양 (9종)</h4>
         <div class="sort-specs-wrap">
           <table class="sort-specs">
             <thead>
@@ -536,50 +669,61 @@
     </section>
 
     <!-- ═══ SMART SERIES (로스팅 원두 선별) ═══ -->
-    <section class="sort-section alt">
+    <section class="sort-section">
       <div class="container">
         <div class="sort-intro">
           <h2>SMART 시리즈 <span>Roasted Coffee Bean Quality Sorter — 로스팅 원두용 선별기</span></h2>
-          <p>커피의 풍미는 로스팅 정도와 밀접하게 연결됩니다. SMART 시리즈는 봉은 원두의 미세한 색상 차이를 기준으로 정밀하게 등급을 나누고 선별하여, 한 잔 한 잔의 풍미 일관성을 보장합니다. 스페셜티 카페·부티크 로스터리의 "매장+로스팅 공장" 형태 운영에 이상적.</p>
+          <p>널리 알려진 바와 같이 커피의 풍미는 로스팅 정도와 밀접한 관련이 있으며, 로스팅 강도에 따라 원두의 색상이 다양하게 나타납니다. 커피 로스팅 원두의 정밀 선별 수요에 대응하기 위해 Anysort가 개발한 <strong>SMART 시리즈</strong>는 볶은 원두의 미세한 색상 차이를 기준으로 정밀하게 등급을 나누고 선별합니다. 이를 통해 컵마다 동일한 풍미 일관성을 보장하며, 현재 전 세계의 고급 커피 브랜드와 '매장+로스팅 공장(store in front, factory in back)' 형태의 스페셜티 커피 매장에서 사용되고 있습니다.</p>
         </div>
 
-        <div class="sort-feature">
-          <div class="sort-feature-body">
-            <p class="eyebrow">Compact & Precise</p>
-            <h3>부티크 로스터리를 위한 정밀 선별 솔루션</h3>
-            <p>경량 소형 설계로 작은 크기에도 불구하고 높은 생산량을 실현하며, 다양한 가공 환경에 유연하게 적용됩니다. PLOV 물리 구조 플랫폼 기술로 로스팅 원두의 잘 부서지는 특성을 고려해 유연한 낙하 구조로 설계되어 선별 시 파손이 전혀 발생하지 않습니다.</p>
-
-            <div class="sort-tech-grid">
-              <div class="sort-tech-card">
-                <div class="tc-icon">🛡️</div>
-                <p class="tc-title">PLOV 낙하 구조</p>
-                <p class="tc-desc">로스팅 원두의 취약성을 고려한 유연 낙하, 파손 Zero</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">👁️</div>
-                <p class="tc-title">Hawkeye Camera 3.0</p>
-                <p class="tc-desc">고속 이동 원두를 정확하게 인식</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">🤖</div>
-                <p class="tc-title">AI 대형 선별 모델</p>
-                <p class="tc-desc">색상·형태·크기·재질 미세 차이 정밀 판별</p>
-              </div>
-              <div class="sort-tech-card">
-                <div class="tc-icon">🔷</div>
-                <p class="tc-title">MPF 기술</p>
-                <p class="tc-desc">색상 결함·형태 결함·이물질을 더욱 정밀하게 수행</p>
-              </div>
-            </div>
+        <!-- 제품 소개 (reverse 레이아웃) -->
+        <div class="sort-showcase reverse">
+          <div class="sort-showcase-content">
+            <p class="eyebrow">SMART 1 · SMART 2 · SMART 3</p>
+            <h3>부티크 로스터리의 품질 관리자</h3>
+            <p>SMART 시리즈는 경량 소형 설계로 작은 매장에도 배치 가능하면서, 시간당 0.2 ~ 0.6톤의 생산량을 실현합니다. 로스터 옆에 놓고 바로 선별 라인을 구성할 수 있습니다.</p>
+            <ul class="sort-showcase-points">
+              <li><span class="pt-icon">🎨</span><span><strong>색상 차이 정밀 판별</strong> — 로스팅 강도에 따른 미세한 색상 차이까지 구분하여 컵 퀄리티 편차를 제거</span></li>
+              <li><span class="pt-icon">🛡️</span><span><strong>파손 Zero 낙하</strong> — PLOV 유연 낙하 구조로 깨지기 쉬운 로스팅 원두를 완벽히 보호</span></li>
+              <li><span class="pt-icon">📐</span><span><strong>컴팩트 설계</strong> — SMART 1 기준 530×880×1,210mm, 172kg으로 소규모 카페·로스터리에 적합</span></li>
+              <li><span class="pt-icon">🌍</span><span><strong>글로벌 레퍼런스</strong> — 전 세계 고급 커피 브랜드 및 부티크 로스터리에서 사용 중</span></li>
+            </ul>
           </div>
-          <div class="sort-feature-img">
-            <img src="../assets/img/sorting-smart-1.jpg" alt="SMART 시리즈 로스팅 원두 선별기"/>
+          <div class="sort-showcase-img">
+            <img src="../assets/img/sorting-smart-machine.jpg" alt="SMART 시리즈 로스팅 원두 선별기"/>
+          </div>
+        </div>
+
+        <!-- SMART 기술 -->
+        <h3 class="sort-tech-title">Quality Sorting Technology</h3>
+        <p class="sort-tech-subtitle">경량 소형 설계에도 높은 생산량을 실현하는 4가지 핵심 기술</p>
+        <div class="sort-tech-grid">
+          <div class="sort-tech-card">
+            <div class="tc-icon">🛡️</div>
+            <p class="tc-title">PLOV 낙하 구조</p>
+            <p class="tc-desc">로스팅 원두의 부서지기 쉬운 특성을 고려해, 유연한 낙하 구조로 설계되어 선별 과정에서 파손이 전혀 발생하지 않습니다. 볶은 원두의 섬세한 상태를 그대로 유지합니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">👁️</div>
+            <p class="tc-title">Hawkeye Camera 3.0</p>
+            <p class="tc-desc">고속으로 이동하는 원두를 정확하게 인식하는 3세대 호크아이 카메라. 로스팅에 따른 미묘한 색상 변화까지 포착합니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">🤖</div>
+            <p class="tc-title">AI 대형 품질 선별 모델</p>
+            <p class="tc-desc">AI 기반 대형 품질 선별 모델을 적용해, 색상·형태·크기·재질의 미세한 차이를 정밀하게 판별합니다. 같은 로스팅 프로필 안에서도 편차를 걸러냅니다.</p>
+          </div>
+          <div class="sort-tech-card">
+            <div class="tc-icon">🔷</div>
+            <p class="tc-title">MPF (다중 픽셀 융합)</p>
+            <p class="tc-desc">Multi Pixel Fusion 기술로 색상 결함·형태 결함·크기 결함 및 이물질 제거를 더욱 정밀하게 수행합니다.</p>
           </div>
         </div>
 
         <!-- 선별 대상 -->
         <div class="sort-defects">
-          <p class="sort-defects-title">🎯 SMART 시리즈 선별 대상</p>
+          <p class="sort-defects-title">🎯 SMART 시리즈가 선별해내는 로스팅 원두 결점 6종</p>
+          <p class="sort-defects-desc">정상 원두만 컵에 도달하도록 — 로스팅 단계에서 발생하는 모든 품질 편차를 자동 분류합니다.</p>
           <div class="sort-defects-grid">
             <div class="sort-defect"><span class="df-ko">정상 원두</span><span class="df-en">Good Bean</span></div>
             <div class="sort-defect"><span class="df-ko">과도한 로스팅</span><span class="df-en">Burnt</span></div>
@@ -590,7 +734,8 @@
           </div>
         </div>
 
-        <!-- SMART 시리즈 스펙 테이블 -->
+        <!-- 스펙 -->
+        <h4 class="sort-specs-title">SMART 시리즈 전체 모델 사양 (3종)</h4>
         <div class="sort-specs-wrap">
           <table class="sort-specs">
             <thead>
@@ -615,41 +760,42 @@
       </div>
     </section>
 
-    <!-- ═══ 작동 영상 쇼케이스 ═══ -->
-    <section class="sort-section">
+    <!-- ═══ 카탈로그 다운로드 ═══ -->
+    <section class="sort-section alt" style="padding:36px 0 52px;">
       <div class="container">
         <div class="sort-intro">
-          <h2>선별기 작동 영상 <span>Sorting Machine Demos</span></h2>
-          <p>실제 선별 과정을 확인하세요. SMART와 H 시리즈가 어떻게 색채·형태 결함을 정확하게 구분하고 배출하는지 보여드립니다.</p>
+          <h2>제품 카탈로그 <span>Official Product Catalogs</span></h2>
+          <p>Anysort 공식 카탈로그 원본을 다운로드하여 사내 검토·결재 자료로 활용하세요. 클릭하면 새 창에서 이미지가 열리며, 저장하여 사용하실 수 있습니다.</p>
         </div>
-
-        <div class="sort-videos">
-          <div class="sort-video-card">
-            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-smart.mp4"></video>
-            <div class="sort-video-body">
-              <p class="sort-video-num">01 — SMART 시리즈</p>
-              <h4>로스팅 원두 선별 (파손·탄화)</h4>
-              <p>SMART가 로스팅 원두의 미세한 색상 차이를 포착해 파손된 원두와 과도 로스팅(탄화)된 원두를 선별하는 실제 작동 영상입니다.</p>
+        <div class="sort-catalogs">
+          <a class="sort-catalog-card" href="../assets/img/sorting-h-1.jpg" target="_blank" rel="noopener">
+            <div class="sort-catalog-icon">📄</div>
+            <div class="sort-catalog-info">
+              <span class="cat-title">H 시리즈 카탈로그 (1/2)</span>
+              <span class="cat-meta">제품 개요·선별 대상 · JPG</span>
             </div>
-          </div>
-
-          <div class="sort-video-card">
-            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-impurity.mp4"></video>
-            <div class="sort-video-body">
-              <p class="sort-video-num">02 — H 시리즈</p>
-              <h4>생두 이물질 선별</h4>
-              <p>H 시리즈가 생두에서 돌·금속·나무조각·플라스틱 등 이물질을 정밀하게 제거하는 모습을 보여줍니다.</p>
+          </a>
+          <a class="sort-catalog-card" href="../assets/img/sorting-h-2.jpg" target="_blank" rel="noopener">
+            <div class="sort-catalog-icon">📄</div>
+            <div class="sort-catalog-info">
+              <span class="cat-title">H 시리즈 카탈로그 (2/2)</span>
+              <span class="cat-meta">기술·스펙 테이블 · JPG</span>
             </div>
-          </div>
-
-          <div class="sort-video-card">
-            <video muted loop playsinline preload="none" data-src="../assets/video/sorting-h-defect.mp4"></video>
-            <div class="sort-video-body">
-              <p class="sort-video-num">03 — H 시리즈</p>
-              <h4>생두 결점두 선별 (검정·파손)</h4>
-              <p>H 시리즈가 검정 원두(흑두)와 파손된 원두를 정확하게 구분해 별도로 배출하는 작동 영상입니다.</p>
+          </a>
+          <a class="sort-catalog-card" href="../assets/img/sorting-smart-1.jpg" target="_blank" rel="noopener">
+            <div class="sort-catalog-icon">📄</div>
+            <div class="sort-catalog-info">
+              <span class="cat-title">SMART 시리즈 카탈로그 (1/2)</span>
+              <span class="cat-meta">제품 개요·선별 대상 · JPG</span>
             </div>
-          </div>
+          </a>
+          <a class="sort-catalog-card" href="../assets/img/sorting-smart-2.jpg" target="_blank" rel="noopener">
+            <div class="sort-catalog-icon">📄</div>
+            <div class="sort-catalog-info">
+              <span class="cat-title">SMART 시리즈 카탈로그 (2/2)</span>
+              <span class="cat-meta">기술·스펙 테이블 · JPG</span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -658,7 +804,7 @@
     <section class="sort-cta">
       <div class="container">
         <h3>귀사의 생산 규모에 맞는 선별기를 찾아드립니다</h3>
-        <p>처리량·설치 공간·예산을 알려주시면 최적의 모델을 제안하고 정확한 견적을 드립니다. 스페셜티 로스터리부터 대량 가공 공장까지.</p>
+        <p>처리량·설치 공간·예산을 알려주시면 SMART 또는 H 시리즈 중 최적의 모델을 제안하고 정확한 견적과 설치·교육 일정을 안내드립니다. 스페셜티 로스터리부터 대량 가공 공장까지.</p>
         <div class="sort-cta-btns">
           <a class="btn btn-primary" href="../contact.html">선별기 문의하기 →</a>
           <a class="btn btn-ghost" href="mailto:skdngus77@naver.com" style="color:#fff;border-color:rgba(255,255,255,.3);">이메일 보내기</a>
