@@ -62,7 +62,7 @@ const PNS_PRODUCTS = [
     name:      "나만의 커스텀 드립백",
     img:       "assets/img/custom/bag-blank.png",
     url:       "custom-edition.html",
-    sub:       "디자인 시안 준비 후 최소 50개부터 주문 가능합니다.",
+    sub:       "디자인 시안 준비 후 소량 맞춤 제작 가능합니다.",
     badge:     "주문 가능",
     badgeType: "ready",
     priceType: "custom",
