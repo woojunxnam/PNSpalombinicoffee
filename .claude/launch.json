@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "pns-site",
-      "runtimeExecutable": "python3",
+      "runtimeExecutable": "py",
       "runtimeArgs": ["-m", "http.server", "8080"],
       "port": 8080
     }
