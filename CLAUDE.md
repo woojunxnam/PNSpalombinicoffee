@@ -96,13 +96,14 @@ window.T = [
 4. 모바일 메뉴 (`main.js`의 `menuItems` 배열)도 함께 업데이트
 
 ### 현재 네비 구조 (탑 레벨)
-`브랜드 → 제품 → 🌋 볼케이노 루비 → 자동화 장비 → B2B → 문의 → 고객·협력사`
+`브랜드 → 제품 → 드립백 OEM 주문 → 🌋 볼케이노 루비 → 자동화 장비 → B2B → 문의 → 고객·협력사`
 
 - About (브랜드) → Technology, Heritage, Reviews, FAQ
 - Products (제품) → PNS 팔롬비니 상품 라인업, 계열사 상품 라인업
+- 드립백 OEM 주문 (단독 링크 → custom-edition.html, 제품과 볼케이노 루비 사이)
 - 🌋 볼케이노 루비 (단독 링크, .nav-volcano 클래스)
 - Machines (자동화 장비) → 드립백·패키징 머신 라인업
-- B2B → B2B 상품 라인업, 드립백 맞춤 주문, 드립백 생산 현장 보기, 생두 원두 대량 주문, 봉투 필름지 맞춤 주문, 봉투 필름지 생산 현장 보기(준비중)
+- B2B → B2B 상품 라인업, 드립백 OEM 주문(→ custom-edition.html), 드립백 생산 현장 보기(현재 `style="display:none"`로 숨김 — 페이지 b2b.html은 유지), 생두 원두 대량 주문, 봉투 필름지 맞춤 주문, 봉투 필름지 생산 현장 보기(준비중)
 - Contact (문의)
 - Partners (고객·협력사)
 

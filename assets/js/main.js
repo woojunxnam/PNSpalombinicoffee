@@ -282,6 +282,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         { href: `${prefix}lineup.html`, label: '협력사 상품 라인업' },
       ]
     },
+    { href: `${prefix}custom-edition.html`, label: '드립백 OEM 주문' },
     { href: `${prefix}products/volcano-ruby.html`, label: '🌋 볼케이노 루비', volcano: true },
     {
       type: 'group', label: '자동화 장비',
@@ -294,8 +295,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       type: 'group', label: 'B2B',
       items: [
         { href: `${prefix}b2b-lineup.html`, label: 'B2B 상품 라인업' },
-        { href: `${prefix}custom-edition.html`, label: '드립백 맞춤 주문' },
-        { href: `${prefix}b2b.html`, label: '드립백 생산 현장 보기' },
+        { href: `${prefix}custom-edition.html`, label: '드립백 OEM 주문' },
         { href: `${prefix}b2b-bean.html`, label: '생두 원두 대량 주문' },
         { href: `${prefix}film-custom.html`, label: '봉투 필름지 맞춤 주문' },
         { href: `${prefix}b2b-film.html`, label: '봉투 필름지 생산 현장 보기' },
@@ -666,6 +666,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '브랜드': 'Brand',
     '제품': 'Products',
     '🌋 볼케이노 루비': '🌋 Volcano Ruby',
+    '드립백 OEM 주문': 'Drip Bag OEM',
     '자동화 장비': 'Machines',
     '문의': 'Contact',
     '고객·협력사': 'Partners',
@@ -680,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
     '드립백·패키징 머신 라인업': 'Drip Bag & Packaging Machines',
     '선별기 머신 라인업': 'Color Sorter Machines',
     'B2B 상품 라인업': 'B2B Product Lineup',
-    '드립백 맞춤 주문': 'Custom Drip Bag',
+    '드립백 OEM 주문': 'Drip Bag OEM',
     '드립백 생산 현장 보기': 'Drip Bag Production',
     '생두 원두 대량 주문': 'Bulk Bean Order',
     '봉투 필름지 맞춤 주문': 'Custom Coffee Film',
