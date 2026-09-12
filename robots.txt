@@ -1,4 +1,76 @@
+# ─────────────────────────────────────────────
+#  PNS 팔롬비니 (팔롬비니) — https://www.pnscoffee.com
+#  드립백 제조 · 드립백 주문제작(OEM) 전문
+# ─────────────────────────────────────────────
+
 User-agent: *
+Allow: /
+
+# ── 검색엔진 크롤러 ──
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# 네이버 검색 크롤러
+User-agent: Yeti
+Allow: /
+
+# 다음/카카오 검색 크롤러
+User-agent: Daum
+Allow: /
+
+User-agent: Daumoa
+Allow: /
+
+# ── AI 검색 / 생성형 AI 크롤러 (AI 검색 노출 허용) ──
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 Sitemap: https://www.pnscoffee.com/sitemap.xml
