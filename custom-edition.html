@@ -50,6 +50,9 @@
       color: #f5ede1;
       margin: 0 0 6px;
     }
+    /* 서브타이틀을 H1 안에 둠(검색엔진 H1 신호) — 시각은 기존 p와 동일 */
+    .ce-hero-title .ce-hero-subtitle { display:block; font-family:var(--sans); line-height:1.6; margin:6px 0 0; }
+    .ce-hero-title:has(.ce-hero-subtitle) { margin-bottom:18px; }
     .ce-hero-subtitle {
       font-size: clamp(14px, 1.6vw, 17px);
       font-weight: 700;
@@ -759,8 +762,7 @@
         <div class="ce-hero-inner">
           <div>
             <p class="ce-hero-eyebrow">Drip Bag OEM · PNS Palombini</p>
-            <h1 class="ce-hero-title">드립백 OEM</h1>
-            <p class="ce-hero-subtitle">드립백 제조 · 드립백 주문제작</p>
+            <h1 class="ce-hero-title">드립백 OEM<span class="ce-hero-subtitle">드립백 제조 · 드립백 주문제작</span></h1>
             <p class="ce-hero-desc">
               드립백 제조와 주문제작을 패키지 디자인부터 생산, 선물세트 구성까지 원스톱으로 제공합니다.<br/>
               카페·로스터리·커피 브랜드는 물론 기업·호텔·관공서, 각종 행사 기념품까지—
